@@ -6,3 +6,9 @@ id = "fHQQRDsXggaPeedtlQu6L"
 uri = "file://park-pulse-static.zip"
 type = "unspecified"
 title = "Park Pulse — Static Build (park-pulse-static.zip)"
+
+[[outputs]]
+id = "YIYU28w77q63o84NE98wR"
+uri = "file://README.md"
+type = "text"
+title = "README.md — Park Pulse GitHub README"
