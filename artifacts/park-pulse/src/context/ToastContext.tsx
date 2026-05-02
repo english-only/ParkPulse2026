@@ -49,7 +49,7 @@ export function ToastProvider({ children }: { children: React.ReactNode }) {
                   </svg>
                 )}
               </span>
-              <span className="pp-toast-message">{message}</span>
+              <span className="pp-toast-message">{t.message}</span>
             </div>
           ))}
         </div>,
