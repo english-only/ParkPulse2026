@@ -32,7 +32,7 @@ function calcCentroid(coords: number[][]): { lat: number; lng: number } {
 function parkMarkerColor(park: Park): string {
   if (park.hasPlayground) return "#E76F51";
   if (park.type === "Iconic") return "#FFD166";
-  if (park.type === "Sportsfield") return "#F4A261";
+  if (park.type === "Sportsfield" || park.type === "Sports") return "#F4A261";
   if (park.type === "Neighbourhood") return "#83C5BE";
   return "#2D6A4F";
 }
@@ -71,6 +71,7 @@ const defaultFilters: Filters = {
 export default function Explore() {
   const { theme } = useTheme();
   const { toast } = useToast();
+
   const mapRef = useRef<L.Map | null>(null);
   const mapContainerRef = useRef<HTMLDivElement>(null);
   const tileLayerRef = useRef<L.TileLayer | null>(null);
@@ -85,6 +86,11 @@ export default function Explore() {
   const locationMarkerRef = useRef<L.Marker | null>(null);
   const locationCircleRef = useRef<L.Circle | null>(null);
 
+  // Refs for stable access inside map event callbacks
+  const filteredRef = useRef<Park[]>([]);
+  const geocodeNearbyRef = useRef<Park[] | null>(null);
+  const setSelectedParkRef = useRef<(p: Park) => void>(() => {});
+
   const [allParks, setAllParks] = useState<Park[]>([]);
   const [filtered, setFiltered] = useState<Park[]>([]);
   const [searchInput, setSearchInput] = useState("");
@@ -94,31 +100,85 @@ export default function Explore() {
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const [treeZoomHint, setTreeZoomHint] = useState(false);
   const [loading, setLoading] = useState(true);
-  const mapReady = useRef(false);
+  const [geocodeNearby, setGeocodeNearby] = useState<Park[] | null>(null);
+  const [geocodePlace, setGeocodePlace] = useState("");
 
-  // Debounce search
+  // Keep setSelectedPark stable in ref (no stale closure in popups)
+  setSelectedParkRef.current = setSelectedPark;
+
+  // ── Viewport-culled marker renderer ─────────────────────────────────────
+  const renderMarkersForBounds = useCallback((parksToRender: Park[]) => {
+    const map = mapRef.current;
+    if (!map) return;
+    const bounds = map.getBounds().pad(0.5);
+
+    markersRef.current.forEach(m => map.removeLayer(m));
+    markersRef.current = [];
+
+    parksToRender.forEach(park => {
+      if (!bounds.contains([park.lat, park.lng])) return;
+      const marker = L.marker([park.lat, park.lng], {
+        icon: makeIcon(parkMarkerColor(park)),
+        title: park.name,
+      });
+      marker.bindPopup(() => {
+        const div = document.createElement("div");
+        div.className = "pp-popup";
+        div.innerHTML = `
+          <span class="pp-popup-type">${park.type}</span>
+          <h3>${park.name}</h3>
+          ${park.area ? `<p>Area: ${park.area >= 10000 ? (park.area / 10000).toFixed(2) + " ha" : park.area.toLocaleString() + " m²"}</p>` : ""}
+          ${park.hasPlayground ? `<p style="font-size:12px;margin-top:4px">🛝 Has Playground</p>` : ""}
+          <button class="pp-popup-btn" style="margin-top:8px">View Details</button>`;
+        setTimeout(() => {
+          div.querySelector(".pp-popup-btn")?.addEventListener("click", () =>
+            setSelectedParkRef.current(park)
+          );
+        }, 0);
+        return div;
+      }, { maxWidth: 280 });
+      marker.addTo(map);
+      markersRef.current.push(marker);
+    });
+  }, []);
+
+  // Sync refs for stable map-event access
+  useEffect(() => { filteredRef.current = filtered; }, [filtered]);
+  useEffect(() => { geocodeNearbyRef.current = geocodeNearby; }, [geocodeNearby]);
+
+  // ── Debounce search ──────────────────────────────────────────────────────
   useEffect(() => {
     const t = setTimeout(() => setSearch(searchInput), 300);
     return () => clearTimeout(t);
   }, [searchInput]);
 
-  // Read URL params for pre-applied filters
+  // Clear geocode on new search term
+  useEffect(() => {
+    setGeocodeNearby(null);
+    setGeocodePlace("");
+  }, [search]);
+
+  // ── URL params ───────────────────────────────────────────────────────────
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const filter = params.get("filter");
     if (filter && filter in defaultFilters) {
       setFilters(prev => ({ ...prev, [filter as keyof Filters]: true }));
     }
-    const locate = params.get("locate");
-    if (locate === "1") {
+    if (params.get("locate") === "1") {
       setTimeout(() => handleLocate(), 1500);
     }
   }, []);
 
-  // Init map
+  // ── Init map ─────────────────────────────────────────────────────────────
   useEffect(() => {
     if (mapRef.current || !mapContainerRef.current) return;
-    const map = L.map(mapContainerRef.current, { center: [-33.8688, 151.2093], zoom: 13, zoomControl: false });
+    const map = L.map(mapContainerRef.current, {
+      center: [-33.8688, 151.2093],
+      zoom: 13,
+      zoomControl: false,
+      preferCanvas: true, // Better performance for many markers
+    });
 
     const initialTheme = document.documentElement.getAttribute("data-theme") || "default";
     tileLayerRef.current = L.tileLayer(TILE_URLS[initialTheme] || TILE_URLS.default, {
@@ -128,8 +188,9 @@ export default function Explore() {
     L.control.zoom({ position: "bottomright" }).addTo(map);
     L.control.scale({ position: "bottomleft", imperial: false, metric: true }).addTo(map);
 
-    map.on("zoomend", () => {
+    map.on("moveend zoomend", () => {
       const zoom = map.getZoom();
+      // Tree layer visibility
       if (treeLayerRef.current) {
         if (zoom >= TREE_ZOOM_THRESHOLD) {
           if (!map.hasLayer(treeLayerRef.current)) map.addLayer(treeLayerRef.current);
@@ -139,20 +200,22 @@ export default function Explore() {
           setTreeZoomHint(true);
         }
       }
+      // Re-render markers for new viewport
+      const currentParks = geocodeNearbyRef.current ?? filteredRef.current;
+      renderMarkersForBounds(currentParks);
     });
 
     mapRef.current = map;
-    mapReady.current = true;
-    return () => { map.remove(); mapRef.current = null; mapReady.current = false; };
-  }, []);
+    return () => { map.remove(); mapRef.current = null; };
+  }, [renderMarkersForBounds]);
 
-  // Swap tile URL when theme changes
+  // ── Swap tile URL on theme change ────────────────────────────────────────
   useEffect(() => {
     if (!tileLayerRef.current) return;
     tileLayerRef.current.setUrl(TILE_URLS[theme] || TILE_URLS.default);
   }, [theme]);
 
-  // Load parks
+  // ── Load parks ───────────────────────────────────────────────────────────
   useEffect(() => {
     async function load() {
       try {
@@ -171,10 +234,14 @@ export default function Explore() {
           if (g.type === "Polygon") { const c = calcCentroid(g.coordinates[0]); lat = c.lat; lng = c.lng; }
           else if (g.type === "MultiPolygon") { const c = calcCentroid(g.coordinates[0][0]); lat = c.lat; lng = c.lng; }
           return {
-            id: p.OBJECTID ?? i, name: p.Name || "Unnamed Park", type: p.Type || "Unknown",
+            id: p.OBJECTID ?? i,
+            name: p.Name || "Unnamed Park",
+            type: p.Type || "Unknown",
             suburb: (suburbs[String(p.OBJECTID)] || {}).suburb || "",
-            hasPlayground: p.Playgrounds === "Yes", area: p.Shape__Area ? Math.round(p.Shape__Area) : null,
-            assetId: p.Asset_ID || "", lat, lng,
+            hasPlayground: p.Playgrounds === "Yes",
+            area: p.Shape__Area ? Math.round(p.Shape__Area) : null,
+            assetId: p.Asset_ID || "",
+            lat, lng,
           };
         });
         setAllParks(parks);
@@ -185,9 +252,10 @@ export default function Explore() {
     load();
   }, []);
 
-  // Load blacktown always
+  // ── Blacktown layer ──────────────────────────────────────────────────────
   useEffect(() => {
-    if (!mapRef.current) return;
+    const map = mapRef.current;
+    if (!map) return;
     fetch(`${BASE}data/blacktown.geojson`).then(r => r.json()).then(data => {
       if (!mapRef.current) return;
       const layer = L.layerGroup();
@@ -202,32 +270,24 @@ export default function Explore() {
         layer.addLayer(marker);
       });
       blacktownLayerRef.current = layer;
-      if (mapRef.current) layer.addTo(mapRef.current);
+      layer.addTo(mapRef.current);
     }).catch(() => {});
-  }, [mapRef.current]);
+  }, []);
 
-  // Render park markers
+  // ── Re-render markers when filtered or geocodeNearby changes ─────────────
   useEffect(() => {
-    if (!mapRef.current) return;
-    markersRef.current.forEach(m => mapRef.current!.removeLayer(m));
-    markersRef.current = [];
-    filtered.forEach(park => {
-      const marker = L.marker([park.lat, park.lng], { icon: makeIcon(parkMarkerColor(park)), title: park.name });
-      marker.bindPopup(() => {
-        const div = document.createElement("div");
-        div.className = "pp-popup";
-        div.innerHTML = `<span class="pp-popup-type">${park.type}</span><h3>${park.name}</h3>${park.area ? `<p>Area: ${park.area >= 10000 ? (park.area/10000).toFixed(2)+" ha" : park.area.toLocaleString()+" m²"}</p>` : ""}${park.hasPlayground ? `<p style="font-size:12px;margin-top:4px">🛝 Has Playground</p>` : ""}<button class="pp-popup-btn" style="margin-top:8px">View Details</button>`;
-        setTimeout(() => {
-          div.querySelector(".pp-popup-btn")?.addEventListener("click", () => setSelectedPark(park));
-        }, 0);
-        return div;
-      }, { maxWidth: 280 });
-      marker.addTo(mapRef.current!);
-      markersRef.current.push(marker);
-    });
-  }, [filtered]);
+    filteredRef.current = filtered;
+    const toRender = geocodeNearbyRef.current ?? filtered;
+    renderMarkersForBounds(toRender);
+  }, [filtered, renderMarkersForBounds]);
 
-  // Overlay layers: fountains, transport, toilets, trees
+  useEffect(() => {
+    geocodeNearbyRef.current = geocodeNearby;
+    if (geocodeNearby !== null) renderMarkersForBounds(geocodeNearby);
+    else renderMarkersForBounds(filteredRef.current);
+  }, [geocodeNearby, renderMarkersForBounds]);
+
+  // ── Overlay layers ───────────────────────────────────────────────────────
   useEffect(() => {
     const map = mapRef.current;
     if (!map) return;
@@ -247,6 +307,7 @@ export default function Explore() {
         fountainLayerRef.current = layer;
       } catch {}
     };
+
     const loadTransport = async () => {
       if (transportLayerRef.current) return;
       try {
@@ -264,6 +325,7 @@ export default function Explore() {
         transportLayerRef.current = layer;
       } catch {}
     };
+
     const loadTrees = async () => {
       if (treeLayerRef.current) return;
       try {
@@ -278,6 +340,7 @@ export default function Explore() {
         treeLayerRef.current = layer;
       } catch {}
     };
+
     const loadToilets = async () => {
       if (toiletLayerRef.current) return;
       try {
@@ -317,7 +380,7 @@ export default function Explore() {
     } else { if (treeLayerRef.current && map.hasLayer(treeLayerRef.current)) map.removeLayer(treeLayerRef.current); setTreeZoomHint(false); }
   }, [filters.fountains, filters.transport, filters.toilets, filters.trees]);
 
-  // Dog parks layer
+  // ── Dog parks layer ──────────────────────────────────────────────────────
   useEffect(() => {
     const map = mapRef.current;
     if (!map) return;
@@ -345,7 +408,7 @@ export default function Explore() {
     else if (dogLayerRef.current && map.hasLayer(dogLayerRef.current)) map.removeLayer(dogLayerRef.current);
   }, [filters.dogs]);
 
-  // NPWS facilities layer (clustered)
+  // ── NPWS facilities layer (clustered) ────────────────────────────────────
   useEffect(() => {
     const map = mapRef.current;
     if (!map) return;
@@ -370,13 +433,15 @@ export default function Explore() {
     else if (npwsLayerRef.current && map.hasLayer(npwsLayerRef.current)) map.removeLayer(npwsLayerRef.current);
   }, [filters.npws]);
 
-  // Filter parks list
+  // ── Filter parks list ────────────────────────────────────────────────────
   useEffect(() => {
     const q = search.toLowerCase();
     const parkKeys: (keyof Filters)[] = ["playground", "sports", "iconic", "neighbourhood", "pocket", "sportsfield"];
     const anyParkFilter = parkKeys.some(k => filters[k]);
     const result = allParks.filter(park => {
-      if (q && !park.name.toLowerCase().includes(q) && !park.type.toLowerCase().includes(q) && !park.suburb.toLowerCase().includes(q)) return false;
+      if (q && !park.name.toLowerCase().includes(q) &&
+          !park.type.toLowerCase().includes(q) &&
+          !park.suburb.toLowerCase().includes(q)) return false;
       if (anyParkFilter) {
         return (filters.playground && park.hasPlayground) ||
           (filters.sports && (park.type === "Sportsfield" || park.type === "Sports")) ||
@@ -390,6 +455,38 @@ export default function Explore() {
     setFiltered(result);
   }, [allParks, search, filters]);
 
+  // ── Geocode fallback ─────────────────────────────────────────────────────
+  // When search has no park results, geocode the query and fly to that place,
+  // showing the 20 nearest parks in the sidebar.
+  useEffect(() => {
+    if (!search.trim() || filtered.length > 0 || geocodeNearby !== null || allParks.length === 0) return;
+    const controller = new AbortController();
+    (async () => {
+      try {
+        const q = encodeURIComponent(`${search}, New South Wales, Australia`);
+        const res = await fetch(
+          `https://nominatim.openstreetmap.org/search?format=json&q=${q}&limit=1&countrycodes=au`,
+          { signal: controller.signal }
+        );
+        const data = await res.json();
+        if (data[0]) {
+          const lat = parseFloat(data[0].lat);
+          const lng = parseFloat(data[0].lon);
+          const place = data[0].display_name.split(",")[0].trim();
+          mapRef.current?.flyTo([lat, lng], 14, { duration: 1.2, easeLinearity: 0.25 });
+          const nearby = [...allParks]
+            .sort((a, b) => Math.hypot(a.lat - lat, a.lng - lng) - Math.hypot(b.lat - lat, b.lng - lng))
+            .slice(0, 20);
+          setGeocodeNearby(nearby);
+          setGeocodePlace(place);
+          toast(`Showing parks near "${place}"`, "info");
+        }
+      } catch {}
+    })();
+    return () => controller.abort();
+  }, [search, filtered.length, geocodeNearby, allParks, toast]);
+
+  // ── Handlers ─────────────────────────────────────────────────────────────
   const selectPark = useCallback((park: Park) => {
     if (!mapRef.current) return;
     mapRef.current.flyTo([park.lat, park.lng], 17, { duration: 1.2, easeLinearity: 0.25 });
@@ -415,7 +512,9 @@ export default function Explore() {
           icon: L.divIcon({ className: "", html: `<div class="pp-location-dot"></div>`, iconSize: [20, 20], iconAnchor: [10, 10] }),
           title: "Your location",
         }).addTo(mapRef.current);
-        locationCircleRef.current = L.circle([lat, lng], { radius: accuracy, color: "#4A90E2", fillColor: "#4A90E2", fillOpacity: 0.1, weight: 1 }).addTo(mapRef.current);
+        locationCircleRef.current = L.circle([lat, lng], {
+          radius: accuracy, color: "#4A90E2", fillColor: "#4A90E2", fillOpacity: 0.1, weight: 1,
+        }).addTo(mapRef.current);
         mapRef.current.flyTo([lat, lng], 15, { duration: 1.5, easeLinearity: 0.25 });
         toast("Location found!", "success");
       },
@@ -424,60 +523,91 @@ export default function Explore() {
     );
   }, [toast]);
 
-  const clearAll = useCallback(() => { setSearchInput(""); setSearch(""); setFilters(defaultFilters); }, []);
+  const clearAll = useCallback(() => {
+    setSearchInput(""); setSearch(""); setFilters(defaultFilters);
+    setGeocodeNearby(null); setGeocodePlace("");
+  }, []);
+
   const toggleFilter = (key: keyof Filters) => setFilters(prev => ({ ...prev, [key]: !prev[key] }));
 
   const activeFilterCount = Object.values(filters).filter(Boolean).length + (search ? 1 : 0);
 
+  // ── Filter items ─────────────────────────────────────────────────────────
   const filterItems = [
     { key: "playground" as const, label: "Playgrounds", icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg> },
-    { key: "sports" as const, label: "Sports", icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/><line x1="2" y1="12" x2="22" y2="12"/></svg> },
+    { key: "sports" as const, label: "Sports Parks", icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/><line x1="2" y1="12" x2="22" y2="12"/></svg> },
     { key: "iconic" as const, label: "Iconic Parks", icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg> },
     { key: "neighbourhood" as const, label: "Neighbourhood", icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg> },
     { key: "pocket" as const, label: "Pocket Parks", icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg> },
     { key: "sportsfield" as const, label: "Sportsfields", icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="12" x2="21" y2="12"/><circle cx="12" cy="12" r="3"/></svg> },
-    { key: "dogs" as const, label: "Dog Parks", icon: <span style={{ fontSize: 14 }}>🐕</span> },
+    {
+      key: "dogs" as const, label: "Dog Parks",
+      icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+        <circle cx="7.5" cy="6.5" r="2"/>
+        <circle cx="16.5" cy="6.5" r="2"/>
+        <circle cx="4.5" cy="11" r="2"/>
+        <circle cx="19.5" cy="11" r="2"/>
+        <path d="M12 22c-4.5 0-7.5-2.5-7.5-6 0-2.5 2-4 5-4h5c3 0 5 1.5 5 4 0 3.5-3 6-7.5 6z"/>
+      </svg>,
+    },
     { key: "npws" as const, label: "NPWS Facilities", icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg> },
     { key: "fountains" as const, label: "Drinking Fountains", icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M12 22V12"/><path d="M5 12C5 8 8 4 12 4s7 4 7 8"/><path d="M5 12H2a10 10 0 0 0 20 0h-3"/></svg> },
     { key: "toilets" as const, label: "Public Toilets", icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M7 7h10v8a4 4 0 0 1-4 4H11a4 4 0 0 1-4-4V7z"/><path d="M5 7V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v2"/></svg> },
-    { key: "transport" as const, label: "Public Transport", icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/><line x1="12" y1="12" x2="12" y2="12"/><path d="M8 21l-2 2M18 21l-2 2"/></svg> },
+    { key: "transport" as const, label: "Public Transport", icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/><path d="M8 21l-2 2M18 21l-2 2"/></svg> },
     { key: "trees" as const, label: "Trees", icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M12 22v-7l-2-2"/><path d="M17 8v.8A6 6 0 0 1 13.8 20v0H10v0A6.5 6.5 0 0 1 7 8h0a5 5 0 0 1 10 0Z"/></svg> },
   ];
 
   const quickPills = [
     { label: "🛝 Playgrounds", key: "playground" as keyof Filters },
-    { label: "🐕 Dog Parks", key: "dogs" as keyof Filters },
-    { label: "🍖 NPWS/BBQ", key: "npws" as keyof Filters },
-    { label: "⛲ Fountains", key: "fountains" as keyof Filters },
-    { label: "🚻 Toilets", key: "toilets" as keyof Filters },
+    { label: "🐕 Dog Parks",   key: "dogs"       as keyof Filters },
+    { label: "🍖 NPWS/BBQ",    key: "npws"       as keyof Filters },
+    { label: "⛲ Fountains",   key: "fountains"  as keyof Filters },
+    { label: "🚻 Toilets",     key: "toilets"    as keyof Filters },
   ];
 
-  const showingCount = filtered.length;
+  // Parks to display in the sidebar results list
+  const displayParks = geocodeNearby ?? filtered;
   const totalCount = allParks.length + 1605;
 
   return (
     <div className="pp-explore-page">
       <Navbar />
       <main className="pp-explore-main">
+
+        {/* ── Sidebar ── */}
         <aside className={`pp-sidebar${sidebarCollapsed ? " collapsed" : ""}`}>
           <div className="pp-sidebar-header">
-            <h2>Find Parks {activeFilterCount > 0 && <span className="pp-active-badge">{activeFilterCount}</span>}</h2>
-            <button className="pp-sidebar-toggle" aria-label="Collapse sidebar" onClick={() => { setSidebarCollapsed(true); setTimeout(() => mapRef.current?.invalidateSize(), 330); }}>
+            <h2>
+              Find Parks{" "}
+              {activeFilterCount > 0 && <span className="pp-active-badge">{activeFilterCount}</span>}
+            </h2>
+            <button
+              className="pp-sidebar-toggle"
+              aria-label="Collapse sidebar"
+              onClick={() => { setSidebarCollapsed(true); setTimeout(() => mapRef.current?.invalidateSize(), 330); }}
+            >
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M15 18l-6-6 6-6"/></svg>
             </button>
           </div>
 
           <div className="pp-search-container">
             <div className="pp-search-wrapper">
-              <svg className="pp-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+              <svg className="pp-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/>
+              </svg>
               <input
-                type="text" className="pp-search-input" placeholder="Search parks, suburbs, types…"
-                value={searchInput} onChange={e => setSearchInput(e.target.value)}
+                type="text"
+                className="pp-search-input"
+                placeholder="Search parks, suburbs, types…"
+                value={searchInput}
+                onChange={e => setSearchInput(e.target.value)}
                 aria-label="Search parks"
               />
               {searchInput && (
-                <button className="pp-clear-btn" onClick={() => { setSearchInput(""); setSearch(""); }} aria-label="Clear search">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                <button className="pp-clear-btn" onClick={clearAll} aria-label="Clear search">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+                  </svg>
                 </button>
               )}
             </div>
@@ -485,7 +615,11 @@ export default function Explore() {
 
           <div className="pp-quick-pills-container">
             {quickPills.map(p => (
-              <button key={p.key} className={`pp-quick-pill${filters[p.key] ? " active" : ""}`} onClick={() => toggleFilter(p.key)}>
+              <button
+                key={p.key}
+                className={`pp-quick-pill${filters[p.key] ? " active" : ""}`}
+                onClick={() => toggleFilter(p.key)}
+              >
                 {p.label}
               </button>
             ))}
@@ -493,7 +627,9 @@ export default function Explore() {
 
           <div className="pp-filters-container">
             <h3>
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/>
+              </svg>
               All Filters
             </h3>
             <div className="pp-filter-group">
@@ -518,24 +654,52 @@ export default function Explore() {
             <div className="pp-results-header">
               <h3>Results</h3>
               <span className="pp-results-count">
-                {activeFilterCount > 0 ? `${showingCount} parks` : `${totalCount.toLocaleString()} locations`}
+                {geocodePlace
+                  ? `Near "${geocodePlace}"`
+                  : activeFilterCount > 0
+                    ? `${displayParks.length} parks`
+                    : `${totalCount.toLocaleString()} locations`}
               </span>
             </div>
+
+            {geocodePlace && (
+              <div className="pp-geocode-hint">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/>
+                </svg>
+                No parks matched — showing {displayParks.length} parks near <strong>{geocodePlace}</strong>
+              </div>
+            )}
+
             <div className="pp-results-list">
               {loading ? (
                 Array.from({ length: 6 }).map((_, i) => <div key={i} className="pp-skeleton-card" />)
-              ) : filtered.length === 0 ? (
+              ) : displayParks.length === 0 ? (
                 <div className="pp-empty-state">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/>
+                  </svg>
                   <p>No parks found.</p>
-                  {activeFilterCount > 0 && <button className="pp-btn pp-btn-outline pp-btn-small" onClick={clearAll}>Clear filters</button>}
+                  {activeFilterCount > 0 && (
+                    <button className="pp-btn pp-btn-outline pp-btn-small" onClick={clearAll}>Clear filters</button>
+                  )}
                 </div>
               ) : (
-                filtered.slice(0, 100).map(park => (
-                  <div key={park.id} className="pp-park-card" onClick={() => selectPark(park)} role="button" tabIndex={0} onKeyDown={e => e.key === "Enter" && selectPark(park)} aria-label={`View ${park.name} on map`}>
+                displayParks.slice(0, 100).map(park => (
+                  <div
+                    key={park.id}
+                    className="pp-park-card"
+                    onClick={() => selectPark(park)}
+                    role="button"
+                    tabIndex={0}
+                    onKeyDown={e => e.key === "Enter" && selectPark(park)}
+                    aria-label={`View ${park.name} on map`}
+                  >
                     <div className="pp-park-card-header">
                       <h4>{park.name}</h4>
-                      <span className={`pp-park-type-badge ${park.type.toLowerCase().replace(/\s+/g, "-")}`}>{park.type}</span>
+                      <span className={`pp-park-type-badge ${park.type.toLowerCase().replace(/\s+/g, "-")}`}>
+                        {park.type}
+                      </span>
                     </div>
                     <div className="pp-park-card-facilities">
                       {park.hasPlayground && <span className="pp-facility-tag">🛝 Playground</span>}
@@ -548,20 +712,31 @@ export default function Explore() {
           </div>
         </aside>
 
+        {/* ── Map ── */}
         <section className="pp-map-container">
           <div id="park-map" ref={mapContainerRef} style={{ width: "100%", height: "100%" }} />
           <button className="pp-locate-btn" aria-label="Find my location" onClick={handleLocate} title="Find my location">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/>
+              <circle cx="12" cy="12" r="10"/>
+              <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/>
             </svg>
           </button>
           {sidebarCollapsed && (
-            <button className="pp-sidebar-open-btn" aria-label="Open sidebar" onClick={() => { setSidebarCollapsed(false); setTimeout(() => mapRef.current?.invalidateSize(), 330); }}>
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+            <button
+              className="pp-sidebar-open-btn"
+              aria-label="Open sidebar"
+              onClick={() => { setSidebarCollapsed(false); setTimeout(() => mapRef.current?.invalidateSize(), 330); }}
+            >
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <line x1="3" y1="12" x2="21" y2="12"/>
+                <line x1="3" y1="6" x2="21" y2="6"/>
+                <line x1="3" y1="18" x2="21" y2="18"/>
+              </svg>
             </button>
           )}
         </section>
       </main>
+
       <ParkModal park={selectedPark} onClose={() => setSelectedPark(null)} />
     </div>
   );
