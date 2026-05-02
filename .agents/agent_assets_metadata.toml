@@ -1,0 +1,8 @@
+uploads = []
+generated = []
+
+[[outputs]]
+id = "fHQQRDsXggaPeedtlQu6L"
+uri = "file://park-pulse-static.zip"
+type = "unspecified"
+title = "Park Pulse — Static Build (park-pulse-static.zip)"
