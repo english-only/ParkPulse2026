@@ -1,0 +1,13 @@
+{
+  "lastUpdated": "2026-05-02",
+  "version": "2.0.0",
+  "sources": {
+    "parks": "City of Sydney Open Data",
+    "blacktown": "Blacktown City Council",
+    "npws": "NSW National Parks & Wildlife Service",
+    "dogs": "City of Sydney Open Data",
+    "fountains": "City of Sydney Open Data",
+    "toilets": "City of Sydney Open Data",
+    "transport": "Transport for NSW"
+  }
+}

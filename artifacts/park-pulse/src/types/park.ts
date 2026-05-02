@@ -10,35 +10,35 @@ export interface Park {
   lng: number;
 }
 
-export interface FountainFeature {
+export interface DogPark {
+  id: number;
+  name: string;
+  suburb: string;
+  street: string;
+  postcode: number;
+  agency: string;
+  offLeashTime: string;
+  alwaysOffLeash: boolean;
+  prohibitedAreas: string;
+  description: string;
   lat: number;
   lng: number;
-  name: string;
 }
 
-export interface TransportFeature {
+export interface NPWSFacility {
+  id: number;
+  name: string;
+  subtype: string;
+  branch: string;
+  lga: string;
+  comments: string;
   lat: number;
   lng: number;
-  name: string;
-  mode: string;
 }
 
-export interface TreeFeature {
-  lat: number;
-  lng: number;
-  species: string;
-}
-
-export interface ToiletFeature {
-  lat: number;
-  lng: number;
+export interface RecentPark {
+  id: number;
   name: string;
-}
-
-export interface BlacktownFeature {
-  lat: number;
-  lng: number;
-  name: string;
-  isPlayground: boolean;
-  website?: string;
+  type: string;
+  suburb: string;
 }

@@ -1,0 +1,292 @@
+# 🌳 PARK PULSE — LEGENDARY UPGRADE MEGA-PROMPT
+
+You are upgrading **Park Pulse**, an existing multi-page Sydney parks discovery website built in vanilla HTML/CSS/JS using Leaflet.js for maps. The goal is to make this the most feature-complete, beautiful, offline-capable parks website ever built.
+
+---
+
+## ⚠️ CRITICAL DELIVERY REQUIREMENT
+
+**The final deliverable is a single `.zip` file.**
+- User downloads zip → opens `index.html` → **everything works immediately with zero internet connection.**
+- No CDN calls that fail offline. Bundle ALL external libraries (Leaflet, MarkerCluster, fonts, icons) as local files inside the zip.
+- Folder structure must be clean and self-contained.
+- Test every page offline before delivering.
+
+---
+
+## 📁 EXISTING FILE STRUCTURE
+
+```
+ParkPulse/
+├── index.html
+├── about.html
+├── explore.html
+├── css/styles.css
+├── js/
+│   ├── main.js
+│   └── explore.js  (939 lines)
+└── data/
+    ├── Parks.geojson          (City of Sydney parks, ~400 parks)
+    ├── blacktown.geojson      (Blacktown area parks/playgrounds)
+    ├── drinking-fountains.geojson
+    ├── parks-suburbs.json
+    ├── public-transports.json
+    ├── toilets-sydney.json
+    └── trees.geojson          (17MB - heavy, handled with zoom threshold)
+```
+
+---
+
+## ➕ NEW DATA FILES TO INTEGRATE
+
+Add these two new datasets to the `/data/` folder and integrate them fully into the explore page with their own filter toggles, map markers, popups, and sidebar cards:
+
+### 1. `data/npws-facilities-greater-sydney.geojson`
+National Parks & Wildlife Service facility points across Greater Sydney.
+- **1,795 features** with properties: `AssetName`, `d_SubtypeC` (facility type), `d_Branch` (area), `d_LGA`, `Comments`
+- Facility types include: `Picnic Table`, `Seat`, `BBQ/Fireplace`, `Shelter`, `Waste/Recycling Stn`, `Bin`, `Playground Equipment`, `Cycle Rack`, `Life Buoy Stand`
+- Coordinates are in the `geometry.coordinates` array as `[lng, lat]`
+- **Filter label:** "NPWS Facilities" with subtypes (BBQ, Picnic, Shelter, etc.)
+- **Marker colors by subtype:**
+  - BBQ/Fireplace → `#FF6B35` (orange-red)
+  - Picnic Table → `#8B5E3C` (brown)
+  - Shelter → `#5B8C5A` (green)
+  - Playground Equipment → `#E91E8C` (pink)
+  - Seat → `#6B8CBA` (steel blue)
+  - Everything else → `#888` (grey)
+- Use clustering (MarkerCluster) for this layer
+- Popup should show: facility type badge, AssetName, d_LGA, d_Branch, Comments
+
+### 2. `data/Dog_off-leash_parks.geojson`
+City of Sydney off-leash dog areas.
+- Properties: `ParkName`, `Street`, `Suburb`, `Postcode`, `Agency`, `OffLeashTime`, `ProhibitedAreas`, `OffLeashDescription`
+- Geometry is `Point` with `[lng, lat]` coordinates
+- **Filter label:** "🐕 Dog Parks"
+- **Marker:** Bright yellow-green `#AACC00` circle with a paw icon (SVG inline)
+- Popup shows: park name, suburb, off-leash hours, prohibited areas, full description
+- If `OffLeashTime === "At all times"` → show green badge "Always Off-Leash"
+- Otherwise → show orange badge with the time restriction
+
+---
+
+## 🐛 BUGS & GLITCHES TO FIX
+
+Fix all of the following in the existing code:
+
+1. **`toilets-sydney.json` and `trees.geojson` are empty (0 bytes) in the original repo.** Either populate them with real data OR gracefully handle empty/missing files without crashing or showing errors. Add fallback empty-state messages like "No data available for this layer."
+
+2. **`parks-suburbs.json` is also empty.** The `loadParkData()` function tries to merge suburb data — make this graceful so it doesn't break when the file is empty.
+
+3. **Map doesn't invalidate size properly on sidebar resize.** The sidebar resize handle works but the map tiles don't redraw correctly on slow drag. Call `map.invalidateSize()` continuously during drag, not just on mouseup.
+
+4. **Mobile menu toggle** (`mobile-menu-btn`) works but the nav doesn't close when you click a link or click outside it. Add a document click listener to close the nav on outside click.
+
+5. **Filter clear button doesn't reset the Blacktown layer.** When "Clear Filters" is clicked, the Blacktown layer (which auto-loads on startup) gets removed but is never re-added. Fix: Blacktown layer should always be visible; clear filters should not remove it.
+
+6. **Park modal has no directions button.** When a park popup or modal opens, add a "Get Directions" button that opens Google Maps to that lat/lng in a new tab: `https://www.google.com/maps/dir/?api=1&destination={lat},{lng}`
+
+7. **Search doesn't find parks by suburb.** The search only checks park name. Extend it to also search suburb, park type, and facility tags.
+
+8. **Empty state for zero filter results** shows generic message. Improve it to say which filters are active and suggest clearing them.
+
+9. **Explore page on mobile** — the sidebar overlaps the map on small screens and there's no way to dismiss it. Add a proper mobile drawer behaviour: sidebar slides up from bottom on mobile, tap outside to dismiss.
+
+10. **No loading indicator** for the initial park data load. Users see a blank map for a moment. Add a subtle loading spinner or skeleton state.
+
+---
+
+## 🎨 5 THEMES — FULLY IMPLEMENTED
+
+Implement a **theme switcher** that:
+- Lives in the navbar (top-right, icon button that opens a theme picker dropdown)
+- Persists selection to `localStorage` under key `parkpulse_theme`
+- Applies theme instantly with no page reload (swap a `data-theme` attribute on `<html>`)
+- Works across ALL pages (index, explore, about)
+- Smooth CSS transitions on theme change (`transition: background 0.3s, color 0.3s`)
+
+### Theme 1: `default` — Modern Green (keep existing aesthetic)
+- Background: `#f8f9fa`, Primary: `#2D6A4F`, Accent: `#52B788`
+- Clean, light, professional
+- Map tiles: CARTO Light (`https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png`)
+
+### Theme 2: `dark` — Night Mode
+- Background: `#0d1117`, Cards: `#161b22`, Borders: `#30363d`
+- Text: `#e6edf3`, Primary: `#238636`, Accent: `#3fb950`
+- Nav: `#161b22` with bottom border `#30363d`
+- Map tiles: CARTO Dark Matter (`https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png`)
+- All cards, sidebar, modals use dark bg with subtle borders
+
+### Theme 3: `sunset` — Warm Earthy
+- Background: `#FFF8F0`, Cards: `#FFF0E0`
+- Primary: `#C44B00`, Accent: `#E8763A`
+- Text: `#2D1B00`
+- Nav gradient: `linear-gradient(135deg, #C44B00, #E8763A)`
+- Map tiles: CARTO Voyager (`https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png`)
+
+### Theme 4: `neon` — Cyberpunk Night
+- Background: `#050510`, Cards: `#0d0d1a`
+- Primary: `#00FF88`, Accent: `#FF00FF`
+- Text: `#E0E0FF`
+- Nav: `#0a0a1a` with neon green bottom border `2px solid #00FF88`
+- All buttons: neon green with black text, glow on hover (`box-shadow: 0 0 15px #00FF88`)
+- Cards: border `1px solid #00FF8840`, glow on hover
+- Map tiles: CARTO Dark Matter
+- Scrollbar: custom neon green
+
+### Theme 5: `minimal` — Pure Mono
+- Background: `#FFFFFF`, Cards: `#FAFAFA`
+- Primary: `#000000`, Accent: `#555555`
+- Text: `#111111`
+- Nav: pure white with 1px bottom border `#e0e0e0`
+- Zero decorative elements, no gradients, no shadows
+- Map tiles: CARTO Positron (`https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}{r}.png`)
+- Typography: system-ui stack only
+
+**IMPORTANT:** Map tile URLs must be bundled for offline use. For offline support, use Leaflet's built-in offline capabilities OR cache the tile layer. Best approach: **use a single offline-capable tile source** — bundle [leaflet-providers](https://github.com/leaflet-extras/leaflet-providers) locally or simply default to **OpenStreetMap raster tiles with aggressive caching**. Add a note in the UI: "Map tiles require internet connection. All other features work offline."
+
+---
+
+## ✨ FEATURES TO ADD — GO LEGENDARY
+
+### 🗺️ Map Enhancements
+- **"Locate Me" button** — floating button on map, asks for geolocation, flies to user location, shows blue pulsing dot marker with accuracy circle
+- **Marker clustering** — all dense layers (parks, NPWS facilities) use `Leaflet.markerCluster` (bundle the plugin locally)
+- **Park polygon outlines** — when a park is selected/hovered, draw its GeoJSON polygon outline on the map in the primary theme colour
+- **Mini-map** — small overview map in the bottom-right corner using Leaflet's built-in `L.Control.MiniMap` (bundle it)
+- **Scale bar** — `L.control.scale()` in bottom-left
+- **Layer count badges** — next to each filter toggle, show a small count of how many items are in that layer (e.g. "BBQ 283")
+
+### 🔍 Search & Filter
+- **Unified search bar** searches across: park names, NPWS facility names, dog park names, suburb, transport stops, drinking fountains — everything
+- **Search as you type** with debounce (300ms)
+- **Quick-filter pill buttons** above the results list:
+  - 🛝 Has Playground
+  - 🐕 Dog Friendly  
+  - 🚻 Has Toilets
+  - 🍖 Has BBQ
+  - ⛲ Drinking Fountain
+  - 🚌 Near Transport
+- **Sort results** by: Distance (if geolocation available), Name A–Z, Park Type
+- **Results count** shown at top of results list: "Showing 24 of 412 parks"
+- **Suburb/area grouping** — option to group results by suburb in sidebar
+
+### 📍 Park Detail Modal (upgrade existing)
+- Show all available facility icons in a grid (playground ✓, BBQ ✓, toilets ?, fountain ?, etc.)
+- Cross-reference: when a park is opened, search nearby NPWS facilities within 200m and list them
+- Cross-reference: check if any dog parks overlap and show "🐕 Dog friendly area nearby"
+- **"Get Directions"** button → opens Google Maps directions to park centroid
+- **"Share Park"** button → copies a URL with `?park=ParkName` query string to clipboard, with a toast notification "Link copied!"
+- Park type badge (Pocket / Neighbourhood / Iconic / Sportsfield / Civic)
+- Park size display (calculate from `Shape__Area` in m², convert to ha if > 10,000m²)
+
+### 📊 Stats Dashboard (new section on home page)
+- Animated number counters on page load
+- Show: total parks, total NPWS facilities, total dog parks, total drinking fountains, total toilets
+- Small bar chart showing park type breakdown (Pocket vs Neighbourhood vs Iconic vs Sportsfield)
+- "Fun facts" rotating ticker: "Sydney has X BBQ spots", "X parks allow dogs off-leash", etc.
+
+### 🏠 Home Page Enhancements
+- **"Quick Explore" section** — 4 clickable cards that open explore page with preset filters:
+  - "Find a BBQ spot 🍖" → opens explore with BBQ filter active
+  - "Take the dog out 🐕" → opens explore with dog parks layer on
+  - "Find a playground 🛝" → opens explore with playground filter active
+  - "Nearest park to me 📍" → triggers geolocation and opens explore centred on user
+- **Hero improvements** — add subtle animated SVG background (floating leaf particles or gentle wave)
+- **Recently viewed parks** — store last 5 viewed parks in localStorage, show on home page as "Recently Viewed" cards
+
+### 📱 Mobile UX
+- On screens < 768px: sidebar becomes a **bottom sheet drawer** (slides up from bottom)
+- **FAB button** (floating action button) on explore page for mobile: "🔍 Filter & Search"
+- Touch-friendly markers (minimum 44px tap targets)
+- Swipe down gesture on bottom sheet to close it
+- Mobile-optimised popup size (full width, readable font)
+
+### 🌐 About Page Enhancements
+- Add new data source cards for: NPWS Facilities, Dog Off-Leash Parks
+- Add a "Tech Stack" section: Leaflet.js, Vanilla JS, OpenStreetMap, open government data
+- Add a real, working "last updated" timestamp pulled from a `data/meta.json` file you create
+
+### ♿ Accessibility
+- All interactive elements have `aria-label` attributes
+- Focus rings visible in all themes
+- Keyboard navigable filters (Enter/Space to toggle)
+- Skip to main content link at top of page
+- All map markers have `title` attributes
+
+### 🎯 Performance
+- Lazy load heavy data (trees, toilets) only when filter toggled — already partially done, complete this
+- NPWS and Dog Park layers load on first toggle, then stay cached in memory
+- Debounce all search inputs (300ms)
+- `requestAnimationFrame` for any animation loops
+
+### 💅 Polish
+- **Toast notification system** — bottom-right toasts for actions (filter applied, link copied, location found, etc.) — auto-dismiss after 3s
+- **Smooth map fly animations** — use `map.flyTo()` instead of `map.setView()` for all navigation
+- **Custom scrollbar** in themed colours (webkit + firefox)
+- **Hover states** on all sidebar result cards — lift shadow, show "View on Map" hint
+- **Empty state illustrations** — custom SVG park-themed empty states when no results
+
+---
+
+## 📂 FINAL FOLDER STRUCTURE
+
+```
+park-pulse/
+├── index.html
+├── explore.html
+├── about.html
+├── css/
+│   └── styles.css              (all 5 themes via data-theme + CSS vars)
+├── js/
+│   ├── main.js
+│   ├── explore.js
+│   └── theme-switcher.js       (new — theme logic, works on all pages)
+├── data/
+│   ├── Parks.geojson
+│   ├── blacktown.geojson
+│   ├── drinking-fountains.geojson
+│   ├── parks-suburbs.json
+│   ├── public-transports.json
+│   ├── toilets-sydney.json
+│   ├── trees.geojson
+│   ├── npws-facilities-greater-sydney.geojson   ← NEW
+│   ├── Dog_off-leash_parks.geojson              ← NEW
+│   └── meta.json               (new — { "lastUpdated": "2025-05-01" })
+├── lib/                        (ALL bundled offline libraries)
+│   ├── leaflet/
+│   │   ├── leaflet.js
+│   │   ├── leaflet.css
+│   │   └── images/             (marker icons etc.)
+│   ├── leaflet.markercluster/
+│   │   ├── leaflet.markercluster.js
+│   │   └── MarkerCluster.css
+│   └── (any other libs)
+└── README.md
+```
+
+---
+
+## ✅ PRE-DELIVERY CHECKLIST
+
+Before zipping:
+- [ ] Open `index.html` with NO internet — everything renders correctly
+- [ ] Open `explore.html` with NO internet — map loads, all filters work
+- [ ] All 5 themes switch correctly and persist on page refresh
+- [ ] NPWS facilities layer loads and clusters correctly
+- [ ] Dog parks layer loads with correct paw markers
+- [ ] "Locate Me" button works
+- [ ] Mobile layout works at 375px width
+- [ ] No `console.error` or `console.warn` messages on any page
+- [ ] All links between pages work
+- [ ] Filter clear button works without breaking anything
+- [ ] Modal opens and closes correctly
+- [ ] README explains how to open the project
+
+---
+
+## 🎯 GOAL
+
+When the user opens this zip and loads `index.html`, they should think:
+**"This looks like a real, professional, government-grade parks app — not a student project."**
+
+Make it legendary. 🏆
