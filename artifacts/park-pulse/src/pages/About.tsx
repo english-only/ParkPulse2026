@@ -53,7 +53,7 @@ export default function About() {
             onClick={() => topRef.current?.scrollIntoView({ behavior: "smooth" })}
           >
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-              <path d="M18 15l-6-6-6 6"/>
+              <path d="M18 15l-6-6-6 6" />
             </svg>
           </button>
         )}
@@ -68,18 +68,18 @@ export default function About() {
         <nav className="pp-about-jump-nav" aria-label="Page sections">
           <div className="pp-container">
             {[
-              { href: "#mission",   label: "Mission"    },
-              { href: "#data",      label: "Data Sources" },
-              { href: "#tech",      label: "Tech Stack"  },
-              { href: "#tips",      label: "Pro Tips"    },
-              { href: "#shortcuts", label: "Shortcuts"   },
+              { href: "#mission", label: "Mission" },
+              { href: "#data", label: "Data Sources" },
+              { href: "#tech", label: "Tech Stack" },
+              { href: "#tips", label: "Pro Tips" },
+              { href: "#shortcuts", label: "Shortcuts" },
             ].map(({ href, label }) => (
               <a key={href} href={href} className="pp-about-jump-link">{label}</a>
             ))}
           </div>
         </nav>
 
-        <section className="pp-about-content" id="mission" style={{ scrollMarginTop: "3.25rem" }}>
+        <section className="pp-about-content pp-about-section-anchor" id="mission" style={{ scrollMarginTop: "3.25rem" }}>
           <div className="pp-container">
             <div className="pp-about-grid">
               <div className="pp-about-text">
@@ -110,7 +110,7 @@ export default function About() {
                     "Use keyboard shortcuts for power-user navigation (press ? anytime)",
                     "\"Surprise Me\" picks a random park; \"Recenter\" button resets map to Sydney CBD",
                   ].map(item => (
-                    <li key={item}><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="20 6 9 17 4 12"/></svg>{item}</li>
+                    <li key={item}><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="20 6 9 17 4 12" /></svg>{item}</li>
                   ))}
                 </ul>
               </div>
@@ -129,7 +129,7 @@ export default function About() {
               {dataSources.map(s => (
                 <div key={s.title} className="pp-source-card">
                   <div className="pp-source-icon">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" /><polyline points="14 2 14 8 20 8" /><line x1="16" y1="13" x2="8" y2="13" /><line x1="16" y1="17" x2="8" y2="17" /></svg>
                   </div>
                   <div className="pp-source-header-row">
                     <h3>{s.title}</h3>
@@ -194,27 +194,27 @@ export default function About() {
             <p className="pp-data-intro">Power-user tips for the Explore page — press <code className="pp-inline-code">?</code> on the explore page to show these at any time.</p>
             <div className="pp-shortcuts-about-grid">
               {[
-                { keys: ["/"],       desc: "Focus the search box" },
+                { keys: ["/"], desc: "Focus the search box" },
                 { keys: ["↑", "↓"], desc: "Navigate through results" },
-                { keys: ["Enter"],   desc: "Open the selected park" },
-                { keys: ["S"],       desc: "Surprise me — open a random park" },
-                { keys: ["C"],       desc: "Toggle compact / normal view" },
-                { keys: ["F"],       desc: "Fit map to visible results" },
-                { keys: ["T"],       desc: "Cycle through map themes" },
-                { keys: ["L"],       desc: "Locate me via GPS" },
-                { keys: ["D"],       desc: "Toggle saved / favourites view" },
-                { keys: ["W"],       desc: "Walking directions for the open park" },
-                { keys: ["G"],       desc: "Open park in Google Maps (while modal open)" },
-                { keys: ["N"],       desc: "Next park in list (while modal is open)" },
-                { keys: ["P"],       desc: "Previous park in list (while modal is open)" },
+                { keys: ["Enter"], desc: "Open the selected park" },
+                { keys: ["S"], desc: "Surprise me — open a random park" },
+                { keys: ["C"], desc: "Toggle compact / normal view" },
+                { keys: ["F"], desc: "Fit map to visible results" },
+                { keys: ["T"], desc: "Cycle through map themes" },
+                { keys: ["L"], desc: "Locate me via GPS" },
+                { keys: ["D"], desc: "Toggle saved / favourites view" },
+                { keys: ["W"], desc: "Walking directions for the open park" },
+                { keys: ["G"], desc: "Open park in Google Maps (while modal open)" },
+                { keys: ["N"], desc: "Next park in list (while modal is open)" },
+                { keys: ["P"], desc: "Previous park in list (while modal is open)" },
                 { keys: ["←", "→"], desc: "Navigate parks in modal (arrow keys)" },
-                { keys: ["Esc"],     desc: "Close modal or dismiss overlay" },
-                { keys: ["?"],       desc: "Toggle keyboard shortcuts help" },
-                { keys: ["M"],       desc: "Recenter map on Sydney CBD" },
-                { keys: ["1"],       desc: "Sort: Default order" },
-                { keys: ["2"],       desc: "Sort: A–Z alphabetical" },
-                { keys: ["3"],       desc: "Sort: Nearest first (triggers locate if no GPS)" },
-                { keys: ["4"],       desc: "Sort: Largest parks first" },
+                { keys: ["Esc"], desc: "Close modal or dismiss overlay" },
+                { keys: ["?"], desc: "Toggle keyboard shortcuts help" },
+                { keys: ["M"], desc: "Recenter map on Sydney CBD" },
+                { keys: ["1"], desc: "Sort: Default order" },
+                { keys: ["2"], desc: "Sort: A–Z alphabetical" },
+                { keys: ["3"], desc: "Sort: Nearest first (triggers locate if no GPS)" },
+                { keys: ["4"], desc: "Sort: Largest parks first" },
               ].map(({ keys, desc }) => (
                 <div key={desc} className="pp-shortcut-about-row">
                   <div className="pp-shortcut-about-keys">
@@ -233,7 +233,7 @@ export default function About() {
             <p>Over 2,000 parks and green spaces — playgrounds, dog areas, NPWS facilities, and more — all on one map.</p>
             <div style={{ display: "flex", gap: "1rem", justifyContent: "center", flexWrap: "wrap" }}>
               <Link href="/explore" className="pp-btn pp-btn-primary">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="11" cy="11" r="8" /><path d="M21 21l-4.35-4.35" /></svg>
                 Explore Parks
               </Link>
               <Link href="/explore?surprise=1" className="pp-btn pp-btn-secondary">
