@@ -2,7 +2,7 @@ import { useEffect, useRef, useState, useCallback, useMemo } from "react";
 import Navbar from "../components/Navbar";
 import ParkModal from "../components/ParkModal";
 import type { Park } from "../types/park";
-import { useTheme } from "../hooks/useTheme";
+import { useTheme, THEMES, type Theme } from "../hooks/useTheme";
 import { useToast } from "../context/ToastContext";
 import { fetchWithCache, clearAllCache } from "../utils/dataCache";
 import L from "leaflet";
@@ -15,14 +15,16 @@ const BASE = import.meta.env.BASE_URL;
 const TREE_ZOOM_THRESHOLD = 16;
 
 const TILE_URLS: Record<string, string> = {
-  default: "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png",
-  dark:    "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png",
-  sunset:  "https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png",
-  neon:    "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png",
-  minimal: "https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}{r}.png",
+  default:   "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png",
+  dark:      "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png",
+  sunset:    "https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png",
+  neon:      "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png",
+  minimal:   "https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}{r}.png",
+  satellite: "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
 };
 
-const TILE_ATTR = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/">CARTO</a>';
+const TILE_ATTR_DEFAULT  = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/">CARTO</a>';
+const TILE_ATTR_SAT      = 'Tiles &copy; Esri &mdash; Source: Esri, Maxar, USGS';
 
 // ── Helpers ──────────────────────────────────────────────────────────────────
 function haversineKm(lat1: number, lng1: number, lat2: number, lng2: number): number {
@@ -55,6 +57,19 @@ function fuzzyScore(park: Park, q: string): number {
   return 0;
 }
 
+function sizeLabel(area: number): { label: string; cls: string } {
+  if (area < 1000)  return { label: "Tiny",   cls: "pp-size-tiny" };
+  if (area < 5000)  return { label: "Small",  cls: "pp-size-small" };
+  if (area < 10000) return { label: "Medium", cls: "pp-size-med" };
+  if (area < 50000) return { label: "Large",  cls: "pp-size-large" };
+  return                   { label: "Massive",cls: "pp-size-massive" };
+}
+
+function fmtArea(area: number): string {
+  if (area >= 10000) return `${(area / 10000).toFixed(1)} ha`;
+  return `${area >= 1000 ? area.toLocaleString() : Math.round(area)} m²`;
+}
+
 function calcCentroid(coords: number[][]): { lat: number; lng: number } {
   let sumLat = 0, sumLng = 0;
   coords.forEach(([lng, lat]) => { sumLng += lng; sumLat += lat; });
@@ -66,6 +81,7 @@ function parkMarkerColor(park: Park): string {
   if (park.type === "Iconic") return "#FFD166";
   if (park.type === "Sportsfield" || park.type === "Sports") return "#F4A261";
   if (park.type === "Neighbourhood") return "#83C5BE";
+  if (park.type === "Pocket") return "#9B59B6";
   return "#2D6A4F";
 }
 
@@ -106,7 +122,7 @@ interface DogRaw  { name: string; lat: number; lng: number }
 
 // ── Component ────────────────────────────────────────────────────────────────
 export default function Explore() {
-  const { theme } = useTheme();
+  const { theme, setTheme } = useTheme();
   const { toast } = useToast();
 
   // ── Map refs ─────────────────────────────────────────────────────────────
@@ -124,12 +140,20 @@ export default function Explore() {
   const locationMarkerRef  = useRef<L.Marker | null>(null);
   const locationCircleRef  = useRef<L.Circle | null>(null);
   const treeRendererRef    = useRef<L.Canvas | null>(null);
+  const allParksRef        = useRef<Park[]>([]);
+  const deepLinkHandledRef = useRef(false);
 
   // Stable refs for map callbacks
   const filteredRef        = useRef<Park[]>([]);
   const geocodeNearbyRef   = useRef<Park[] | null>(null);
   const setSelectedParkRef = useRef<(p: Park) => void>(() => {});
+  const userLocationRef    = useRef<{lat:number;lng:number}|null>(null);
+  const handleLocateRef    = useRef<() => void>(() => {});
   const searchInputRef     = useRef<HTMLInputElement>(null);
+  const loadMoreSentinelRef = useRef<HTMLDivElement>(null);
+  const resultsListRef      = useRef<HTMLDivElement>(null);
+  const lastViewedParkIdRef  = useRef<number | null>(null);
+  const selectedParkRef      = useRef<Park | null>(null);
 
   // ── State ─────────────────────────────────────────────────────────────────
   const [allParks,        setAllParks]        = useState<Park[]>([]);
@@ -143,35 +167,180 @@ export default function Explore() {
   const [loading,         setLoading]         = useState(true);
   const [geocodeNearby,   setGeocodeNearby]   = useState<Park[] | null>(null);
   const [geocodePlace,    setGeocodePlace]    = useState("");
-  const [sortBy,          setSortBy]          = useState<"default"|"name"|"nearest">("default");
+  const [sortBy,          setSortBy]          = useState<"default"|"name"|"nearest"|"size">("default");
   const [userLocation,    setUserLocation]    = useState<{lat:number;lng:number}|null>(null);
   const [searchHistory,   setSearchHistory]   = useState<string[]>(() => {
     try { return JSON.parse(localStorage.getItem("parkpulse_history") || "[]"); } catch { return []; }
   });
   const [showHistory,     setShowHistory]     = useState(false);
+  const [searchFocused,   setSearchFocused]   = useState(false);
+  const [minArea,         setMinArea]         = useState(0);
+  const [compactView,     setCompactView]     = useState(false);
+  const [legendCollapsed, setLegendCollapsed] = useState(false);
   const [layerCounts,     setLayerCounts]     = useState<Record<string,number>>({});
   const [visibleCount,    setVisibleCount]    = useState(100);
   const [fromCache,       setFromCache]       = useState(false);
   const [npwsRawData,     setNpwsRawData]     = useState<NpwsRaw[]>([]);
   const [dogRawData,      setDogRawData]      = useState<DogRaw[]>([]);
   const [filtersOpen,     setFiltersOpen]     = useState(false);
-  const [favoriteIds,     setFavoriteIds]     = useState<Set<string>>(() => {
-    try { return new Set<string>(JSON.parse(localStorage.getItem("parkpulse_favs") || "[]")); }
-    catch { return new Set<string>(); }
+  const [visibleMapCount, setVisibleMapCount] = useState(0);
+  const [favoriteIds,     setFavoriteIds]     = useState<Set<number>>(() => {
+    try { return new Set<number>(JSON.parse(localStorage.getItem("parkpulse_favs") || "[]")); }
+    catch { return new Set<number>(); }
   });
   const [showFavOnly,     setShowFavOnly]     = useState(false);
+  const [recentParks,    setRecentParks]     = useState<Array<{id: number; name: string; type: string; suburb: string}>>(() => {
+    try { return JSON.parse(localStorage.getItem("parkpulse_recent") || "[]"); } catch { return []; }
+  });
 
   setSelectedParkRef.current = setSelectedPark;
+  selectedParkRef.current    = selectedPark;
+
+  // ── Refresh recents + scroll-to-card when modal closes ───────────────────
+  useEffect(() => {
+    if (selectedPark !== null) {
+      lastViewedParkIdRef.current = selectedPark.id;
+    } else {
+      try { setRecentParks(JSON.parse(localStorage.getItem("parkpulse_recent") || "[]")); } catch {}
+      const id = lastViewedParkIdRef.current;
+      if (id !== null) {
+        setTimeout(() => {
+          const card = document.querySelector<HTMLElement>(`[data-park-id="${id}"]`);
+          if (card) {
+            card.scrollIntoView({ block: "nearest", behavior: "smooth" });
+            card.classList.add("pp-card-flash");
+            card.addEventListener("animationend", () => card.classList.remove("pp-card-flash"), { once: true });
+          }
+        }, 80);
+      }
+    }
+  }, [selectedPark]);
+
+  // ── Keyboard shortcuts: "/" focuses search, "?" shows help ───────────────
+  useEffect(() => {
+    const handler = (e: KeyboardEvent) => {
+      const tag = (document.activeElement as HTMLElement)?.tagName;
+      const isInput = tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT";
+      if (e.key === "/" && !isInput) {
+        e.preventDefault();
+        setSidebarCollapsed(false);
+        setTimeout(() => searchInputRef.current?.focus(), 50);
+      } else if (e.key === "?" && !isInput) {
+        e.preventDefault();
+        setShowShortcuts(v => !v);
+      } else if ((e.key === "s" || e.key === "S") && !isInput) {
+        e.preventDefault();
+        surpriseMeRef.current();
+      } else if ((e.key === "c" || e.key === "C") && !isInput) {
+        e.preventDefault();
+        setCompactView(v => !v);
+      } else if ((e.key === "f" || e.key === "F") && !isInput) {
+        e.preventDefault();
+        const map = mapRef.current;
+        if (!map) return;
+        const parks = geocodeNearbyRef.current ?? filteredRef.current;
+        if (!parks.length) return;
+        const bounds = L.latLngBounds(parks.map(p => [p.lat, p.lng] as L.LatLngExpression));
+        map.fitBounds(bounds, { padding: [48, 48], maxZoom: 16, animate: true });
+      } else if ((e.key === "t" || e.key === "T") && !isInput) {
+        e.preventDefault();
+        const currentIdx = THEMES.findIndex(t => t.id === document.documentElement.getAttribute("data-theme"));
+        setTheme(THEMES[(currentIdx + 1) % THEMES.length].id);
+      } else if (e.key === "1" && !isInput) {
+        e.preventDefault(); setSortBy("default");
+      } else if (e.key === "2" && !isInput) {
+        e.preventDefault(); setSortBy("name");
+      } else if (e.key === "3" && !isInput) {
+        e.preventDefault();
+        if (userLocationRef.current) { setSortBy("nearest"); } else { handleLocateRef.current(); }
+      } else if (e.key === "4" && !isInput) {
+        e.preventDefault(); setSortBy("size");
+      } else if ((e.key === "l" || e.key === "L") && !isInput) {
+        e.preventDefault();
+        handleLocateRef.current();
+      } else if ((e.key === "d" || e.key === "D") && !isInput) {
+        e.preventDefault();
+        setShowFavOnly(v => !v);
+      } else if ((e.key === "w" || e.key === "W") && !isInput) {
+        const park = selectedParkRef.current;
+        if (park) {
+          e.preventDefault();
+          window.open(`https://www.google.com/maps/dir/?api=1&destination=${park.lat},${park.lng}&travelmode=walking`, "_blank", "noopener,noreferrer");
+        }
+      } else if ((e.key === "g" || e.key === "G") && !isInput) {
+        const park = selectedParkRef.current;
+        if (park) {
+          e.preventDefault();
+          window.open(`https://www.google.com/maps/@${park.lat},${park.lng},17z`, "_blank", "noopener,noreferrer");
+        }
+      } else if ((e.key === "n" || e.key === "N") && !isInput) {
+        const park = selectedParkRef.current;
+        if (park) {
+          e.preventDefault();
+          const parks = geocodeNearbyRef.current ?? filteredRef.current;
+          const idx = parks.findIndex(p => p.id === park.id);
+          if (idx >= 0 && idx < parks.length - 1) selectParkRef.current(parks[idx + 1]);
+        }
+      } else if ((e.key === "p" || e.key === "P") && !isInput) {
+        const park = selectedParkRef.current;
+        if (park) {
+          e.preventDefault();
+          const parks = geocodeNearbyRef.current ?? filteredRef.current;
+          const idx = parks.findIndex(p => p.id === park.id);
+          if (idx > 0) selectParkRef.current(parks[idx - 1]);
+        }
+      } else if ((e.key === "m" || e.key === "M") && !isInput) {
+        e.preventDefault();
+        mapRef.current?.flyTo([-33.8688, 151.2093], 13, { duration: 1.2, easeLinearity: 0.25 });
+        toast("Recentred on Sydney CBD", "info");
+      } else if (e.key === "Escape") {
+        setShowShortcuts(false);
+      }
+    };
+    window.addEventListener("keydown", handler);
+    return () => window.removeEventListener("keydown", handler);
+  }, [setTheme, theme]);
+
+  // ── Keyboard: arrow nav between result cards ──────────────────────────────
+  useEffect(() => {
+    const handler = (e: KeyboardEvent) => {
+      if (!resultsListRef.current) return;
+      const cards = Array.from(resultsListRef.current.querySelectorAll<HTMLElement>(".pp-park-card[tabindex]"));
+      if (!cards.length) return;
+      const active = document.activeElement as HTMLElement;
+      const idx = cards.indexOf(active);
+      if (e.key === "ArrowDown") {
+        if (active === searchInputRef.current) {
+          e.preventDefault(); cards[0]?.focus(); cards[0]?.scrollIntoView({ block: "nearest" });
+        } else if (idx >= 0 && idx < cards.length - 1) {
+          e.preventDefault(); cards[idx + 1].focus(); cards[idx + 1].scrollIntoView({ block: "nearest" });
+        }
+      } else if (e.key === "ArrowUp") {
+        if (idx === 0) {
+          e.preventDefault(); searchInputRef.current?.focus();
+        } else if (idx > 0) {
+          e.preventDefault(); cards[idx - 1].focus(); cards[idx - 1].scrollIntoView({ block: "nearest" });
+        }
+      } else if (e.key === "Escape" && idx >= 0) {
+        e.preventDefault(); searchInputRef.current?.focus();
+      }
+    };
+    window.addEventListener("keydown", handler);
+    return () => window.removeEventListener("keydown", handler);
+  }, []);
 
   // ── Viewport-culled marker renderer ──────────────────────────────────────
   const renderMarkersForBounds = useCallback((parksToRender: Park[]) => {
     const map = mapRef.current;
     if (!map) return;
     const bounds = map.getBounds().pad(0.5);
+    const tightBounds = map.getBounds();
     markersRef.current.forEach(m => map.removeLayer(m));
     markersRef.current = [];
+    let inViewport = 0;
     parksToRender.forEach(park => {
       if (!bounds.contains([park.lat, park.lng])) return;
+      if (tightBounds.contains([park.lat, park.lng])) inViewport++;
       const marker = L.marker([park.lat, park.lng], {
         icon: makeIcon(parkMarkerColor(park)),
         title: park.name,
@@ -182,23 +351,27 @@ export default function Explore() {
         div.innerHTML = `
           <span class="pp-popup-type">${park.type}</span>
           <h3>${park.name}</h3>
-          ${park.area ? `<p>Area: ${park.area >= 10000 ? (park.area / 10000).toFixed(2) + " ha" : park.area.toLocaleString() + " m²"}</p>` : ""}
-          ${park.hasPlayground ? `<p style="font-size:12px;margin-top:4px">🛝 Has Playground</p>` : ""}
-          <button class="pp-popup-btn" style="margin-top:8px">View Details</button>`;
-        setTimeout(() => {
-          div.querySelector(".pp-popup-btn")?.addEventListener("click", () =>
-            setSelectedParkRef.current(park)
-          );
-        }, 0);
+          ${park.suburb ? `<p style="font-size:12px;color:var(--pp-text-muted);margin-bottom:2px">📍 ${park.suburb}</p>` : ""}
+          ${park.area ? `<p style="font-size:12px">📐 ${fmtArea(park.area)}</p>` : ""}
+          ${park.hasPlayground ? `<p style="font-size:12px;margin-top:2px">🛝 Has Playground</p>` : ""}
+          <div style="display:flex;align-items:center;gap:6px;margin-top:8px">
+            <button class="pp-popup-btn">View Details</button>
+            <a href="https://www.google.com/maps/dir/?api=1&destination=${park.lat},${park.lng}" target="_blank" rel="noopener noreferrer" class="pp-popup-dir-link">Directions ↗</a>
+          </div>`;
+        div.querySelector(".pp-popup-btn")?.addEventListener("click", () =>
+          setSelectedParkRef.current(park)
+        );
         return div;
       }, { maxWidth: 280 });
       marker.addTo(map);
       markersRef.current.push(marker);
     });
+    setVisibleMapCount(inViewport);
   }, []);
 
   useEffect(() => { filteredRef.current = filtered; }, [filtered]);
   useEffect(() => { geocodeNearbyRef.current = geocodeNearby; }, [geocodeNearby]);
+  useEffect(() => { userLocationRef.current = userLocation; }, [userLocation]);
 
   // ── Debounce search + history ─────────────────────────────────────────────
   useEffect(() => {
@@ -224,7 +397,27 @@ export default function Explore() {
   // Reset visible count on search/filter/sort change
   useEffect(() => { setVisibleCount(100); }, [search, filters, sortBy, geocodeNearby]);
 
-  // ── URL params ────────────────────────────────────────────────────────────
+  // ── Results list scroll-to-top visibility ────────────────────────────────
+  useEffect(() => {
+    const el = resultsListRef.current;
+    if (!el) return;
+    const handler = () => setShowScrollTop(el.scrollTop > 320);
+    el.addEventListener("scroll", handler, { passive: true });
+    return () => el.removeEventListener("scroll", handler);
+  }, []);
+
+  // ── Infinite scroll sentinel ──────────────────────────────────────────────
+  useEffect(() => {
+    const sentinel = loadMoreSentinelRef.current;
+    if (!sentinel) return;
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) setVisibleCount(v => v + 50);
+    }, { threshold: 0.1 });
+    observer.observe(sentinel);
+    return () => observer.disconnect();
+  });
+
+  // ── URL params (on mount) ─────────────────────────────────────────────────
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const filter = params.get("filter");
@@ -234,7 +427,47 @@ export default function Explore() {
     if (params.get("locate") === "1") {
       setTimeout(() => handleLocate(), 1500);
     }
+    const q = params.get("q");
+    if (q) { setSearchInput(q); setSearch(q); }
+    const sort = params.get("sort");
+    if (sort === "name" || sort === "nearest" || sort === "size") setSortBy(sort);
+    const themeParam = params.get("theme");
+    if (themeParam && THEMES.some(t => t.id === themeParam)) setTheme(themeParam as Theme);
   }, []);
+
+  // ── URL sync: update ?q= and ?sort= as state changes ─────────────────────
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    if (search) params.set("q", search); else params.delete("q");
+    if (sortBy !== "default") params.set("sort", sortBy); else params.delete("sort");
+    const qs = params.toString();
+    window.history.replaceState(null, "", `${window.location.pathname}${qs ? "?" + qs : ""}`);
+  }, [search, sortBy]);
+
+  // ── Deep-link: open park from ?park= / ?surprise=1 URL param ─────────────
+  useEffect(() => {
+    if (deepLinkHandledRef.current || allParks.length === 0) return;
+    const params = new URLSearchParams(window.location.search);
+    const parkName = params.get("park");
+    const isSurprise = params.get("surprise") === "1";
+    if (!parkName && !isSurprise) { deepLinkHandledRef.current = true; return; }
+    if (isSurprise) {
+      deepLinkHandledRef.current = true;
+      const pick = allParks[Math.floor(Math.random() * allParks.length)];
+      setSelectedPark(pick);
+      setTimeout(() => mapRef.current?.flyTo([pick.lat, pick.lng], 17, { duration: 1.5, easeLinearity: 0.25 }), 200);
+      return;
+    }
+    if (parkName) {
+      const decoded = decodeURIComponent(parkName);
+      const found = allParks.find(p => p.name === decoded);
+      if (found) {
+        deepLinkHandledRef.current = true;
+        setSelectedPark(found);
+        setTimeout(() => mapRef.current?.flyTo([found.lat, found.lng], 17, { duration: 1.5, easeLinearity: 0.25 }), 150);
+      }
+    }
+  }, [allParks]);
 
   // ── Init map ──────────────────────────────────────────────────────────────
   useEffect(() => {
@@ -247,8 +480,11 @@ export default function Explore() {
     });
 
     const initialTheme = document.documentElement.getAttribute("data-theme") || "default";
+    const isSat = initialTheme === "satellite";
     tileLayerRef.current = L.tileLayer(TILE_URLS[initialTheme] || TILE_URLS.default, {
-      attribution: TILE_ATTR, subdomains: "abcd", maxZoom: 19,
+      attribution: isSat ? TILE_ATTR_SAT : TILE_ATTR_DEFAULT,
+      subdomains: isSat ? "" : "abcd",
+      maxZoom: 19,
     }).addTo(map);
 
     L.control.zoom({ position: "bottomright" }).addTo(map);
@@ -276,7 +512,18 @@ export default function Explore() {
   // ── Swap tile URL on theme change ─────────────────────────────────────────
   useEffect(() => {
     if (!tileLayerRef.current) return;
+    const isSat = theme === "satellite";
     tileLayerRef.current.setUrl(TILE_URLS[theme] || TILE_URLS.default);
+    tileLayerRef.current.options.subdomains = isSat ? "" : "abcd";
+    const map = mapRef.current;
+    if (map) {
+      const attrCtrl = (map as any).attributionControl;
+      if (attrCtrl) {
+        attrCtrl.removeAttribution(TILE_ATTR_DEFAULT);
+        attrCtrl.removeAttribution(TILE_ATTR_SAT);
+        attrCtrl.addAttribution(isSat ? TILE_ATTR_SAT : TILE_ATTR_DEFAULT);
+      }
+    }
   }, [theme]);
 
   // ── Load parks (cached) ───────────────────────────────────────────────────
@@ -305,6 +552,7 @@ export default function Explore() {
             lat, lng,
           };
         });
+        allParksRef.current = parks;
         setAllParks(parks);
         setFiltered(parks);
         setLayerCounts(prev => ({ ...prev, parks: parks.length }));
@@ -410,7 +658,7 @@ export default function Explore() {
         features.forEach((f: any) => {
           const [lng, lat] = f.geometry.coordinates;
           const p = f.properties || {};
-          const park = allParks
+          const park = allParksRef.current
             .map(candidate => ({ candidate, dist: haversineKm(lat, lng, candidate.lat, candidate.lng) }))
             .sort((a, b) => a.dist - b.dist)[0]?.candidate ?? null;
           const circle = L.circleMarker([lat, lng], {
@@ -559,19 +807,21 @@ export default function Explore() {
       (filters.pocket && park.type === "Pocket") ||
       (filters.sportsfield && park.type === "Sportsfield");
 
+    const areaPass = (park: Park) => !minArea || (park.area != null && park.area >= minArea);
+
     if (!q) {
-      setFiltered(anyParkFilter ? allParks.filter(typeMatch) : allParks);
+      setFiltered(allParks.filter(p => (!anyParkFilter || typeMatch(p)) && areaPass(p)));
       return;
     }
 
     const scored = allParks
       .map(park => ({ park, score: fuzzyScore(park, q) }))
-      .filter(x => x.score > 0 && (!anyParkFilter || typeMatch(x.park)))
+      .filter(x => x.score > 0 && (!anyParkFilter || typeMatch(x.park)) && areaPass(x.park))
       .sort((a, b) => b.score - a.score)
       .map(x => x.park);
 
     setFiltered(scored);
-  }, [allParks, search, filters]);
+  }, [allParks, search, filters, minArea]);
 
   // ── Geocode fallback ──────────────────────────────────────────────────────
   useEffect(() => {
@@ -592,7 +842,7 @@ export default function Explore() {
           mapRef.current?.flyTo([lat, lng], 14, { duration: 1.2, easeLinearity: 0.25 });
           const nearby = [...allParks]
             .sort((a, b) => haversineKm(lat, lng, a.lat, a.lng) - haversineKm(lat, lng, b.lat, b.lng))
-            .slice(0, 20);
+            .slice(0, 50);
           setGeocodeNearby(nearby);
           setGeocodePlace(place);
           toast(`Showing parks near "${place}"`, "info");
@@ -603,16 +853,64 @@ export default function Explore() {
   }, [search, filtered.length, geocodeNearby, allParks, toast]);
 
   // ── Computed values ───────────────────────────────────────────────────────
+  const parkStats = useMemo(() => ({
+    playgrounds:   allParks.filter(p => p.hasPlayground).length,
+    iconic:        allParks.filter(p => p.type === "Iconic").length,
+    neighbourhood: allParks.filter(p => p.type === "Neighbourhood").length,
+    sports:        allParks.filter(p => p.type === "Sportsfield" || p.type === "Sports").length,
+    pocket:        allParks.filter(p => p.type === "Pocket").length,
+  }), [allParks]);
+
+  // Keep layerCounts in sync with parkStats so filter badges show counts
+  useEffect(() => {
+    if (!allParks.length) return;
+    setLayerCounts(prev => ({
+      ...prev,
+      playground:         parkStats.playgrounds,
+      sports:             parkStats.sports,
+      iconic:             parkStats.iconic,
+      neighbourhood_stat: parkStats.neighbourhood,
+      pocket_stat:        parkStats.pocket,
+      sportsfield_stat:   allParks.filter(p => p.type === "Sportsfield").length,
+    }));
+  }, [parkStats, allParks]);
+
   const sortedDisplayParks = useMemo(() => {
     let list = geocodeNearby ?? filtered;
     if (showFavOnly) list = list.filter(p => favoriteIds.has(p.id));
     if (sortBy === "name") return [...list].sort((a, b) => a.name.localeCompare(b.name));
+    if (sortBy === "size") return [...list].sort((a, b) => (b.area ?? 0) - (a.area ?? 0));
     if (sortBy === "nearest" && userLocation) {
       const { lat, lng } = userLocation;
       return [...list].sort((a, b) => haversineKm(lat, lng, a.lat, a.lng) - haversineKm(lat, lng, b.lat, b.lng));
     }
     return list;
   }, [filtered, geocodeNearby, sortBy, userLocation, showFavOnly, favoriteIds]);
+
+  const autoCompleteSuggestions = useMemo(() => {
+    if (!searchFocused || searchInput.length < 1 || allParks.length === 0) return [];
+    const q = searchInput.toLowerCase().trim();
+    const uniqueSuburbs = [...new Set(allParks.map(p => p.suburb).filter((s): s is string => !!s))];
+    const suburbHits = uniqueSuburbs
+      .filter(s => s.toLowerCase().startsWith(q))
+      .slice(0, 3)
+      .map(s => ({ kind: "suburb" as const, label: s, sub: `Suburb · ${allParks.filter(p => p.suburb === s).length} parks`, value: s }));
+    const parkHits = allParks
+      .filter(p => p.name.toLowerCase().startsWith(q) || p.name.toLowerCase().includes(` ${q}`))
+      .slice(0, 3)
+      .map(p => ({ kind: "park" as const, label: p.name, sub: `${p.type}${p.suburb ? ` · ${p.suburb}` : ""}`, value: p.name }));
+    const typeKeywords: Array<{ label: string; sub: string; value: string }> = [
+      { label: "Pocket Parks",       sub: `${parkStats.pocket} parks`,        value: "pocket"        },
+      { label: "Iconic Parks",       sub: `${parkStats.iconic} parks`,         value: "iconic"        },
+      { label: "Neighbourhood Parks",sub: `${parkStats.neighbourhood} parks`,  value: "neighbourhood" },
+      { label: "Playgrounds",        sub: `${parkStats.playgrounds} parks`,    value: "playground"    },
+      { label: "Sportsfields",       sub: `${parkStats.sports} parks`,         value: "sportsfield"   },
+      { label: "Dog Parks",          sub: "off-leash areas",                   value: "dog park"      },
+    ].filter(t => t.label.toLowerCase().includes(q) || t.value.includes(q));
+    const typeHits = typeKeywords.slice(0, 2).map(t => ({ kind: "type" as const, label: t.label, sub: t.sub, value: t.value }));
+    const combined = [...suburbHits, ...parkHits, ...typeHits].slice(0, 7);
+    return combined;
+  }, [allParks, searchInput, searchFocused, parkStats]);
 
   const suggestions = useMemo(() => {
     if (sortedDisplayParks.length > 0 || !search.trim() || geocodeNearby !== null) return [];
@@ -631,7 +929,7 @@ export default function Explore() {
       .map(f => ({ ...f, distKm: haversineKm(selectedPark.lat, selectedPark.lng, f.lat, f.lng) }))
       .filter(f => f.distKm < 2)
       .sort((a, b) => a.distKm - b.distKm)
-      .slice(0, 5);
+      .slice(0, 7);
   }, [selectedPark, npwsRawData]);
 
   const nearbyDogParkName = useMemo(() => {
@@ -689,7 +987,53 @@ export default function Explore() {
     setSortBy("default");
     setVisibleCount(100);
     setShowFavOnly(false);
+    setMinArea(0);
     searchInputRef.current?.focus();
+  }, []);
+
+  const [showScrollTop,   setShowScrollTop]   = useState(false);
+  const [showShortcuts,   setShowShortcuts]   = useState(false);
+  handleLocateRef.current = handleLocate;
+  const selectParkRef = useRef<(park: Park) => void>(() => {});
+  selectParkRef.current = selectPark;
+  const surpriseMeRef = useRef<() => void>(() => {});
+  surpriseMeRef.current = () => {
+    const list = sortedDisplayParks;
+    if (!list.length) return;
+    const pick = list[Math.floor(Math.random() * Math.min(list.length, visibleCount))];
+    selectPark(pick);
+    toast(`🎲 ${pick.name}${pick.suburb ? ` · ${pick.suburb}` : ""}`, "info");
+  };
+  const surpriseMe = useCallback(() => surpriseMeRef.current(), []);
+
+  const exportFavorites = useCallback(() => {
+    const favParks = allParks.filter(p => favoriteIds.has(p.id));
+    if (!favParks.length) return;
+    const lines = favParks.map(p => {
+      const area = p.area ? (p.area >= 10000 ? (p.area / 10000).toFixed(1) + " ha" : p.area.toLocaleString() + " m²") : "";
+      const maps = `https://maps.google.com/?q=${p.lat},${p.lng}`;
+      return `${p.name}${p.suburb ? ` — ${p.suburb}` : ""} (${p.type}${area ? `, ${area}` : ""})\n  📍 ${maps}`;
+    });
+    const text = `My Saved Parks (${favParks.length})\n${"─".repeat(30)}\n${lines.join("\n\n")}`;
+    navigator.clipboard.writeText(text)
+      .then(() => toast(`Copied ${favParks.length} parks to clipboard`, "success"))
+      .catch(() => toast("Could not copy to clipboard", "error"));
+  }, [allParks, favoriteIds, toast]);
+
+  const copySearchLink = useCallback(() => {
+    const url = window.location.href;
+    navigator.clipboard.writeText(url)
+      .then(() => toast("Search link copied!", "success"))
+      .catch(() => toast("Could not copy link", "error"));
+  }, [toast]);
+
+  const fitToResults = useCallback(() => {
+    const map = mapRef.current;
+    if (!map) return;
+    const parks = geocodeNearbyRef.current ?? filteredRef.current;
+    if (!parks.length) return;
+    const bounds = L.latLngBounds(parks.map(p => [p.lat, p.lng] as L.LatLngExpression));
+    map.fitBounds(bounds, { padding: [48, 48], maxZoom: 16, animate: true });
   }, []);
 
   const handleClearCache = useCallback(() => {
@@ -702,14 +1046,14 @@ export default function Explore() {
     setFilters(prev => ({ ...prev, [key]: !prev[key] }));
   };
 
-  const toggleFavorite = useCallback((id: string, e: React.MouseEvent) => {
+  const toggleFavorite = useCallback((id: number, e: React.MouseEvent) => {
     e.stopPropagation();
     setFavoriteIds(prev => {
       const next = new Set(prev);
       const adding = !next.has(id);
       if (adding) next.add(id); else next.delete(id);
       localStorage.setItem("parkpulse_favs", JSON.stringify([...next]));
-      const name = allParks.find(p => p.id === id)?.name ?? "Park";
+      const name = allParks.find(p => p.id === (id as number))?.name ?? "Park";
       toast(adding ? `Saved "${name}"` : `Removed "${name}" from saved`, adding ? "success" : "info");
       return next;
     });
@@ -720,6 +1064,12 @@ export default function Explore() {
   const displayParks = sortedDisplayParks;
 
   // ── Filter items config ───────────────────────────────────────────────────
+  const filterEmoji: Partial<Record<keyof Filters, string>> = {
+    playground: "🛝", sports: "⚽", iconic: "⭐", neighbourhood: "🏘",
+    pocket: "🌿", sportsfield: "🏟", dogs: "🐕", npws: "🍖",
+    fountains: "⛲", toilets: "🚻", transport: "🚌", trees: "🌳",
+  };
+
   const filterItems = [
     { key: "playground" as const, label: "Playgrounds",   countKey: "playground",
       icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg> },
@@ -727,11 +1077,11 @@ export default function Explore() {
       icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/><line x1="2" y1="12" x2="22" y2="12"/></svg> },
     { key: "iconic" as const, label: "Iconic Parks",      countKey: "iconic",
       icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg> },
-    { key: "neighbourhood" as const, label: "Neighbourhood", countKey: "",
+    { key: "neighbourhood" as const, label: "Neighbourhood", countKey: "neighbourhood_stat",
       icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg> },
-    { key: "pocket" as const, label: "Pocket Parks",      countKey: "",
+    { key: "pocket" as const, label: "Pocket Parks",      countKey: "pocket_stat",
       icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg> },
-    { key: "sportsfield" as const, label: "Sportsfields",  countKey: "",
+    { key: "sportsfield" as const, label: "Sportsfields",  countKey: "sportsfield_stat",
       icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="12" x2="21" y2="12"/><circle cx="12" cy="12" r="3"/></svg> },
     { key: "dogs" as const, label: "Dog Parks",            countKey: "dogs",
       icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="7.5" cy="6.5" r="2"/><circle cx="16.5" cy="6.5" r="2"/><circle cx="4.5" cy="11" r="2"/><circle cx="19.5" cy="11" r="2"/><path d="M12 22c-4.5 0-7.5-2.5-7.5-6 0-2.5 2-4 5-4h5c3 0 5 1.5 5 4 0 3.5-3 6-7.5 6z"/></svg> },
@@ -749,7 +1099,11 @@ export default function Explore() {
 
   const quickPills = [
     { label: "🛝 Playgrounds", key: "playground" as keyof Filters },
-    { label: "🐕 Dog Parks",   key: "dogs"       as keyof Filters },
+    { label: "🐕 Dog Parks",   key: "dogs"          as keyof Filters },
+    { label: "⭐ Iconic",       key: "iconic"       as keyof Filters },
+    { label: "🌿 Pocket",       key: "pocket"      as keyof Filters },
+    { label: "🏘 Neighbourhood",key: "neighbourhood" as keyof Filters },
+    { label: "⚽ Sports",       key: "sports"       as keyof Filters },
     { label: "🍖 NPWS/BBQ",    key: "npws"       as keyof Filters },
     { label: "⛲ Fountains",   key: "fountains"  as keyof Filters },
     { label: "🚻 Toilets",     key: "toilets"    as keyof Filters },
@@ -794,18 +1148,27 @@ export default function Explore() {
                 placeholder="Search parks, suburbs, types…"
                 value={searchInput}
                 onChange={e => { setSearchInput(e.target.value); setShowHistory(false); }}
-                onFocus={() => searchHistory.length > 0 && setShowHistory(true)}
-                onBlur={() => setTimeout(() => setShowHistory(false), 160)}
-                onKeyDown={e => { if (e.key === "Escape") { clearAll(); } }}
+                onFocus={() => { setSearchFocused(true); if (!searchInput && searchHistory.length > 0) setShowHistory(true); }}
+                onBlur={() => { setTimeout(() => { setShowHistory(false); setSearchFocused(false); }, 160); }}
+                onKeyDown={e => {
+                  if (e.key === "Escape") { clearAll(); }
+                  else if (e.key === "ArrowDown") {
+                    e.preventDefault();
+                    const first = resultsListRef.current?.querySelector<HTMLElement>(".pp-park-card[tabindex]");
+                    first?.focus(); first?.scrollIntoView({ block: "nearest" });
+                  }
+                }}
                 aria-label="Search parks"
                 autoComplete="off"
               />
-              {searchInput && (
+              {searchInput ? (
                 <button className="pp-clear-btn" onClick={clearAll} aria-label="Clear search">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                     <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
                   </svg>
                 </button>
+              ) : (
+                <kbd className="pp-search-kbd" title="Press / to focus search">/</kbd>
               )}
             </div>
             {showHistory && searchHistory.length > 0 && !searchInput && (
@@ -831,6 +1194,38 @@ export default function Explore() {
                 ))}
               </div>
             )}
+            {!showHistory && autoCompleteSuggestions.length > 0 && (
+              <div className="pp-autocomplete-dropdown" role="listbox" aria-label="Suggestions">
+                {autoCompleteSuggestions.map((item, i) => (
+                  <button
+                    key={i}
+                    className="pp-autocomplete-item"
+                    role="option"
+                    onMouseDown={() => { setSearchInput(item.value); setSearchFocused(false); }}
+                  >
+                    {item.kind === "suburb" ? (
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="pp-ac-icon">
+                        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+                        <polyline points="9 22 9 12 15 12 15 22"/>
+                      </svg>
+                    ) : item.kind === "type" ? (
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="pp-ac-icon">
+                        <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/>
+                      </svg>
+                    ) : (
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="pp-ac-icon">
+                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/>
+                      </svg>
+                    )}
+                    <span className="pp-ac-label">{item.label}</span>
+                    <span className={`pp-ac-kind pp-ac-kind-${item.kind}`}>
+                      {item.kind === "suburb" ? "Suburb" : item.kind === "type" ? "Type" : "Park"}
+                    </span>
+                    <span className="pp-ac-sub">{item.sub}</span>
+                  </button>
+                ))}
+              </div>
+            )}
           </div>
 
           {/* Quick pills */}
@@ -851,6 +1246,13 @@ export default function Explore() {
                 {p.label}
               </button>
             ))}
+            <button
+              className="pp-quick-pill pp-quick-pill-surprise"
+              onClick={surpriseMe}
+              title="Open a random park (S)"
+            >
+              🎲 Surprise
+            </button>
           </div>
 
           {/* Filters (collapsible) */}
@@ -898,6 +1300,25 @@ export default function Explore() {
                     </label>
                   ))}
                 </div>
+                {/* Min area filter */}
+                <div className="pp-area-filter">
+                  <span className="pp-area-filter-label">Min size</span>
+                  <div className="pp-area-filter-btns">
+                    {([
+                      { val: 0,     label: "Any" },
+                      { val: 500,   label: "500m²+" },
+                      { val: 2000,  label: "2,000m²+" },
+                      { val: 10000, label: "1ha+" },
+                      { val: 50000, label: "5ha+" },
+                    ] as const).map(({ val, label }) => (
+                      <button
+                        key={val}
+                        className={`pp-area-btn${minArea === val ? " active" : ""}`}
+                        onClick={() => setMinArea(val)}
+                      >{label}</button>
+                    ))}
+                  </div>
+                </div>
                 <button className="pp-btn pp-btn-outline pp-btn-small" style={{ marginTop: ".375rem" }} onClick={clearAll}>
                   Clear All
                 </button>
@@ -909,26 +1330,181 @@ export default function Explore() {
           <div className="pp-results-container">
             <div className="pp-results-header">
               <h3>Results</h3>
-              <span className="pp-results-count">
-                {geocodePlace
-                  ? `Near "${geocodePlace}"`
-                  : activeFilterCount > 0
-                    ? `${displayParks.length.toLocaleString()} parks`
-                    : `${totalCount.toLocaleString()} locations`}
-              </span>
+              <div style={{ display: "flex", alignItems: "center", gap: ".375rem" }}>
+                <span className="pp-results-count">
+                  {geocodePlace
+                    ? `Near "${geocodePlace}"`
+                    : activeFilterCount > 0
+                      ? (() => {
+                          const withArea = displayParks.filter(p => p.area);
+                          const totalHa = withArea.reduce((s, p) => s + (p.area ?? 0), 0) / 10000;
+                          return `${displayParks.length.toLocaleString()} parks${withArea.length > 1 ? ` · ${totalHa.toFixed(0)} ha` : ""}`;
+                        })()
+                      : `${totalCount.toLocaleString()} locations`}
+                </span>
+                {showFavOnly && favoriteIds.size > 0 && (
+                  <button className="pp-export-btn" onClick={exportFavorites} title="Copy saved parks list to clipboard">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                      <rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+                    </svg>
+                  </button>
+                )}
+                {(activeFilterCount > 0 || search || geocodeNearby) && (
+                  <button className="pp-fit-btn" onClick={copySearchLink} title="Copy link to this search">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                      <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
+                    </svg>
+                  </button>
+                )}
+                {displayParks.length > 0 && (
+                  <button className="pp-fit-btn" onClick={surpriseMe} title="Open a random park from results" style={{ borderRadius: "var(--pp-radius-sm)" }}>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                      <rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8" cy="8" r="1.5" fill="currentColor"/><circle cx="16" cy="8" r="1.5" fill="currentColor"/><circle cx="8" cy="16" r="1.5" fill="currentColor"/><circle cx="16" cy="16" r="1.5" fill="currentColor"/><circle cx="12" cy="12" r="1.5" fill="currentColor"/>
+                    </svg>
+                  </button>
+                )}
+                <button
+                  className={`pp-fit-btn${compactView ? " active-btn" : ""}`}
+                  onClick={() => setCompactView(v => !v)}
+                  title={compactView ? "Switch to normal view" : "Switch to compact view"}
+                >
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/>
+                    <line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/>
+                  </svg>
+                </button>
+                {(activeFilterCount > 0 || geocodeNearby) && displayParks.length > 1 && (
+                  <button className="pp-fit-btn" onClick={fitToResults} title="Fit map to results">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                      <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/>
+                    </svg>
+                  </button>
+                )}
+                <button
+                  className={`pp-fit-btn${showShortcuts ? " active-btn" : ""}`}
+                  onClick={() => setShowShortcuts(v => !v)}
+                  title="Keyboard shortcuts (?)"
+                  style={{ fontFamily: "serif", fontWeight: 700, fontSize: "1rem", lineHeight: 1 }}
+                >?</button>
+              </div>
             </div>
+            {/* Active filter chips — quick-remove individual filters */}
+            {(Object.entries(filters).some(([, v]) => v) || minArea > 0) && (
+              <div className="pp-active-chips">
+                {(Object.entries(filters) as [keyof Filters, boolean][])
+                  .filter(([, v]) => v)
+                  .map(([key]) => {
+                    const item = filterItems.find(f => f.key === key);
+                    const emoji = filterEmoji[key];
+                    return (
+                      <button
+                        key={key}
+                        className="pp-active-chip"
+                        onClick={() => setFilters(prev => ({ ...prev, [key]: false }))}
+                        title={`Remove ${item?.label ?? key} filter`}
+                      >
+                        {emoji && <span style={{ marginRight: ".1rem" }}>{emoji}</span>}
+                        {item?.label ?? key}
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                          <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+                        </svg>
+                      </button>
+                    );
+                  })}
+                {minArea > 0 && (
+                  <button className="pp-active-chip" onClick={() => setMinArea(0)} title="Remove area filter">
+                    ≥{fmtArea(minArea)}
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                      <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+                    </svg>
+                  </button>
+                )}
+              </div>
+            )}
+
+            {/* Type breakdown strip — visible when filtered results are non-empty */}
+            {!loading && (activeFilterCount > 0 || search || geocodeNearby) && displayParks.length > 3 && (() => {
+              const counts: Record<string, number> = {};
+              displayParks.forEach(p => { counts[p.type] = (counts[p.type] ?? 0) + 1; });
+              const sorted = Object.entries(counts).sort((a, b) => b[1] - a[1]).slice(0, 5);
+              const typeColors: Record<string, string> = {
+                Park: "var(--pp-primary)", Playground: "#f97316", Iconic: "#f59e0b",
+                Sportsfield: "#ef4444", Sports: "#ef4444", Neighbourhood: "#0d9488",
+                Pocket: "#8b5cf6", "Off-leash": "#84cc16",
+              };
+              const typeFilterMap: Partial<Record<string, keyof typeof filters>> = {
+                Playground: "playground", Iconic: "iconic",
+                Sportsfield: "sportsfield", Sports: "sportsfield",
+                Neighbourhood: "neighbourhood", Pocket: "pocket",
+              };
+              const suburbCounts: Record<string, number> = {};
+              displayParks.forEach(p => { if (p.suburb) suburbCounts[p.suburb] = (suburbCounts[p.suburb] ?? 0) + 1; });
+              const topSuburb = Object.entries(suburbCounts).sort((a, b) => b[1] - a[1])[0];
+              return (
+                <div className="pp-type-breakdown">
+                  {sorted.map(([type, count]) => {
+                    const fKey = typeFilterMap[type];
+                    return (
+                      <button
+                        key={type}
+                        className={`pp-type-breakdown-item${fKey && filters[fKey] ? " active" : ""}`}
+                        onClick={() => fKey && setFilters(prev => ({ ...prev, [fKey]: !prev[fKey] }))}
+                        title={fKey ? `Filter by ${type}` : undefined}
+                        style={{ cursor: fKey ? "pointer" : "default" }}
+                      >
+                        <span className="pp-type-breakdown-dot" style={{ background: typeColors[type] ?? "var(--pp-primary)" }} />
+                        {type} <span className="pp-type-breakdown-count">{count}</span>
+                      </button>
+                    );
+                  })}
+                  {topSuburb && topSuburb[1] > 1 && (
+                    <button
+                      className="pp-type-breakdown-item"
+                      onClick={() => { setSearchInput(topSuburb[0]); setSearch(topSuburb[0]); setGeocodeNearby(null); setGeocodePlace(""); }}
+                      title={`Search parks in ${topSuburb[0]}`}
+                      style={{ marginLeft: "auto", color: "var(--pp-primary)" }}
+                    >
+                      📍 {topSuburb[0]} <span className="pp-type-breakdown-count">{topSuburb[1]}</span>
+                    </button>
+                  )}
+                </div>
+              );
+            })()}
+
+            {/* Park stats — visible only when idle; each is a filter shortcut */}
+            {!loading && !search && !geocodeNearby && !showFavOnly && !activeFilterCount && parkStats.playgrounds > 0 && (
+              <div className="pp-park-stats-bar">
+                {([
+                  { emoji: "🛝", count: parkStats.playgrounds,       filterKey: "playground"    as const, label: "playgrounds" },
+                  { emoji: "⭐", count: parkStats.iconic,            filterKey: "iconic"        as const, label: "iconic parks" },
+                  { emoji: "🐕", count: layerCounts.dogs ?? 29,      filterKey: "dogs"          as const, label: "dog parks" },
+                  { emoji: "🌿", count: parkStats.pocket,            filterKey: "pocket"        as const, label: "pocket parks" },
+                  { emoji: "🏘",  count: parkStats.neighbourhood,    filterKey: "neighbourhood" as const, label: "neighbourhood parks" },
+                  { emoji: "⚽", count: parkStats.sports,            filterKey: "sportsfield"   as const, label: "sportsfields" },
+                ] as const).map(({ emoji, count, filterKey, label }) => (
+                  <button
+                    key={filterKey}
+                    className="pp-stat-pill"
+                    title={`Filter to ${label}`}
+                    onClick={() => { setFilters(prev => ({ ...prev, [filterKey]: true })); setFiltersOpen(true); }}
+                  >
+                    {emoji} {count}
+                  </button>
+                ))}
+              </div>
+            )}
 
             {/* Sort bar */}
             <div className="pp-sort-bar" role="group" aria-label="Sort order">
               <span className="pp-sort-label">Sort:</span>
-              {(["default", "name", "nearest"] as const).map(s => (
+              {(["default", "name", "nearest", "size"] as const).map(s => (
                 <button
                   key={s}
                   className={`pp-sort-btn${sortBy === s ? " active" : ""}${s === "nearest" && !userLocation ? " disabled" : ""}`}
                   onClick={() => { if (s === "nearest" && !userLocation) { handleLocate(); } else setSortBy(s); }}
-                  title={s === "nearest" && !userLocation ? "Click to enable location" : ""}
+                  title={s === "nearest" && !userLocation ? "Click to enable location" : s === "size" ? "Largest parks first" : ""}
                 >
-                  {s === "default" ? "Default" : s === "name" ? "A–Z" : "Nearest"}
+                  {s === "default" ? "Default" : s === "name" ? "A–Z" : s === "nearest" ? "Nearest" : "Largest"}
                 </button>
               ))}
             </div>
@@ -949,11 +1525,118 @@ export default function Explore() {
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                   <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/>
                 </svg>
-                Showing {displayParks.length} parks near <strong>{geocodePlace}</strong>
+                <span style={{ flex: 1 }}>Showing {displayParks.length} parks near <strong>{geocodePlace}</strong></span>
+                <button
+                  style={{ marginLeft: ".375rem", color: "var(--pp-text-muted)", lineHeight: 1, flexShrink: 0 }}
+                  title="Clear location filter"
+                  onClick={() => { setGeocodeNearby(null); setGeocodePlace(""); setSearchInput(""); setSearch(""); }}
+                >
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" style={{ width: 13, height: 13 }}>
+                    <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+                  </svg>
+                </button>
               </div>
             )}
 
-            <div className="pp-results-list">
+            {/* Sort summary banners */}
+            {!loading && sortBy === "size" && displayParks.length > 0 && (() => {
+              const withArea = displayParks.filter(p => p.area);
+              const totalHa = withArea.reduce((sum, p) => sum + (p.area ?? 0), 0) / 10000;
+              const top = displayParks[0];
+              return (
+                <div className="pp-sort-banner">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/>
+                  </svg>
+                  <span>
+                    Largest first · <strong>{top.name}</strong> leads at {top.area ? fmtArea(top.area) : "—"}
+                    {withArea.length > 1 && <> · {withArea.length}/{displayParks.length} have area data · combined {totalHa.toFixed(0)} ha</>}
+                  </span>
+                </div>
+              );
+            })()}
+            {!loading && sortBy === "name" && displayParks.length > 1 && (() => {
+              const first = displayParks[0].name;
+              const last  = displayParks[displayParks.length - 1].name;
+              return (
+                <div className="pp-sort-banner">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="15" y2="12"/><line x1="3" y1="18" x2="9" y2="18"/>
+                  </svg>
+                  <span>
+                    A–Z · <strong>{first.slice(0, 20)}{first.length > 20 ? "…" : ""}</strong> → <strong>{last.slice(0, 20)}{last.length > 20 ? "…" : ""}</strong> · {displayParks.length} parks
+                  </span>
+                </div>
+              );
+            })()}
+            {!loading && sortBy === "nearest" && displayParks.length > 0 && userLocation && (() => {
+              const within1km = displayParks.filter(p =>
+                p.lat != null && haversineKm(userLocation.lat, userLocation.lng, p.lat!, p.lng!) < 1
+              ).length;
+              const nearest = displayParks[0];
+              const nearestDist = nearest.lat != null
+                ? haversineKm(userLocation.lat, userLocation.lng, nearest.lat, nearest.lng!)
+                : null;
+              return (
+                <div className="pp-sort-banner">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/>
+                  </svg>
+                  <span>
+                    Nearest first · <strong>{nearest.name}</strong>
+                    {nearestDist !== null && <> is {nearestDist < 1 ? `${Math.round(nearestDist * 1000)} m` : `${nearestDist.toFixed(1)} km`} away
+                      {nearestDist < 3 && <> (~{Math.max(1, Math.round(nearestDist / 0.083))} min walk)</>}
+                    </>}
+                    {within1km > 0 && <> · {within1km} park{within1km !== 1 ? "s" : ""} within 1 km</>}
+                  </span>
+                </div>
+              );
+            })()}
+
+            {/* Recently viewed — shown when idle (no search/filter/fav) */}
+            {!loading && !search && !geocodeNearby && !showFavOnly && recentParks.length > 0 && (
+              <div className="pp-recents-strip">
+                <div className="pp-recents-header">
+                  <span className="pp-recents-label">Recent</span>
+                  <button
+                    className="pp-recents-clear"
+                    onClick={() => {
+                      localStorage.removeItem("parkpulse_recent");
+                      setRecentParks([]);
+                    }}
+                    title="Clear recently viewed"
+                  >
+                    Clear
+                  </button>
+                </div>
+                <div className="pp-recents-chips">
+                  {recentParks.slice(0, 4).map(r => {
+                    const park = allParks.find(p => p.id === r.id);
+                    if (!park) return null;
+                    return (
+                      <button key={r.id} className="pp-recent-chip" onClick={() => selectPark(park)} title={park.suburb || park.type}>
+                        <span className="pp-recent-chip-name">{r.name}</span>
+                        {park.suburb && <span className="pp-recent-chip-sub">{park.suburb}</span>}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
+
+            {showScrollTop && (
+              <button
+                className="pp-scroll-top-btn"
+                onClick={() => resultsListRef.current?.scrollTo({ top: 0, behavior: "smooth" })}
+                title="Back to top"
+                aria-label="Scroll results to top"
+              >
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M18 15l-6-6-6 6"/>
+                </svg>
+              </button>
+            )}
+            <div className="pp-results-list" ref={resultsListRef}>
               {loading ? (
                 Array.from({ length: 6 }).map((_, i) => <div key={i} className="pp-skeleton-card" />)
               ) : displayParks.length === 0 && suggestions.length === 0 ? (
@@ -962,17 +1645,30 @@ export default function Explore() {
                     <>
                       <span style={{ fontSize: "2rem" }}>♡</span>
                       <p>No saved parks yet.</p>
-                      <p style={{ fontSize: ".8rem" }}>Hover a park card and tap the heart to save it.</p>
+                      <p style={{ fontSize: ".8rem" }}>Tap the heart on any park card to save it here.</p>
                       <button className="pp-btn pp-btn-outline pp-btn-small" onClick={() => setShowFavOnly(false)}>Browse all parks</button>
+                    </>
+                  ) : search ? (
+                    <>
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                        <circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/>
+                      </svg>
+                      <p>No parks match <strong>"{search}"</strong>.</p>
+                      <p style={{ fontSize: ".8rem", marginTop: "-.25rem" }}>Try a suburb name, park type, or check spelling.</p>
+                      <div style={{ display: "flex", gap: ".5rem", flexWrap: "wrap", justifyContent: "center" }}>
+                        <button className="pp-btn pp-btn-outline pp-btn-small" onClick={() => { setSearchInput(""); setSearch(""); }}>Clear search</button>
+                        {activeFilterCount > 0 && <button className="pp-btn pp-btn-outline pp-btn-small" onClick={clearAll}>Clear all</button>}
+                      </div>
                     </>
                   ) : (
                     <>
                       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                         <circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/>
                       </svg>
-                      <p>No parks found.</p>
+                      <p>No parks match your filters.</p>
+                      <p style={{ fontSize: ".8rem", marginTop: "-.25rem" }}>Try removing some filters to see more results.</p>
                       {activeFilterCount > 0 && (
-                        <button className="pp-btn pp-btn-outline pp-btn-small" onClick={clearAll}>Clear filters</button>
+                        <button className="pp-btn pp-btn-outline pp-btn-small" onClick={clearAll}>Clear all filters</button>
                       )}
                     </>
                   )}
@@ -997,10 +1693,12 @@ export default function Explore() {
                       ? haversineKm(userLocation.lat, userLocation.lng, park.lat, park.lng)
                       : null;
                     const typeClass = park.type.toLowerCase().replace(/\s+/g, "-");
+                    const showRank = sortBy === "size" && i < 10 && park.area;
                     return (
                       <div
                         key={park.id}
-                        className="pp-park-card pp-card-stagger"
+                        data-park-id={park.id}
+                        className={`pp-park-card pp-card-stagger${compactView ? " compact" : ""}${showRank ? " pp-ranked" : ""}`}
                         style={{ animationDelay: `${Math.min(i, 15) * 35}ms` }}
                         onClick={() => selectPark(park)}
                         role="button"
@@ -1008,6 +1706,16 @@ export default function Explore() {
                         onKeyDown={e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); selectPark(park); } }}
                         aria-label={`View ${park.name}`}
                       >
+                        {showRank && (
+                          <span
+                            className="pp-rank-badge"
+                            title={`#${i + 1} largest`}
+                            style={i === 0 ? { background: "#FFD700", color: "#7A5C00" }
+                                 : i === 1 ? { background: "#C0C0C0", color: "#444" }
+                                 : i === 2 ? { background: "#CD7F32", color: "#fff" }
+                                 : undefined}
+                          >#{i + 1}</span>
+                        )}
                         <button
                           className={`pp-fav-btn${favoriteIds.has(park.id) ? " active" : ""}`}
                           onClick={e => toggleFavorite(park.id, e)}
@@ -1016,18 +1724,82 @@ export default function Explore() {
                         >
                           {favoriteIds.has(park.id) ? "♥" : "♡"}
                         </button>
+                        <button
+                          className="pp-card-pin-btn"
+                          title={`Fly to ${park.name} on map`}
+                          onClick={e => {
+                            e.stopPropagation();
+                            mapRef.current?.flyTo([park.lat, park.lng], 17, { duration: 1.0, easeLinearity: 0.25 });
+                            setSidebarCollapsed(false);
+                          }}
+                          aria-label={`Show ${park.name} on map`}
+                        >
+                          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ width: 11, height: 11 }}>
+                            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/>
+                          </svg>
+                        </button>
+                        <button
+                          className="pp-card-share-btn"
+                          title="Copy link to this park"
+                          onClick={async e => {
+                            e.stopPropagation();
+                            const url = `${window.location.origin}${window.location.pathname}?park=${encodeURIComponent(park.name)}`;
+                            try { await navigator.clipboard.writeText(url); } catch { /* fallback ignored */ }
+                            toast("Link copied!", "success");
+                          }}
+                          aria-label={`Copy link to ${park.name}`}
+                        >
+                          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ width: 11, height: 11 }}>
+                            <circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/>
+                            <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>
+                          </svg>
+                        </button>
                         <div className="pp-park-card-header">
-                          <h4>{park.name}</h4>
-                          <span className={`pp-park-type-badge ${typeClass}`}>{park.type}</span>
+                          <h4>{search ? (() => {
+                            const q = search.trim();
+                            const idx = park.name.toLowerCase().indexOf(q.toLowerCase());
+                            if (idx === -1) return park.name;
+                            return (<>{park.name.slice(0, idx)}<mark className="pp-highlight-match">{park.name.slice(idx, idx + q.length)}</mark>{park.name.slice(idx + q.length)}</>);
+                          })() : park.name}</h4>
+                          <button
+                            className={`pp-park-type-badge ${typeClass} pp-type-badge-btn`}
+                            onClick={e => {
+                              e.stopPropagation();
+                              const map: Partial<Record<string, keyof Filters>> = {
+                                Pocket: "pocket", Iconic: "iconic",
+                                Neighbourhood: "neighbourhood", Sportsfield: "sportsfield", Sports: "sportsfield",
+                              };
+                              const key = map[park.type];
+                              if (key) { setFilters(prev => ({ ...prev, [key!]: true })); setFiltersOpen(true); }
+                            }}
+                            title={`Filter to ${park.type} parks`}
+                          >
+                            {park.type}
+                          </button>
                         </div>
                         <div className="pp-park-card-meta">
-                          {park.suburb && <span className="pp-park-suburb-pill">{park.suburb}</span>}
+                          {park.suburb && (
+                            <button
+                              className="pp-park-suburb-pill pp-suburb-clickable"
+                              onClick={e => {
+                                e.stopPropagation();
+                                setSearchInput(park.suburb);
+                                setSearch(park.suburb);
+                                setGeocodeNearby(null);
+                                setGeocodePlace("");
+                              }}
+                              title={`Search parks in ${park.suburb}`}
+                            >
+                              {park.suburb}
+                            </button>
+                          )}
                           {dist !== null && (
                             <span className="pp-park-distance">
                               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ width: 10, height: 10 }}>
                                 <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/>
                               </svg>
                               {dist < 1 ? `${Math.round(dist * 1000)} m` : `${dist.toFixed(1)} km`}
+                              {dist < 3 && <span className="pp-walk-time">· ~{Math.max(1, Math.round(dist / 0.083))} min</span>}
                             </span>
                           )}
                         </div>
@@ -1039,27 +1811,38 @@ export default function Explore() {
                                 Playground
                               </span>
                             )}
-                            {park.area && (
-                              <span className="pp-facility-tag">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/></svg>
-                                {park.area >= 10000 ? `${(park.area / 10000).toFixed(1)} ha` : `${Math.round(park.area / 100) * 100} m²`}
-                              </span>
-                            )}
+                            {park.area && (() => {
+                              const { label, cls } = sizeLabel(park.area);
+                              return (
+                                <span className="pp-facility-tag">
+                                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/></svg>
+                                  {fmtArea(park.area)}
+                                  <span className={`pp-size-label ${cls}`}>{label}</span>
+                                </span>
+                              );
+                            })()}
                           </div>
                         )}
-                        <div className="pp-card-hover-hint">View on map →</div>
+                        {compactView && park.area && (() => {
+                          const { label, cls } = sizeLabel(park.area);
+                          return <span className={`pp-size-label ${cls} pp-compact-size`}>{label}</span>;
+                        })()}
+                        <div className="pp-card-hover-hint">Open park details →</div>
                       </div>
                     );
                   })}
 
                   {displayParks.length > visibleCount && (
-                    <button
-                      className="pp-load-more-btn"
-                      onClick={() => setVisibleCount(v => v + 100)}
-                    >
-                      Show {Math.min(100, displayParks.length - visibleCount)} more
-                      <span className="pp-load-more-count">({displayParks.length - visibleCount} remaining)</span>
-                    </button>
+                    <>
+                      <button
+                        className="pp-load-more-btn"
+                        onClick={() => setVisibleCount(v => v + 100)}
+                      >
+                        Show {Math.min(100, displayParks.length - visibleCount)} more
+                        <span className="pp-load-more-count">({displayParks.length - visibleCount} remaining)</span>
+                      </button>
+                      <div ref={loadMoreSentinelRef} style={{ height: 1 }} aria-hidden="true" />
+                    </>
                   )}
                 </>
               )}
@@ -1078,13 +1861,56 @@ export default function Explore() {
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M9 18l6-6-6-6"/></svg>
             </button>
           )}
-          <button className="pp-locate-btn" aria-label="Locate me" onClick={handleLocate}>
+          {visibleMapCount > 0 && !loading && (
+            <div className="pp-viewport-count" aria-live="polite">
+              {visibleMapCount} park{visibleMapCount === 1 ? "" : "s"} visible
+            </div>
+          )}
+          <button
+            className="pp-locate-btn"
+            aria-label="Locate me"
+            onClick={handleLocate}
+            title="Find my location (L)"
+          >
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
               <circle cx="12" cy="12" r="10"/><line x1="22" y1="12" x2="18" y2="12"/>
               <line x1="6" y1="12" x2="2" y2="12"/><line x1="12" y1="6" x2="12" y2="2"/>
               <line x1="12" y1="22" x2="12" y2="18"/>
             </svg>
           </button>
+          <button
+            className="pp-recenter-btn"
+            aria-label="Recenter on Sydney"
+            title="Recenter on Sydney CBD"
+            onClick={() => mapRef.current?.flyTo([-33.8688, 151.2093], 13, { duration: 1.1, easeLinearity: 0.25 })}
+          >
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <path d="M12 2a7 7 0 0 1 7 7c0 5-7 13-7 13S5 14 5 9a7 7 0 0 1 7-7z"/>
+              <circle cx="12" cy="9" r="2.5" fill="currentColor" stroke="none"/>
+            </svg>
+          </button>
+          {/* Map Legend */}
+          <div className={`pp-map-legend${legendCollapsed ? " collapsed" : ""}`}>
+            <button className="pp-map-legend-title" onClick={() => setLegendCollapsed(v => !v)} title={legendCollapsed ? "Show legend" : "Hide legend"}>
+              Markers
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ width: 10, height: 10, marginLeft: "auto", transition: "transform .2s", transform: legendCollapsed ? "rotate(-90deg)" : "none" }}>
+                <polyline points="6 9 12 15 18 9"/>
+              </svg>
+            </button>
+            {!legendCollapsed && [
+              { color: "#E76F51", label: "Playground" },
+              { color: "#FFD166", label: "Iconic" },
+              { color: "#F4A261", label: "Sports" },
+              { color: "#83C5BE", label: "Neighbourhood" },
+              { color: "#9B59B6", label: "Pocket" },
+              { color: "#2D6A4F", label: "Park" },
+            ].map(({ color, label }) => (
+              <div key={label} className="pp-map-legend-item">
+                <div className="pp-map-legend-dot" style={{ background: color }} />
+                <span>{label}</span>
+              </div>
+            ))}
+          </div>
           <div id="park-map" ref={mapContainerRef} />
         </div>
 
@@ -1105,15 +1931,105 @@ export default function Explore() {
       </main>
 
       {/* Modal */}
-      {selectedPark && (
-        <ParkModal
-          park={selectedPark}
-          onClose={() => setSelectedPark(null)}
-          nearbyNPWS={nearbyNPWSFacilities}
-          nearbyDogPark={nearbyDogParkName}
-          isFavorite={favoriteIds.has(selectedPark.id)}
-          onToggleFavorite={toggleFavorite}
-        />
+      {selectedPark && (() => {
+        const modalParks = geocodeNearby ?? displayParks;
+        const modalIdx   = modalParks.findIndex(p => p.id === selectedPark.id);
+        return (
+          <ParkModal
+            park={selectedPark}
+            onClose={() => setSelectedPark(null)}
+            nearbyNPWS={nearbyNPWSFacilities}
+            nearbyDogPark={nearbyDogParkName}
+            isFavorite={favoriteIds.has(selectedPark.id)}
+            onToggleFavorite={toggleFavorite}
+            onSuburbSearch={(suburb) => {
+              setSearchInput(suburb);
+              setSearch(suburb);
+              setGeocodeNearby(null);
+              setGeocodePlace("");
+              setSelectedPark(null);
+            }}
+            onTypeFilter={(type) => {
+              const typeMap: Partial<Record<string, keyof typeof filters>> = {
+                Playground: "playground", Iconic: "iconic",
+                Sportsfield: "sportsfield", Sports: "sports",
+                Neighbourhood: "neighbourhood", Pocket: "pocket",
+                "Off-leash": "dogs",
+              };
+              const key = typeMap[type];
+              if (key) {
+                setFilters(prev => ({ ...prev, [key]: true }));
+                setFiltersOpen(true);
+                toast(`Filtered to ${type} parks`, "info");
+              }
+              setSelectedPark(null);
+            }}
+            onFindNearby={(lat, lng, name) => {
+              const nearby = [...allParks]
+                .map(p => ({ p, d: haversineKm(lat, lng, p.lat, p.lng) }))
+                .filter(x => x.d <= 1)
+                .sort((a, b) => a.d - b.d)
+                .map(x => x.p);
+              setGeocodeNearby(nearby);
+              setGeocodePlace(`Near ${name}`);
+              setSearchInput(""); setSearch("");
+              mapRef.current?.flyTo([lat, lng], 15, { duration: 1.2, easeLinearity: 0.25 });
+              toast(`${nearby.length} park${nearby.length !== 1 ? "s" : ""} within 1 km`, "info");
+            }}
+            userLocation={userLocation}
+            parkIndex={modalIdx >= 0 ? modalIdx : undefined}
+            totalParks={modalParks.length}
+            onPrev={modalIdx > 0 ? () => selectPark(modalParks[modalIdx - 1]) : null}
+            onNext={modalIdx >= 0 && modalIdx < modalParks.length - 1 ? () => selectPark(modalParks[modalIdx + 1]) : null}
+          />
+        );
+      })()}
+
+      {/* Keyboard shortcuts overlay */}
+      {showShortcuts && (
+        <div className="pp-shortcuts-overlay" onClick={() => setShowShortcuts(false)}>
+          <div className="pp-shortcuts-modal" onClick={e => e.stopPropagation()}>
+            <div className="pp-shortcuts-header">
+              <h3>Keyboard Shortcuts</h3>
+              <button className="pp-modal-close-btn" onClick={() => setShowShortcuts(false)}>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+              </button>
+            </div>
+            <div className="pp-shortcuts-grid">
+              {[
+                { keys: ["/"],        desc: "Focus search" },
+                { keys: ["?"],        desc: "Show/hide shortcuts" },
+                { keys: ["↑", "↓"],  desc: "Navigate results" },
+                { keys: ["Enter"],    desc: "Open selected park" },
+                { keys: ["Esc"],      desc: "Close modal / dismiss" },
+                { keys: ["S"],        desc: "Surprise me — random park" },
+                { keys: ["C"],        desc: "Toggle compact view" },
+                { keys: ["F"],        desc: "Fit map to results" },
+                { keys: ["T"],        desc: "Cycle map theme" },
+                { keys: ["L"],        desc: "Locate me (GPS)" },
+                { keys: ["D"],        desc: "Toggle saved parks view" },
+                { keys: ["W"],        desc: "Walk directions for open park" },
+                { keys: ["G"],        desc: "Google Maps view for open park" },
+                { keys: ["N"],        desc: "Next park in list (modal open)" },
+                { keys: ["P"],        desc: "Previous park in list (modal open)" },
+                { keys: ["←", "→"],  desc: "Navigate parks in modal" },
+                { keys: ["M"],        desc: "Recenter map on Sydney CBD" },
+                { keys: ["1"],        desc: "Sort: Default" },
+                { keys: ["2"],        desc: "Sort: A–Z" },
+                { keys: ["3"],        desc: "Sort: Nearest (or locate if no GPS)" },
+                { keys: ["4"],        desc: "Sort: Largest" },
+              ].map(({ keys, desc }) => (
+                <div key={desc} className="pp-shortcut-row">
+                  <div className="pp-shortcut-keys">
+                    {keys.map(k => <kbd key={k} className="pp-kbd">{k}</kbd>)}
+                  </div>
+                  <span>{desc}</span>
+                </div>
+              ))}
+            </div>
+            <p className="pp-shortcuts-hint">Press <kbd className="pp-kbd">?</kbd> or <kbd className="pp-kbd">Esc</kbd> to close</p>
+          </div>
+        </div>
       )}
     </div>
   );

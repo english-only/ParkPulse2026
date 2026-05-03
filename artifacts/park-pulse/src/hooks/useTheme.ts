@@ -1,13 +1,14 @@
 import { useEffect, useState, useCallback } from "react";
 
-export type Theme = "default" | "dark" | "sunset" | "neon" | "minimal";
+export type Theme = "default" | "dark" | "sunset" | "neon" | "minimal" | "satellite";
 
 export const THEMES: { id: Theme; label: string; icon: string }[] = [
-  { id: "default", label: "Modern Green", icon: "🌿" },
-  { id: "dark",    label: "Night Mode",   icon: "🌙" },
-  { id: "sunset",  label: "Sunset",       icon: "🌅" },
-  { id: "neon",    label: "Neon",         icon: "💻" },
-  { id: "minimal", label: "Minimal",      icon: "⬜" },
+  { id: "default",   label: "Modern Green", icon: "🌿" },
+  { id: "dark",      label: "Night Mode",   icon: "🌙" },
+  { id: "sunset",    label: "Sunset",       icon: "🌅" },
+  { id: "neon",      label: "Neon",         icon: "💻" },
+  { id: "minimal",   label: "Minimal",      icon: "⬜" },
+  { id: "satellite", label: "Satellite",    icon: "🛰️" },
 ];
 
 const STORAGE_KEY = "parkpulse_theme";

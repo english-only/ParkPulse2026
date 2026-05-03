@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link } from "wouter";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
@@ -7,11 +7,19 @@ const BASE = import.meta.env.BASE_URL;
 
 export default function About() {
   const [lastUpdated, setLastUpdated] = useState<string | null>(null);
+  const [showBackTop, setShowBackTop] = useState(false);
+  const topRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     fetch(`${BASE}data/meta.json`).then(r => r.json()).then(data => {
       if (data.lastUpdated) setLastUpdated(new Date(data.lastUpdated).toLocaleDateString("en-AU", { year: "numeric", month: "long", day: "numeric" }));
     }).catch(() => {});
+  }, []);
+
+  useEffect(() => {
+    const handler = () => setShowBackTop(window.scrollY > 500);
+    window.addEventListener("scroll", handler, { passive: true });
+    return () => window.removeEventListener("scroll", handler);
   }, []);
 
   const dataSources = [
@@ -29,15 +37,27 @@ export default function About() {
     { name: "Vite 7", icon: "⚡", desc: "Build tool — instant dev server" },
     { name: "Leaflet.js", icon: "🗺️", desc: "Interactive maps with clustering" },
     { name: "TypeScript", icon: "📘", desc: "Type-safe components and data models" },
-    { name: "OpenStreetMap / CARTO", icon: "🌐", desc: "5 map tile themes including dark mode" },
+    { name: "OpenStreetMap / CARTO / Esri", icon: "🌐", desc: "6 map tile themes: default, dark, sunset, neon, minimal, satellite" },
     { name: "Open Government Data", icon: "🏛️", desc: "NSW & City of Sydney datasets" },
   ];
 
   return (
-    <div className="pp-page">
+    <div className="pp-page" ref={topRef}>
       <Navbar />
       <main className="pp-about-main">
-        <section className="pp-about-hero">
+        {showBackTop && (
+          <button
+            className="pp-about-back-top"
+            aria-label="Back to top"
+            title="Back to top"
+            onClick={() => topRef.current?.scrollIntoView({ behavior: "smooth" })}
+          >
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+              <path d="M18 15l-6-6-6 6"/>
+            </svg>
+          </button>
+        )}
+        <section className="pp-about-hero" id="top">
           <div className="pp-container">
             <h1>About Park Pulse</h1>
             <p className="pp-about-subtitle">Connecting communities with their local parks and green spaces</p>
@@ -45,29 +65,63 @@ export default function About() {
           </div>
         </section>
 
-        <section className="pp-about-content">
+        <nav className="pp-about-jump-nav" aria-label="Page sections">
+          <div className="pp-container">
+            {[
+              { href: "#mission",   label: "Mission"    },
+              { href: "#data",      label: "Data Sources" },
+              { href: "#tech",      label: "Tech Stack"  },
+              { href: "#tips",      label: "Pro Tips"    },
+              { href: "#shortcuts", label: "Shortcuts"   },
+            ].map(({ href, label }) => (
+              <a key={href} href={href} className="pp-about-jump-link">{label}</a>
+            ))}
+          </div>
+        </nav>
+
+        <section className="pp-about-content" id="mission" style={{ scrollMarginTop: "3.25rem" }}>
           <div className="pp-container">
             <div className="pp-about-grid">
               <div className="pp-about-text">
                 <h2>Our Mission</h2>
                 <p>Park Pulse was created to help Sydney residents and visitors discover the incredible variety of parks, playgrounds, dog parks, and recreational facilities available throughout the city. We believe everyone should have easy access to their local green spaces.</p>
-                <p>Our platform aggregates open government data and presents it in an easy-to-use, interactive map-based format — with smart filters, 5 visual themes, and powerful search.</p>
+                <p>Our platform aggregates open government data and presents it in an easy-to-use, interactive map-based format — with smart filters, 6 visual themes, and powerful search.</p>
                 <h2>How It Works</h2>
                 <p>Use the interactive explorer to:</p>
                 <ul className="pp-feature-list">
-                  {["Browse 2,000+ parks on an interactive map", "Find off-leash dog parks with hours and restrictions", "Discover 1,795 NPWS facilities across Greater Sydney", "Filter by playgrounds, sports fields, fountains, and more", "Get turn-by-turn directions to any park"].map(item => (
+                  {[
+                    "Browse 2,000+ parks on an interactive map with colour-coded markers by type",
+                    "Find off-leash dog parks with hours and restrictions",
+                    "Discover 1,795 NPWS facilities across Greater Sydney",
+                    "Filter by playgrounds, dog parks, sports fields, pocket parks, neighbourhood parks, fountains, and more",
+                    "Quick-filter pills for the most common park types — one click to filter instantly",
+                    "Sort by name, distance, or area size — with contextual summary banners",
+                    "Search highlights matched terms; top suburb shown in result strip",
+                    "Park size category labels (Tiny → Massive) on every result card",
+                    "Pin button on cards flies the map to any park at zoom 17",
+                    "Get driving or walking directions (with estimated walk time) directly from any park detail",
+                    "View on Google Maps or OpenStreetMap directly from any park detail",
+                    "Visual size bar in park details shows area relative to Sydney's largest",
+                    "Save favourites and export your list (with Google Maps links) to clipboard",
+                    "Flash-to-card animation returns focus to the last-viewed park after closing",
+                    "Navigate between parks using Prev/Next arrow buttons or N/P keyboard shortcuts",
+                    "Share any park with a direct link — copy button on every card and in the modal",
+                    "6 map themes: Default, Dark, Sunset, Neon, Minimal, Satellite (Esri)",
+                    "Use keyboard shortcuts for power-user navigation (press ? anytime)",
+                    "\"Surprise Me\" picks a random park; \"Recenter\" button resets map to Sydney CBD",
+                  ].map(item => (
                     <li key={item}><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="20 6 9 17 4 12"/></svg>{item}</li>
                   ))}
                 </ul>
               </div>
               <div className="pp-about-image">
-                <img src="https://images.unsplash.com/photo-1517457373958-b7bdd4587205?w=600&q=80" alt="Children playing in a park playground" />
+                <img src="https://images.unsplash.com/photo-1501854140801-50d01698950b?w=600&q=80" alt="Aerial view of a green park in the city" />
               </div>
             </div>
           </div>
         </section>
 
-        <section className="pp-data-sources">
+        <section className="pp-data-sources" id="data">
           <div className="pp-container">
             <h2>Data Sources</h2>
             <p className="pp-data-intro">Park Pulse uses open public datasets to provide accurate and up-to-date information.</p>
@@ -90,7 +144,7 @@ export default function About() {
           </div>
         </section>
 
-        <section className="pp-tech-stack">
+        <section className="pp-tech-stack" id="tech">
           <div className="pp-container">
             <h2>Tech Stack</h2>
             <p className="pp-data-intro">Built with modern open-source tools for performance and reliability.</p>
@@ -108,14 +162,85 @@ export default function About() {
           </div>
         </section>
 
+        <section className="pp-pro-tips" id="tips">
+          <div className="pp-container">
+            <h2>Pro Tips</h2>
+            <p className="pp-data-intro">Get the most out of Park Pulse with these power-user tricks.</p>
+            <div className="pp-tips-grid">
+              {[
+                { icon: "🏷️", tip: "Click any type badge on a park card to instantly filter by that type — Pocket, Iconic, Neighbourhood, and more." },
+                { icon: "📍", tip: "Click any suburb pill on a card or in the park detail to search all parks in that suburb at once." },
+                { icon: "🎲", tip: "Press S (or click the dice icon) for a Surprise Me random park from your current filtered results." },
+                { icon: "🔗", tip: "Hover over any park card to reveal a share button — it copies a direct link to that park in one click." },
+                { icon: "🗺️", tip: "Press T repeatedly to cycle through all 6 map themes: Modern Green, Night Mode, Sunset, Neon, Minimal, and Satellite." },
+                { icon: "⌨️", tip: "Press ? at any time on the Explore page to pop up the full keyboard shortcuts cheat sheet." },
+                { icon: "📐", tip: "Press C to toggle compact view — great for quickly scanning a long list of results." },
+                { icon: "🏃", tip: "N and P (or ← →) navigate between parks in the detail panel without closing and reopening the modal." },
+                { icon: "🔍", tip: "Press / to instantly jump focus to the search box, then Esc to clear and return to the map." },
+                { icon: "📋", tip: "Click the coordinates in any park detail panel to instantly copy lat/lng to your clipboard." },
+              ].map(({ icon, tip }) => (
+                <div key={icon} className="pp-tip-card">
+                  <span className="pp-tip-icon">{icon}</span>
+                  <p>{tip}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section className="pp-shortcuts-about" id="shortcuts">
+          <div className="pp-container">
+            <h2>Keyboard Shortcuts</h2>
+            <p className="pp-data-intro">Power-user tips for the Explore page — press <code className="pp-inline-code">?</code> on the explore page to show these at any time.</p>
+            <div className="pp-shortcuts-about-grid">
+              {[
+                { keys: ["/"],       desc: "Focus the search box" },
+                { keys: ["↑", "↓"], desc: "Navigate through results" },
+                { keys: ["Enter"],   desc: "Open the selected park" },
+                { keys: ["S"],       desc: "Surprise me — open a random park" },
+                { keys: ["C"],       desc: "Toggle compact / normal view" },
+                { keys: ["F"],       desc: "Fit map to visible results" },
+                { keys: ["T"],       desc: "Cycle through map themes" },
+                { keys: ["L"],       desc: "Locate me via GPS" },
+                { keys: ["D"],       desc: "Toggle saved / favourites view" },
+                { keys: ["W"],       desc: "Walking directions for the open park" },
+                { keys: ["G"],       desc: "Open park in Google Maps (while modal open)" },
+                { keys: ["N"],       desc: "Next park in list (while modal is open)" },
+                { keys: ["P"],       desc: "Previous park in list (while modal is open)" },
+                { keys: ["←", "→"], desc: "Navigate parks in modal (arrow keys)" },
+                { keys: ["Esc"],     desc: "Close modal or dismiss overlay" },
+                { keys: ["?"],       desc: "Toggle keyboard shortcuts help" },
+                { keys: ["M"],       desc: "Recenter map on Sydney CBD" },
+                { keys: ["1"],       desc: "Sort: Default order" },
+                { keys: ["2"],       desc: "Sort: A–Z alphabetical" },
+                { keys: ["3"],       desc: "Sort: Nearest first (triggers locate if no GPS)" },
+                { keys: ["4"],       desc: "Sort: Largest parks first" },
+              ].map(({ keys, desc }) => (
+                <div key={desc} className="pp-shortcut-about-row">
+                  <div className="pp-shortcut-about-keys">
+                    {keys.map(k => <kbd key={k} className="pp-kbd">{k}</kbd>)}
+                  </div>
+                  <span>{desc}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
         <section className="pp-about-cta">
           <div className="pp-container">
-            <h2>Ready to Explore?</h2>
-            <p>Start discovering parks and playgrounds in your area today.</p>
-            <Link href="/explore" className="pp-btn pp-btn-primary">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
-              Explore Parks
-            </Link>
+            <h2>Ready to Discover Your Perfect Park?</h2>
+            <p>Over 2,000 parks and green spaces — playgrounds, dog areas, NPWS facilities, and more — all on one map.</p>
+            <div style={{ display: "flex", gap: "1rem", justifyContent: "center", flexWrap: "wrap" }}>
+              <Link href="/explore" className="pp-btn pp-btn-primary">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+                Explore Parks
+              </Link>
+              <Link href="/explore?surprise=1" className="pp-btn pp-btn-secondary">
+                <span style={{ fontSize: "1rem" }}>🎲</span>
+                Surprise Me
+              </Link>
+            </div>
           </div>
         </section>
       </main>
