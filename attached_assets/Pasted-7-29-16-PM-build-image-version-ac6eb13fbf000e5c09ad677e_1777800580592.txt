@@ -1,0 +1,104 @@
+7:29:16 PM: build-image version: ac6eb13fbf000e5c09ad677efd8b7c3c2d0142b6 (noble-new-builds)
+7:29:16 PM: buildbot version: 1e1f172b82fc46a7a7b4b14d04d14163b44b9b01
+7:29:16 PM: Fetching cached dependencies
+7:29:16 PM: Failed to fetch cache, continuing with build
+7:29:16 PM: Starting to prepare the repo for build
+7:29:16 PM: No cached dependencies found. Cloning fresh repo
+7:29:16 PM: git clone --filter=blob:none https://github.com/english-only/ParkPulse2026
+7:29:16 PM: Preparing Git Reference refs/heads/main
+7:29:18 PM: Installing dependencies
+7:29:18 PM: mise ~/.config/mise/config.toml tools: python@3.14.3
+7:29:18 PM: mise ~/.config/mise/config.toml tools: ruby@3.4.8
+7:29:18 PM: mise ~/.config/mise/config.toml tools: go@1.26.2
+7:29:19 PM: v22.22.2 is already installed.
+7:29:19 PM: Now using node v22.22.2 (npm v10.9.7)
+7:29:19 PM: Enabling Node.js Corepack
+7:29:20 PM: pnpm workspaces detected
+7:29:20 PM: Installing npm packages using pnpm version 10.30.3
+7:29:20 PM: Scope: all 9 workspace projects
+7:29:20 PM: Lockfile is up to date, resolution step is skipped
+7:29:20 PM: Progress: resolved 1, reused 0, downloaded 0, added 0
+7:29:20 PM: Packages: +492
+7:29:20 PM: ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+7:29:21 PM: Progress: resolved 492, reused 0, downloaded 178, added 92
+7:29:22 PM: Progress: resolved 492, reused 0, downloaded 301, added 166
+7:29:23 PM: Progress: resolved 492, reused 0, downloaded 390, added 206
+7:29:24 PM: Progress: resolved 492, reused 0, downloaded 492, added 466
+7:29:24 PM: Progress: resolved 492, reused 0, downloaded 492, added 492, done
+7:29:24 PM: .../esbuild@0.27.3/node_modules/esbuild postinstall$ node install.js
+7:29:25 PM: .../esbuild@0.27.3/node_modules/esbuild postinstall: Done
+7:29:25 PM: devDependencies:
+7:29:25 PM: + prettier 3.8.1
+7:29:25 PM: + typescript 5.9.3
+7:29:25 PM: . preinstall$ sh -c 'rm -f package-lock.json yarn.lock; case "$npm_config_user_agent" in pnpm/*) ;; *) echo "Use pnpm instead" >&2; exit 1 ;; esac'
+7:29:25 PM: . preinstall: Done
+7:29:25 PM: Done in 5s using pnpm v10.30.3
+7:29:25 PM: npm packages installed using pnpm
+7:29:26 PM: Successfully installed dependencies
+7:29:26 PM: Detected 0 framework(s)
+7:29:26 PM: Starting build script
+7:29:27 PM: Section completed: initializing
+7:29:28 PM: ​
+7:29:28 PM: Netlify Build                                                 
+7:29:28 PM: ────────────────────────────────────────────────────────────────
+7:29:28 PM: ​
+7:29:28 PM: ❯ Version
+7:29:28 PM:   @netlify/build 35.13.4
+7:29:28 PM: ​
+7:29:28 PM: ❯ Flags
+7:29:28 PM:   accountId: 69f6b1712ba96c8ff40a48c9
+7:29:28 PM:   baseRelDir: true
+7:29:28 PM:   buildId: 69f7156be5aeb03fa6b6f815
+7:29:28 PM:   deployId: 69f7156be5aeb03fa6b6f817
+7:29:29 PM: ​
+7:29:29 PM: ❯ Current directory
+7:29:29 PM:   /opt/build/repo
+7:29:29 PM: ​
+7:29:29 PM: ❯ Config file
+7:29:29 PM:   No config file was defined: using default values.
+7:29:29 PM: ​
+7:29:29 PM: ❯ Context
+7:29:29 PM:   production
+7:29:29 PM: ​
+7:29:29 PM: Build command from Netlify app                                
+7:29:29 PM: ────────────────────────────────────────────────────────────────
+7:29:29 PM: ​
+7:29:29 PM: $ pnpm --filter @workspace/park-pulse run build
+7:29:29 PM: > @workspace/park-pulse@0.0.0 build /opt/build/repo/artifacts/park-pulse
+7:29:29 PM: > vite build --config vite.config.ts
+7:29:29 PM: failed to load config from /opt/build/repo/artifacts/park-pulse/vite.config.ts
+7:29:29 PM: error during build:
+7:29:29 PM: Error: BASE_PATH environment variable is required but was not provided.
+7:29:29 PM:     at file:///opt/build/repo/artifacts/park-pulse/node_modules/.vite-temp/vite.config.ts.timestamp-1777800569511-56c942cc8cac8.mjs:15:9
+7:29:29 PM:     at ModuleJob.run (node:internal/modules/esm/module_job:343:25)
+7:29:29 PM:     at async onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:665:26)
+7:29:29 PM:     at async loadConfigFromBundledFile (file:///opt/build/repo/node_modules/.pnpm/vite@7.3.2_@types+node@25.3.5_jiti@2.6.1_lightningcss@1.31.1_tsx@4.21.0_yaml@2.8.2/node_modules/vite/dist/node/chunks/config.js:35920:12)
+7:29:29 PM:     at async bundleAndLoadConfigFile (file:///opt/build/repo/node_modules/.pnpm/vite@7.3.2_@types+node@25.3.5_jiti@2.6.1_lightningcss@1.31.1_tsx@4.21.0_yaml@2.8.2/node_modules/vite/dist/node/chunks/config.js:35808:17)
+7:29:29 PM:     at async loadConfigFromFile (file:///opt/build/repo/node_modules/.pnpm/vite@7.3.2_@types+node@25.3.5_jiti@2.6.1_lightningcss@1.31.1_tsx@4.21.0_yaml@2.8.2/node_modules/vite/dist/node/chunks/config.js:35775:42)
+7:29:29 PM:     at async resolveConfig (file:///opt/build/repo/node_modules/.pnpm/vite@7.3.2_@types+node@25.3.5_jiti@2.6.1_lightningcss@1.31.1_tsx@4.21.0_yaml@2.8.2/node_modules/vite/dist/node/chunks/config.js:35424:22)
+7:29:29 PM:     at async createBuilder (file:///opt/build/repo/node_modules/.pnpm/vite@7.3.2_@types+node@25.3.5_jiti@2.6.1_lightningcss@1.31.1_tsx@4.21.0_yaml@2.8.2/node_modules/vite/dist/node/chunks/config.js:33879:19)
+7:29:29 PM:     at async CAC.<anonymous> (file:///opt/build/repo/node_modules/.pnpm/vite@7.3.2_@types+node@25.3.5_jiti@2.6.1_lightningcss@1.31.1_tsx@4.21.0_yaml@2.8.2/node_modules/vite/dist/node/cli.js:629:10)
+7:29:29 PM: /opt/build/repo/artifacts/park-pulse:
+7:29:29 PM:  ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL  @workspace/park-pulse@0.0.0 build: `vite build --config vite.config.ts`
+7:29:29 PM: Exit status 1
+7:29:29 PM: ​
+7:29:29 PM: "build.command" failed                                        
+7:29:29 PM: ────────────────────────────────────────────────────────────────
+7:29:29 PM: ​
+7:29:29 PM:   Error message
+7:29:29 PM:   Command failed with exit code 1: pnpm --filter @workspace/park-pulse run build (https://ntl.fyi/exit-code-1)
+7:29:29 PM: ​
+7:29:29 PM:   Error location
+7:29:29 PM:   In Build command from Netlify app:
+7:29:29 PM:   pnpm --filter @workspace/park-pulse run build
+7:29:29 PM: ​
+7:29:29 PM:   Resolved config
+7:29:29 PM:   build:
+7:29:29 PM:     command: pnpm --filter @workspace/park-pulse run build
+7:29:29 PM:     commandOrigin: ui
+7:29:29 PM:     publish: /opt/build/repo/dist/public
+7:29:29 PM:     publishOrigin: ui
+7:29:29 PM: Build failed due to a user error: Build script returned non-zero exit code: 2
+7:29:30 PM: Failing build: Failed to build site
+7:29:30 PM: Finished processing build request in 14.225s
+7:29:30 PM: Failed during stage 'building site': Build script returned non-zero exit code: 2 (https://ntl.fyi/exit-code-2)
