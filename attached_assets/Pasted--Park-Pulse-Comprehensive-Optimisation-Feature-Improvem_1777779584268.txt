@@ -1,0 +1,283 @@
+# Park Pulse — Comprehensive Optimisation & Feature Improvements
+
+You are improving **Park Pulse**, a Sydney parks discovery web app. This prompt covers performance, UX, accessibility, and feature enhancements. Deliver as updated files only — no rebuild.
+
+---
+
+## 🚀 PERFORMANCE OPTIMISATIONS
+
+### 1. Trees Layer — Keep Detail, Kill Lag
+
+The `trees.geojson` file is 17MB and causes severe lag. Optimise rendering while keeping all data intact:
+
+- **Keep all tree properties** in the dataset (don't strip anything). Data stays complete for popups and detail views.
+- **Use a canvas renderer** for tree markers instead of DOM elements:
+  ```js
+  const renderer = L.canvas({ padding: 0.5 });
+  ```
+  Pass `{ renderer }` to each tree marker. Canvas rendering is dramatically faster than SVG/DOM for thousands of markers.
+- **Split the tree data into geographic tiles**: Instead of loading all 17MB at once, divide `trees.geojson` into 9 smaller files by grid (NW, N, NE, W, C, E, SW, S, SE). Only load tiles visible in current viewport + 1 adjacent tile. As user pans, load/unload tiles dynamically.
+  - File names: `trees-nw.geojson`, `trees-n.geojson`, etc. (~2MB each instead of 17MB monolith)
+  - Example bounds for Sydney: NW (-33.6 to -33.8, 150.7 to 150.9), etc.
+- **Increase zoom threshold** from 15 to 16 before trees appear — fewer tiles rendered at once.
+- **Use `L.circleMarker`** instead of `L.divIcon`. Circle markers with canvas render 10x faster.
+- **Lazy-load tree popup details**: When a tree marker is clicked, fetch full details on-demand (show spinner). Don't keep all properties in memory at once.
+- **Add visible note** next to Trees filter: "🌳 Renders at zoom 16+ (high detail)"
+
+### 2. Debounce & Throttle Everything
+
+- **Search input**: debounce 300ms before filtering/rendering results
+- **Map pan/zoom events**: throttle `invalidateSize()` calls to max 60ms intervals
+- **Window resize**: throttle sidebar resize calculations to 16ms (60fps)
+- **Filter toggles**: use `requestAnimationFrame` for layer add/remove animations
+
+### 3. Image & Asset Optimisation
+
+- **Favicon**: convert `favicon.svg` to `.ico` (smaller, faster to load)
+- **Open Graph image** (`opengraph.jpg`): compress to max 100KB (currently unknown size)
+- **Data files**: gzip-compress all JSON/GeoJSON in transit (server should handle, but mention it)
+- **Lazy-load park photos** in modals — use `loading="lazy"` attribute on all `<img>` tags
+
+### 4. Bundle Size Analysis
+
+- Check if React, ReactDOM, React Router are being bundled unnecessarily or duplicated
+- Remove unused Leaflet plugins if any are included
+- Tree-shake unused utility functions from `main.js` and `explore.js`
+- Ensure only one copy of Leaflet is loaded (not duplicated)
+
+### 5. Data Loading Strategy
+
+- **Cache all GeoJSON in localStorage** after first load (with expiration: 7 days)
+  ```js
+  localStorage.setItem('parkpulse_cache_parks', JSON.stringify(data), { expires: 604800 })
+  ```
+  Check cache before fetching — huge speed boost on repeat visits
+- **Show cached data indicator** in UI when serving from cache: "📦 Data cached (tap to refresh)"
+- **Preload critical data only** on startup: Parks + Dog Parks + NPWS. Everything else lazy-loads on filter toggle.
+- **Show a progress bar** while GeoJSON files load (especially on slow connections)
+
+---
+
+## 🎨 SIDEBAR & FILTER UX IMPROVEMENTS
+
+### 1. Filter Section — Reclaim Space for Results
+
+- **Cap filter section** at max `45%` of sidebar height
+- **Make filters internally scrollable**: `overflow-y: auto`, scrollbar styled to match theme
+- **Results list**: minimum `50%` of sidebar, flex-grow to fill remaining space
+- **On mobile** (< 768px): collapse filters into a "Filters ▼" button that toggles a drawer
+- **Tighten spacing**:
+  - Filter item padding: `6px 8px` (was probably higher)
+  - Filter label font: `13px` (down from standard)
+  - Checkbox/radio sizes: remain accessible (min 44px tap target)
+- **Keep search bar pinned** at top (never scrolls away with filters)
+- **Quick-filter pills** ("Has Playground", "Dog Friendly", etc.) — put these ABOVE the checkbox list as a horizontal scrollable row (if space allows)
+
+### 2. Results List — Better Cards & Interactions
+
+- **Park result cards** should show:
+  - Park name (bold)
+  - Suburb badge (small, theme-coloured)
+  - 1-line description/type (Playground, Sports Field, etc.)
+  - Distance from user (if geolocation enabled) — right-align, smaller text
+  - Facility icons row (🛝 🚻 ⛲ 🍖 🐕 etc.) showing what's available
+  - Hover state: subtle lift shadow + "View on Map" button appears
+- **Pagination/Virtual scrolling**: If 500+ results, use virtual scrolling (only render visible cards). Don't render 500 DOM nodes at once.
+- **"Load More" button** at bottom of results if results are capped
+- **Empty state** when no results: Show a friendly SVG illustration + "No parks match your filters. Try clearing some?"
+- **Result count** at top: "Showing 24 of 412 parks"
+
+### 3. Park Modal/Detail View
+
+- **Show all facility icons** in a clean 3-column grid (Playground ✓, BBQ ✓, Toilet ✗, etc.)
+- **"Get Directions"** button → opens Google Maps: `https://www.google.com/maps/dir/?api=1&destination={lat},{lng}`
+- **"Share Park"** button → copies shareable link to clipboard, shows toast "Link copied!"
+- **Cross-reference nearby facilities**: 
+  - Search NPWS facilities within 200m, list them
+  - Check if dog parks overlap, show "🐕 Dog-friendly area nearby"
+- **Park image carousel** if images available (placeholder SVG if not)
+- **Park size** in hectares (calculate from geometry)
+- **Link to official council page** if available in data
+
+---
+
+## 🗺️ MAP & NAVIGATION IMPROVEMENTS
+
+### 1. Map Controls & Interactions
+
+- **"Locate Me" button** (floating):
+  - Asks for geolocation (with permission prompt)
+  - Centers map on user, shows blue pulsing dot + accuracy circle
+  - Shows "You are here" label
+  - If permission denied, show toast "Geolocation disabled"
+- **Mini-map** in bottom-right corner (L.Control.MiniMap — bundle locally)
+- **Scale bar** in bottom-left (L.control.scale())
+- **Layer count badges** next to filter names: "Parks 412", "Dog Parks 38", "NPWS 1795"
+- **Marker clustering** badges should show count clearly and be clickable to zoom in
+- **"Find park near me"** quick-action button on home page that triggers geolocation + opens explore
+
+### 2. Map Popups — Better Info Density
+
+- **Standard popup structure**:
+  - Type badge (e.g., "🛝 Playground · Blacktown")
+  - Name (bold)
+  - Address/suburb
+  - Available facilities (icons)
+  - "View Details" button (opens modal)
+  - "Directions" button (opens Google Maps)
+- **Keep popup size consistent** across all layer types (parks, NPWS, dog parks, etc.)
+- **Prevent popup overlap** — if two popups would overlap, move one to the side
+
+### 3. Theming — Map Tile Integration
+
+- All 5 themes should have different **base map tiles** that fit the aesthetic:
+  - **Default**: CARTO Light (light, clean)
+  - **Dark**: CARTO Dark Matter
+  - **Sunset**: CARTO Voyager (warm, detailed)
+  - **Neon**: CARTO Dark Matter (dark base for neon accents)
+  - **Minimal**: CARTO Positron (no labels, pure minimalism)
+- Bundle these tile providers locally or use offline raster tiles for true offline support
+
+---
+
+## ✨ NEW FEATURES
+
+### 1. Home Page Enhancements
+
+- **Stats Dashboard**:
+  - Animated counters: Total Parks, Total NPWS Facilities, Dog Parks, Fountains, Toilets
+  - Count from actual data files on page load
+  - Animate from 0 to final number over 1.5s on mount
+- **"Quick Explore" action cards** (4 clickable cards):
+  - "🍖 Find a BBQ" → opens explore with BBQ filter on
+  - "🐕 Dog Parks" → opens explore with dog parks layer visible
+  - "🛝 Playgrounds" → opens explore with playground filter on
+  - "📍 Nearest Park" → geolocation + opens explore centred on user
+- **Hero section**: Add subtle animated SVG background (floating leaves or gentle particles — use GSAP if already in bundle, else CSS keyframes)
+- **Recently Viewed Parks** section: Store last 5 viewed parks in localStorage, show as clickable cards with mini-preview
+
+### 2. About Page Improvements
+
+- Add new **Data Sources** section listing:
+  - City of Sydney Parks
+  - NPWS Facilities
+  - Dog Off-Leash Parks
+  - Drinking Fountains
+  - Public Transport
+  - Trees (with link to source)
+- **Tech Stack** section: Leaflet.js, Vite, React, Vanilla JS, OpenStreetMap, GitHub
+- **Last Updated** timestamp from `data/meta.json` (e.g., "Data last updated: May 3, 2025")
+- **Contributors/Credits** section (include your name and any collaborators)
+
+### 3. Search & Filter Power-Ups
+
+- **Multi-select advanced filters**: facility type + distance radius + park type all at once
+- **Sort options**: by Distance, by Name, by Facility Count
+- **Search should find**:
+  - Park names (fuzzy matching, not exact)
+  - Suburb/address
+  - Facility types ("BBQ", "Playground", etc.)
+  - Transport stops near parks
+  - NPWS facility names
+- **Search history**: Show last 5 searches in a dropdown (stored in localStorage)
+- **"Did you mean?"** — if search returns 0 results, suggest similar park names or nearby suburbs
+
+### 4. Accessibility & Mobile
+
+- **All interactive elements**: proper `aria-label`, `aria-pressed`, `aria-expanded` attributes
+- **Keyboard navigation**: Tab through filters, Enter to toggle, Escape to close modals
+- **Focus visible** on all buttons (standard outline or custom ring)
+- **High contrast mode**: If `prefers-contrast: more`, boost color saturation and borders
+- **Reduced motion**: If `prefers-reduced-motion: reduce`, disable all animations (fade in/out instead of slide/zoom)
+- **Mobile drawer** on < 768px: sidebar becomes bottom sheet, swipe-down to close
+- **Touch targets**: minimum 44x44px for all buttons (currently might be smaller)
+- **Mobile optimisation**:
+  - Popup text: readable font size (min 14px)
+  - Results cards: full width on mobile
+  - Filters: stacked vertically, not multi-column
+  - FAB button for mobile: "🔍 Filters" to toggle sidebar
+
+---
+
+## 🎯 POLISH & MICRO-INTERACTIONS
+
+### 1. Toast Notifications
+
+Add a toast system for user feedback (bottom-right, auto-dismiss after 3s):
+- "Filter applied" (green)
+- "Location found" (blue)
+- "Link copied to clipboard" (green)
+- "Error loading data" (red)
+- "Using cached data" (orange)
+
+### 2. Loading States
+
+- **Skeleton loaders** while GeoJSON files load (show ghost cards where results will be)
+- **Spinner** in center of map while initial park data loads
+- **Layer loading indicator** next to filter toggle: small animated spinner while data loads
+- **"Tap to retry"** button if a data file fails to load
+
+### 3. Animations
+
+- **Theme switch**: smooth fade (0.3s) on background/text/borders
+- **Map fly animations**: use `map.flyTo()` instead of `map.setView()` for all navigation
+- **Results cards**: stagger fade-in (30ms delay between each card)
+- **Sidebar open/close**: slide in from left (or bottom on mobile) with easing
+- **Hover effects**: subtle lift on park cards, color shift on buttons
+- **Custom scrollbar**: styled to match active theme colour
+
+### 4. Visual Refinements
+
+- **Custom markers** for each layer type (different colors/shapes):
+  - Parks: green circle
+  - Dog parks: yellow with paw icon
+  - NPWS facilities: color-coded by type (BBQ orange, shelter green, etc.)
+  - Fountains: blue
+  - Toilets: orange
+  - Transport: purple
+- **Badge system**: small pills for park type, accessibility status, etc.
+- **Icon consistency**: all icons from same set (Feather, Heroicons, or custom SVG)
+- **Spacing & alignment**: use consistent 8px grid throughout
+- **Shadows & depth**: subtle shadows on cards/modals, glow on neon theme
+
+---
+
+## 🔧 CODE QUALITY
+
+- **No console errors/warnings** on any page
+- **All links work** (internal navigation, external links open in new tab)
+- **Mobile responsive** at 320px, 375px, 768px, 1024px breakpoints
+- **Cross-browser tested** (Chrome, Firefox, Safari, Edge)
+- **Accessibility audit** using Lighthouse (aim for 90+ score)
+- **Performance audit** (Lighthouse): aim for 85+ on mobile
+
+---
+
+## 📋 FINAL CHECKLIST
+
+Before delivering:
+- [ ] All 5 themes switch instantly and persist on refresh
+- [ ] Search finds parks, facilities, suburbs (fuzzy matching works)
+- [ ] Filter toggles add/remove layers without breaking map
+- [ ] "Locate Me" works and shows user position
+- [ ] Get Directions buttons open Google Maps correctly
+- [ ] Modal opens/closes smoothly with no overlays stuck
+- [ ] Results list scrolls independently from filters
+- [ ] No 404s, broken images, or failed data loads
+- [ ] Mobile layout works at 375px width
+- [ ] Keyboard navigation works (Tab, Enter, Escape)
+- [ ] Toast notifications appear and auto-dismiss
+- [ ] Tree data loads without massive lag (canvas + tiling)
+- [ ] Recently viewed parks persist in localStorage
+- [ ] Data cache works (check localStorage in DevTools)
+- [ ] Offline mode works for cached data
+- [ ] No console errors in DevTools
+
+---
+
+## 🎯 GOAL
+
+When users open this, they should think:
+**"This is a professional, government-grade parks app — not a student project."**
+
+Make. It. **LEGENDARY.** 🏆
