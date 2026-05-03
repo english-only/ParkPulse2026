@@ -1228,33 +1228,6 @@ export default function Explore() {
             )}
           </div>
 
-          {/* Quick pills */}
-          <div className="pp-quick-pills-container">
-            <button
-              className={`pp-quick-pill pp-quick-pill-saved${showFavOnly ? " active" : ""}`}
-              onClick={() => setShowFavOnly(v => !v)}
-              title={favCount ? `${favCount} saved park${favCount !== 1 ? "s" : ""}` : "No saved parks yet"}
-            >
-              {showFavOnly ? "♥" : "♡"} Saved{favCount > 0 && <span className="pp-pill-count">{favCount}</span>}
-            </button>
-            {quickPills.map(p => (
-              <button
-                key={p.key}
-                className={`pp-quick-pill${filters[p.key] ? " active" : ""}`}
-                onClick={() => toggleFilter(p.key)}
-              >
-                {p.label}
-              </button>
-            ))}
-            <button
-              className="pp-quick-pill pp-quick-pill-surprise"
-              onClick={surpriseMe}
-              title="Open a random park (S)"
-            >
-              🎲 Surprise
-            </button>
-          </div>
-
           {/* Filters (collapsible) */}
           <div className={`pp-filters-container${filtersOpen ? " open" : ""}`}>
             <button
