@@ -1,0 +1,64 @@
+7:16:02 PM: Netlify Build                                                 
+7:16:02 PM: ────────────────────────────────────────────────────────────────
+7:16:02 PM: ​
+7:16:02 PM: ❯ Version
+7:16:02 PM:   @netlify/build 35.13.4
+7:16:02 PM: ​
+7:16:02 PM: ❯ Flags
+7:16:02 PM:   accountId: 69f6b1712ba96c8ff40a48c9
+7:16:02 PM:   baseRelDir: true
+7:16:02 PM:   buildId: 69f712454985f7384a74d81b
+7:16:02 PM:   deployId: 69f712454985f7384a74d81d
+7:16:02 PM:   packagePath: artifacts/park-pulse
+7:16:03 PM: ​
+7:16:03 PM: ❯ Current directory
+7:16:03 PM:   /opt/build/repo
+7:16:03 PM: ​
+7:16:03 PM: ❯ Config file
+7:16:03 PM:   No config file was defined: using default values.
+7:16:03 PM: ​
+7:16:03 PM: ❯ Context
+7:16:03 PM:   production
+7:16:03 PM: ​
+7:16:03 PM: Build command from Netlify app                                
+7:16:03 PM: ────────────────────────────────────────────────────────────────
+7:16:03 PM: ​
+7:16:03 PM: $ pnpm --filter @workspace/park-pulse run build
+7:16:03 PM: > @workspace/park-pulse@0.0.0 build /opt/build/repo/artifacts/park-pulse
+7:16:03 PM: > vite build --config vite.config.ts
+7:16:03 PM: failed to load config from /opt/build/repo/artifacts/park-pulse/vite.config.ts
+7:16:03 PM: error during build:
+7:16:03 PM: Error: PORT environment variable is required but was not provided.
+7:16:03 PM:     at file:///opt/build/repo/artifacts/park-pulse/node_modules/.vite-temp/vite.config.ts.timestamp-1777799763530-e652487de68a2.mjs:10:9
+7:16:03 PM:     at ModuleJob.run (node:internal/modules/esm/module_job:343:25)
+7:16:03 PM:     at async onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:665:26)
+7:16:03 PM:     at async loadConfigFromBundledFile (file:///opt/build/repo/node_modules/.pnpm/vite@7.3.2_@types+node@25.3.5_jiti@2.6.1_lightningcss@1.31.1_tsx@4.21.0_yaml@2.8.2/node_modules/vite/dist/node/chunks/config.js:35920:12)
+7:16:03 PM:     at async bundleAndLoadConfigFile (file:///opt/build/repo/node_modules/.pnpm/vite@7.3.2_@types+node@25.3.5_jiti@2.6.1_lightningcss@1.31.1_tsx@4.21.0_yaml@2.8.2/node_modules/vite/dist/node/chunks/config.js:35808:17)
+7:16:03 PM:     at async loadConfigFromFile (file:///opt/build/repo/node_modules/.pnpm/vite@7.3.2_@types+node@25.3.5_jiti@2.6.1_lightningcss@1.31.1_tsx@4.21.0_yaml@2.8.2/node_modules/vite/dist/node/chunks/config.js:35775:42)
+7:16:03 PM:     at async resolveConfig (file:///opt/build/repo/node_modules/.pnpm/vite@7.3.2_@types+node@25.3.5_jiti@2.6.1_lightningcss@1.31.1_tsx@4.21.0_yaml@2.8.2/node_modules/vite/dist/node/chunks/config.js:35424:22)
+7:16:03 PM:     at async createBuilder (file:///opt/build/repo/node_modules/.pnpm/vite@7.3.2_@types+node@25.3.5_jiti@2.6.1_lightningcss@1.31.1_tsx@4.21.0_yaml@2.8.2/node_modules/vite/dist/node/chunks/config.js:33879:19)
+7:16:03 PM:     at async CAC.<anonymous> (file:///opt/build/repo/node_modules/.pnpm/vite@7.3.2_@types+node@25.3.5_jiti@2.6.1_lightningcss@1.31.1_tsx@4.21.0_yaml@2.8.2/node_modules/vite/dist/node/cli.js:629:10)
+7:16:03 PM: /opt/build/repo/artifacts/park-pulse:
+7:16:03 PM:  ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL  @workspace/park-pulse@0.0.0 build: `vite build --config vite.config.ts`
+7:16:03 PM: Exit status 1
+7:16:03 PM: ​
+7:16:03 PM: "build.command" failed                                        
+7:16:03 PM: ────────────────────────────────────────────────────────────────
+7:16:03 PM: ​
+7:16:03 PM:   Error message
+7:16:03 PM:   Command failed with exit code 1: pnpm --filter @workspace/park-pulse run build (https://ntl.fyi/exit-code-1)
+7:16:03 PM: ​
+7:16:03 PM:   Error location
+7:16:03 PM:   In Build command from Netlify app:
+7:16:03 PM:   pnpm --filter @workspace/park-pulse run build
+7:16:03 PM: ​
+7:16:03 PM:   Resolved config
+7:16:03 PM:   build:
+7:16:03 PM:     command: pnpm --filter @workspace/park-pulse run build
+7:16:03 PM:     commandOrigin: ui
+7:16:03 PM:     publish: /opt/build/repo/artifacts/park-pulse/dist/public
+7:16:03 PM:     publishOrigin: ui
+7:16:03 PM: Build failed due to a user error: Build script returned non-zero exit code: 2
+7:16:04 PM: Failed during stage 'building site': Build script returned non-zero exit code: 2 (https://ntl.fyi/exit-code-2)
+7:16:04 PM: Failing build: Failed to build site
+7:16:04 PM: Finished processing build request in 13.851s
