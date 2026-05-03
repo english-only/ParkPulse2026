@@ -13,6 +13,8 @@ interface ParkModalProps {
   onClose: () => void;
   nearbyNPWS?: NearbyFacility[];
   nearbyDogPark?: string | null;
+  isFavorite?: boolean;
+  onToggleFavorite?: (id: string, e: React.MouseEvent) => void;
 }
 
 function formatArea(area: number): string {
@@ -31,7 +33,7 @@ function npwsIcon(subtype: string): string {
   return "📍";
 }
 
-export default function ParkModal({ park, onClose, nearbyNPWS, nearbyDogPark }: ParkModalProps) {
+export default function ParkModal({ park, onClose, nearbyNPWS, nearbyDogPark, isFavorite, onToggleFavorite }: ParkModalProps) {
   const { toast } = useToast();
 
   useEffect(() => {
@@ -210,6 +212,16 @@ export default function ParkModal({ park, onClose, nearbyNPWS, nearbyDogPark }: 
             </svg>
             Share
           </button>
+          {onToggleFavorite && (
+            <button
+              className={`pp-btn pp-btn-secondary pp-modal-fav-btn${isFavorite ? " active" : ""}`}
+              onClick={e => onToggleFavorite(park.id, e)}
+              aria-label={isFavorite ? "Remove from saved" : "Save park"}
+            >
+              <span style={{ fontSize: "1rem", lineHeight: 1 }}>{isFavorite ? "♥" : "♡"}</span>
+              {isFavorite ? "Saved" : "Save"}
+            </button>
+          )}
         </div>
       </div>
     </div>

@@ -154,6 +154,12 @@ export default function Explore() {
   const [fromCache,       setFromCache]       = useState(false);
   const [npwsRawData,     setNpwsRawData]     = useState<NpwsRaw[]>([]);
   const [dogRawData,      setDogRawData]      = useState<DogRaw[]>([]);
+  const [filtersOpen,     setFiltersOpen]     = useState(false);
+  const [favoriteIds,     setFavoriteIds]     = useState<Set<string>>(() => {
+    try { return new Set<string>(JSON.parse(localStorage.getItem("parkpulse_favs") || "[]")); }
+    catch { return new Set<string>(); }
+  });
+  const [showFavOnly,     setShowFavOnly]     = useState(false);
 
   setSelectedParkRef.current = setSelectedPark;
 
@@ -586,14 +592,15 @@ export default function Explore() {
 
   // ── Computed values ───────────────────────────────────────────────────────
   const sortedDisplayParks = useMemo(() => {
-    const list = geocodeNearby ?? filtered;
+    let list = geocodeNearby ?? filtered;
+    if (showFavOnly) list = list.filter(p => favoriteIds.has(p.id));
     if (sortBy === "name") return [...list].sort((a, b) => a.name.localeCompare(b.name));
     if (sortBy === "nearest" && userLocation) {
       const { lat, lng } = userLocation;
       return [...list].sort((a, b) => haversineKm(lat, lng, a.lat, a.lng) - haversineKm(lat, lng, b.lat, b.lng));
     }
     return list;
-  }, [filtered, geocodeNearby, sortBy, userLocation]);
+  }, [filtered, geocodeNearby, sortBy, userLocation, showFavOnly, favoriteIds]);
 
   const suggestions = useMemo(() => {
     if (sortedDisplayParks.length > 0 || !search.trim() || geocodeNearby !== null) return [];
@@ -669,6 +676,7 @@ export default function Explore() {
     setGeocodeNearby(null); setGeocodePlace("");
     setSortBy("default");
     setVisibleCount(100);
+    setShowFavOnly(false);
     searchInputRef.current?.focus();
   }, []);
 
@@ -682,7 +690,20 @@ export default function Explore() {
     setFilters(prev => ({ ...prev, [key]: !prev[key] }));
   };
 
-  const activeFilterCount = Object.values(filters).filter(Boolean).length + (search ? 1 : 0);
+  const toggleFavorite = useCallback((id: string, e: React.MouseEvent) => {
+    e.stopPropagation();
+    setFavoriteIds(prev => {
+      const next = new Set(prev);
+      const adding = !next.has(id);
+      if (adding) next.add(id); else next.delete(id);
+      localStorage.setItem("parkpulse_favs", JSON.stringify([...next]));
+      const name = allParks.find(p => p.id === id)?.name ?? "Park";
+      toast(adding ? `Saved "${name}"` : `Removed "${name}" from saved`, adding ? "success" : "info");
+      return next;
+    });
+  }, [allParks, toast]);
+
+  const activeFilterCount = Object.values(filters).filter(Boolean).length + (search ? 1 : 0) + (showFavOnly ? 1 : 0);
   const totalCount = allParks.length + 1605;
   const displayParks = sortedDisplayParks;
 
@@ -721,6 +742,8 @@ export default function Explore() {
     { label: "⛲ Fountains",   key: "fountains"  as keyof Filters },
     { label: "🚻 Toilets",     key: "toilets"    as keyof Filters },
   ];
+
+  const favCount = [...allParks].filter(p => favoriteIds.has(p.id)).length;
 
   // ── JSX ───────────────────────────────────────────────────────────────────
   return (
@@ -800,6 +823,13 @@ export default function Explore() {
 
           {/* Quick pills */}
           <div className="pp-quick-pills-container">
+            <button
+              className={`pp-quick-pill pp-quick-pill-saved${showFavOnly ? " active" : ""}`}
+              onClick={() => setShowFavOnly(v => !v)}
+              title={favCount ? `${favCount} saved park${favCount !== 1 ? "s" : ""}` : "No saved parks yet"}
+            >
+              {showFavOnly ? "♥" : "♡"} Saved{favCount > 0 && <span className="pp-pill-count">{favCount}</span>}
+            </button>
             {quickPills.map(p => (
               <button
                 key={p.key}
@@ -811,35 +841,56 @@ export default function Explore() {
             ))}
           </div>
 
-          {/* Filters (max-height, internally scrollable) */}
-          <div className="pp-filters-container">
-            <h3>
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/>
-              </svg>
-              Filters
-            </h3>
-            <div className="pp-filter-group">
-              {filterItems.map(item => (
-                <label key={item.key} className="pp-filter-checkbox">
-                  <input type="checkbox" checked={filters[item.key]} onChange={() => toggleFilter(item.key)} />
-                  <span className="pp-checkmark" />
-                  <span className="pp-filter-label">
-                    {item.icon}
-                    {item.label}
-                    {item.key === "trees" && filters.trees && treeZoomHint && (
-                      <small style={{ color: "#999", fontSize: 10, marginLeft: 4 }}>(zoom in)</small>
-                    )}
-                    {item.countKey && layerCounts[item.countKey] !== undefined && (
-                      <span className="pp-layer-count">{layerCounts[item.countKey].toLocaleString()}</span>
-                    )}
+          {/* Filters (collapsible) */}
+          <div className={`pp-filters-container${filtersOpen ? " open" : ""}`}>
+            <button
+              className="pp-filters-toggle"
+              aria-expanded={filtersOpen}
+              onClick={() => setFiltersOpen(v => !v)}
+            >
+              <span className="pp-filters-toggle-left">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/>
+                </svg>
+                Filters
+                {Object.values(filters).some(Boolean) && (
+                  <span className="pp-active-badge" style={{ fontSize: ".65rem" }}>
+                    {Object.values(filters).filter(Boolean).length}
                   </span>
-                </label>
-              ))}
-            </div>
-            <button className="pp-btn pp-btn-outline pp-btn-small" style={{ marginTop: ".375rem" }} onClick={clearAll}>
-              Clear All
+                )}
+              </span>
+              <svg
+                className={`pp-filters-chevron${filtersOpen ? " rotated" : ""}`}
+                viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"
+              >
+                <polyline points="6 9 12 15 18 9"/>
+              </svg>
             </button>
+            {filtersOpen && (
+              <>
+                <div className="pp-filter-group">
+                  {filterItems.map(item => (
+                    <label key={item.key} className="pp-filter-checkbox">
+                      <input type="checkbox" checked={filters[item.key]} onChange={() => toggleFilter(item.key)} />
+                      <span className="pp-checkmark" />
+                      <span className="pp-filter-label">
+                        {item.icon}
+                        {item.label}
+                        {item.key === "trees" && filters.trees && treeZoomHint && (
+                          <small style={{ color: "#999", fontSize: 10, marginLeft: 4 }}>(zoom in)</small>
+                        )}
+                        {item.countKey && layerCounts[item.countKey] !== undefined && (
+                          <span className="pp-layer-count">{layerCounts[item.countKey].toLocaleString()}</span>
+                        )}
+                      </span>
+                    </label>
+                  ))}
+                </div>
+                <button className="pp-btn pp-btn-outline pp-btn-small" style={{ marginTop: ".375rem" }} onClick={clearAll}>
+                  Clear All
+                </button>
+              </>
+            )}
           </div>
 
           {/* Results */}
@@ -895,12 +946,23 @@ export default function Explore() {
                 Array.from({ length: 6 }).map((_, i) => <div key={i} className="pp-skeleton-card" />)
               ) : displayParks.length === 0 && suggestions.length === 0 ? (
                 <div className="pp-empty-state">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                    <circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/>
-                  </svg>
-                  <p>No parks found.</p>
-                  {activeFilterCount > 0 && (
-                    <button className="pp-btn pp-btn-outline pp-btn-small" onClick={clearAll}>Clear filters</button>
+                  {showFavOnly && favoriteIds.size === 0 ? (
+                    <>
+                      <span style={{ fontSize: "2rem" }}>♡</span>
+                      <p>No saved parks yet.</p>
+                      <p style={{ fontSize: ".8rem" }}>Hover a park card and tap the heart to save it.</p>
+                      <button className="pp-btn pp-btn-outline pp-btn-small" onClick={() => setShowFavOnly(false)}>Browse all parks</button>
+                    </>
+                  ) : (
+                    <>
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                        <circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/>
+                      </svg>
+                      <p>No parks found.</p>
+                      {activeFilterCount > 0 && (
+                        <button className="pp-btn pp-btn-outline pp-btn-small" onClick={clearAll}>Clear filters</button>
+                      )}
+                    </>
                   )}
                 </div>
               ) : displayParks.length === 0 && suggestions.length > 0 ? (
@@ -934,6 +996,14 @@ export default function Explore() {
                         onKeyDown={e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); selectPark(park); } }}
                         aria-label={`View ${park.name}`}
                       >
+                        <button
+                          className={`pp-fav-btn${favoriteIds.has(park.id) ? " active" : ""}`}
+                          onClick={e => toggleFavorite(park.id, e)}
+                          aria-label={favoriteIds.has(park.id) ? `Remove ${park.name} from saved` : `Save ${park.name}`}
+                          title={favoriteIds.has(park.id) ? "Remove from saved" : "Save park"}
+                        >
+                          {favoriteIds.has(park.id) ? "♥" : "♡"}
+                        </button>
                         <div className="pp-park-card-header">
                           <h4>{park.name}</h4>
                           <span className={`pp-park-type-badge ${typeClass}`}>{park.type}</span>
@@ -1029,6 +1099,8 @@ export default function Explore() {
           onClose={() => setSelectedPark(null)}
           nearbyNPWS={nearbyNPWSFacilities}
           nearbyDogPark={nearbyDogParkName}
+          isFavorite={favoriteIds.has(selectedPark.id)}
+          onToggleFavorite={toggleFavorite}
         />
       )}
     </div>
