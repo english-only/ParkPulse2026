@@ -410,6 +410,9 @@ export default function Explore() {
         features.forEach((f: any) => {
           const [lng, lat] = f.geometry.coordinates;
           const p = f.properties || {};
+          const park = allParks
+            .map(candidate => ({ candidate, dist: haversineKm(lat, lng, candidate.lat, candidate.lng) }))
+            .sort((a, b) => a.dist - b.dist)[0]?.candidate ?? null;
           const circle = L.circleMarker([lat, lng], {
             renderer,
             radius: 3,
@@ -419,12 +422,21 @@ export default function Explore() {
             weight: 0.5,
             interactive: true,
           });
-          if (p.common_name || p.species || p.genus) {
-            circle.bindPopup(
-              `<div class="pp-popup"><span class="pp-popup-type" style="background:#40916C">🌳 Tree</span><h3>${p.common_name || p.species || "Tree"}</h3>${p.genus ? `<p style="font-size:11px;color:var(--pp-text-muted)">${p.genus}</p>` : ""}${p.location ? `<p>${p.location}</p>` : ""}</div>`,
-              { maxWidth: 200 }
-            );
-          }
+          const popup = document.createElement("div");
+          popup.className = "pp-popup";
+          popup.innerHTML = `
+            <span class="pp-popup-type" style="background:#40916C">🌳 Tree</span>
+            <h3>${p.common_name || p.species || "Tree"}</h3>
+            ${p.genus ? `<p style="font-size:11px;color:var(--pp-text-muted)">${p.genus}</p>` : ""}
+            ${p.location ? `<p>${p.location}</p>` : ""}
+            ${park ? `<p style="font-size:11px;margin-top:4px">Nearest park: ${park.name}</p>` : ""}
+            <button class="pp-popup-btn" style="margin-top:8px">${park ? "View nearest park" : "View details"}</button>
+          `;
+          popup.querySelector(".pp-popup-btn")?.addEventListener("click", () => {
+            if (park) setSelectedParkRef.current(park);
+            else if (p.common_name || p.species || p.genus) toast(`Tree: ${p.common_name || p.species || "unknown"}`, "info");
+          });
+          circle.bindPopup(popup, { maxWidth: 240 });
           layer.addLayer(circle);
         });
         treeLayerRef.current = layer;
