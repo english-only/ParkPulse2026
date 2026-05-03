@@ -69,6 +69,7 @@ export default function About() {
           <div className="pp-container">
             {[
               { href: "#mission", label: "Mission" },
+              { href: "#how-it-works", label: "How It Works" },
               { href: "#data", label: "Data Sources" },
               { href: "#tech", label: "Tech Stack" },
               { href: "#tips", label: "Pro Tips" },
@@ -79,6 +80,7 @@ export default function About() {
           </div>
         </nav>
 
+        {/* ── Mission ── */}
         <section className="pp-about-content pp-about-section-anchor" id="mission" style={{ scrollMarginTop: "3.25rem" }}>
           <div className="pp-container">
             <div className="pp-about-grid">
@@ -86,29 +88,13 @@ export default function About() {
                 <h2>Our Mission</h2>
                 <p>Park Pulse was created to help Sydney residents and visitors discover the incredible variety of parks, playgrounds, dog parks, and recreational facilities available throughout the city. We believe everyone should have easy access to their local green spaces.</p>
                 <p>Our platform aggregates open government data and presents it in an easy-to-use, interactive map-based format — with smart filters, 6 visual themes, and powerful search.</p>
-                <h2>How It Works</h2>
-                <p>Use the interactive explorer to:</p>
-                <ul className="pp-feature-list">
+                <ul className="pp-feature-list" style={{ marginTop: "1.25rem" }}>
                   {[
-                    "Browse 2,000+ parks on an interactive map with colour-coded markers by type",
-                    "Find off-leash dog parks with hours and restrictions",
-                    "Discover 1,795 NPWS facilities across Greater Sydney",
-                    "Filter by playgrounds, dog parks, sports fields, pocket parks, neighbourhood parks, fountains, and more",
-                    "Quick-filter pills for the most common park types — one click to filter instantly",
-                    "Sort by name, distance, or area size — with contextual summary banners",
-                    "Search highlights matched terms; top suburb shown in result strip",
-                    "Park size category labels (Tiny → Massive) on every result card",
-                    "Pin button on cards flies the map to any park at zoom 17",
-                    "Get driving or walking directions (with estimated walk time) directly from any park detail",
-                    "View on Google Maps or OpenStreetMap directly from any park detail",
-                    "Visual size bar in park details shows area relative to Sydney's largest",
-                    "Save favourites and export your list (with Google Maps links) to clipboard",
-                    "Flash-to-card animation returns focus to the last-viewed park after closing",
-                    "Navigate between parks using Prev/Next arrow buttons or N/P keyboard shortcuts",
-                    "Share any park with a direct link — copy button on every card and in the modal",
-                    "6 map themes: Default, Dark, Sunset, Neon, Minimal, Satellite (Esri)",
-                    "Use keyboard shortcuts for power-user navigation (press ? anytime)",
-                    "\"Surprise Me\" picks a random park; \"Recenter\" button resets map to Sydney CBD",
+                    "2,000+ parks and green spaces across Greater Sydney",
+                    "1,795 NPWS facilities — BBQs, picnic tables, shelters and more",
+                    "29 off-leash dog parks with hours and restrictions",
+                    "6 map themes for every preference: day, night, satellite, and more",
+                    "All data sourced from open NSW and City of Sydney government datasets",
                   ].map(item => (
                     <li key={item}><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="20 6 9 17 4 12" /></svg>{item}</li>
                   ))}
@@ -117,6 +103,72 @@ export default function About() {
               <div className="pp-about-image">
                 <img src="https://images.unsplash.com/photo-1501854140801-50d01698950b?w=600&q=80" alt="Aerial view of a green park in the city" />
               </div>
+            </div>
+          </div>
+        </section>
+
+        {/* ── How It Works ── */}
+        <section className="pp-hiw-section pp-about-section-anchor" id="how-it-works" style={{ scrollMarginTop: "3.25rem" }}>
+          <div className="pp-container">
+            <div className="pp-hiw-header">
+              <h2>How It Works</h2>
+              <p className="pp-data-intro" style={{ marginBottom: 0 }}>Six steps from opening the app to finding your perfect park.</p>
+            </div>
+            <div className="pp-hiw-steps">
+              {[
+                {
+                  n: "1",
+                  icon: "🗺️",
+                  title: "Open the Map",
+                  desc: "Visit the Explore page to see 2,000+ Sydney parks plotted as colour-coded markers on an interactive map. Clusters expand as you zoom in.",
+                  cta: { label: "Open Explore", href: "/explore" },
+                },
+                {
+                  n: "2",
+                  icon: "🔍",
+                  title: "Search & Filter",
+                  desc: "Type a park name, suburb, or type in the search box. Use quick-filter pills (Playgrounds, Dog Parks, Iconic…) or the full filter panel for fine-grained control.",
+                  cta: null,
+                },
+                {
+                  n: "3",
+                  icon: "📍",
+                  title: "Click a Park",
+                  desc: "Tap any map marker or result card to open the full park detail — area, facilities, size category, directions, and nearby NPWS facilities.",
+                  cta: null,
+                },
+                {
+                  n: "4",
+                  icon: "⭐",
+                  title: "Save Favourites",
+                  desc: "Heart any park to save it to your private list. Export your saved parks as a clipboard list of Google Maps links for easy sharing.",
+                  cta: null,
+                },
+                {
+                  n: "5",
+                  icon: "🧭",
+                  title: "Get Directions",
+                  desc: "Open walking or driving directions to any park in one click — walking time estimate included. Or jump straight to Google Maps or OpenStreetMap.",
+                  cta: null,
+                },
+                {
+                  n: "6",
+                  icon: "🎲",
+                  title: "Discover Randomly",
+                  desc: "Press S or click \"Surprise Me\" to jump to a random park from your current filtered results. Great for spontaneous weekend adventures.",
+                  cta: { label: "Surprise Me", href: "/explore?surprise=1" },
+                },
+              ].map(step => (
+                <div key={step.n} className="pp-hiw-card">
+                  <div className="pp-hiw-number">{step.n}</div>
+                  <div className="pp-hiw-icon">{step.icon}</div>
+                  <h3 className="pp-hiw-title">{step.title}</h3>
+                  <p className="pp-hiw-desc">{step.desc}</p>
+                  {step.cta && (
+                    <Link href={step.cta.href} className="pp-hiw-cta">{step.cta.label} →</Link>
+                  )}
+                </div>
+              ))}
             </div>
           </div>
         </section>

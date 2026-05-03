@@ -430,6 +430,20 @@ h1{font-weight:800;letter-spacing:-.03em}
 .pp-about-cta h2{font-size:clamp(1.4rem,2.5vw,2rem);margin-bottom:1rem}
 .pp-about-cta p{color:var(--pp-text-secondary);margin-bottom:1.5rem}
 
+/* ===== How It Works section ===== */
+.pp-hiw-section{padding:4rem 0;background:var(--pp-bg-alt)}
+.pp-hiw-header{text-align:center;margin-bottom:2.5rem}
+.pp-hiw-header h2{font-size:clamp(1.4rem,2.5vw,2rem);margin-bottom:.5rem}
+.pp-hiw-steps{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1.25rem}
+.pp-hiw-card{position:relative;background:var(--pp-surface);border:1px solid var(--pp-border-light);border-radius:var(--pp-radius-lg);padding:1.5rem 1.5rem 1.25rem;display:flex;flex-direction:column;gap:.5rem;transition:all var(--pp-transition)}
+.pp-hiw-card:hover{transform:translateY(-3px);box-shadow:var(--pp-shadow-lg);border-color:var(--pp-green-300)}
+.pp-hiw-number{position:absolute;top:1rem;right:1rem;width:26px;height:26px;border-radius:50%;background:var(--pp-green-100);color:var(--pp-primary-dark);font-size:.75rem;font-weight:800;display:flex;align-items:center;justify-content:center;border:1.5px solid var(--pp-green-300)}
+.pp-hiw-icon{font-size:2rem;line-height:1;margin-bottom:.25rem}
+.pp-hiw-title{font-size:1rem;font-weight:700;color:var(--pp-text);margin:0}
+.pp-hiw-desc{font-size:.875rem;color:var(--pp-text-secondary);line-height:1.6;flex:1;margin:0}
+.pp-hiw-cta{display:inline-flex;align-items:center;font-size:.82rem;font-weight:600;color:var(--pp-primary);text-decoration:none;margin-top:.25rem;transition:color var(--pp-transition)}
+.pp-hiw-cta:hover{color:var(--pp-primary-dark);text-decoration:underline}
+
 /* Keyboard shortcuts section on About */
 .pp-shortcuts-about{padding:4rem 0;background:var(--pp-surface)}
 .pp-shortcuts-about h2{font-size:clamp(1.4rem,2.5vw,2rem);margin-bottom:.75rem}
