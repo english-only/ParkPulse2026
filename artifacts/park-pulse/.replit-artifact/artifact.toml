@@ -1,0 +1,31 @@
+kind = "web"
+previewPath = "/"
+title = "Park Pulse"
+version = "1.0.0"
+id = "artifacts/park-pulse"
+router = "path"
+
+[[integratedSkills]]
+name = "react-vite"
+version = "1.0.0"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 24288
+
+[services.development]
+run = "pnpm --filter @workspace/park-pulse run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/park-pulse", "run", "build" ]
+publicDir = "artifacts/park-pulse/dist/public"
+serve = "static"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "24288"
+BASE_PATH = "/"

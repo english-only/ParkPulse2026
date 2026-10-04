@@ -1,0 +1,4 @@
+[build]
+  base = "artifacts/park-pulse"
+  command = "pnpm run build"
+  publish = "dist/public"
