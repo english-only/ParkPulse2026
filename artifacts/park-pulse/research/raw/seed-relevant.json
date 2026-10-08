@@ -1,0 +1,2184 @@
+[
+ {
+  "org": "bayside-council",
+  "name": "bonnie-doon-eve-street-cahill-park-pipe-overland-2d-flood-study-report",
+  "title": "Bonnie Doon, Eve Street/Cahill Park Pipe & Overland 2D Flood Study report",
+  "notes": "Final Report",
+  "metadata_modified": "2026-01-15T01:36:44.761096",
+  "resources": [
+   {
+    "id": "a3d4d8ce-44e4-4d7a-8543-78131cd7d67c",
+    "name": "Bonnie Doon, Eve Street/Cahill Park Final Report",
+    "format": "PDF",
+    "url": "https://flooddata.ses.nsw.gov.au/dataset/de654aaa-5895-4fc3-97b7-a3303187324d/resource/a3d4d8ce-44e4-4d7a-8543-78131cd7d67c",
+    "last_modified": null
+   }
+  ]
+ },
+ {
+  "org": "bayside-council",
+  "name": "bonnie-doon-eve-street-cahill-park-pipe-overland-2d-peak-flood-level-grids",
+  "title": "Bonnie Doon, Eve Street/Cahill Park Pipe & Overland 2D - Peak Flood Level Grids",
+  "notes": "Peak flood level grids",
+  "metadata_modified": "2025-12-17T02:01:34.427177",
+  "resources": [
+   {
+    "id": "807f3f76-6735-4eb9-9b0d-02b3354d0e62",
+    "name": "Bonnie Doon, Eve Street/Cahill Park Pipe & Overland 2D - Peak Flood level Grids",
+    "format": "ZIP",
+    "url": "https://flooddata.ses.nsw.gov.au/dataset/1faa81b8-b999-4cc8-b6be-156b7d0c791f/resource/807f3f76-6735-4eb9-9b0d-02b3354d0e62",
+    "last_modified": null
+   }
+  ]
+ },
+ {
+  "org": "bayside-council",
+  "name": "springvale-drain-and-floodvale-drain-flood-study-community-consultation",
+  "title": "Springvale Drain and Floodvale Drain Flood Study - Community Consultation",
+  "notes": "Data contains: Questionnaire, newsletters and feedback",
+  "metadata_modified": "2025-12-17T01:04:38.784078",
+  "resources": [
+   {
+    "id": "aa429f51-87ff-4605-8c48-bcf3788c5eba",
+    "name": "Springvale Drain and Floodvale Drain - Community Consultation",
+    "format": "ZIP",
+    "url": "https://flooddata.ses.nsw.gov.au/dataset/f6583e5b-b33d-4437-a2f9-f21217fd257b/resource/aa429f51-87ff-4605-8c48-bcf3788c5eba",
+    "last_modified": null
+   }
+  ]
+ },
+ {
+  "org": "bayside-council",
+  "name": "bonnie-doon-eve-street-cahill-park-pipe-overland-2d-flood-study-tuflow",
+  "title": "Bonnie Doon, Eve Street/Cahill Park Pipe & Overland 2D Flood Study - TUFLOW",
+  "notes": "bc_dbase, model, runs, raw results",
+  "metadata_modified": "2025-12-17T00:27:38.476067",
+  "resources": [
+   {
+    "id": "90b405d6-3861-4d25-8e59-6676e9d53779",
+    "name": "Bonnie Doon, Eve Street/Cahill Park Pipe and Overland 2D Flood Study - TUFLOW",
+    "format": "ZIP",
+    "url": "https://flooddata.ses.nsw.gov.au/dataset/929c44ef-0b17-4800-878d-45d9b28c56c3/resource/90b405d6-3861-4d25-8e59-6676e9d53779",
+    "last_modified": null
+   }
+  ]
+ },
+ {
+  "org": "blue-mountains-city-council",
+  "name": "hazelbrook-creek-and-woodford-creek-catchment-frms-p-community-consultation",
+  "title": "Hazelbrook Creek and Woodford Creek Catchment FRMS&P - Community Consultation",
+  "notes": "Community Consultation Files",
+  "metadata_modified": "2025-12-17T04:03:25.889385",
+  "resources": [
+   {
+    "id": "7a70cdab-6c9b-496a-9dfe-3b8b1ae8fc17",
+    "name": "Hazelbrook Creek and Woodford Creek Catchment FRMS&P - Community Consultation",
+    "format": "ZIP",
+    "url": "https://flooddata.ses.nsw.gov.au/dataset/49a7a1f3-7745-4255-8e0a-f67b478adc55/resource/7a70cdab-6c9b-496a-9dfe-3b8b1ae8fc17",
+    "last_modified": null
+   }
+  ]
+ },
+ {
+  "org": "blue-mountains-city-council",
+  "name": "lapstone-south-glenbrook-and-south-blaxland-frmsp-community-consultation",
+  "title": "Lapstone, South Glenbrook and South Blaxland Floodplain Risk Management Study and Plan - Community Consultation",
+  "notes": "Memo and brochure",
+  "metadata_modified": "2025-12-17T02:47:13.961653",
+  "resources": [
+   {
+    "id": "5f533b89-18a7-4136-abad-9ed0ce15e207",
+    "name": "Lapstone, South Glenbrook and South Blaxland FRMSP Community Consultation",
+    "format": "ZIP",
+    "url": "https://flooddata.ses.nsw.gov.au/dataset/56523bb2-fcc5-4688-a594-b943528e2cf2/resource/5f533b89-18a7-4136-abad-9ed0ce15e207",
+    "last_modified": null
+   }
+  ]
+ },
+ {
+  "org": "blue-mountains-city-council",
+  "name": "blue-mountains-city-council-waterway-health-explorer",
+  "title": "Blue Mountains City Council Waterway Health Explorer",
+  "notes": "The Blue Mountains Waterway Health Explorer allows you to discover water quality and aquatic macroinvertebrate data visualisations from Blue Mountains City Council’s Waterway Health Monitoring Programs, some of which have been running since 1998. The Explorer presents data from council’s three core ",
+  "metadata_modified": "2025-11-18T23:41:40.236497",
+  "resources": [
+   {
+    "id": "arbitrary_dashboard_link",
+    "name": "Dashboard",
+    "format": "Dashboard",
+    "url": "https://app.powerbi.com/view?r=eyJrIjoiN2YzODUxZGQtZjNhMS00MTdiLTgxZGItODFiMGU0ZDMxYTU5IiwidCI6ImZmMDUxMDUyLTUwODctNDk4MS05MDcwLTFlZWRkODE5ZWJlYSJ9"
+   },
+   {
+    "id": "2aa9ba9d-d0b2-43da-b970-0a4118f83c5b",
+    "name": "Blue Mountains City Council Waterway Health Explorer",
+    "format": "URL",
+    "url": "https://app.powerbi.com/view?r=eyJrIjoiN2YzODUxZGQtZjNhMS00MTdiLTgxZGItODFiMGU0ZDMxYTU5IiwidCI6ImZmMDUxMDUyLTUwODctNDk4MS05MDcwLTFlZWRkODE5ZWJlYSJ9",
+    "last_modified": null
+   }
+  ]
+ },
+ {
+  "org": "blue-mountains-city-council",
+  "name": "blue-mountains-city-council-waterway-health-monitoring-program",
+  "title": "Blue Mountains City Council Waterway Health Monitoring Program",
+  "notes": "The Blue Mountains Waterway Health Monitoring Program is an ongoing initiative by Blue Mountains City Council to monitor and share information about the condition of local waterways. Its purpose is to provide council, the community and other stakeholders with accessible insights into waterway health",
+  "metadata_modified": "2025-11-17T21:27:44.515154",
+  "resources": [
+   {
+    "id": "e73340e6-8752-46f9-aa79-e278d75826b8",
+    "name": "Blue Mountains City Council Healthy Waterways Program",
+    "format": "",
+    "url": "https://www.bmcc.nsw.gov.au/environment/waterways",
+    "last_modified": null
+   }
+  ]
+ },
+ {
+  "org": "camden-council",
+  "name": "upper-south-creek-flood-study-final-report",
+  "title": "Upper South Creek Flood Study",
+  "notes": "The Study has defined design flood behaviour for the Upper South Creek area. The model used to define design flood liability is calibrated and validated and is shown to be relatively insensitive to model parameters. As such it is expected that design flood estimates are accurate, hence the model can",
+  "metadata_modified": "2026-01-15T01:50:39.160403",
+  "resources": [
+   {
+    "id": "59248847-49ba-4539-8c9d-ebb8c820ee44",
+    "name": "Upper South Creek - Flood Study Final Report",
+    "format": "PDF",
+    "url": "https://flooddata.ses.nsw.gov.au/dataset/8a9438d2-3bd4-42e3-aca1-902bfdd0901b/resource/59248847-49ba-4539-8c9d-ebb8c820ee44",
+    "last_modified": null
+   }
+  ]
+ },
+ {
+  "org": "camden-council",
+  "name": "harrington-park-flood-mitigation-preferred-flood-mitigation-options-and-concept-design-model-outputs",
+  "title": "Harrington Park Mitigation Works Narellan-Nepean: Preferred Flood Mitigation Options and Concept Design - Hydraulic Model Outputs (TUFLOW)",
+  "notes": "Hydraulic Model Outputs (TUFLOW)",
+  "metadata_modified": "2025-12-17T03:40:23.060527",
+  "resources": [
+   {
+    "id": "9d5558f6-9236-430e-bc29-9df604664a7b",
+    "name": "Harrington Park Flood Mitigation - Preferred Flood Mitigation Options and Concept Design - Hydraulic Model Outputs (TUFLOW)",
+    "format": "ZIP",
+    "url": "https://flooddata.ses.nsw.gov.au/dataset/dce3a993-79f8-4640-aa49-543986d77ad3/resource/9d5558f6-9236-430e-bc29-9df604664a7b",
+    "last_modified": null
+   }
+  ]
+ },
+ {
+  "org": "camden-council",
+  "name": "harrington-park-flood-mitigation-preferred-flood-mitigation-options-and-concept-design-plans",
+  "title": "Harrington Park Mitigation Works Narellan-Nepean: Preferred Flood Mitigation Options and Concept Design - Plans for Works",
+  "notes": "Plans for Works",
+  "metadata_modified": "2025-12-17T03:39:50.110890",
+  "resources": [
+   {
+    "id": "de4232e3-aa71-49ba-b2e2-08e62e58bfcc",
+    "name": "Harrington Park Flood Mitigation - Preferred Flood Mitigation Options and Concept Design - Plans for Works",
+    "format": "ZIP",
+    "url": "https://flooddata.ses.nsw.gov.au/dataset/394df300-3cfc-4a4d-ab9d-18585d28e926/resource/de4232e3-aa71-49ba-b2e2-08e62e58bfcc",
+    "last_modified": null
+   }
+  ]
+ },
+ {
+  "org": "camden-council",
+  "name": "harrington-park-flood-mitigation-preferred-flood-mitigation-options-and-concept-design-data-handover",
+  "title": "Harrington Park Mitigation Works Narellan-Nepean: Preferred Flood Mitigation Options and Concept Design - Data Handover",
+  "notes": "Dataset handover description and exhaustive file list",
+  "metadata_modified": "2025-12-17T03:39:12.354927",
+  "resources": [
+   {
+    "id": "15bb3145-dce5-4bd5-bfcd-7b772ef1401d",
+    "name": "Harrington Park Flood Mitigation - Preferred Flood Mitigation Options and Concept Design - Data Handover",
+    "format": "ZIP",
+    "url": "https://flooddata.ses.nsw.gov.au/dataset/8adffac8-7c6a-4a6e-bf85-e8629a53fdec/resource/15bb3145-dce5-4bd5-bfcd-7b772ef1401d",
+    "last_modified": null
+   }
+  ]
+ },
+ {
+  "org": "camden-council",
+  "name": "harrington-park-flood-mitigation-preferred-flood-mitigation-options-and-concept-design-model-inputs",
+  "title": "Harrington Park Mitigation Works Narellan-Nepean: Preferred Flood Mitigation Options and Concept Design - Hydraulic Model Inputs (TUFLOW)",
+  "notes": "Hydraulic Model Inputs (TUFLOW)",
+  "metadata_modified": "2025-12-17T03:38:41.501191",
+  "resources": [
+   {
+    "id": "9cd4466d-638a-496d-b5af-134fb9d00ae0",
+    "name": "Harrington Park Flood Mitigation - Preferred Flood Mitigation Options and Concept Design - Hydraulic Model Inputs (TUFLOW)",
+    "format": "ZIP",
+    "url": "https://flooddata.ses.nsw.gov.au/dataset/bf7a44a2-27df-42af-990b-0f00ca459bad/resource/9cd4466d-638a-496d-b5af-134fb9d00ae0",
+    "last_modified": null
+   }
+  ]
+ },
+ {
+  "org": "camden-council",
+  "name": "harrington-park-flood-mitigation-preferred-flood-mitigation-options-and-concept-design-report",
+  "title": "Harrington Park Mitigation Works Narellan-Nepean: Preferred Flood Mitigation Options and Concept Design - Report",
+  "notes": "Final Draft Report",
+  "metadata_modified": "2025-12-17T03:38:37.443176",
+  "resources": [
+   {
+    "id": "d7bd277a-4cca-4249-9653-c0e0716e38d9",
+    "name": "Harrington Park Flood Mitigation - Preferred Flood Mitigation Options and Concept Design - Report",
+    "format": "PDF",
+    "url": "https://flooddata.ses.nsw.gov.au/dataset/fd734659-12b2-4ed3-bdff-603b4becf104/resource/d7bd277a-4cca-4249-9653-c0e0716e38d9",
+    "last_modified": null
+   }
+  ]
+ },
+ {
+  "org": "camden-council",
+  "name": "harrington-park-flood-mitigation-site-assessment-for-flood-levee-and-channelisation-options-report",
+  "title": "Harrington Park Flood Mitigation - Site Assessment for Flood Levee and Channelisation Options - Report",
+  "notes": "Complete Report",
+  "metadata_modified": "2025-12-17T03:37:15.689864",
+  "resources": [
+   {
+    "id": "af6e9720-cc69-478d-a4e4-5c03a0209730",
+    "name": "Harrington Park Flood Mitigation - Site Assessment for Flood Levee and Channelisation Options - Report",
+    "format": "PDF",
+    "url": "https://flooddata.ses.nsw.gov.au/dataset/2b7dd753-3f35-461d-bfa4-0765b7bf399c/resource/af6e9720-cc69-478d-a4e4-5c03a0209730",
+    "last_modified": null
+   }
+  ]
+ },
+ {
+  "org": "camden-council",
+  "name": "narellan-creek-proposed-spillway-channel-harrington-park-vegetation-management-plan-report",
+  "title": "Narellan Creek Proposed Spillway Channel, Harrington Park - Vegetation Management Plan - Report",
+  "notes": "Complete Report",
+  "metadata_modified": "2025-12-17T03:36:44.839433",
+  "resources": [
+   {
+    "id": "c884b0af-233d-43d2-827d-90155818dc35",
+    "name": "Narellan Creek Proposed Spillway Channel, Harrington Park - Vegetation Management Plan - Report",
+    "format": "PDF",
+    "url": "https://flooddata.ses.nsw.gov.au/dataset/e4d879a7-0ee8-46fc-b684-da49440bdc41/resource/c884b0af-233d-43d2-827d-90155818dc35",
+    "last_modified": null
+   }
+  ]
+ },
+ {
+  "org": "camden-council",
+  "name": "harrington-park-flood-mitigation-works-ref-report",
+  "title": "Harrington Park Flood Mitigation Works - Review of Environmental Factors - Report",
+  "notes": "Complete Report",
+  "metadata_modified": "2025-12-17T03:31:30.362855",
+  "resources": [
+   {
+    "id": "64ae54fc-a751-4eb6-80d1-edc7bb4daa7c",
+    "name": "Harrington Park Flood Mitigation Works - REF - Report",
+    "format": "PDF",
+    "url": "https://flooddata.ses.nsw.gov.au/dataset/6dfa34c9-8b95-4696-8a0e-77aa1148954d/resource/64ae54fc-a751-4eb6-80d1-edc7bb4daa7c",
+    "last_modified": null
+   }
+  ]
+ },
+ {
+  "org": "camden-council",
+  "name": "harrington-park-mitigation-works-narellan-post-flood-analysis-june-2016-event-report",
+  "title": "Harrington Park Mitigation Works, Narellan - Post Flood Analysis June 2016 Event - Report",
+  "notes": "Complete Report",
+  "metadata_modified": "2025-12-17T03:29:54.139254",
+  "resources": [
+   {
+    "id": "a9173176-46ca-496d-8933-e0a8e3df9c90",
+    "name": "Harrington Park Mitigation Works, Narellan - Post Flood Analysis June 2016 Event - Report",
+    "format": "PDF",
+    "url": "https://flooddata.ses.nsw.gov.au/dataset/bdab0fb1-5d7b-4e36-b1a3-03432d4b50ff/resource/a9173176-46ca-496d-8933-e0a8e3df9c90",
+    "last_modified": null
+   }
+  ]
+ },
+ {
+  "org": "camden-council",
+  "name": "harrington-park-flood-mitigation-preferred-flood-mitigation-options-and-concept-design-gis",
+  "title": "Harrington Park Mitigation Works Narellan-Nepean: Preferred Flood Mitigation Options and Concept Design - GIS Layers",
+  "notes": "GIS Layers",
+  "metadata_modified": "2025-12-17T03:27:14.929316",
+  "resources": [
+   {
+    "id": "f6234977-77fc-47f1-875a-88749a773bed",
+    "name": "Harrington Park Flood Mitigation - Preferred Flood Mitigation Options and Concept Design  - GIS Layers",
+    "format": "ZIP",
+    "url": "https://flooddata.ses.nsw.gov.au/dataset/f8aeca53-b7ed-4a15-b3fa-6c17c77578cb/resource/f6234977-77fc-47f1-875a-88749a773bed",
+    "last_modified": null
+   }
+  ]
+ },
+ {
+  "org": "camden-council",
+  "name": "harrington-park-flood-mitigation-preferred-flood-mitigation-options-and-concept-design-aerials",
+  "title": "Harrington Park Mitigation Works Narellan-Nepean: Preferred Flood Mitigation Options and Concept Design - Aerial Imagery",
+  "notes": "Aerial Imagery",
+  "metadata_modified": "2025-12-17T03:22:40.791246",
+  "resources": [
+   {
+    "id": "619c3dd8-7693-47d4-85e3-066cee84b5e1",
+    "name": "Harrington Park Flood Mitigation - Preferred Flood Mitigation Options and Concept Design - Aerial Imagery",
+    "format": "ZIP",
+    "url": "https://flooddata.ses.nsw.gov.au/dataset/0a220bc2-7eaa-4a1a-af88-ee046b0e05aa/resource/619c3dd8-7693-47d4-85e3-066cee84b5e1",
+    "last_modified": null
+   }
+  ]
+ },
+ {
+  "org": "camden-council",
+  "name": "harrington-park-flood-mitigation-preferred-flood-mitigation-options-and-concept-design-waterride",
+  "title": "Harrington Park Mitigation Works Narellan-Nepean: Preferred Flood Mitigation Options and Concept Design - WaterRIDE",
+  "notes": "WaterRIDE Files",
+  "metadata_modified": "2025-12-17T03:22:36.703387",
+  "resources": [
+   {
+    "id": "88e1072f-a182-4414-99a0-26147b3ad713",
+    "name": "Harrington Park Flood Mitigation - Preferred Flood Mitigation Options and Concept Design - WaterRIDE",
+    "format": "ZIP",
+    "url": "https://flooddata.ses.nsw.gov.au/dataset/8764e6a9-91c8-4b63-879d-b23c3a244870/resource/88e1072f-a182-4414-99a0-26147b3ad713",
+    "last_modified": null
+   }
+  ]
+ },
+ {
+  "org": "canterbury-bankstown-council",
+  "name": "punchbowl-catchment-flood-study-report",
+  "title": "Punchbowl Catchment Flood Study",
+  "notes": "#Study Area The study area is located in south west Sydney and includes parts of the suburbs of Punchbowl, Mount Lewis and Greenacre. It is an urban catchment that drains through a stormwater pipe network and the Sydney Water open concrete channel drainage system in a north-easterly direction toward",
+  "metadata_modified": "2026-01-20T05:27:55.645954",
+  "resources": [
+   {
+    "id": "4e823c88-b48a-4dd3-ad2d-5895508c4cc6",
+    "name": "Punchbowl Catchment Flood Study",
+    "format": "PDF",
+    "url": "https://flooddata.ses.nsw.gov.au/dataset/31fc4688-a22e-4fb7-9d7c-6b3d96aa59cd/resource/4e823c88-b48a-4dd3-ad2d-5895508c4cc6",
+    "last_modified": null
+   }
+  ]
+ },
+ {
+  "org": "canterbury-bankstown-council",
+  "name": "picnic-point-flood-study-report",
+  "title": "Picnic Point Catchment Flood Study",
+  "notes": "#Study Area The study area is located in south west Sydney and includes the central part of the suburb of Picnic Point. The northern part of the catchment is predominantly urban; the southern part includes parts of the Georges River National Park, in particular the Yeramba Lagoon. The catchment drai",
+  "metadata_modified": "2026-01-20T05:27:22.214988",
+  "resources": [
+   {
+    "id": "cfc2ec24-843b-4903-b837-f3bf7ae70adb",
+    "name": "Picnic Point Catchment Flood Study",
+    "format": "PDF",
+    "url": "https://flooddata.ses.nsw.gov.au/dataset/1cf05b00-fd36-48c6-b0d9-60525168eeb6/resource/cfc2ec24-843b-4903-b837-f3bf7ae70adb",
+    "last_modified": null
+   }
+  ]
+ },
+ {
+  "org": "canterbury-bankstown-council",
+  "name": "morris-gully-catchment-flood-study-report",
+  "title": "Morris Gully Catchment Flood Study",
+  "notes": "#Study Area The study area is located in south west Sydney and includes parts of the suburbs of Revesby Heights, Revesby, Panania and Picnic Point. It is an urban catchment that drains in a south-easterly direction through a stormwater pipe network to the Georges River. The Morris Gully catchment is",
+  "metadata_modified": "2026-01-20T05:26:31.613084",
+  "resources": [
+   {
+    "id": "1beefb87-89e8-4f6a-86d1-3da2cd267125",
+    "name": "Morris Gully Catchment Flood Study",
+    "format": "PDF",
+    "url": "https://flooddata.ses.nsw.gov.au/dataset/be7c6eb0-cee7-4a67-be8f-cfac6ae81e3c/resource/1beefb87-89e8-4f6a-86d1-3da2cd267125",
+    "last_modified": null
+   }
+  ]
+ },
+ {
+  "org": "canterbury-bankstown-council",
+  "name": "greenacre-park-stormwater-catchment-flood-study-report",
+  "title": "Greenacre Park Stormwater Catchment Flood Study",
+  "notes": "#Study Area The study area is known as the Greenacre Park catchment. It is one of four catchment areas that drain to the Upper Cooks River, which flows to Botany Bay through the Cooks River. The study area is located mostly within the Sydney suburb of Greenacre, in the north-east corner of the Banks",
+  "metadata_modified": "2026-01-20T05:22:16.267056",
+  "resources": [
+   {
+    "id": "86e6dc82-b6b6-40b1-b9d9-d5a44fcd0221",
+    "name": "Greenacre Park - Stormwater Catchment Flood Study",
+    "format": "PDF",
+    "url": "https://flooddata.ses.nsw.gov.au/dataset/51fc23af-c6fd-4c8a-bd3e-f4d4c1eee5f4/resource/86e6dc82-b6b6-40b1-b9d9-d5a44fcd0221",
+    "last_modified": null
+   }
+  ]
+ },
+ {
+  "org": "canterbury-bankstown-council",
+  "name": "georges-hall-catchment-flood-study-report",
+  "title": "Georges Hall Catchment Flood Study",
+  "notes": "#The Study Area The Georges Hall study area is located in Bankstown, south west Sydney and is contained within the suburb of Georges Hall. The Georges Hall catchment area is approximately 140 hectares of predominantly residential land. Elevations range from over 50 mAHD in the east to approximately ",
+  "metadata_modified": "2026-01-20T05:21:16.198393",
+  "resources": [
+   {
+    "id": "6c327f23-d4c1-427a-baa2-43cd21c9b478",
+    "name": "Georges Hall Catchment Flood Study",
+    "format": "PDF",
+    "url": "https://flooddata.ses.nsw.gov.au/dataset/c4c3bb3e-3cfd-40d3-8b40-55fa4d45d8ab/resource/6c327f23-d4c1-427a-baa2-43cd21c9b478",
+    "last_modified": null
+   }
+  ]
+ },
+ {
+  "org": "canterbury-bankstown-council",
+  "name": "cooks-river-catchment-flood-study-report",
+  "title": "Cooks River Catchment Flood Study",
+  "notes": "BMT WBM was commissioned by Bankstown City Council to prepare a Flood Study for the Cooks River stormwater catchment. Similar studies were simultaneously commissioned for the Punchbowl, the Georges Hall, the Lansdowne and the Miller Road stormwater catchments. The location of the Cooks River stormwa",
+  "metadata_modified": "2026-01-20T05:13:18.076780",
+  "resources": [
+   {
+    "id": "2e360daf-879d-4793-8b42-72cd8a6a8f6a",
+    "name": "Cooks River Catchment - Flood Study",
+    "format": "PDF",
+    "url": "https://flooddata.ses.nsw.gov.au/dataset/e07c8424-cc3c-4f28-938f-47765828f6fd/resource/2e360daf-879d-4793-8b42-72cd8a6a8f6a",
+    "last_modified": null
+   }
+  ]
+ },
+ {
+  "org": "canterbury-bankstown-council",
+  "name": "lucas-road-catchment-flood-study-report",
+  "title": "Lucas Road Catchment Flood Study Report",
+  "notes": "#Study Area The study area is located in south west Sydney and includes parts of the suburbs of East Hills, Panania and Picnic Point. It is an urban catchment that drains through a stormwater pipe network and Monash Creek to the Georges River. Much of the study area is also at risk of flooding from ",
+  "metadata_modified": "2026-01-07T01:28:38.088674",
+  "resources": [
+   {
+    "id": "6f48656a-dd42-4068-8d1e-7707315d03bd",
+    "name": "Lucas Road Catchment Flood Study Report",
+    "format": "PDF",
+    "url": "https://flooddata.ses.nsw.gov.au/dataset/1154a74d-db0a-4fdd-9523-1a1dd87b3559/resource/6f48656a-dd42-4068-8d1e-7707315d03bd",
+    "last_modified": null
+   }
+  ]
+ },
+ {
+  "org": "canterbury-bankstown-council",
+  "name": "prospect-creek-frmsp-report",
+  "title": "Prospect Creek FRMSP Report",
+  "notes": "# The Study Area The study area comprises four sub-catchments within the Canterbury-Bankstown Council Local Government Area (LGA) that drain to Prospect Creek: * __Georges Hall Sub-Catchment__: Covering approximately 145 hectares, this area predominantly features residential land with notable reserv",
+  "metadata_modified": "2025-12-17T05:17:02.715521",
+  "resources": [
+   {
+    "id": "07262ed8-a0aa-4bf7-8cb6-c44f7cf6a257",
+    "name": "Prospect Creek Sub-Catchment Flood Risk Management Study and Plan Final Report",
+    "format": "PDF",
+    "url": "https://flooddata.ses.nsw.gov.au/dataset/a980c359-a20b-4b48-8e13-51a252d6e9f1/resource/07262ed8-a0aa-4bf7-8cb6-c44f7cf6a257",
+    "last_modified": null
+   }
+  ]
+ },
+ {
+  "org": "canterbury-bankstown-council",
+  "name": "georges-river-at-carinya-road-picnic-point-structural-assessment-of-flood-deflector-levees-report",
+  "title": "Georges River at Carinya Road, Picnic Point - Structural Assessment of Flood Deflector Levees - Report",
+  "notes": "Complete report",
+  "metadata_modified": "2025-12-17T02:36:40.176914",
+  "resources": [
+   {
+    "id": "1b26aeb3-ab46-4dc2-a2b1-d371b51d90fd",
+    "name": "Georges River at Carinya Road, Picnic Point - Structural Assessment of Flood Deflector Levees - Report",
+    "format": "PDF",
+    "url": "https://flooddata.ses.nsw.gov.au/dataset/8abb37fb-19c1-4973-ad95-f6d6f9ef73f3/resource/1b26aeb3-ab46-4dc2-a2b1-d371b51d90fd",
+    "last_modified": null
+   }
+  ]
+ },
+ {
+  "org": "city-of-parramatta-council",
+  "name": "homebush-bay-catchment-stormwater-management-plan-report",
+  "title": "Homebush Bay Catchment - Stormwater Management Plan - Report",
+  "notes": "Complete Report",
+  "metadata_modified": "2025-12-17T03:48:30.845012",
+  "resources": [
+   {
+    "id": "b8b9f094-4331-4752-9b94-0669213ef9fa",
+    "name": "Homebush Bay Catchment - Stormwater Management Plan - Report",
+    "format": "PDF",
+    "url": "https://flooddata.ses.nsw.gov.au/dataset/78bbef5d-0570-40af-87a6-c93785ae5bab/resource/b8b9f094-4331-4752-9b94-0669213ef9fa",
+    "last_modified": null
+   }
+  ]
+ },
+ {
+  "org": "council-of-the-city-of-sydney",
+  "name": "centennial-park-frmp-report",
+  "title": "Centennial Park FRMP - Report",
+  "notes": "Complete report",
+  "metadata_modified": "2026-01-15T02:16:40.790428",
+  "resources": [
+   {
+    "id": "e17a8ad5-a754-4750-b6e9-6aeff15ff0b8",
+    "name": "Centennial Park FRMP - Report",
+    "format": "PDF",
+    "url": "https://flooddata.ses.nsw.gov.au/dataset/fd973c87-98ae-460f-b8f3-5c608fe29171/resource/e17a8ad5-a754-4750-b6e9-6aeff15ff0b8",
+    "last_modified": null
+   }
+  ]
+ },
+ {
+  "org": "council-of-the-city-of-sydney",
+  "name": "centennial-park-flood-study-report",
+  "title": "Centennial Park Flood Study - Report",
+  "notes": "2 parts",
+  "metadata_modified": "2026-01-15T02:14:29.759255",
+  "resources": [
+   {
+    "id": "8e3b65d6-2322-4f27-ba36-f374e243fa31",
+    "name": "Centennial Park Flood Study - Report",
+    "format": "PDF",
+    "url": "https://flooddata.ses.nsw.gov.au/dataset/8d4b53d9-fa76-47d1-b191-60d9fd817fc8/resource/8e3b65d6-2322-4f27-ba36-f374e243fa31",
+    "last_modified": null
+   },
+   {
+    "id": "e051e84b-17eb-43d1-b0cc-5e14bc868d9a",
+    "name": "Centennial Park Flood Study - Report",
+    "format": "PDF",
+    "url": "https://flooddata.ses.nsw.gov.au/dataset/8d4b53d9-fa76-47d1-b191-60d9fd817fc8/resource/e051e84b-17eb-43d1-b0cc-5e14bc868d9a",
+    "last_modified": null
+   }
+  ]
+ },
+ {
+  "org": "council-of-the-city-of-sydney",
+  "name": "green-square-catchment-floodplain-risk-management-plan-report",
+  "title": "Green Square Catchment Floodplain Risk Management Plan",
+  "notes": "The Green Square Floodplain Risk Management Plan has been prepared in accordance with the NSW Floodplain Development Manual (April 2005) and: Is based on a comprehensive and detailed evaluation of all factors that affect and are affected by the use of flood prone land; Represents the considered opin",
+  "metadata_modified": "2026-01-14T22:22:35.922092",
+  "resources": [
+   {
+    "id": "115ff1b7-658e-49a6-abed-29e949786756",
+    "name": "Green Square Catchment Floodplain Risk Management Plan",
+    "format": "PDF",
+    "url": "https://flooddata.ses.nsw.gov.au/dataset/3a49f08c-f364-4df5-9a8a-b4444e768465/resource/115ff1b7-658e-49a6-abed-29e949786756",
+    "last_modified": null
+   }
+  ]
+ },
+ {
+  "org": "council-of-the-city-of-sydney",
+  "name": "centennial-park-frms-report",
+  "title": "Centennial Park FRMS - Report",
+  "notes": "3 parts",
+  "metadata_modified": "2025-12-17T00:42:36.487262",
+  "resources": [
+   {
+    "id": "da1c20ac-fbe9-411e-899e-2e5c2b3a4433",
+    "name": "Centennial Park FRMS - Report",
+    "format": "ZIP",
+    "url": "https://flooddata.ses.nsw.gov.au/dataset/ee369b34-fb6e-4af8-af0f-41f5ad6a5bd5/resource/da1c20ac-fbe9-411e-899e-2e5c2b3a4433",
+    "last_modified": null
+   }
+  ]
+ },
+ {
+  "org": "fairfield-city-council",
+  "name": "smithfield-overland-flood-study-report",
+  "title": "Smithfield Overland Flood Study",
+  "notes": "The 292 ha Smithfield overland flow catchment is located in the north-eastern portion of the Fairfield LGA, to the south-west of Prospect Creek, and encompasses parts of the suburbs of Smithfield, Fairfield Heights and Fairfield West. The catchment is roughly bisected lengthways by the Cumberland Hi",
+  "metadata_modified": "2026-01-14T22:08:40.308598",
+  "resources": [
+   {
+    "id": "fece2536-d075-48e2-b6ff-886473fdcaaa",
+    "name": "Smithfield - Overland Flood Study",
+    "format": "PDF",
+    "url": "https://flooddata.ses.nsw.gov.au/dataset/2adcdbad-e101-44d2-8dfb-4e5cb18e4803/resource/fece2536-d075-48e2-b6ff-886473fdcaaa",
+    "last_modified": null
+   }
+  ]
+ },
+ {
+  "org": "fairfield-city-council",
+  "name": "old-guildford-overland-flood-study-2010-report",
+  "title": "Old Guildford Overland Flood Study",
+  "notes": "#Study Objectives Key objectives of this study are to: * Identify the major overland flow paths within the Old Guildford catchment study area. * Determine the nature and extent of overland flooding and flood risk in the study area. * Identify properties at risk of local overland flooding and quantif",
+  "metadata_modified": "2026-01-14T22:01:27.497341",
+  "resources": [
+   {
+    "id": "c1537251-2d14-42a3-9b9f-dc678dcc3f57",
+    "name": "Old Guildford - Overland Flood Study 2010",
+    "format": "PDF",
+    "url": "https://flooddata.ses.nsw.gov.au/dataset/3fea5c77-8483-4b30-99fd-e64eb49fb90d/resource/c1537251-2d14-42a3-9b9f-dc678dcc3f57",
+    "last_modified": null
+   }
+  ]
+ },
+ {
+  "org": "fairfield-city-council",
+  "name": "canley-corridor-overland-flood-study-report",
+  "title": "Canley Corridor Overland Flood Study",
+  "notes": "This report is structured as follows: ##Section 1 – Introduction ##Section 2 – Background: Explanation of the need for this overland flow study, of Fairfield’s overland flow study program, the situation of this study area, the study objectives, and the history of flooding in the catchment ##Section ",
+  "metadata_modified": "2026-01-14T22:00:41.274225",
+  "resources": [
+   {
+    "id": "915f594a-4eec-4ba1-8594-3d95a7aba2d0",
+    "name": "Canley Corridor Overland Flood Study",
+    "format": "PDF",
+    "url": "https://flooddata.ses.nsw.gov.au/dataset/68abdd50-cad7-447c-859c-c93ed5a70d28/resource/915f594a-4eec-4ba1-8594-3d95a7aba2d0",
+    "last_modified": null
+   }
+  ]
+ },
+ {
+  "org": "fairfield-city-council",
+  "name": "wetherill-park-overland-flood-study-report",
+  "title": "Wetherill Park Overland Flood Study - Report",
+  "notes": "Version 2 - final report",
+  "metadata_modified": "2026-01-14T00:10:33.749428",
+  "resources": [
+   {
+    "id": "9fe901f4-fdc4-4cdf-9977-212ae583bbc9",
+    "name": "Wetherill Park Overland Flood Study Report",
+    "format": "PDF",
+    "url": "https://flooddata.ses.nsw.gov.au/dataset/0867b38c-7e3a-4130-bd04-79a5e0124686/resource/9fe901f4-fdc4-4cdf-9977-212ae583bbc9",
+    "last_modified": null
+   }
+  ]
+ },
+ {
+  "org": "georges-river-council",
+  "name": "kogarah-bay-creek-frmp",
+  "title": "Kogarah Bay Creek Floodplain Risk Management Plan",
+  "notes": "Kogarah Bay Creek is a 2.8 km2 catchment which drains into Kogarah Bay forming part of the Georges River estuary feeding into Botany Bay (Figure 1). It is one of the largest catchments in the Kogarah Council municipality and has the greatest number of reported flooding incidents. The catchment area ",
+  "metadata_modified": "2026-01-15T00:46:33.119118",
+  "resources": [
+   {
+    "id": "27d5d40a-3e8b-423f-b3aa-f50400098444",
+    "name": "Kogarah Bay Creek Floodplain Risk Management Plan",
+    "format": "PDF",
+    "url": "https://flooddata.ses.nsw.gov.au/dataset/d8544469-e21a-4f36-86f6-31bbfaf82e05/resource/27d5d40a-3e8b-423f-b3aa-f50400098444",
+    "last_modified": null
+   }
+  ]
+ },
+ {
+  "org": "georges-river-council",
+  "name": "beverley-park-overland-flow-risk-management-study-plan-report",
+  "title": "Beverley Park Overland Flow Risk Management Study & Plan",
+  "notes": "A Floodplain Risk Management Study and Plan (FRMS&P) for the Beverley Park catchment has been prepared by Cardno Lawson Treloar for Kogarah Council. The FRMS&P identify and examine options for the management of flooding within the Beverley Park catchment floodplain and is prepared in accordance with",
+  "metadata_modified": "2026-01-14T02:28:10.665806",
+  "resources": [
+   {
+    "id": "0b682f7e-598c-46ee-b3fa-bcc3b5002711",
+    "name": "Beverley Park - Overland Flow Risk Management Study & Plan",
+    "format": "PDF",
+    "url": "https://flooddata.ses.nsw.gov.au/dataset/c0e65954-589b-466d-8030-ac00b19434ef/resource/0b682f7e-598c-46ee-b3fa-bcc3b5002711",
+    "last_modified": null
+   }
+  ]
+ },
+ {
+  "org": "georges-river-council",
+  "name": "poulton-park-overland-flow-management-study-and-plan-report",
+  "title": "Poulton Park Overland Flow Management Study and Plan - Report",
+  "notes": "Complete report (Volume 1 & 2) + Figures + Appendices",
+  "metadata_modified": "2026-01-14T00:26:24.684382",
+  "resources": [
+   {
+    "id": "840ec909-5522-48c6-9f6b-4f9265c3f5f7",
+    "name": "Poulton Park Overland Flow Management Study and Plan - Report Volume 1",
+    "format": "PDF",
+    "url": "https://flooddata.ses.nsw.gov.au/dataset/32ab3650-0ee7-40d4-9d31-36ccc36e7cec/resource/840ec909-5522-48c6-9f6b-4f9265c3f5f7",
+    "last_modified": null
+   },
+   {
+    "id": "23da219e-798c-489f-a109-0ac72928ebdf",
+    "name": "Poulton Park Overland Flow Management Study and Plan - Report Volume 2",
+    "format": "PDF",
+    "url": "https://flooddata.ses.nsw.gov.au/dataset/32ab3650-0ee7-40d4-9d31-36ccc36e7cec/resource/23da219e-798c-489f-a109-0ac72928ebdf",
+    "last_modified": null
+   },
+   {
+    "id": "e77402ac-4353-474e-b24b-d3f48aa01f08",
+    "name": "Poulton Park Overland Flow Management Study and Plan - Figures",
+    "format": "ZIP",
+    "url": "https://flooddata.ses.nsw.gov.au/dataset/32ab3650-0ee7-40d4-9d31-36ccc36e7cec/resource/e77402ac-4353-474e-b24b-d3f48aa01f08",
+    "last_modified": null
+   },
+   {
+    "id": "9a398168-5d3e-421c-8049-70e2f8c726f3",
+    "name": "Poulton Park Overland Flow Management Study and Plan - Appendices",
+    "format": "ZIP",
+    "url": "https://flooddata.ses.nsw.gov.au/dataset/32ab3650-0ee7-40d4-9d31-36ccc36e7cec/resource/9a398168-5d3e-421c-8049-70e2f8c726f3",
+    "last_modified": null
+   }
+  ]
+ },
+ {
+  "org": "georges-river-council",
+  "name": "beverley-park-flood-planning-level-mapping-report",
+  "title": "Beverley Park Flood Planning Level Mapping - Report",
+  "notes": "Complete Report",
+  "metadata_modified": "2025-12-17T03:18:17.017610",
+  "resources": [
+   {
+    "id": "344c5540-32cf-4a43-9d1e-d373f7826aec",
+    "name": "Beverley Park Flood Planning Level Mapping - Report",
+    "format": "PDF",
+    "url": "https://flooddata.ses.nsw.gov.au/dataset/d89f6df9-0b51-4ab4-b155-96147b2eb230/resource/344c5540-32cf-4a43-9d1e-d373f7826aec",
+    "last_modified": null
+   }
+  ]
+ },
+ {
+  "org": "georges-river-council",
+  "name": "poulton-park-overland-flow-risk-management-study-and-plan-report",
+  "title": "Poulton Park Overland Flow Risk Management Study and Plan - Report",
+  "notes": "Volume 1 & 2",
+  "metadata_modified": "2025-12-17T02:06:09.263061",
+  "resources": [
+   {
+    "id": "d9716338-4a6e-4c7f-81df-d05ef61a877b",
+    "name": "Poulton Park Overland Flow Risk Management Study and Plan - Report V1",
+    "format": "PDF",
+    "url": "https://flooddata.ses.nsw.gov.au/dataset/3e36252f-4825-4775-8726-395167ea3d0a/resource/d9716338-4a6e-4c7f-81df-d05ef61a877b",
+    "last_modified": null
+   },
+   {
+    "id": "8133fafe-b6ea-4bbf-9daf-84eeb4bf539d",
+    "name": "Poulton Park Overland Flow Risk Management Study and Plan - Report V2",
+    "format": "PDF",
+    "url": "https://flooddata.ses.nsw.gov.au/dataset/3e36252f-4825-4775-8726-395167ea3d0a/resource/8133fafe-b6ea-4bbf-9daf-84eeb4bf539d",
+    "last_modified": null
+   }
+  ]
+ },
+ {
+  "org": "georges-river-council",
+  "name": "poulton-park-overland-flow-management-study-and-plan-options",
+  "title": "Poulton Park Overland Flow Management Study and Plan - Options",
+  "notes": "9 options",
+  "metadata_modified": "2025-12-17T01:53:51.347452",
+  "resources": [
+   {
+    "id": "d2ec696e-dc52-4645-a375-3d3dbb16cd53",
+    "name": "Poulton Park Overland Flow Management Study and Plan - Options",
+    "format": "ZIP",
+    "url": "https://flooddata.ses.nsw.gov.au/dataset/fd49b108-59d7-445f-b437-e879c3410daa/resource/d2ec696e-dc52-4645-a375-3d3dbb16cd53",
+    "last_modified": null
+   }
+  ]
+ },
+ {
+  "org": "georges-river-council",
+  "name": "poulton-park-overland-flow-management-study-and-plan-community-consultation",
+  "title": "Poulton Park Overland Flow Management Study and Plan - Community Consultation",
+  "notes": "Brochure + questionnaire",
+  "metadata_modified": "2025-12-17T01:09:56.437985",
+  "resources": [
+   {
+    "id": "42038054-4013-479e-8dc7-4f17a53d93ad",
+    "name": "Poulton Park Overland Flow Management Study and Plan - Community Consultation",
+    "format": "ZIP",
+    "url": "https://flooddata.ses.nsw.gov.au/dataset/668035ae-ce93-4a95-a1f3-0fb4ea1d34ff/resource/42038054-4013-479e-8dc7-4f17a53d93ad",
+    "last_modified": null
+   }
+  ]
+ },
+ {
+  "org": "georges-river-council",
+  "name": "poulton-park-overland-flow-management-study-and-plan-hydraulic-model-input",
+  "title": "Poulton Park Overland Flow Management Study and Plan - Hydraulic Model Input",
+  "notes": "SOBEK",
+  "metadata_modified": "2025-12-17T01:09:44.381002",
+  "resources": [
+   {
+    "id": "29046cf2-c821-4f4a-812e-a0eb24a52523",
+    "name": "Poulton Park Overland Flow Management Study and Plan - Hydraulic Model Input",
+    "format": "ZIP",
+    "url": "https://flooddata.ses.nsw.gov.au/dataset/56059e3c-1d4a-48bf-a9eb-e204e50224b1/resource/29046cf2-c821-4f4a-812e-a0eb24a52523",
+    "last_modified": null
+   }
+  ]
+ },
+ {
+  "org": "georges-river-council",
+  "name": "poulton-park-overland-flow-management-study-and-plan-survey",
+  "title": "Poulton Park Overland Flow Management Study and Plan - Survey",
+  "notes": "* Cross sections; * DEM; * Ground level and floor level survey.",
+  "metadata_modified": "2025-12-17T00:47:00.692308",
+  "resources": [
+   {
+    "id": "ac6f1bd6-f01c-4add-8a00-86f19fca42c1",
+    "name": "Poulton Park Overland Flow Management Study and Plan - Survey",
+    "format": "ZIP",
+    "url": "https://flooddata.ses.nsw.gov.au/dataset/511f3c4d-2543-46ca-a697-dab88f3b534c/resource/ac6f1bd6-f01c-4add-8a00-86f19fca42c1",
+    "last_modified": null
+   }
+  ]
+ },
+ {
+  "org": "georges-river-council",
+  "name": "poulton-park-overland-flow-management-study-and-plan-hydraulic-model-output",
+  "title": "Poulton Park Overland Flow Management Study and Plan - Hydraulic Model Output",
+  "notes": "SOBEK",
+  "metadata_modified": "2025-12-17T00:45:44.562378",
+  "resources": [
+   {
+    "id": "8248a1dd-645a-405e-a8a3-d8b586963bc0",
+    "name": "Poulton Park Overland Flow Management Study and Plan - Hydraulic Model Output",
+    "format": "ZIP",
+    "url": "https://flooddata.ses.nsw.gov.au/dataset/91e2e0b2-4185-4a04-a418-d3858d536060/resource/8248a1dd-645a-405e-a8a3-d8b586963bc0",
+    "last_modified": null
+   }
+  ]
+ },
+ {
+  "org": "georges-river-council",
+  "name": "poulton-park-overland-flow-management-study-and-plan-property-photos",
+  "title": "Poulton Park Overland Flow Management Study and Plan - Property Photos",
+  "notes": "Photos of properties",
+  "metadata_modified": "2025-12-17T00:44:12.938791",
+  "resources": [
+   {
+    "id": "e0bf4cdd-1540-49c0-b274-7fab925eda34",
+    "name": "Poulton Park Overland Flow Management Study and Plan - Property Photos",
+    "format": "ZIP",
+    "url": "https://flooddata.ses.nsw.gov.au/dataset/f863b484-2d31-42d6-a7c9-bf6e1ccb4e1f/resource/e0bf4cdd-1540-49c0-b274-7fab925eda34",
+    "last_modified": null
+   }
+  ]
+ },
+ {
+  "org": "georges-river-council",
+  "name": "poulton-park-overland-flow-management-study-and-plan-summary",
+  "title": "Poulton Park Overland Flow Management Study and Plan - Summary",
+  "notes": "Data Summary",
+  "metadata_modified": "2025-12-17T00:44:04.514458",
+  "resources": [
+   {
+    "id": "3a83a89d-6895-4b4d-a733-811d720c2a54",
+    "name": "Poulton Park Overland Flow Management Study and Plan - Summary",
+    "format": "DOC",
+    "url": "https://flooddata.ses.nsw.gov.au/dataset/34aae485-581a-4aec-b167-b08eb7440912/resource/3a83a89d-6895-4b4d-a733-811d720c2a54",
+    "last_modified": null
+   }
+  ]
+ },
+ {
+  "org": "hawkesbury-city-council",
+  "name": "hawkesbury-city-council-vegetation-mapping-2007-vis_id-3958c2c4b",
+  "title": "Hawkesbury City Council Vegetation Mapping, 2007. VIS_ID 3958",
+  "notes": "A field based update of vegetation community mapping (2005)within the Hawkesbury City Council area. VIS_ID 3958",
+  "metadata_modified": "2026-10-01T08:11:35.403962",
+  "resources": [
+   {
+    "id": "anzlic-web-map",
+    "name": "Show on SEED Web Map",
+    "format": "SEED Web Map",
+    "url": "https://geo.seed.nsw.gov.au/vertigisstudio/web/?app=cabd04d595ec43c1aaf4298e80e83ec2&workflow=36ea26c1-e8e2-4355-8600-5d1558259ad3&workflowParams={\"portalItems\""
+   },
+   {
+    "id": "ca3e3718-815b-44f5-86c6-194efd8c6aae",
+    "name": "Data Quality Statement",
+    "format": "PDF",
+    "url": "https://datasets.seed.nsw.gov.au/dataset/hawkesbury-city-council-vegetation-mapping-2007-vis_id-3958c2c4b/resource/data_quality_report/pdf",
+    "last_modified": null
+   },
+   {
+    "id": "3b0f756d-b55a-4bbb-8c8d-d5bda4f6d321",
+    "name": "Download package",
+    "format": "ZIP",
+    "url": "https://datasets.seed.nsw.gov.au/dataset/1d89895d-1fab-43f6-8b73-d699bfe69263/resource/3b0f756d-b55a-4bbb-8c8d-d5bda4f6d321/download/vegetationhawkesburylga3958",
+    "last_modified": null
+   },
+   {
+    "id": "223bae9d-7ff4-44b1-afb9-577ff9634d02",
+    "name": "WMS",
+    "format": "WMS",
+    "url": "https://mapprod3.environment.nsw.gov.au/arcgis/services/VIS/Vegetation_HawkesburyLGA_2007_3958/MapServer/WMSServer?request=GetCapabilities&service=WMS",
+    "last_modified": null
+   },
+   {
+    "id": "fa5358ea-f43f-4799-814b-e3c8d71bf570",
+    "name": "REST Services",
+    "format": "ARCGIS REST SERVICE",
+    "url": "https://mapprod3.environment.nsw.gov.au/arcgis/rest/services/VIS/Vegetation_HawkesburyLGA_2007_3958/MapServer",
+    "last_modified": null
+   }
+  ]
+ },
+ {
+  "org": "hawkesbury-city-council",
+  "name": "hawkesbury-floodplain-risk-management-study-plan-report",
+  "title": "Hawkesbury Floodplain Risk Management Study & Plan",
+  "notes": "The study area of the Hawkesbury Floodplain Risk Management Study & Plan comprises all of the Hawkesbury River and its immediate surrounds that fall within the Hawkesbury Local Government Area. It extends from Agnes Banks/Yarramundi in the south to Wisemans Ferry in the north, representing a river d",
+  "metadata_modified": "2026-01-20T04:16:38.846891",
+  "resources": [
+   {
+    "id": "0c5bdfc2-a652-45f6-806c-859fad3766a6",
+    "name": "Hawkesbury - Floodplain Risk Management Study & Plan",
+    "format": "PDF",
+    "url": "https://flooddata.ses.nsw.gov.au/dataset/3e3c6379-7b9c-4e37-90df-244abe2aaa1c/resource/0c5bdfc2-a652-45f6-806c-859fad3766a6",
+    "last_modified": null
+   },
+   {
+    "id": "03ca53b7-1fca-4018-aa75-871a20e3a4fe",
+    "name": "Hawkesbury - Floodplain Risk Management Study & Plan",
+    "format": "PDF",
+    "url": "https://flooddata.ses.nsw.gov.au/dataset/3e3c6379-7b9c-4e37-90df-244abe2aaa1c/resource/03ca53b7-1fca-4018-aa75-871a20e3a4fe",
+    "last_modified": null
+   },
+   {
+    "id": "c2e2496e-e213-453a-a7b6-6356e152ba3f",
+    "name": "Hawkesbury - Floodplain Risk Management Study & Plan",
+    "format": "PDF",
+    "url": "https://flooddata.ses.nsw.gov.au/dataset/3e3c6379-7b9c-4e37-90df-244abe2aaa1c/resource/c2e2496e-e213-453a-a7b6-6356e152ba3f",
+    "last_modified": null
+   }
+  ]
+ },
+ {
+  "org": "hawkesbury-city-council",
+  "name": "final-report-redbankcreekfloodstudy",
+  "title": "Final report Redbank Creek Flood Study",
+  "notes": "The final report provides a comprehensive summary of the project's objectives, data collection and review, methodology, key flood modelling results, consequences of flooding on the community and conclusions.",
+  "metadata_modified": "2025-12-17T05:34:38.336005",
+  "resources": [
+   {
+    "id": "4a10c265-05fa-4fc1-bd8d-bb74e6011e46",
+    "name": "Redbank Creek Flood Study (Final Report)",
+    "format": "PDF",
+    "url": "https://flooddata.ses.nsw.gov.au/dataset/b0e275a5-1aff-4cc0-9503-cdd057e1b71b/resource/4a10c265-05fa-4fc1-bd8d-bb74e6011e46",
+    "last_modified": null
+   }
+  ]
+ },
+ {
+  "org": "hawkesbury-city-council",
+  "name": "bligh-park-evacuation-route-study-report",
+  "title": "Bligh Park - Evacuation Route Study - Report",
+  "notes": "Complete Report",
+  "metadata_modified": "2025-12-17T03:17:12.885635",
+  "resources": [
+   {
+    "id": "4e83c6e9-c085-448c-944b-b99513c983a0",
+    "name": "Bligh Park - Evacuation Route Study - Report",
+    "format": "PDF",
+    "url": "https://flooddata.ses.nsw.gov.au/dataset/97d6636a-e445-492e-b5ea-f5ad23c9245e/resource/4e83c6e9-c085-448c-944b-b99513c983a0",
+    "last_modified": null
+   }
+  ]
+ },
+ {
+  "org": "hawkesbury-city-council",
+  "name": "bligh-park-evacuation-route-options-study-report",
+  "title": "Bligh Park - Evacuation Route Options Study - Report",
+  "notes": "Complete",
+  "metadata_modified": "2025-12-17T03:05:45.266918",
+  "resources": [
+   {
+    "id": "c5ea8fa8-7541-479e-8cfd-77d436bee412",
+    "name": "Bligh Park - Evacuation Route Options Study - Report",
+    "format": "PDF",
+    "url": "https://flooddata.ses.nsw.gov.au/dataset/4d8f0756-8de4-4da6-9e67-6670c023fc95/resource/c5ea8fa8-7541-479e-8cfd-77d436bee412",
+    "last_modified": null
+   }
+  ]
+ },
+ {
+  "org": "hornsby-shire-council",
+  "name": "hornsby-local-government-area-remnant-trees-2008-vis_id-4472",
+  "title": "Hornsby Local Government Area Remnant Trees, 2008. VIS_ID 4472",
+  "notes": "Stands of remnant trees are important for conservation of biodiversity in the Urban District of Hornsby Shire. Particularly important are the stands of Blue Gum Shale Forest, Blue Gum Diatreme Forest and Turpentine-Ironbark Forest trees, because even in the absence of a native understorey, these are",
+  "metadata_modified": "2026-10-01T13:43:35.397541",
+  "resources": [
+   {
+    "id": "anzlic-web-map",
+    "name": "Show on SEED Web Map",
+    "format": "SEED Web Map",
+    "url": "https://geo.seed.nsw.gov.au/vertigisstudio/web/?app=cabd04d595ec43c1aaf4298e80e83ec2&workflow=36ea26c1-e8e2-4355-8600-5d1558259ad3&workflowParams={\"portalItems\""
+   },
+   {
+    "id": "d7737a65-20e7-410d-8aad-774b6ac59846",
+    "name": "Data Quality Statement - Hornsby LGA Remnant Trees VIS_ID 4472",
+    "format": "PDF",
+    "url": "https://datasets.seed.nsw.gov.au/dataset/hornsby-local-government-area-remnant-trees-2008-vis_id-4472/resource/data_quality_report/pdf",
+    "last_modified": null
+   },
+   {
+    "id": "8acdac43-5e65-4d00-a1b5-b4cd9dac5e3c",
+    "name": "HornsbyLGA_RemnantTrees_4472 data package",
+    "format": "ZIP",
+    "url": "https://datasets.seed.nsw.gov.au/dataset/b82dd8d5-1228-43c8-9965-9fc8e31c12f2/resource/8acdac43-5e65-4d00-a1b5-b4cd9dac5e3c/download/ygeonetworkzipsvegetationho",
+    "last_modified": "2016-10-14T03:10:57.845216"
+   },
+   {
+    "id": "b8732aa3-5e63-452b-a3bc-ae8fac9c6efd",
+    "name": "WMS",
+    "format": "WMS",
+    "url": "https://mapprod3.environment.nsw.gov.au/arcgis/services/VIS/Vegetation_HornsbyLGA_RemnantTrees_4472/MapServer/WMSServer?request=GetCapabilities&service=WMS",
+    "last_modified": null
+   },
+   {
+    "id": "1d460ff8-c59c-4fba-b0b0-1182880a75a8",
+    "name": "REST Services",
+    "format": "ARCGIS REST SERVICE",
+    "url": "https://mapprod3.environment.nsw.gov.au/arcgis/rest/services/VIS/Vegetation_HornsbyLGA_RemnantTrees_4472/MapServer",
+    "last_modified": null
+   }
+  ]
+ },
+ {
+  "org": "hornsby-shire-council",
+  "name": "hornsby-local-government-area-threatened-ecological-communities-2008-vis_id-4470",
+  "title": "Hornsby Local Government Area Threatened Ecological Communities, 2008. VIS_ID 4470",
+  "notes": "Updated mapping of Threatened Ecological Communities (TECs). The native vegetation communities of Hornsby Shire were originally identified and mapped in 1990-1993. The present study updates the classification and mapping of 30 communities, with the updated mapping provided in digital form for inclus",
+  "metadata_modified": "2026-10-01T13:42:35.590909",
+  "resources": [
+   {
+    "id": "anzlic-web-map",
+    "name": "Show on SEED Web Map",
+    "format": "SEED Web Map",
+    "url": "https://geo.seed.nsw.gov.au/vertigisstudio/web/?app=cabd04d595ec43c1aaf4298e80e83ec2&workflow=36ea26c1-e8e2-4355-8600-5d1558259ad3&workflowParams={\"portalItems\""
+   },
+   {
+    "id": "0ae557f7-70a9-4a4c-8a3a-5ac2964b5c11",
+    "name": "Data Quality Statement - Hornsby LGA TECs VIS_ID 4470",
+    "format": "PDF",
+    "url": "https://datasets.seed.nsw.gov.au/dataset/hornsby-local-government-area-threatened-ecological-communities-2008-vis_id-4470/resource/data_quality_report/pdf",
+    "last_modified": null
+   },
+   {
+    "id": "efdea6fa-8014-4725-9ee6-43be616a206d",
+    "name": "HornsbyLGA_TEC_4470 data package",
+    "format": "ZIP",
+    "url": "https://datasets.seed.nsw.gov.au/dataset/191a6472-03f2-497e-8ba9-302b58f05add/resource/efdea6fa-8014-4725-9ee6-43be616a206d/download/ygeonetworkzipsvegetationho",
+    "last_modified": "2016-10-14T03:07:28.136976"
+   },
+   {
+    "id": "387436f9-6f75-484c-99b9-c6d47bb600cb",
+    "name": "WMS",
+    "format": "WMS",
+    "url": "https://mapprod3.environment.nsw.gov.au/arcgis/services/VIS/Vegetation_HornsbyLGA_TEC_4470/MapServer/WMSServer?request=GetCapabilities&service=WMS",
+    "last_modified": null
+   },
+   {
+    "id": "b17e2851-153a-4ca4-abd2-e3e311f546fa",
+    "name": "REST Services",
+    "format": "ARCGIS REST SERVICE",
+    "url": "https://mapprod3.environment.nsw.gov.au/arcgis/rest/services/VIS/Vegetation_HornsbyLGA_TEC_4470/MapServer",
+    "last_modified": null
+   }
+  ]
+ },
+ {
+  "org": "hornsby-shire-council",
+  "name": "hornsby-local-government-area-vegetation-map-update-2017-vis_id-5065",
+  "title": "Hornsby Local Government Area Vegetation Map Update, 2017. VIS_ID 5065",
+  "notes": "The Hornsby Vegetation Map 2017 provides current information on the native vegetation in the study area. Previous Hornsby Vegetation mapping was completed in 2008. There are substantial changes in the mapped polygons on the urban-bushland boundary based on the updated imagery and map rules. New mapp",
+  "metadata_modified": "2026-10-01T11:18:18.122320",
+  "resources": [
+   {
+    "id": "1e96d516-0279-4512-b18d-58bbb89b7d31",
+    "name": "Data Quality Statement",
+    "format": "PDF",
+    "url": "https://datasets.seed.nsw.gov.au/dataset/hornsby-local-government-area-vegetation-map-update-2017-vis_id-5065/resource/data_quality_report/pdf",
+    "last_modified": null
+   },
+   {
+    "id": "0b7917aa-e2ed-4eae-b555-7a0012186846",
+    "name": "Download Package",
+    "format": "ZIP",
+    "url": "https://datasets.seed.nsw.gov.au/dataset/588cf8ba-211f-42c2-a21a-b7e1825b4998/resource/0b7917aa-e2ed-4eae-b555-7a0012186846/download/vegetationhornsbylga2017506",
+    "last_modified": null
+   }
+  ]
+ },
+ {
+  "org": "hornsby-shire-council",
+  "name": "hornsby-local-government-area-vegetation-communities-2008-vis_id-4471",
+  "title": "Hornsby Local Government Area Vegetation Communities, 2008. VIS_ID 4471",
+  "notes": "Between 1990-1993, the native vegetation communities in the bushland of Hornsby Shire were identified and mapped. The present study, carried out between 2006 and 2008, updates the classification and mapping of the communities. The survey area included all of the Hornsby LGA, from Eastwood to Brookly",
+  "metadata_modified": "2026-10-01T07:05:13.553227",
+  "resources": [
+   {
+    "id": "anzlic-web-map",
+    "name": "Show on SEED Web Map",
+    "format": "SEED Web Map",
+    "url": "https://geo.seed.nsw.gov.au/vertigisstudio/web/?app=cabd04d595ec43c1aaf4298e80e83ec2&workflow=36ea26c1-e8e2-4355-8600-5d1558259ad3&workflowParams={\"portalItems\""
+   },
+   {
+    "id": "9e13a2f4-d171-45b1-9d8a-3d8d31baa276",
+    "name": "Data Quality Statement - Hornsby LGA Vegetation Communities VIS_ID 4471",
+    "format": "PDF",
+    "url": "https://datasets.seed.nsw.gov.au/dataset/hornsby-local-government-area-vegetation-communities-2008-vis_id-4471/resource/data_quality_report/pdf",
+    "last_modified": null
+   },
+   {
+    "id": "63633386-ff97-4971-ad0e-31da09e63471",
+    "name": "Download ZIP Package",
+    "format": "ZIP",
+    "url": "https://datasets.seed.nsw.gov.au/dataset/499be415-b582-420c-8e37-f9023b291aba/resource/63633386-ff97-4971-ad0e-31da09e63471/download/ygeonetworkzipsvegetationho",
+    "last_modified": "2016-10-26T04:02:23.286035"
+   },
+   {
+    "id": "6f30073e-1d6f-42af-809f-19ddbd1e2b96",
+    "name": "WMS",
+    "format": "WMS",
+    "url": "https://mapprod3.environment.nsw.gov.au/arcgis/services/VIS/Vegetation_HornsbyLGA_2008_4471/MapServer/WMSServer?request=GetCapabilities&service=WMS",
+    "last_modified": null
+   },
+   {
+    "id": "a0e50094-c36a-4620-a861-6a9a7ca4e68b",
+    "name": "REST Services",
+    "format": "ARCGIS REST SERVICE",
+    "url": "https://mapprod3.environment.nsw.gov.au/arcgis/rest/services/VIS/Vegetation_HornsbyLGA_2008_4471/MapServer",
+    "last_modified": null
+   }
+  ]
+ },
+ {
+  "org": "hornsby-shire-council",
+  "name": "hawkesburywatch-estuary-health-dashboard",
+  "title": "HawkesburyWatch Estuary Health Dashboard",
+  "notes": "The HawkesburyWatch Dashboard provides access to raw water quality data collected from seven real-time telemetric monitoring stations along the Hawkesbury estuary. This data is analysed to deliver insights on estuary health, algal bloom risk, swimming conditions at 13 mapped estuarine sites, and flo",
+  "metadata_modified": "2026-01-22T23:09:25.210248",
+  "resources": [
+   {
+    "id": "arbitrary_dashboard_link",
+    "name": "Dashboard",
+    "format": "Dashboard",
+    "url": "https://www.mhlfit.net/users/HornsbyShireCouncil/"
+   },
+   {
+    "id": "fa618e40-14f5-43ae-81d1-4817eeaae539",
+    "name": "Hawkesbury Estuary Health Dashboard",
+    "format": "URL",
+    "url": "https://www.mhlfit.net/users/HornsbyShireCouncil/",
+    "last_modified": null
+   },
+   {
+    "id": "9d37eb65-bace-4498-8787-dbf7c6310064",
+    "name": "Latest catchment health results",
+    "format": "URL",
+    "url": "https://www.hornsby.nsw.gov.au/Environment/Waterways/Using-water-quality-information/Latest-catchment-health-results",
+    "last_modified": null
+   },
+   {
+    "id": "ef5b1061-72f0-4c53-9888-406234f8af83",
+    "name": "Data Quality Statement",
+    "format": "PDF",
+    "url": "https://datasets.seed.nsw.gov.au/dataset/c828b8ff-0e5c-4fde-a91c-21788117a6af/resource/ef5b1061-72f0-4c53-9888-406234f8af83/download/hawkesburywatch_dqs.pdf",
+    "last_modified": null
+   }
+  ]
+ },
+ {
+  "org": "ku-ring-gai-council",
+  "name": "lovers-jump-creek-flood-study-community-consultation",
+  "title": "Lovers Jump Creek Flood Study - Community Consultation",
+  "notes": "Feedback, newsletters, questionnaire, workshop",
+  "metadata_modified": "2025-12-17T02:55:50.473031",
+  "resources": [
+   {
+    "id": "2a8b70bc-cffd-4992-b654-3e70cfff7ccc",
+    "name": "Lovers Jump Creek Flood Study - Community Consultation",
+    "format": "ZIP",
+    "url": "https://flooddata.ses.nsw.gov.au/dataset/bab30cf8-d308-4957-804a-3fb016d4c6d5/resource/2a8b70bc-cffd-4992-b654-3e70cfff7ccc",
+    "last_modified": null
+   }
+  ]
+ },
+ {
+  "org": "ku-ring-gai-council",
+  "name": "blackbutt-creek-flood-study-community-consultation",
+  "title": "Blackbutt Creek Flood Study - Community Consultation",
+  "notes": "Newsletter, workshop, questionnaire",
+  "metadata_modified": "2025-12-17T01:47:47.080901",
+  "resources": [
+   {
+    "id": "96c532ae-69a4-4dc0-a415-2a42955a0344",
+    "name": "Blackbutt Creek Flood Study - Community Consultation",
+    "format": "ZIP",
+    "url": "https://flooddata.ses.nsw.gov.au/dataset/46bde632-1de7-4690-aed7-1660da92a5ed/resource/96c532ae-69a4-4dc0-a415-2a42955a0344",
+    "last_modified": null
+   }
+  ]
+ },
+ {
+  "org": "liverpool-city-council",
+  "name": "liverpool-city-centre-overland-flow-path-mapping-report",
+  "title": "Liverpool City Centre Overland Flow Path Mapping- Report",
+  "notes": "Complete Report ",
+  "metadata_modified": "2026-01-19T05:31:33.912420",
+  "resources": [
+   {
+    "id": "d971e883-26ab-4410-b289-8c5377caab54",
+    "name": "Liverpool City Centre Overland Flow Path Mapping - Report",
+    "format": "PDF",
+    "url": "https://flooddata.ses.nsw.gov.au/dataset/fd520993-8d6a-4f09-b7a1-8ef7b1e942c2/resource/d971e883-26ab-4410-b289-8c5377caab54",
+    "last_modified": null
+   }
+  ]
+ },
+ {
+  "org": "liverpool-city-council",
+  "name": "liverpool-overland-flow-path-study-stage-2-report",
+  "title": "Liverpool Overland Flow Path Study Stage 2 - Final Report",
+  "notes": "This report documents the Study’s objectives, results and recommendations. * Section 1 introduces the study. * Section 2 provides some background information and a summary of available data. * Section 3 outlines the community consultation undertaken. * Section 4 outlines the general modelling approa",
+  "metadata_modified": "2026-01-19T05:31:04.336093",
+  "resources": [
+   {
+    "id": "6ba8052a-4f28-4f1a-9b25-5957de868e39",
+    "name": "Liverpool - Overland Flow Path Study Stage 2",
+    "format": "PDF",
+    "url": "https://flooddata.ses.nsw.gov.au/dataset/ec1ca086-696b-45dc-b86a-2881abe43ed9/resource/6ba8052a-4f28-4f1a-9b25-5957de868e39",
+    "last_modified": null
+   }
+  ]
+ },
+ {
+  "org": "liverpool-city-council",
+  "name": "liverpool-overland-flow-path-study-stage-4-report",
+  "title": "Liverpool Overland Flow Path Study Stage 4",
+  "notes": "#Conclusions The objective of the study was to undertake a preliminary investigation to identify and map sub-catchments and major overland flow paths within urban areas of the Liverpool LGA. This was achieved through the development of a flood model of the study area, underpinned by the detailed rep",
+  "metadata_modified": "2026-01-13T04:57:09.720562",
+  "resources": [
+   {
+    "id": "cb067dd9-8fed-4c50-a1bb-11258da389f3",
+    "name": "Liverpool Overland Flow Path Study Stage 4",
+    "format": "PDF",
+    "url": "https://flooddata.ses.nsw.gov.au/dataset/b069bc72-b981-4077-8a16-47c07f6dbd14/resource/cb067dd9-8fed-4c50-a1bb-11258da389f3",
+    "last_modified": null
+   }
+  ]
+ },
+ {
+  "org": "liverpool-city-council",
+  "name": "liverpool-overland-flow-path-study-stage-3-report",
+  "title": "Liverpool - Overland Flow Path Study Stage 3 - Report",
+  "notes": "Report + Appendix",
+  "metadata_modified": "2026-01-13T04:55:30.216882",
+  "resources": [
+   {
+    "id": "01c5afa1-782b-4f84-91c5-d01321bbf514",
+    "name": "Liverpool - Overland Flow Path Study Stage 3 - Report",
+    "format": "PDF",
+    "url": "https://flooddata.ses.nsw.gov.au/dataset/297a8667-7df5-4a35-b3e1-4fbfbd52f0bb/resource/01c5afa1-782b-4f84-91c5-d01321bbf514",
+    "last_modified": null
+   },
+   {
+    "id": "653b2c0d-fc9a-43f0-bcdd-aa1f5b8049f9",
+    "name": "Liverpool - Overland Flow Path Study Stage 3 - Appendix",
+    "format": "PDF",
+    "url": "https://flooddata.ses.nsw.gov.au/dataset/297a8667-7df5-4a35-b3e1-4fbfbd52f0bb/resource/653b2c0d-fc9a-43f0-bcdd-aa1f5b8049f9",
+    "last_modified": null
+   }
+  ]
+ },
+ {
+  "org": "liverpool-city-council",
+  "name": "liverpool-city-centre-overland-flow-path-mapping-hydraulic-model-outputs-tuflow",
+  "title": "Liverpool City Centre Overland Flow Path Mapping - Hydraulic Model Outputs (TUFLOW) - Raw",
+  "notes": "Hydraulic Model Outputs (TUFLOW) - Raw",
+  "metadata_modified": "2025-12-17T03:42:36.710599",
+  "resources": [
+   {
+    "id": "b194863b-1b8b-432d-b8af-e00b9a0c49be",
+    "name": "Liverpool City Centre Overland Flow Path Mapping - Hydraulic Model Outputs (TUFLOW) - Raw - 001",
+    "format": "ZIP",
+    "url": "https://flooddata.ses.nsw.gov.au/dataset/b1a7f30c-f7bd-44a3-9d93-1ba282ea8434/resource/b194863b-1b8b-432d-b8af-e00b9a0c49be",
+    "last_modified": null
+   },
+   {
+    "id": "2e0d550c-75e8-4ae4-b771-d5ff10e3005c",
+    "name": "Liverpool City Centre Overland Flow Path Mapping - Hydraulic Model Outputs (TUFLOW) - Raw - 002",
+    "format": "ZIP",
+    "url": "https://flooddata.ses.nsw.gov.au/dataset/b1a7f30c-f7bd-44a3-9d93-1ba282ea8434/resource/2e0d550c-75e8-4ae4-b771-d5ff10e3005c",
+    "last_modified": null
+   },
+   {
+    "id": "6a981755-e3a9-4db0-a907-931245f853f0",
+    "name": "Liverpool City Centre Overland Flow Path Mapping - Hydraulic Model Outputs (TUFLOW) - Raw - 003",
+    "format": "ZIP",
+    "url": "https://flooddata.ses.nsw.gov.au/dataset/b1a7f30c-f7bd-44a3-9d93-1ba282ea8434/resource/6a981755-e3a9-4db0-a907-931245f853f0",
+    "last_modified": null
+   }
+  ]
+ },
+ {
+  "org": "liverpool-city-council",
+  "name": "liverpool-city-centre-overland-flow-path-mapping-aerial-imagery",
+  "title": "Liverpool City Centre Overland Flow Path Mapping - Aerial Imagery",
+  "notes": "Aerial Imagery",
+  "metadata_modified": "2025-12-17T03:42:09.557515",
+  "resources": [
+   {
+    "id": "cd948fb3-e6b8-4bc4-97bf-a1f6c860e8e7",
+    "name": "Liverpool City Centre Overland Flow Path Mapping - Aerial Imagery",
+    "format": "ZIP",
+    "url": "https://flooddata.ses.nsw.gov.au/dataset/b1012d44-01a5-4bbb-8b65-449489bd7ecb/resource/cd948fb3-e6b8-4bc4-97bf-a1f6c860e8e7",
+    "last_modified": null
+   }
+  ]
+ },
+ {
+  "org": "liverpool-city-council",
+  "name": "liverpool-city-centre-overland-flow-path-mapping-gis-layers",
+  "title": "Liverpool City Centre Overland Flow Path Mapping - GIS Layers",
+  "notes": "GIS Layers",
+  "metadata_modified": "2025-12-17T03:41:59.541337",
+  "resources": [
+   {
+    "id": "6616687b-a853-4f6b-9160-f3ee059f2b85",
+    "name": "Liverpool City Centre Overland Flow Path Mapping - GIS Layers",
+    "format": "ZIP",
+    "url": "https://flooddata.ses.nsw.gov.au/dataset/7cd82ac7-0840-4bfa-9c9b-315dbed8966f/resource/6616687b-a853-4f6b-9160-f3ee059f2b85",
+    "last_modified": null
+   }
+  ]
+ },
+ {
+  "org": "liverpool-city-council",
+  "name": "liverpool-city-centre-overland-flow-path-mapping-hydrological-model-inputs-xp-rafts",
+  "title": "Liverpool City Centre Overland Flow Path Mapping - Hydrological Model Inputs (XP-RAFTS)",
+  "notes": "Hydrological Model Inputs (XP-RAFTS)",
+  "metadata_modified": "2025-12-17T03:31:57.498555",
+  "resources": [
+   {
+    "id": "c3ed2655-2fd0-4374-8ae3-dd9d28c8077c",
+    "name": "Liverpool City Centre Overland Flow Path Mapping - Hydrological Model Inputs (XP-RAFTS)",
+    "format": "ZIP",
+    "url": "https://flooddata.ses.nsw.gov.au/dataset/14ee5a64-481d-4cd1-8180-660fd8164c7a/resource/c3ed2655-2fd0-4374-8ae3-dd9d28c8077c",
+    "last_modified": null
+   }
+  ]
+ },
+ {
+  "org": "liverpool-city-council",
+  "name": "liverpool-city-centre-overland-flow-path-mapping-hydraulic-model-outputs-tuflow-post-processed",
+  "title": "Liverpool City Centre Overland Flow Path Mapping - Hydraulic Model Outputs (TUFLOW) - Processed",
+  "notes": "Hydraulic Model Outputs (TUFLOW) - Processed",
+  "metadata_modified": "2025-12-17T03:16:24.707555",
+  "resources": [
+   {
+    "id": "cbf07921-dba6-40e8-9715-41dd74545ef1",
+    "name": "Liverpool City Centre Overland Flow Path Mapping - Hydraulic Model Outputs (TUFLOW) - Processed",
+    "format": "ZIP",
+    "url": "https://flooddata.ses.nsw.gov.au/dataset/39a6c8f0-f402-47a7-a2ff-78c02f52b040/resource/cbf07921-dba6-40e8-9715-41dd74545ef1",
+    "last_modified": null
+   }
+  ]
+ },
+ {
+  "org": "liverpool-city-council",
+  "name": "liverpool-city-centre-overland-flow-path-mapping-hydrological-model-catchmentsim",
+  "title": "Liverpool City Centre Overland Flow Path Mapping - Hydrological Model (CatchmentSIM)",
+  "notes": "Hydrological Model (CatchmentSIM) - Inputs and Outputs",
+  "metadata_modified": "2025-12-17T03:13:53.024217",
+  "resources": [
+   {
+    "id": "24e54ac4-b4fd-4252-b6d1-9107589328d4",
+    "name": "Liverpool City Centre Overland Flow Path Mapping - Hydrological Model (CatchmentSIM) - Inputs&Outputs",
+    "format": "ZIP",
+    "url": "https://flooddata.ses.nsw.gov.au/dataset/80e29559-ba64-4209-9509-2d52c6e85032/resource/24e54ac4-b4fd-4252-b6d1-9107589328d4",
+    "last_modified": null
+   }
+  ]
+ },
+ {
+  "org": "liverpool-city-council",
+  "name": "liverpool-city-centre-overland-flow-path-mapping-spatial-flood-layers",
+  "title": "Liverpool City Centre Overland Flow Path Mapping - Spatial Flood Layers",
+  "notes": "* Flood Depths; * Flood Levels; * Flood Velocity; * Flood VelocityxDepth; * Flood Hazard; * Hydraulic Categorisation; * Flood Risk Precinct; * Sensitivity Analysis Results. ",
+  "metadata_modified": "2025-12-17T03:13:29.962544",
+  "resources": [
+   {
+    "id": "dd125e35-8716-4670-8731-3a7c300c914c",
+    "name": "Liverpool City Centre Overland Flow Path Mapping - Flood Depths",
+    "format": "ZIP",
+    "url": "https://flooddata.ses.nsw.gov.au/dataset/4492bab9-c215-4274-bc0c-4845047ba5ea/resource/dd125e35-8716-4670-8731-3a7c300c914c",
+    "last_modified": null
+   },
+   {
+    "id": "81b0fd83-0328-4acf-b355-33e352172950",
+    "name": "Liverpool City Centre Overland Flow Path Mapping - Flood Hazard",
+    "format": "ZIP",
+    "url": "https://flooddata.ses.nsw.gov.au/dataset/4492bab9-c215-4274-bc0c-4845047ba5ea/resource/81b0fd83-0328-4acf-b355-33e352172950",
+    "last_modified": null
+   },
+   {
+    "id": "0a147d01-437d-441a-b7fd-4e4a6407940d",
+    "name": "Liverpool City Centre Overland Flow Path Mapping - Flood Levels",
+    "format": "ZIP",
+    "url": "https://flooddata.ses.nsw.gov.au/dataset/4492bab9-c215-4274-bc0c-4845047ba5ea/resource/0a147d01-437d-441a-b7fd-4e4a6407940d",
+    "last_modified": null
+   },
+   {
+    "id": "f5937977-54b7-432d-ba1c-e20f2ebe7460",
+    "name": "Liverpool City Centre Overland Flow Path Mapping - Flood Risk Precinct",
+    "format": "ZIP",
+    "url": "https://flooddata.ses.nsw.gov.au/dataset/4492bab9-c215-4274-bc0c-4845047ba5ea/resource/f5937977-54b7-432d-ba1c-e20f2ebe7460",
+    "last_modified": null
+   },
+   {
+    "id": "5f395b29-3d51-46c3-8bec-aff7b4879f2f",
+    "name": "Liverpool City Centre Overland Flow Path Mapping - Flood VelocityxDepth",
+    "format": "ZIP",
+    "url": "https://flooddata.ses.nsw.gov.au/dataset/4492bab9-c215-4274-bc0c-4845047ba5ea/resource/5f395b29-3d51-46c3-8bec-aff7b4879f2f",
+    "last_modified": null
+   },
+   {
+    "id": "d3016e97-1f84-4899-8af6-1020e6ed71a0",
+    "name": "Liverpool City Centre Overland Flow Path Mapping - Flood Velocity",
+    "format": "ZIP",
+    "url": "https://flooddata.ses.nsw.gov.au/dataset/4492bab9-c215-4274-bc0c-4845047ba5ea/resource/d3016e97-1f84-4899-8af6-1020e6ed71a0",
+    "last_modified": null
+   },
+   {
+    "id": "669c4eb7-97f3-4856-9dd1-d429ab011da8",
+    "name": "Liverpool City Centre Overland Flow Path Mapping - Hydraulic Categorisation",
+    "format": "ZIP",
+    "url": "https://flooddata.ses.nsw.gov.au/dataset/4492bab9-c215-4274-bc0c-4845047ba5ea/resource/669c4eb7-97f3-4856-9dd1-d429ab011da8",
+    "last_modified": null
+   },
+   {
+    "id": "51dde280-96d0-4683-a933-9416d2b9ccaf",
+    "name": "Liverpool City Centre Overland Flow Path Mapping - Sensitivity Analysis Results",
+    "format": "ZIP",
+    "url": "https://flooddata.ses.nsw.gov.au/dataset/4492bab9-c215-4274-bc0c-4845047ba5ea/resource/51dde280-96d0-4683-a933-9416d2b9ccaf",
+    "last_modified": null
+   }
+  ]
+ },
+ {
+  "org": "liverpool-city-council",
+  "name": "liverpool-city-centre-overland-flow-path-mapping-post-processed-summary",
+  "title": "Liverpool City Centre Overland Flow Path Mapping - Post-Processed Summary",
+  "notes": "Liverpool CBD Model Scenarios",
+  "metadata_modified": "2025-12-17T03:11:13.702261",
+  "resources": [
+   {
+    "id": "021286bb-86e6-4563-ad67-ab53abe2a7dd",
+    "name": "Liverpool City Centre Overland Flow Path Mapping - Post-Processed Summary",
+    "format": "XLSX",
+    "url": "https://flooddata.ses.nsw.gov.au/dataset/8563a744-853b-447a-84e1-35b1af57097f/resource/021286bb-86e6-4563-ad67-ab53abe2a7dd",
+    "last_modified": null
+   }
+  ]
+ },
+ {
+  "org": "liverpool-city-council",
+  "name": "liverpool-city-centre-overland-flow-path-mapping-dem",
+  "title": "Liverpool City Centre Overland Flow Path Mapping - DEM",
+  "notes": "DEM",
+  "metadata_modified": "2025-12-17T03:10:12.490753",
+  "resources": [
+   {
+    "id": "289ad0a9-4df3-4f89-82c4-822294683e38",
+    "name": "Liverpool City Centre Overland Flow Path Mapping - DEM",
+    "format": "ZIP",
+    "url": "https://flooddata.ses.nsw.gov.au/dataset/0ac0c9cd-ace7-4262-a568-03cda8d721bf/resource/289ad0a9-4df3-4f89-82c4-822294683e38",
+    "last_modified": null
+   }
+  ]
+ },
+ {
+  "org": "liverpool-city-council",
+  "name": "liverpool-city-centre-overland-flow-path-mapping-hydraulic-model-inputs-tuflow",
+  "title": "Liverpool City Centre Overland Flow Path Mapping - Hydraulic Model Inputs (TUFLOW)",
+  "notes": "Hydraulic Model Inputs (TUFLOW)",
+  "metadata_modified": "2025-12-17T02:52:51.937959",
+  "resources": [
+   {
+    "id": "30baa889-3715-42dc-9798-db5f01eb8bda",
+    "name": "Liverpool City Centre Overland Flow Path Mapping - Hydraulic Model Inputs (TUFLOW)",
+    "format": "ZIP",
+    "url": "https://flooddata.ses.nsw.gov.au/dataset/80856ec2-e249-4a34-9b02-feb60f114974/resource/30baa889-3715-42dc-9798-db5f01eb8bda",
+    "last_modified": null
+   }
+  ]
+ },
+ {
+  "org": "liverpool-city-council",
+  "name": "liverpool-city-centre-overland-flow-path-mapping-hydrological-model-outputs-xp-rafts",
+  "title": "Liverpool City Centre Overland Flow Path Mapping - Hydrological Model Outputs (XP-RAFTS)",
+  "notes": "Hydrological Model Outputs (XP-RAFTS)",
+  "metadata_modified": "2025-12-17T02:51:39.366688",
+  "resources": [
+   {
+    "id": "7c926cee-39ba-407d-ac86-70b6b7729121",
+    "name": "Liverpool City Centre Overland Flow Path Mapping - Hydrological Model Outputs (XP-RAFTS)",
+    "format": "ZIP",
+    "url": "https://flooddata.ses.nsw.gov.au/dataset/1777f2c4-26bb-4902-aa54-6e0223ccdc12/resource/7c926cee-39ba-407d-ac86-70b6b7729121",
+    "last_modified": null
+   }
+  ]
+ },
+ {
+  "org": "liverpool-city-council",
+  "name": "liverpool-cbd-trunk-drainage-works-george-and-scott-streets-design-plans",
+  "title": "Liverpool CBD Trunk Drainage Works - George and Scott Streets - Design Plans",
+  "notes": "Stormwater Drainage Amplification Works -Scott St. to Moore St. George St., Liverpool",
+  "metadata_modified": "2025-12-17T02:08:34.955886",
+  "resources": [
+   {
+    "id": "1273afbf-c088-4f88-9ad1-6c478a86ed92",
+    "name": "Liverpool CBD Trunk Drainage Works - George and Scott Streets - Design Drawings",
+    "format": "PDF",
+    "url": "https://flooddata.ses.nsw.gov.au/dataset/b89ad858-8304-46ab-bb91-6246a60ccbd9/resource/1273afbf-c088-4f88-9ad1-6c478a86ed92",
+    "last_modified": null
+   },
+   {
+    "id": "ad5a8c87-e694-46db-9b13-a910f5ca0fc4",
+    "name": "Liverpool CBD Trunk Drainage Works - George and Scott Streets - Technical Specifications",
+    "format": "DOC",
+    "url": "https://flooddata.ses.nsw.gov.au/dataset/b89ad858-8304-46ab-bb91-6246a60ccbd9/resource/ad5a8c87-e694-46db-9b13-a910f5ca0fc4",
+    "last_modified": null
+   }
+  ]
+ },
+ {
+  "org": "northern-beaches-council",
+  "name": "narrabeen-lagoon-flood-study-report-2013",
+  "title": "Narrabeen Lagoon Flood Study Report",
+  "notes": "The Narrabeen Lagoon Flood Study has been prepared for Warringah and Pittwater Councils (The Councils) to define the existing flood behaviour in the Narrabeen Lagoon catchment and establish the basis for subsequent floodplain management activities. This study updates previous studies on the Lagoon i",
+  "metadata_modified": "2026-04-08T03:25:37.347389",
+  "resources": [
+   {
+    "id": "6fe39b68-076c-495c-9215-8143b5740d06",
+    "name": "Narrabeen Lagoon Flood Study",
+    "format": "PDF",
+    "url": "https://flooddata.ses.nsw.gov.au/dataset/a20a2ede-e052-45ca-b733-cc85d4ae21c2/resource/6fe39b68-076c-495c-9215-8143b5740d06",
+    "last_modified": null
+   }
+  ]
+ },
+ {
+  "org": "northern-beaches-council",
+  "name": "south-creek-flood-study-may-2006-report",
+  "title": "South Creek Flood Study",
+  "notes": "South Creek is a 7.3 km2 catchment which drains to the southern shore of Narrabeen Lagoon through Cromer Golf Course (Figures 1, 2 and 3). The catchment area is predominantly occupied by urban development (59%) including both residential and commercial/light industrial development, with the remainde",
+  "metadata_modified": "2026-01-15T01:33:38.407796",
+  "resources": [
+   {
+    "id": "a2c820df-40e6-46a4-bb0b-c24d0ca7c8ab",
+    "name": "South Creek - Flood Study May 2006",
+    "format": "PDF",
+    "url": "https://flooddata.ses.nsw.gov.au/dataset/d571672a-47c3-4263-a555-149949830203/resource/a2c820df-40e6-46a4-bb0b-c24d0ca7c8ab",
+    "last_modified": null
+   }
+  ]
+ },
+ {
+  "org": "northern-beaches-council",
+  "name": "great-mackerel-beach-floodplain-risk-management-study-plan-report",
+  "title": "Great Mackerel Beach Floodplain Risk Management Study & Plan",
+  "notes": "#Study area As previously mentioned, Great Mackerel Beach (Figure 1) is a small coastal community on the western shore of Pittwater. The entrance system at Great Mackerel Beach is termed an ICOLL (Intermittent Open and Closed Lake and Lagoon) as the entrance to the lagoon is periodically closed. Onl",
+  "metadata_modified": "2026-01-15T00:49:24.252711",
+  "resources": [
+   {
+    "id": "f2aada56-eaed-491a-b07d-e4bc0ea298fe",
+    "name": "Great Mackerel Beach - Floodplain Risk Management Study & Plan",
+    "format": "PDF",
+    "url": "https://flooddata.ses.nsw.gov.au/dataset/e4e90b2f-3a9d-4a3d-addd-5452206a2105/resource/f2aada56-eaed-491a-b07d-e4bc0ea298fe",
+    "last_modified": null
+   }
+  ]
+ },
+ {
+  "org": "northern-beaches-council",
+  "name": "south-creek-floodplain-risk-management-plan-report",
+  "title": "South Creek Floodplain Risk Management Plan report",
+  "notes": "#Study Context The preparation of this plan follows on from the Flood Study (WMA, 2006) and Floodplain Risk Management Study (Cardno Lawson Treloar, 2007a) and forms the fifth stage of the Floodplain Risk Management Process which includes: * Formation of a Committee * Data Collection * Flood Study *",
+  "metadata_modified": "2026-01-14T02:30:16.621235",
+  "resources": [
+   {
+    "id": "472099ad-c911-452b-b2ce-dcd52225ddb1",
+    "name": "South Creek - Floodplain Risk Management Plan",
+    "format": "PDF",
+    "url": "https://flooddata.ses.nsw.gov.au/dataset/2fd342f1-43fd-438c-b8fb-db9a570e96d8/resource/472099ad-c911-452b-b2ce-dcd52225ddb1",
+    "last_modified": null
+   }
+  ]
+ },
+ {
+  "org": "northern-beaches-council",
+  "name": "dee-why-south-catchment-flood-study-report",
+  "title": "Dee Why South Catchment Flood Study",
+  "notes": "This report has been prepared for Warringah Council to define the nature and extent of flood in the Dee Why South Catchment. Flood modelling was completed to define flood behaviour for a range of storm events from 1 year Average Recurrence Interval (ARI) to Probable Maximum Flood (PMF). The modellin",
+  "metadata_modified": "2026-01-14T00:57:06.141872",
+  "resources": [
+   {
+    "id": "b573ee0d-fe38-4781-9005-016cd06e6a77",
+    "name": "Dee Why South Catchment Flood Study",
+    "format": "PDF",
+    "url": "https://flooddata.ses.nsw.gov.au/dataset/a3ee2883-3b76-4d37-8d99-24d28ec5b8f3/resource/b573ee0d-fe38-4781-9005-016cd06e6a77",
+    "last_modified": null
+   }
+  ]
+ },
+ {
+  "org": "northern-beaches-council",
+  "name": "manly-lagoon-flood-study-final-report2013",
+  "title": "Manly Lagoon Flood Study",
+  "notes": "#Conclusions Provided below is a summary of the key findings of the Flood Study, in particular some of the important considerations for future floodplain risk management in the catchment: * The design flood conditions documented in the report typically provide for a small increase in previously adop",
+  "metadata_modified": "2026-01-13T04:59:54.269654",
+  "resources": [
+   {
+    "id": "6f7870a1-20dc-431f-99bb-e7995d3f2451",
+    "name": "Manly Lagoon - Flood Study Final Report",
+    "format": "PDF",
+    "url": "https://flooddata.ses.nsw.gov.au/dataset/1a81a729-e0af-4bce-8ec2-adf337b68e77/resource/6f7870a1-20dc-431f-99bb-e7995d3f2451",
+    "last_modified": null
+   }
+  ]
+ },
+ {
+  "org": "northern-beaches-council",
+  "name": "mccarrs-creek-mona-vale-and-bayview-flood-study-report",
+  "title": "McCarrs Creek, Mona Vale and Bayview Flood Study Report",
+  "notes": "This report details the results and findings of the Flood Study investigations. The key elements include: • a description of the study area; • a summary of available historical flood related data; • establishment and calibration of the hydrologic and hydraulic models; • the estimation of design floo",
+  "metadata_modified": "2025-12-17T05:24:21.402572",
+  "resources": [
+   {
+    "id": "47e16628-61d1-485b-9851-c5393b11e8aa",
+    "name": "McCarrs Creek, Mona Vale and Bayview Flood Study 2017",
+    "format": "PDF",
+    "url": "https://flooddata.ses.nsw.gov.au/dataset/05c1679f-44bd-40d2-a0d6-8152d256a4df/resource/47e16628-61d1-485b-9851-c5393b11e8aa",
+    "last_modified": null
+   }
+  ]
+ },
+ {
+  "org": "northern-beaches-council",
+  "name": "manly-to-seaforth-data-description",
+  "title": "Manly to Seaforth Data Description",
+  "notes": "Cardno was commissioned by Northern Beaches Council to undertake the Manly to Seaforth Flood Study for urban catchments, which comprises the suburbs of Clontarf and Balgowlah Heights and parts of Seaforth, Balgowlah, Fairlight, and Manly. A number of modelling scenarios were assessed to determine th",
+  "metadata_modified": "2025-12-17T05:01:34.758025",
+  "resources": [
+   {
+    "id": "8aef85bd-298b-43b1-9372-2c8293c2c694",
+    "name": "Manly to Seaforth Flood Study Data Description",
+    "format": "PDF",
+    "url": "https://flooddata.ses.nsw.gov.au/dataset/27cd1470-accf-40a6-8c6d-792e8f043983/resource/8aef85bd-298b-43b1-9372-2c8293c2c694",
+    "last_modified": null
+   }
+  ]
+ },
+ {
+  "org": "northern-beaches-council",
+  "name": "careel-creek-floodplain-risk-management-plan-community-consultation-questionnaire-responses",
+  "title": "Careel Creek Floodplain Risk Management Plan - Community Consultation (Questionnaire Responses)",
+  "notes": "Community Consultation (Questionnaire Responses)",
+  "metadata_modified": "2025-12-17T04:02:22.907433",
+  "resources": [
+   {
+    "id": "229a8fde-8552-443e-86b5-70aada52510d",
+    "name": "Careel Creek Floodplain Risk Management Plan - Community Consultation (Questionnaire Responses)",
+    "format": "ZIP",
+    "url": "https://flooddata.ses.nsw.gov.au/dataset/c16e03b1-1245-4ef7-9275-78b4581154a8/resource/229a8fde-8552-443e-86b5-70aada52510d",
+    "last_modified": null
+   }
+  ]
+ },
+ {
+  "org": "northern-beaches-council",
+  "name": "mccarrs-creek-mona-vale-and-bayview-flood-study-2017-report",
+  "title": "McCarrs Creek, Mona Vale and Bayview Flood Study, 2017 - Report",
+  "notes": " Main Report; Appendix A - Flood Mapping; Appendix B - Community Consultation; Appendix C - Design Hydrographs",
+  "metadata_modified": "2025-12-17T03:59:28.501730",
+  "resources": [
+   {
+    "id": "ee8f4bd5-d224-44c7-8ce1-daba083b0727",
+    "name": "McCarrs Creek, Mona Vale and Bayview Flood Study, 2017 - Main Report",
+    "format": "PDF",
+    "url": "https://flooddata.ses.nsw.gov.au/dataset/ce4eaf49-1214-48ae-9d5e-ebc12116ad49/resource/ee8f4bd5-d224-44c7-8ce1-daba083b0727",
+    "last_modified": null
+   },
+   {
+    "id": "539b01cc-dac1-4743-8a8e-9f7aa2960dfd",
+    "name": "McCarrs Creek, Mona Vale and Bayview Flood Study, 2017 - App A - Flood Mapping",
+    "format": "PDF",
+    "url": "https://flooddata.ses.nsw.gov.au/dataset/ce4eaf49-1214-48ae-9d5e-ebc12116ad49/resource/539b01cc-dac1-4743-8a8e-9f7aa2960dfd",
+    "last_modified": null
+   },
+   {
+    "id": "f6bbbb46-cc3f-4e7b-a5da-a23b917010b8",
+    "name": "McCarrs Creek, Mona Vale and Bayview Flood Study, 2017 - App B - Community Consultation",
+    "format": "PDF",
+    "url": "https://flooddata.ses.nsw.gov.au/dataset/ce4eaf49-1214-48ae-9d5e-ebc12116ad49/resource/f6bbbb46-cc3f-4e7b-a5da-a23b917010b8",
+    "last_modified": null
+   },
+   {
+    "id": "ea40183f-d07a-4402-a250-bc5c0640cfbb",
+    "name": "McCarrs Creek, Mona Vale and Bayview Flood Study, 2017 - App C - Design Hydrographs",
+    "format": "PDF",
+    "url": "https://flooddata.ses.nsw.gov.au/dataset/ce4eaf49-1214-48ae-9d5e-ebc12116ad49/resource/ea40183f-d07a-4402-a250-bc5c0640cfbb",
+    "last_modified": null
+   }
+  ]
+ },
+ {
+  "org": "penrith-city-council",
+  "name": "tuflow-2d-model-outputs-for-calibration-events",
+  "title": "TUFLOW 2D Model Outputs for Calibration Events",
+  "notes": "TUFLOW 2D Model Outputs for Calibration Events",
+  "metadata_modified": "2026-03-02T03:02:46.654398",
+  "resources": [
+   {
+    "id": "273fe41c-297f-4eb7-b2fc-5580c43a7153",
+    "name": "TUFLOW 2D Model Outputs for Feb2012 Event",
+    "format": "ZIP",
+    "url": "https://flooddata.ses.nsw.gov.au/dataset/9a58d91b-19a2-41e3-87ec-20e828f8d061/resource/273fe41c-297f-4eb7-b2fc-5580c43a7153",
+    "last_modified": null
+   },
+   {
+    "id": "c7da70d5-9384-4b60-ab95-e1a153dec93c",
+    "name": "TUFLOW 2D Model Outputs for Feb2020 Event (Part 1)",
+    "format": "ZIP",
+    "url": "https://flooddata.ses.nsw.gov.au/dataset/9a58d91b-19a2-41e3-87ec-20e828f8d061/resource/c7da70d5-9384-4b60-ab95-e1a153dec93c",
+    "last_modified": null
+   },
+   {
+    "id": "99637dc5-94ad-456a-822b-e2dd046b0ecf",
+    "name": "TUFLOW 2D Model Outputs for Feb2020 Event (Part 2)",
+    "format": "ZIP",
+    "url": "https://flooddata.ses.nsw.gov.au/dataset/9a58d91b-19a2-41e3-87ec-20e828f8d061/resource/99637dc5-94ad-456a-822b-e2dd046b0ecf",
+    "last_modified": null
+   },
+   {
+    "id": "ec61b23f-54ef-4713-bec4-2664706e4467",
+    "name": "TUFLOW 2D Model Outputs for Feb2020 Event (Part 3)",
+    "format": "ZIP",
+    "url": "https://flooddata.ses.nsw.gov.au/dataset/9a58d91b-19a2-41e3-87ec-20e828f8d061/resource/ec61b23f-54ef-4713-bec4-2664706e4467",
+    "last_modified": null
+   },
+   {
+    "id": "6a375acb-4a6e-46a0-97d9-981c240f7773",
+    "name": "TUFLOW 2D Model Outputs for Mar2021 Event (Part 1)",
+    "format": "ZIP",
+    "url": "https://flooddata.ses.nsw.gov.au/dataset/9a58d91b-19a2-41e3-87ec-20e828f8d061/resource/6a375acb-4a6e-46a0-97d9-981c240f7773",
+    "last_modified": null
+   },
+   {
+    "id": "88c14b64-7fa8-4fe3-9450-7339b5bea0f5",
+    "name": "TUFLOW 2D Model Outputs for Mar2021 Event (Part 2)",
+    "format": "ZIP",
+    "url": "https://flooddata.ses.nsw.gov.au/dataset/9a58d91b-19a2-41e3-87ec-20e828f8d061/resource/88c14b64-7fa8-4fe3-9450-7339b5bea0f5",
+    "last_modified": null
+   },
+   {
+    "id": "fbedb068-d807-4fc6-9b7d-200a25919333",
+    "name": "TUFLOW 2D Model Outputs for Mar2021 Event (Part 3)",
+    "format": "ZIP",
+    "url": "https://flooddata.ses.nsw.gov.au/dataset/9a58d91b-19a2-41e3-87ec-20e828f8d061/resource/fbedb068-d807-4fc6-9b7d-200a25919333",
+    "last_modified": null
+   },
+   {
+    "id": "4e99564c-51b2-40a5-8e63-93dfc390ac9b",
+    "name": "TUFLOW 2D Model Outputs for Mar2021 Event (Part 4)",
+    "format": "ZIP",
+    "url": "https://flooddata.ses.nsw.gov.au/dataset/9a58d91b-19a2-41e3-87ec-20e828f8d061/resource/4e99564c-51b2-40a5-8e63-93dfc390ac9b",
+    "last_modified": null
+   },
+   {
+    "id": "75c9891c-d661-4944-a9ce-9b7700e87c4f",
+    "name": "TUFLOW 2D Model Outputs for Mar2022 Event (Part 1)",
+    "format": "ZIP",
+    "url": "https://flooddata.ses.nsw.gov.au/dataset/9a58d91b-19a2-41e3-87ec-20e828f8d061/resource/75c9891c-d661-4944-a9ce-9b7700e87c4f",
+    "last_modified": null
+   },
+   {
+    "id": "8c53e96b-6e6d-4c70-930c-a9856183e29a",
+    "name": "TUFLOW 2D Model Outputs for Mar2022 Event (Part 2)",
+    "format": "ZIP",
+    "url": "https://flooddata.ses.nsw.gov.au/dataset/9a58d91b-19a2-41e3-87ec-20e828f8d061/resource/8c53e96b-6e6d-4c70-930c-a9856183e29a",
+    "last_modified": null
+   },
+   {
+    "id": "987cf450-ed2e-4177-8031-6c0ecf3e1d2e",
+    "name": "TUFLOW 2D Model Outputs for Mar2022 Event (Part 3)",
+    "format": "ZIP",
+    "url": "https://flooddata.ses.nsw.gov.au/dataset/9a58d91b-19a2-41e3-87ec-20e828f8d061/resource/987cf450-ed2e-4177-8031-6c0ecf3e1d2e",
+    "last_modified": null
+   },
+   {
+    "id": "fa53c9a4-473d-4de6-a175-75d63f5a2aa5",
+    "name": "TUFLOW 2D Model Outputs for Mar2022 Event (Part 4)",
+    "format": "ZIP",
+    "url": "https://flooddata.ses.nsw.gov.au/dataset/9a58d91b-19a2-41e3-87ec-20e828f8d061/resource/fa53c9a4-473d-4de6-a175-75d63f5a2aa5",
+    "last_modified": null
+   },
+   {
+    "id": "9f50965d-cb9f-4d17-916b-9b1846d79c48",
+    "name": "TUFLOW 2D Model Outputs for Mar2022 Event (Part 5)",
+    "format": "ZIP",
+    "url": "https://flooddata.ses.nsw.gov.au/dataset/9a58d91b-19a2-41e3-87ec-20e828f8d061/resource/9f50965d-cb9f-4d17-916b-9b1846d79c48",
+    "last_modified": null
+   }
+  ]
+ },
+ {
+  "org": "penrith-city-council",
+  "name": "peach-tree-and-lower-surveyors-creek-flood-study-gis",
+  "title": "Peach Tree and Lower Surveyors Creek Flood Study - GIS",
+  "notes": "* Calibration (Historical Flood Marks and Historical Rainfall Data); * Miscellaneous (Collected data, peak discharge locations, potential flood mitigation options, questionnaire responses, rainfall and stream gauges, remote sensing land use map, etc)",
+  "metadata_modified": "2025-12-17T03:48:07.397501",
+  "resources": [
+   {
+    "id": "23ab06c8-ae16-470e-b88d-f7800cfc0b2c",
+    "name": "Peach Tree and Lower Surveyors Creek Flood Study - Calibration",
+    "format": "ZIP",
+    "url": "https://flooddata.ses.nsw.gov.au/dataset/b2fe7019-4c70-4653-abad-186ac9945ef2/resource/23ab06c8-ae16-470e-b88d-f7800cfc0b2c",
+    "last_modified": null
+   },
+   {
+    "id": "a84154bc-93fc-44a0-aa01-9f657009238f",
+    "name": "Peach Tree and Lower Surveyors Creek Flood Study - Miscellaneous",
+    "format": "ZIP",
+    "url": "https://flooddata.ses.nsw.gov.au/dataset/b2fe7019-4c70-4653-abad-186ac9945ef2/resource/a84154bc-93fc-44a0-aa01-9f657009238f",
+    "last_modified": null
+   }
+  ]
+ },
+ {
+  "org": "randwick-city-council",
+  "name": "kensington-to-centennial-park-frmsp-report",
+  "title": "Kensington to Centennial Park FRMSP - Report",
+  "notes": "Volume 1 and Volume 2",
+  "metadata_modified": "2026-01-19T02:59:30.739548",
+  "resources": [
+   {
+    "id": "f88fceaa-0f19-4cae-9d7f-9b6ead366dbf",
+    "name": "Kensington to Centennial Park FRMSP - Report (Volume 1)",
+    "format": "PDF",
+    "url": "https://flooddata.ses.nsw.gov.au/dataset/95421e1a-bd05-4cb7-b75b-3be8147a0221/resource/f88fceaa-0f19-4cae-9d7f-9b6ead366dbf",
+    "last_modified": null
+   },
+   {
+    "id": "3e1b0feb-9506-41b3-852f-a46c88cdd585",
+    "name": "Kensington to Centennial Park FRMSP - Report (Volume 2)",
+    "format": "PDF",
+    "url": "https://flooddata.ses.nsw.gov.au/dataset/95421e1a-bd05-4cb7-b75b-3be8147a0221/resource/3e1b0feb-9506-41b3-852f-a46c88cdd585",
+    "last_modified": null
+   }
+  ]
+ },
+ {
+  "org": "randwick-city-council",
+  "name": "kensington-to-centennial-park-frmsp-hydraulic-model-outputs-tuflow",
+  "title": "Kensington to Centennial Park FRMSP - Hydraulic Model Outputs (TUFLOW)",
+  "notes": "Hydraulic Model Outputs (TUFLOW)",
+  "metadata_modified": "2025-12-17T03:41:09.087947",
+  "resources": [
+   {
+    "id": "129cae16-b4b1-4e3b-8cde-a2e556596236",
+    "name": "Kensington to Centennial Park FRMSP - Hydraulic Model Outputs (TUFLOW)",
+    "format": "ZIP",
+    "url": "https://flooddata.ses.nsw.gov.au/dataset/140b9aca-1c7c-4280-9ba2-739e4e968b75/resource/129cae16-b4b1-4e3b-8cde-a2e556596236",
+    "last_modified": null
+   },
+   {
+    "id": "d095331f-7501-42b8-86b0-cce25057ddc0",
+    "name": "Kensington to Centennial Park FRMSP - Hydraulic Model Outputs (TUFLOW) - Options",
+    "format": "ZIP",
+    "url": "https://flooddata.ses.nsw.gov.au/dataset/140b9aca-1c7c-4280-9ba2-739e4e968b75/resource/d095331f-7501-42b8-86b0-cce25057ddc0",
+    "last_modified": null
+   }
+  ]
+ },
+ {
+  "org": "randwick-city-council",
+  "name": "kensington-to-centennial-park-frmsp-property-tagging-database",
+  "title": "Kensington to Centennial Park FRMSP - Property Tagging Database",
+  "notes": "Property Tagging Database",
+  "metadata_modified": "2025-12-17T03:40:30.985643",
+  "resources": [
+   {
+    "id": "e4b93f16-ca7e-4904-8f72-5477323aab44",
+    "name": "Kensington to Centennial Park FRMSP - Property Tagging Database",
+    "format": "ZIP",
+    "url": "https://flooddata.ses.nsw.gov.au/dataset/a0e31b27-69d4-43c9-bf68-5bf81c3df95d/resource/e4b93f16-ca7e-4904-8f72-5477323aab44",
+    "last_modified": null
+   }
+  ]
+ },
+ {
+  "org": "randwick-city-council",
+  "name": "kensington-to-centennial-park-frmsp-spatial-flood-layers",
+  "title": "Kensington to Centennial Park FRMSP - Processed Results",
+  "notes": "* Flood Depth; * Flood Velocity; * Water Level; * Water Level Contours; * Flood Hazard; * Hydraulic Categories; * FERP Classification; * Z0 and Z1; * Pipe Capacity.",
+  "metadata_modified": "2025-12-17T03:40:18.618029",
+  "resources": [
+   {
+    "id": "505562d6-fad2-460f-bb4d-49d6851b92ce",
+    "name": "Kensington to Centennial Park FRMSP - FERP Classification",
+    "format": "ZIP",
+    "url": "https://flooddata.ses.nsw.gov.au/dataset/bf2e8186-eddf-478b-9ee0-6bd6fe0f6c2a/resource/505562d6-fad2-460f-bb4d-49d6851b92ce",
+    "last_modified": null
+   },
+   {
+    "id": "94245457-7388-4438-a05c-c301c1baa876",
+    "name": "Kensington to Centennial Park FRMSP - Flood Depth",
+    "format": "ZIP",
+    "url": "https://flooddata.ses.nsw.gov.au/dataset/bf2e8186-eddf-478b-9ee0-6bd6fe0f6c2a/resource/94245457-7388-4438-a05c-c301c1baa876",
+    "last_modified": null
+   },
+   {
+    "id": "a90f0922-a7d6-4b63-bb19-579afd0b421c",
+    "name": "Kensington to Centennial Park FRMSP - Flood Hazard",
+    "format": "ZIP",
+    "url": "https://flooddata.ses.nsw.gov.au/dataset/bf2e8186-eddf-478b-9ee0-6bd6fe0f6c2a/resource/a90f0922-a7d6-4b63-bb19-579afd0b421c",
+    "last_modified": null
+   },
+   {
+    "id": "769c9a46-2fc7-46ef-8101-c16869c678f4",
+    "name": "Kensington to Centennial Park FRMSP - Flood Velocity",
+    "format": "ZIP",
+    "url": "https://flooddata.ses.nsw.gov.au/dataset/bf2e8186-eddf-478b-9ee0-6bd6fe0f6c2a/resource/769c9a46-2fc7-46ef-8101-c16869c678f4",
+    "last_modified": null
+   },
+   {
+    "id": "995f0172-348a-46c1-b240-4ee7d779abcf",
+    "name": "Kensington to Centennial Park FRMSP - Hydraulic Categories",
+    "format": "ZIP",
+    "url": "https://flooddata.ses.nsw.gov.au/dataset/bf2e8186-eddf-478b-9ee0-6bd6fe0f6c2a/resource/995f0172-348a-46c1-b240-4ee7d779abcf",
+    "last_modified": null
+   },
+   {
+    "id": "4ca0e449-779d-4421-938c-4fb91c5a93d1",
+    "name": "Kensington to Centennial Park FRMSP - Water Level Contours",
+    "format": "ZIP",
+    "url": "https://flooddata.ses.nsw.gov.au/dataset/bf2e8186-eddf-478b-9ee0-6bd6fe0f6c2a/resource/4ca0e449-779d-4421-938c-4fb91c5a93d1",
+    "last_modified": null
+   },
+   {
+    "id": "6326f3b3-ecc1-4845-8a1a-99a0f0053815",
+    "name": "Kensington to Centennial Park FRMSP - Water Level",
+    "format": "ZIP",
+    "url": "https://flooddata.ses.nsw.gov.au/dataset/bf2e8186-eddf-478b-9ee0-6bd6fe0f6c2a/resource/6326f3b3-ecc1-4845-8a1a-99a0f0053815",
+    "last_modified": null
+   },
+   {
+    "id": "215f9681-0ed5-485d-b30b-f26f29a00107",
+    "name": "Kensington to Centennial Park FRMSP - Z0 and Z1",
+    "format": "ZIP",
+    "url": "https://flooddata.ses.nsw.gov.au/dataset/bf2e8186-eddf-478b-9ee0-6bd6fe0f6c2a/resource/215f9681-0ed5-485d-b30b-f26f29a00107",
+    "last_modified": null
+   },
+   {
+    "id": "0bcf6d5c-03a6-43c7-94a0-f3da6c63a6a6",
+    "name": "Kensington to Centennial Park FRMSP - Pipe Capacity",
+    "format": "ZIP",
+    "url": "https://flooddata.ses.nsw.gov.au/dataset/bf2e8186-eddf-478b-9ee0-6bd6fe0f6c2a/resource/0bcf6d5c-03a6-43c7-94a0-f3da6c63a6a6",
+    "last_modified": null
+   }
+  ]
+ },
+ {
+  "org": "randwick-city-council",
+  "name": "kensington-to-centennial-park-frmsp-dataset-handover-description",
+  "title": "Kensington to Centennial Park FRMSP - Dataset Handover Description",
+  "notes": "Dataset Handover Description",
+  "metadata_modified": "2025-12-17T03:40:13.369484",
+  "resources": [
+   {
+    "id": "6f08d7ba-3de8-499f-9ed4-0b5208b05efd",
+    "name": "Kensington to Centennial Park FRMSP - Dataset Handover Description",
+    "format": "XLSX",
+    "url": "https://flooddata.ses.nsw.gov.au/dataset/6db5eff6-a506-42b3-9c31-c3b3ff9b2bf9/resource/6f08d7ba-3de8-499f-9ed4-0b5208b05efd",
+    "last_modified": null
+   }
+  ]
+ },
+ {
+  "org": "randwick-city-council",
+  "name": "kensington-to-centennial-park-frmsp-hydraulic-model-inputs-tuflow",
+  "title": "Kensington to Centennial Park FRMSP - Hydraulic Model Inputs (TUFLOW)",
+  "notes": "Hydraulic Model Inputs (TUFLOW)",
+  "metadata_modified": "2025-12-17T03:40:09.016078",
+  "resources": [
+   {
+    "id": "5d6a8196-f396-4733-b4da-29a1369ff9f0",
+    "name": "Kensington to Centennial Park FRMSP - Hydraulic Model Inputs (TUFLOW)",
+    "format": "ZIP",
+    "url": "https://flooddata.ses.nsw.gov.au/dataset/387edfee-b91f-4b9c-be02-7cc7d6d56dd5/resource/5d6a8196-f396-4733-b4da-29a1369ff9f0",
+    "last_modified": null
+   }
+  ]
+ },
+ {
+  "org": "randwick-city-council",
+  "name": "kensington-to-centennial-park-frmsp-floor-level-survey",
+  "title": "Kensington to Centennial Park FRMSP - Floor Level Survey",
+  "notes": "Floor Level Survey",
+  "metadata_modified": "2025-12-17T03:40:04.521467",
+  "resources": [
+   {
+    "id": "ea22aae2-54d0-4508-9305-27084f92e1e0",
+    "name": "Kensington to Centennial Park FRMSP - Floor Level Survey",
+    "format": "ZIP",
+    "url": "https://flooddata.ses.nsw.gov.au/dataset/d15e0c03-1573-4c18-9e15-66f19ac52688/resource/ea22aae2-54d0-4508-9305-27084f92e1e0",
+    "last_modified": null
+   }
+  ]
+ },
+ {
+  "org": "randwick-city-council",
+  "name": "birds-gully-and-bunnerong-road-flood-study-hydraulic-model-outputs-tuflow",
+  "title": "Birds Gully and Bunnerong Road Flood Study - Hydraulic Model Outputs (TUFLOW)",
+  "notes": "Hydraulic Model Outputs (TUFLOW) * Design * Calibration * Sensitivity",
+  "metadata_modified": "2025-12-17T03:28:46.070261",
+  "resources": [
+   {
+    "id": "b7ee95c9-04a2-4eda-aeab-fcd5b50224e1",
+    "name": "Birds Gully and Bunnerong Road Flood Study - Hydraulic Model Outputs (TUFLOW) - Design",
+    "format": "ZIP",
+    "url": "https://flooddata.ses.nsw.gov.au/dataset/f6d1c9c3-747c-4fa2-a62c-b4e427d5c595/resource/b7ee95c9-04a2-4eda-aeab-fcd5b50224e1",
+    "last_modified": null
+   },
+   {
+    "id": "6569a4f1-7321-498d-b6c8-7a7c0032147d",
+    "name": "Birds Gully and Bunnerong Road Flood Study - Hydraulic Model Outputs (TUFLOW) - Calibration",
+    "format": "ZIP",
+    "url": "https://flooddata.ses.nsw.gov.au/dataset/f6d1c9c3-747c-4fa2-a62c-b4e427d5c595/resource/6569a4f1-7321-498d-b6c8-7a7c0032147d",
+    "last_modified": null
+   },
+   {
+    "id": "696a14f4-174b-46ba-b6b9-44760bd81a3c",
+    "name": "Birds Gully and Bunnerong Road Flood Study - Hydraulic Model Outputs (TUFLOW) - Sensitivity",
+    "format": "ZIP",
+    "url": "https://flooddata.ses.nsw.gov.au/dataset/f6d1c9c3-747c-4fa2-a62c-b4e427d5c595/resource/696a14f4-174b-46ba-b6b9-44760bd81a3c",
+    "last_modified": null
+   }
+  ]
+ },
+ {
+  "org": "randwick-city-council",
+  "name": "coogee-bay-floodplain-risk-management-study-and-plan-community-consultation",
+  "title": "Coogee Bay Floodplain Risk Management Study and Plan - Community Consultation",
+  "notes": "Newsletter, survey, FAQs, public exhibition, stakeholder survey",
+  "metadata_modified": "2025-12-17T01:41:50.330886",
+  "resources": [
+   {
+    "id": "e8189f5b-3bb2-4cc8-a4c4-654f2624f1d5",
+    "name": "Coogee Bay Floodplain Risk Management Study and Plan - Community Consultation",
+    "format": "ZIP",
+    "url": "https://flooddata.ses.nsw.gov.au/dataset/c08792ca-fa8d-4175-b470-69bd1701c0d9/resource/e8189f5b-3bb2-4cc8-a4c4-654f2624f1d5",
+    "last_modified": null
+   }
+  ]
+ },
+ {
+  "org": "randwick-city-council",
+  "name": "kensington-centennial-park-flood-study-draft-report",
+  "title": "Kensington - Centennial Park Flood Study (Draft) - Report",
+  "notes": "Complete report",
+  "metadata_modified": "2025-12-17T01:22:24.384513",
+  "resources": [
+   {
+    "id": "5716705d-8589-4667-9d2e-4b177441deb6",
+    "name": "Kensington - Centennial Park Flood Study (Draft) - Report",
+    "format": "PDF",
+    "url": "https://flooddata.ses.nsw.gov.au/dataset/ef8718b9-f3dd-4930-a7c3-989eecddd398/resource/5716705d-8589-4667-9d2e-4b177441deb6",
+    "last_modified": null
+   }
+  ]
+ },
+ {
+  "org": "ryde-city-council",
+  "name": "eastwood-terrys-creek-floodplain-risk-management-study-plan-main-report-october-2009",
+  "title": "Eastwood & Terrys Creek Floodplain Risk Management Study & Plan Main Report",
+  "notes": "#Reasons for the Study and Plan Flooding problems within the Eastwood town centre and other areas within the Terry’s Creek catchment are well documented. Significant flooding problems have been experienced in 1967, 1984 and 1989. It is estimated that over 70 houses or commercial properties experienc",
+  "metadata_modified": "2025-12-17T02:15:40.305580",
+  "resources": [
+   {
+    "id": "790fb11c-19c1-4918-8d9c-e2f997988688",
+    "name": "Eastwood & Terrys Creek Floodplain Risk Management Study & Plan - Main Report October 2009",
+    "format": "PDF",
+    "url": "https://flooddata.ses.nsw.gov.au/dataset/4809986c-dda0-4bb7-84be-a094778d43dd/resource/790fb11c-19c1-4918-8d9c-e2f997988688",
+    "last_modified": null
+   }
+  ]
+ },
+ {
+  "org": "ryde-city-council",
+  "name": "macquarie-park-floodplain-risk-management-study-plan-flood-study-report",
+  "title": "Macquarie Park Floodplain Risk Management Study & Plan",
+  "notes": "In accordance with NSW Government policy, the Council of the City of Ryde is committed to preparing a Floodplain Risk Management Plan for Macquarie Park. This report documents the first stage of the process of preparing the Plan – that is, the preparation of a flood study report. The study area cons",
+  "metadata_modified": "2025-12-17T02:14:06.234363",
+  "resources": [
+   {
+    "id": "5e867475-7091-49ee-81c5-eada84869dd7",
+    "name": "Macquarie Park - Floodplain Risk Management Study & Plan - Flood Study Report",
+    "format": "PDF",
+    "url": "https://flooddata.ses.nsw.gov.au/dataset/510aa998-0935-413d-bc4c-49be25ca5c36/resource/5e867475-7091-49ee-81c5-eada84869dd7",
+    "last_modified": null
+   }
+  ]
+ },
+ {
+  "org": "ryde-city-council",
+  "name": "macquarie-park-floodplain-risk-management-study-plan-flood-study-report-pdf",
+  "title": "Macquarie Park Floodplain Risk Management Study & Plan - Flood Study - Report",
+  "notes": "Complete report",
+  "metadata_modified": "2025-12-17T01:03:40.421418",
+  "resources": [
+   {
+    "id": "ae41850b-6174-4aee-ad1d-9469ae37be0e",
+    "name": "Macquarie Park - Floodplain Risk Management Study & Plan - Flood Study - Report",
+    "format": "PDF",
+    "url": "https://flooddata.ses.nsw.gov.au/dataset/3882a17a-eec6-4015-9ee4-b92803b39fe7/resource/ae41850b-6174-4aee-ad1d-9469ae37be0e",
+    "last_modified": null
+   }
+  ]
+ },
+ {
+  "org": "ryde-city-council",
+  "name": "eastwood-terrys-creek-floodplain-risk-management-study-plan-flood-study-report-october-2009",
+  "title": "Eastwood & Terrys Creek Floodplain Risk Management Study & Plan Flood Study Report",
+  "notes": "The study area includes that portion of Terrys Creek within the City of Ryde from Terry Road to the creek’s confluence with the Lane Cove River. In addition, as shown in Figure 1, it includes all significant tributaries of Terrys Creek. This report provides a description of the establishment and cal",
+  "metadata_modified": "2025-12-17T00:29:36.743210",
+  "resources": [
+   {
+    "id": "bc666dc6-995f-4483-a577-56701f74cc87",
+    "name": "Eastwood & Terrys Creek - Floodplain Risk Management Study & Plan - Flood Study Report October 2009",
+    "format": "PDF",
+    "url": "https://flooddata.ses.nsw.gov.au/dataset/9409c2f3-21d2-473d-81d2-4db129288e12/resource/bc666dc6-995f-4483-a577-56701f74cc87",
+    "last_modified": null
+   }
+  ]
+ },
+ {
+  "org": "strathfield-municipal-council",
+  "name": "cooks-river-coxs-creek-flood-study-report",
+  "title": "Cooks River & Coxs Creek Flood Study",
+  "notes": "#Objectives Strathfield Municipal Council engaged WMAwater to undertake the Cooks River and Coxs Creek Flood Study utilising current technology and data. The information and results obtained from the study will provide a firm basis for the development of targeted stormwater management studies, and a",
+  "metadata_modified": "2025-12-17T02:15:36.425014",
+  "resources": [
+   {
+    "id": "0f03e581-13fe-4a11-b907-79ea25ea2ed8",
+    "name": "Cooks River & Coxs Creek - Flood Study",
+    "format": "PDF",
+    "url": "https://flooddata.ses.nsw.gov.au/dataset/21dc18de-36a7-46f1-9684-099d69af1806/resource/0f03e581-13fe-4a11-b907-79ea25ea2ed8",
+    "last_modified": null
+   }
+  ]
+ },
+ {
+  "org": "woollahra-municipal-council",
+  "name": "rushcutters-bay-catchment-flood-study-report",
+  "title": "Rushcutters Bay Catchment Flood Study",
+  "notes": "The Rushcutters Bay catchment between Sydney Harbour and Oxford Street (Figure 1) is located primarily within the Woollahra Municipal Council Local Government Area (LGA). A small part is located within the City of Sydney LGA. The catchment drains the suburbs of Paddington, Rushcutters Bay and parts ",
+  "metadata_modified": "2026-01-19T04:05:11.656672",
+  "resources": [
+   {
+    "id": "a6e10671-a603-4db9-be92-f472d1e7648e",
+    "name": "Rushcutters Bay Catchment Flood Study",
+    "format": "PDF",
+    "url": "https://flooddata.ses.nsw.gov.au/dataset/2ccf9582-0fbf-4914-bd49-58d63f0a6f87/resource/a6e10671-a603-4db9-be92-f472d1e7648e",
+    "last_modified": null
+   },
+   {
+    "id": "70e66f5c-44cd-4219-880d-eb1fb577568f",
+    "name": "Rushcutters Bay Catchment Flood Study",
+    "format": "PDF",
+    "url": "https://flooddata.ses.nsw.gov.au/dataset/2ccf9582-0fbf-4914-bd49-58d63f0a6f87/resource/70e66f5c-44cd-4219-880d-eb1fb577568f",
+    "last_modified": null
+   }
+  ]
+ }
+]

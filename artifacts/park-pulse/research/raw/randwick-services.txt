@@ -1,0 +1,17 @@
+total services: 16
+ - Cadastre | FeatureServer
+ - Cemetery_TestMap_HOSTED | FeatureServer
+ - CenzoTEST20260521 | FeatureServer
+ - ChristmasActivations2020 | FeatureServer
+ - ChristmasInteractiveMap2024_gdb | FeatureServer
+ - ChristmasLightsTrail2020 | FeatureServer
+ - DAApplicationJoinedwithPropertyPoint | FeatureServer
+ - DraftATProutesPortalTest | FeatureServer
+ - LeashFreeArea20220915_gdb | FeatureServer
+ - LEP2020Property | FeatureServer
+ - LEP2020Property20220530v2 | FeatureServer
+ - Nearmap Tree Canopy | FeatureServer
+ - Property | FeatureServer
+ - StreetTreeMasterplanPercinct | FeatureServer
+ - TempDALast12Months | FeatureServer
+ - TestforFoodInspection | FeatureServer

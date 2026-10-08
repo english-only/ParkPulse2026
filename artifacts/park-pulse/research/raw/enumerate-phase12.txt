@@ -1,0 +1,108 @@
+=== PHASE 1: org discovery ===
+Sydney|owners=41|cityofsydneyspatial->cNVyNtjGVZybOQWZ ; CoS_SpatialSystems->cNVyNtjGVZybOQWZ ; russell_jsapi->V6ZHFr6zdgNZuVG0
+Blacktown|owners=27|
+Cumberland|owners=45|CCGIS2025->ssJTvu2LI9qRE1oE ; gis_ccpa->1Cfo0re3un0w6a30 ; ccherava->17F7m6SrhCakwCcI ; miaignet->9de72LkV8htkdfB9 ; jeff.hyder.va->Vhoecg08noPQ7wRF ; NJOGIS->XVOqAjTOJ5P6ngMu
+Parramatta|owners=25|pcc2150->NrOjMi9LSYL3MUze ; gcurley@cityofparramatta.nsw.gov.au_parracity->NrOjMi9LSYL3MUze ; msapevski_parracity->NrOjMi9LSYL3MUze ; dhewetson_parracity->NrOjMi9LSYL3MUze ; HJohnston_parracity->NrOjMi9LSYL3MUze
+Canterbury-Bankstown|owners=5|canterburymaps->RNxkQaMWQcgbiF98 ; ecangisteam->RNxkQaMWQcgbiF98 ; NZGISinSchools_pub1->n4qyP7iVOnJlCVth ; SGNOpenData->UnrqlFBt9cFAdjsP
+Georges River|owners=35|137102_boston->sFnw0xNflSi8J0uh ; ccherava->17F7m6SrhCakwCcI ; alind001->uEH09Hfm70zI2ZxR
+Bayside|owners=19|
+Northern Beaches|owners=44|ParkingTranspo_UConn->6ItOFXGFmdtfeOZb ; michelle.jennings@marincounty.gov_MarinCounty->T8eS7sop5hLmgRRH ; warringah->LRvZf9YQitIniyDH ; opendata_MarinCounty->T8eS7sop5hLmgRRH ; ehm119->F7DSX1DSNSiWmOqh
+Sutherland|owners=18|Aaron.denney->EiEr2xT4gB5AIOtc ; ksuthe22_westernu->rGKxabTU9mcXMw7k ; keith.holmes->TLdVcW1aE8FOKj1g ; smiller_arc->Ug5xGQbHsD8zuZzM
+Hornsby|owners=16|hsc_dave->VKqP0BP08pVXloHq ; t3swanso->gKQTPiEaJnRTRhOv ; Hornsby->VKqP0BP08pVXloHq ; BMAP_Program->nRHtyn3uE1kyzoYc
+Ryde|owners=20|rryding_udel->DCPX1PuggGH4Tici ; Harley_Brio->Ov1diE0uxjL6wSzH ; janet.owen.earth->WGilu1i2IRlWIWQG ; bronwen.mcnoe_otago->NIkwK16KnqB4PR1J ; rasmus.palmqvist_vfk->kwAMxOduiEJAp7ld
+Penrith|owners=30|
+Hawkesbury|owners=14|JAllen_MOS->VYsKlnnEhIQB3D0F ; CORAH_AGOL->9PtzeAadJyclx9t7 ; nswses.gis->ote4BhoDTJeZCJbh ; 349633255->QI0dObYawrKkuwDp
+Strathfield|owners=6|
+Inner West|owners=9|davidchanIWC->dp2UIID5MUpTUFVA ; Zoe.Smith_tfwm->pyZO1twqdVI0YIld ; gis_dundeecity->GlZ1P6ksdiXNYhvC ; OregonMetro.Planning->McQ0OlIABe29rJJy ; ken.campbell@dundeecity.gov.uk_dundeecity->GlZ1P6ksdiXNYhvC ; wmcclin->4TXrdeWh0RyCqPgB ; sydney.gauld->tAsKtfU7NSGC9Yj9
+Randwick|owners=18|bronwen.mcnoe_otago->NIkwK16KnqB4PR1J
+Woollahra|owners=5|Woollahra->zjbesynggtrdwb3p ; karenl_woollahra->zjbesynggtrdwb3p ; web_woollahra->zjbesynggtrdwb3p
+Waverley|owners=22|Dylan.Stewart@education.govt.nz_school_transport->ygJ1AFEQ1sNGJz4H ; sgshindleman@shindico.com_CCIM->82iS1Pc7dgs3LFZv ; aocarchaeology->KEZIbVsXEvL1ZLY5 ; SGNOpenData->UnrqlFBt9cFAdjsP
+Lane Cove|owners=17|hsc_dave->VKqP0BP08pVXloHq ; jcarrigan_kingcounty->Ej0PsM5Aw677QF1W ; CRMOGIS->qchgHH9IIeiivY5M ; jb_WylieTX->6qzfxgiNv7oGnzvU ; bathubadmin_OSUGISci->CD5mKowwN6nIaqd8
+Willoughby|owners=29|branchlakeAGO->B46Y85jouykB6S9l ; OpenDataFME->frpHL0Fv8koQRVWY ; npca.dmccullagh->d0ZCwU7eGKVeNiEE ; opendata@niagarafalls.ca->oMFQlUUrLd1Uh1bd
+Ku-ring-gai|owners=32|russell_jsapi->V6ZHFr6zdgNZuVG0 ; angedactyl->Ug7MTgYyTNfMm1XG
+Mosman|owners=17|
+Hunters Hill|owners=1|
+Fairfield|owners=20|LancasterGIS->CRjnKyCe3OfYTMC3 ; nmurphy_fairfield->A14KNJpxNyBTu19J ; jgoicochea_Fairfield->A14KNJpxNyBTu19J ; jacuna_Fairfield->A14KNJpxNyBTu19J ; KCI_DoITGIS->SCn6czzcqKAFwdGU ; opcolby79@alcdsb.on.ca_alcdsb->JtCA0XJ7pLTQoUUj ; eadams@nrpcvt.com->CIdxNzJmLZGoegAM
+Liverpool|owners=31|LiverpoolCityCouncil->Ys4U0NCXGgyTtRWx ; ethos_standard->0ic9iB2GbjN66MtY ; tinhodacruz->HHh13VD6dsIUE722 ; plotboxmapping->LTisjkyAR6ZTffiz
+Camden|owners=25|Devin.Bassi_CCDPW->JGF6qCAQFbROcocK ; paulcaris_HopeworksCamden->Nzt3APH7h0GUTCYF ; NJOGIS->XVOqAjTOJ5P6ngMu ; vivian35->CBiB2HwHGXUi8D4Y ; paxton42->CBiB2HwHGXUi8D4Y
+Campbelltown|owners=17|
+Blue Mountains|owners=54|Kharriott_forestry->3R3y1KXaPJ9BFnsU ; nepaportal_GOJ->3R3y1KXaPJ9BFnsU ; jpetillion@esri.ca_EsriCanada->wjcPoefzjpzCgffS ; swaray_UWM->O7h3OCRVxKceyg19
+Canada Bay|owners=24|simcoecountygis->77RwWrWtA8WMcLv1 ; eashcroft_audubon->lDFzr3JyGEn5Eymu ; BarrieGIS->C964zBpHgJUpj4d0 ; akerl@oregonstate.edu_OSUGISci->CD5mKowwN6nIaqd8 ; wu0229_UBC->NlsizNmbMFiinWw4
+North Sydney|owners=11|VM.Adams@utas.edu.au->QaTbIA4urpZ5Hkb0 ; ssmalley->rGKxabTU9mcXMw7k
+
+=== PHASE 2: org names ===
+cNVyNtjGVZybOQWZ|City of Sydney|owners=cityofsydneyspatial,CoS_SpatialSystems|lgas=Sydney
+V6ZHFr6zdgNZuVG0|Esri JSAPI|owners=russell_jsapi|lgas=Sydney,Ku-ring-gai
+ssJTvu2LI9qRE1oE|Cumberland County, NC|owners=CCGIS2025|lgas=Cumberland
+1Cfo0re3un0w6a30|Cumberland County|owners=gis_ccpa|lgas=Cumberland
+17F7m6SrhCakwCcI|National Parks Conservation Association|owners=ccherava|lgas=Cumberland,Georges River
+9de72LkV8htkdfB9|Municipality of the County of Cumberland|owners=miaignet|lgas=Cumberland
+Vhoecg08noPQ7wRF|City of Bristol, Virginia|owners=jeff.hyder.va|lgas=Cumberland
+XVOqAjTOJ5P6ngMu|New Jersey Office of GIS|owners=NJOGIS|lgas=Cumberland,Camden
+NrOjMi9LSYL3MUze|City of Parramatta - ArcGIS Online (AGOL)|owners=pcc2150,gcurley@cityofparramatta.nsw.gov.au_parracity,msapevski_parracity,dhewetson_parracity,HJohnston_parracity|lgas=Parramatta
+RNxkQaMWQcgbiF98|Canterbury Regional Council|owners=canterburymaps,ecangisteam|lgas=Canterbury-Bankstown
+n4qyP7iVOnJlCVth|GIS in Schools Programme - New Zealand|owners=NZGISinSchools_pub1|lgas=Canterbury-Bankstown
+UnrqlFBt9cFAdjsP|SGN|owners=SGNOpenData|lgas=Canterbury-Bankstown,Waverley
+sFnw0xNflSi8J0uh|BostonMaps|owners=137102_boston|lgas=Georges River
+uEH09Hfm70zI2ZxR|California State University San Marcos GIS Lab|owners=alind001|lgas=Georges River
+6ItOFXGFmdtfeOZb|University of Connecticut|owners=ParkingTranspo_UConn|lgas=Northern Beaches
+T8eS7sop5hLmgRRH|Public ArcGIS Online|owners=michelle.jennings@marincounty.gov_MarinCounty,opendata_MarinCounty|lgas=Northern Beaches
+LRvZf9YQitIniyDH|Northern Beaches Council|owners=warringah|lgas=Northern Beaches
+F7DSX1DSNSiWmOqh|The Nature Conservancy|owners=ehm119|lgas=Northern Beaches
+EiEr2xT4gB5AIOtc|Madison-Rexburg GIS|owners=Aaron.denney|lgas=Sutherland
+rGKxabTU9mcXMw7k|Western University|owners=ksuthe22_westernu,ssmalley|lgas=Sutherland,North Sydney
+TLdVcW1aE8FOKj1g|Hakai Institute|owners=keith.holmes|lgas=Sutherland
+Ug5xGQbHsD8zuZzM|Georgia Association of Regional Commissions|owners=smiller_arc|lgas=Sutherland
+VKqP0BP08pVXloHq|Hornsby Shire Council|owners=hsc_dave,Hornsby|lgas=Hornsby,Lane Cove
+gKQTPiEaJnRTRhOv|Citizen Science TV|owners=t3swanso|lgas=Hornsby
+nRHtyn3uE1kyzoYc|Florida Department of Environmental Protection|owners=BMAP_Program|lgas=Hornsby
+DCPX1PuggGH4Tici|University of Delaware|owners=rryding_udel|lgas=Ryde
+Ov1diE0uxjL6wSzH|Briometrix|owners=Harley_Brio|lgas=Ryde
+WGilu1i2IRlWIWQG|The Earth Museum|owners=janet.owen.earth|lgas=Ryde
+NIkwK16KnqB4PR1J|University of Otago|owners=bronwen.mcnoe_otago|lgas=Ryde,Randwick
+kwAMxOduiEJAp7ld|Vestfold Fylkeskommune|owners=rasmus.palmqvist_vfk|lgas=Ryde
+VYsKlnnEhIQB3D0F|Mosaic Insights|owners=JAllen_MOS|lgas=Hawkesbury
+9PtzeAadJyclx9t7|Centre of Geographic Sciences - NSCC|owners=CORAH_AGOL|lgas=Hawkesbury
+ote4BhoDTJeZCJbh|NSW State Emergency Service|owners=nswses.gis|lgas=Hawkesbury
+QI0dObYawrKkuwDp|  ArcGIS Online for Ontario Schools|owners=349633255|lgas=Hawkesbury
+dp2UIID5MUpTUFVA|Inner West Council|owners=davidchanIWC|lgas=Inner West
+pyZO1twqdVI0YIld|Transport for West Midlands|owners=Zoe.Smith_tfwm|lgas=Inner West
+GlZ1P6ksdiXNYhvC|DCC Public GIS Portal|owners=gis_dundeecity,ken.campbell@dundeecity.gov.uk_dundeecity|lgas=Inner West
+McQ0OlIABe29rJJy|Metro|owners=OregonMetro.Planning|lgas=Inner West
+4TXrdeWh0RyCqPgB|University of California, Santa Barbara|owners=wmcclin|lgas=Inner West
+tAsKtfU7NSGC9Yj9|Development & Marine Planning|owners=sydney.gauld|lgas=Inner West
+zjbesynggtrdwb3p|Woollahra Municipal Council|owners=Woollahra,karenl_woollahra,web_woollahra|lgas=Woollahra
+ygJ1AFEQ1sNGJz4H|Ministry of Education|owners=Dylan.Stewart@education.govt.nz_school_transport|lgas=Waverley
+82iS1Pc7dgs3LFZv|Intellisite|owners=sgshindleman@shindico.com_CCIM|lgas=Waverley
+KEZIbVsXEvL1ZLY5|AOC Archaeology Group|owners=aocarchaeology|lgas=Waverley
+Ej0PsM5Aw677QF1W|King County|owners=jcarrigan_kingcounty|lgas=Lane Cove
+qchgHH9IIeiivY5M|CNMI Division of Coastal Resources Management|owners=CRMOGIS|lgas=Lane Cove
+6qzfxgiNv7oGnzvU|City of Wylie, TX|owners=jb_WylieTX|lgas=Lane Cove
+CD5mKowwN6nIaqd8|Oregon State University GISci|owners=bathubadmin_OSUGISci,akerl@oregonstate.edu_OSUGISci|lgas=Lane Cove,Canada Bay
+B46Y85jouykB6S9l|Lake County GIS Department|owners=branchlakeAGO|lgas=Willoughby
+frpHL0Fv8koQRVWY|Township of Langley|owners=OpenDataFME|lgas=Willoughby
+d0ZCwU7eGKVeNiEE|Conservation Ontario|owners=npca.dmccullagh|lgas=Willoughby
+oMFQlUUrLd1Uh1bd|City Of Niagara Falls|owners=opendata@niagarafalls.ca|lgas=Willoughby
+Ug7MTgYyTNfMm1XG|Centre for Conservation Geography|owners=angedactyl|lgas=Ku-ring-gai
+CRjnKyCe3OfYTMC3|City of Lancaster, Ohio GIS|owners=LancasterGIS|lgas=Fairfield
+A14KNJpxNyBTu19J|City of Fairfield, CA|owners=nmurphy_fairfield,jgoicochea_Fairfield,jacuna_Fairfield|lgas=Fairfield
+SCn6czzcqKAFwdGU|Solano County DoIT GIS|owners=KCI_DoITGIS|lgas=Fairfield
+JtCA0XJ7pLTQoUUj|Algonquin and Lakeshore Catholic District School Board|owners=opcolby79@alcdsb.on.ca_alcdsb|lgas=Fairfield
+CIdxNzJmLZGoegAM|Northwest Regional Planning Commission|owners=eadams@nrpcvt.com|lgas=Fairfield
+Ys4U0NCXGgyTtRWx|Liverpool City Council|owners=LiverpoolCityCouncil|lgas=Liverpool
+0ic9iB2GbjN66MtY|Ethos Environmental Planning Ltd.|owners=ethos_standard|lgas=Liverpool
+HHh13VD6dsIUE722|University of Liverpool|owners=tinhodacruz|lgas=Liverpool
+LTisjkyAR6ZTffiz|PlotBox|owners=plotboxmapping|lgas=Liverpool
+JGF6qCAQFbROcocK|Camden County|owners=Devin.Bassi_CCDPW|lgas=Camden
+Nzt3APH7h0GUTCYF|Hopeworks|owners=paulcaris_HopeworksCamden|lgas=Camden
+CBiB2HwHGXUi8D4Y|Rowan University|owners=vivian35,paxton42|lgas=Camden
+3R3y1KXaPJ9BFnsU|Government of Jamaica|owners=Kharriott_forestry,nepaportal_GOJ|lgas=Blue Mountains
+wjcPoefzjpzCgffS|Esri Canada|owners=jpetillion@esri.ca_EsriCanada|lgas=Blue Mountains
+O7h3OCRVxKceyg19|University of Wisconsin-Milwaukee|owners=swaray_UWM|lgas=Blue Mountains
+77RwWrWtA8WMcLv1|County of Simcoe|owners=simcoecountygis|lgas=Canada Bay
+lDFzr3JyGEn5Eymu|National Audubon Society|owners=eashcroft_audubon|lgas=Canada Bay
+C964zBpHgJUpj4d0|The City of Barrie|owners=BarrieGIS|lgas=Canada Bay
+NlsizNmbMFiinWw4|The University of British Columbia|owners=wu0229_UBC|lgas=Canada Bay
+QaTbIA4urpZ5Hkb0|Geography & Spatial Sciences, University of Tasmania|owners=VM.Adams@utas.edu.au|lgas=North Sydney
+
+Saved raw/org-info.json

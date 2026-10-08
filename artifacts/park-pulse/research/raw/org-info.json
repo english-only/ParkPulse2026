@@ -1,0 +1,757 @@
+[
+ {
+  "orgId": "cNVyNtjGVZybOQWZ",
+  "name": "City of Sydney",
+  "owners": [
+   "cityofsydneyspatial",
+   "CoS_SpatialSystems"
+  ],
+  "lgas": [
+   "Sydney"
+  ]
+ },
+ {
+  "orgId": "V6ZHFr6zdgNZuVG0",
+  "name": "Esri JSAPI",
+  "owners": [
+   "russell_jsapi"
+  ],
+  "lgas": [
+   "Sydney",
+   "Ku-ring-gai"
+  ]
+ },
+ {
+  "orgId": "ssJTvu2LI9qRE1oE",
+  "name": "Cumberland County, NC",
+  "owners": [
+   "CCGIS2025"
+  ],
+  "lgas": [
+   "Cumberland"
+  ]
+ },
+ {
+  "orgId": "1Cfo0re3un0w6a30",
+  "name": "Cumberland County",
+  "owners": [
+   "gis_ccpa"
+  ],
+  "lgas": [
+   "Cumberland"
+  ]
+ },
+ {
+  "orgId": "17F7m6SrhCakwCcI",
+  "name": "National Parks Conservation Association",
+  "owners": [
+   "ccherava"
+  ],
+  "lgas": [
+   "Cumberland",
+   "Georges River"
+  ]
+ },
+ {
+  "orgId": "9de72LkV8htkdfB9",
+  "name": "Municipality of the County of Cumberland",
+  "owners": [
+   "miaignet"
+  ],
+  "lgas": [
+   "Cumberland"
+  ]
+ },
+ {
+  "orgId": "Vhoecg08noPQ7wRF",
+  "name": "City of Bristol, Virginia",
+  "owners": [
+   "jeff.hyder.va"
+  ],
+  "lgas": [
+   "Cumberland"
+  ]
+ },
+ {
+  "orgId": "XVOqAjTOJ5P6ngMu",
+  "name": "New Jersey Office of GIS",
+  "owners": [
+   "NJOGIS"
+  ],
+  "lgas": [
+   "Cumberland",
+   "Camden"
+  ]
+ },
+ {
+  "orgId": "NrOjMi9LSYL3MUze",
+  "name": "City of Parramatta - ArcGIS Online (AGOL)",
+  "owners": [
+   "pcc2150",
+   "gcurley@cityofparramatta.nsw.gov.au_parracity",
+   "msapevski_parracity",
+   "dhewetson_parracity",
+   "HJohnston_parracity"
+  ],
+  "lgas": [
+   "Parramatta"
+  ]
+ },
+ {
+  "orgId": "RNxkQaMWQcgbiF98",
+  "name": "Canterbury Regional Council",
+  "owners": [
+   "canterburymaps",
+   "ecangisteam"
+  ],
+  "lgas": [
+   "Canterbury-Bankstown"
+  ]
+ },
+ {
+  "orgId": "n4qyP7iVOnJlCVth",
+  "name": "GIS in Schools Programme - New Zealand",
+  "owners": [
+   "NZGISinSchools_pub1"
+  ],
+  "lgas": [
+   "Canterbury-Bankstown"
+  ]
+ },
+ {
+  "orgId": "UnrqlFBt9cFAdjsP",
+  "name": "SGN",
+  "owners": [
+   "SGNOpenData"
+  ],
+  "lgas": [
+   "Canterbury-Bankstown",
+   "Waverley"
+  ]
+ },
+ {
+  "orgId": "sFnw0xNflSi8J0uh",
+  "name": "BostonMaps",
+  "owners": [
+   "137102_boston"
+  ],
+  "lgas": [
+   "Georges River"
+  ]
+ },
+ {
+  "orgId": "uEH09Hfm70zI2ZxR",
+  "name": "California State University San Marcos GIS Lab",
+  "owners": [
+   "alind001"
+  ],
+  "lgas": [
+   "Georges River"
+  ]
+ },
+ {
+  "orgId": "6ItOFXGFmdtfeOZb",
+  "name": "University of Connecticut",
+  "owners": [
+   "ParkingTranspo_UConn"
+  ],
+  "lgas": [
+   "Northern Beaches"
+  ]
+ },
+ {
+  "orgId": "T8eS7sop5hLmgRRH",
+  "name": "Public ArcGIS Online",
+  "owners": [
+   "michelle.jennings@marincounty.gov_MarinCounty",
+   "opendata_MarinCounty"
+  ],
+  "lgas": [
+   "Northern Beaches"
+  ]
+ },
+ {
+  "orgId": "LRvZf9YQitIniyDH",
+  "name": "Northern Beaches Council",
+  "owners": [
+   "warringah"
+  ],
+  "lgas": [
+   "Northern Beaches"
+  ]
+ },
+ {
+  "orgId": "F7DSX1DSNSiWmOqh",
+  "name": "The Nature Conservancy",
+  "owners": [
+   "ehm119"
+  ],
+  "lgas": [
+   "Northern Beaches"
+  ]
+ },
+ {
+  "orgId": "EiEr2xT4gB5AIOtc",
+  "name": "Madison-Rexburg GIS",
+  "owners": [
+   "Aaron.denney"
+  ],
+  "lgas": [
+   "Sutherland"
+  ]
+ },
+ {
+  "orgId": "rGKxabTU9mcXMw7k",
+  "name": "Western University",
+  "owners": [
+   "ksuthe22_westernu",
+   "ssmalley"
+  ],
+  "lgas": [
+   "Sutherland",
+   "North Sydney"
+  ]
+ },
+ {
+  "orgId": "TLdVcW1aE8FOKj1g",
+  "name": "Hakai Institute",
+  "owners": [
+   "keith.holmes"
+  ],
+  "lgas": [
+   "Sutherland"
+  ]
+ },
+ {
+  "orgId": "Ug5xGQbHsD8zuZzM",
+  "name": "Georgia Association of Regional Commissions",
+  "owners": [
+   "smiller_arc"
+  ],
+  "lgas": [
+   "Sutherland"
+  ]
+ },
+ {
+  "orgId": "VKqP0BP08pVXloHq",
+  "name": "Hornsby Shire Council",
+  "owners": [
+   "hsc_dave",
+   "Hornsby"
+  ],
+  "lgas": [
+   "Hornsby",
+   "Lane Cove"
+  ]
+ },
+ {
+  "orgId": "gKQTPiEaJnRTRhOv",
+  "name": "Citizen Science TV",
+  "owners": [
+   "t3swanso"
+  ],
+  "lgas": [
+   "Hornsby"
+  ]
+ },
+ {
+  "orgId": "nRHtyn3uE1kyzoYc",
+  "name": "Florida Department of Environmental Protection",
+  "owners": [
+   "BMAP_Program"
+  ],
+  "lgas": [
+   "Hornsby"
+  ]
+ },
+ {
+  "orgId": "DCPX1PuggGH4Tici",
+  "name": "University of Delaware",
+  "owners": [
+   "rryding_udel"
+  ],
+  "lgas": [
+   "Ryde"
+  ]
+ },
+ {
+  "orgId": "Ov1diE0uxjL6wSzH",
+  "name": "Briometrix",
+  "owners": [
+   "Harley_Brio"
+  ],
+  "lgas": [
+   "Ryde"
+  ]
+ },
+ {
+  "orgId": "WGilu1i2IRlWIWQG",
+  "name": "The Earth Museum",
+  "owners": [
+   "janet.owen.earth"
+  ],
+  "lgas": [
+   "Ryde"
+  ]
+ },
+ {
+  "orgId": "NIkwK16KnqB4PR1J",
+  "name": "University of Otago",
+  "owners": [
+   "bronwen.mcnoe_otago"
+  ],
+  "lgas": [
+   "Ryde",
+   "Randwick"
+  ]
+ },
+ {
+  "orgId": "kwAMxOduiEJAp7ld",
+  "name": "Vestfold Fylkeskommune",
+  "owners": [
+   "rasmus.palmqvist_vfk"
+  ],
+  "lgas": [
+   "Ryde"
+  ]
+ },
+ {
+  "orgId": "VYsKlnnEhIQB3D0F",
+  "name": "Mosaic Insights",
+  "owners": [
+   "JAllen_MOS"
+  ],
+  "lgas": [
+   "Hawkesbury"
+  ]
+ },
+ {
+  "orgId": "9PtzeAadJyclx9t7",
+  "name": "Centre of Geographic Sciences - NSCC",
+  "owners": [
+   "CORAH_AGOL"
+  ],
+  "lgas": [
+   "Hawkesbury"
+  ]
+ },
+ {
+  "orgId": "ote4BhoDTJeZCJbh",
+  "name": "NSW State Emergency Service",
+  "owners": [
+   "nswses.gis"
+  ],
+  "lgas": [
+   "Hawkesbury"
+  ]
+ },
+ {
+  "orgId": "QI0dObYawrKkuwDp",
+  "name": "  ArcGIS Online for Ontario Schools",
+  "owners": [
+   "349633255"
+  ],
+  "lgas": [
+   "Hawkesbury"
+  ]
+ },
+ {
+  "orgId": "dp2UIID5MUpTUFVA",
+  "name": "Inner West Council",
+  "owners": [
+   "davidchanIWC"
+  ],
+  "lgas": [
+   "Inner West"
+  ]
+ },
+ {
+  "orgId": "pyZO1twqdVI0YIld",
+  "name": "Transport for West Midlands",
+  "owners": [
+   "Zoe.Smith_tfwm"
+  ],
+  "lgas": [
+   "Inner West"
+  ]
+ },
+ {
+  "orgId": "GlZ1P6ksdiXNYhvC",
+  "name": "DCC Public GIS Portal",
+  "owners": [
+   "gis_dundeecity",
+   "ken.campbell@dundeecity.gov.uk_dundeecity"
+  ],
+  "lgas": [
+   "Inner West"
+  ]
+ },
+ {
+  "orgId": "McQ0OlIABe29rJJy",
+  "name": "Metro",
+  "owners": [
+   "OregonMetro.Planning"
+  ],
+  "lgas": [
+   "Inner West"
+  ]
+ },
+ {
+  "orgId": "4TXrdeWh0RyCqPgB",
+  "name": "University of California, Santa Barbara",
+  "owners": [
+   "wmcclin"
+  ],
+  "lgas": [
+   "Inner West"
+  ]
+ },
+ {
+  "orgId": "tAsKtfU7NSGC9Yj9",
+  "name": "Development & Marine Planning",
+  "owners": [
+   "sydney.gauld"
+  ],
+  "lgas": [
+   "Inner West"
+  ]
+ },
+ {
+  "orgId": "zjbesynggtrdwb3p",
+  "name": "Woollahra Municipal Council",
+  "owners": [
+   "Woollahra",
+   "karenl_woollahra",
+   "web_woollahra"
+  ],
+  "lgas": [
+   "Woollahra"
+  ]
+ },
+ {
+  "orgId": "ygJ1AFEQ1sNGJz4H",
+  "name": "Ministry of Education",
+  "owners": [
+   "Dylan.Stewart@education.govt.nz_school_transport"
+  ],
+  "lgas": [
+   "Waverley"
+  ]
+ },
+ {
+  "orgId": "82iS1Pc7dgs3LFZv",
+  "name": "Intellisite",
+  "owners": [
+   "sgshindleman@shindico.com_CCIM"
+  ],
+  "lgas": [
+   "Waverley"
+  ]
+ },
+ {
+  "orgId": "KEZIbVsXEvL1ZLY5",
+  "name": "AOC Archaeology Group",
+  "owners": [
+   "aocarchaeology"
+  ],
+  "lgas": [
+   "Waverley"
+  ]
+ },
+ {
+  "orgId": "Ej0PsM5Aw677QF1W",
+  "name": "King County",
+  "owners": [
+   "jcarrigan_kingcounty"
+  ],
+  "lgas": [
+   "Lane Cove"
+  ]
+ },
+ {
+  "orgId": "qchgHH9IIeiivY5M",
+  "name": "CNMI Division of Coastal Resources Management",
+  "owners": [
+   "CRMOGIS"
+  ],
+  "lgas": [
+   "Lane Cove"
+  ]
+ },
+ {
+  "orgId": "6qzfxgiNv7oGnzvU",
+  "name": "City of Wylie, TX",
+  "owners": [
+   "jb_WylieTX"
+  ],
+  "lgas": [
+   "Lane Cove"
+  ]
+ },
+ {
+  "orgId": "CD5mKowwN6nIaqd8",
+  "name": "Oregon State University GISci",
+  "owners": [
+   "bathubadmin_OSUGISci",
+   "akerl@oregonstate.edu_OSUGISci"
+  ],
+  "lgas": [
+   "Lane Cove",
+   "Canada Bay"
+  ]
+ },
+ {
+  "orgId": "B46Y85jouykB6S9l",
+  "name": "Lake County GIS Department",
+  "owners": [
+   "branchlakeAGO"
+  ],
+  "lgas": [
+   "Willoughby"
+  ]
+ },
+ {
+  "orgId": "frpHL0Fv8koQRVWY",
+  "name": "Township of Langley",
+  "owners": [
+   "OpenDataFME"
+  ],
+  "lgas": [
+   "Willoughby"
+  ]
+ },
+ {
+  "orgId": "d0ZCwU7eGKVeNiEE",
+  "name": "Conservation Ontario",
+  "owners": [
+   "npca.dmccullagh"
+  ],
+  "lgas": [
+   "Willoughby"
+  ]
+ },
+ {
+  "orgId": "oMFQlUUrLd1Uh1bd",
+  "name": "City Of Niagara Falls",
+  "owners": [
+   "opendata@niagarafalls.ca"
+  ],
+  "lgas": [
+   "Willoughby"
+  ]
+ },
+ {
+  "orgId": "Ug7MTgYyTNfMm1XG",
+  "name": "Centre for Conservation Geography",
+  "owners": [
+   "angedactyl"
+  ],
+  "lgas": [
+   "Ku-ring-gai"
+  ]
+ },
+ {
+  "orgId": "CRjnKyCe3OfYTMC3",
+  "name": "City of Lancaster, Ohio GIS",
+  "owners": [
+   "LancasterGIS"
+  ],
+  "lgas": [
+   "Fairfield"
+  ]
+ },
+ {
+  "orgId": "A14KNJpxNyBTu19J",
+  "name": "City of Fairfield, CA",
+  "owners": [
+   "nmurphy_fairfield",
+   "jgoicochea_Fairfield",
+   "jacuna_Fairfield"
+  ],
+  "lgas": [
+   "Fairfield"
+  ]
+ },
+ {
+  "orgId": "SCn6czzcqKAFwdGU",
+  "name": "Solano County DoIT GIS",
+  "owners": [
+   "KCI_DoITGIS"
+  ],
+  "lgas": [
+   "Fairfield"
+  ]
+ },
+ {
+  "orgId": "JtCA0XJ7pLTQoUUj",
+  "name": "Algonquin and Lakeshore Catholic District School Board",
+  "owners": [
+   "opcolby79@alcdsb.on.ca_alcdsb"
+  ],
+  "lgas": [
+   "Fairfield"
+  ]
+ },
+ {
+  "orgId": "CIdxNzJmLZGoegAM",
+  "name": "Northwest Regional Planning Commission",
+  "owners": [
+   "eadams@nrpcvt.com"
+  ],
+  "lgas": [
+   "Fairfield"
+  ]
+ },
+ {
+  "orgId": "Ys4U0NCXGgyTtRWx",
+  "name": "Liverpool City Council",
+  "owners": [
+   "LiverpoolCityCouncil"
+  ],
+  "lgas": [
+   "Liverpool"
+  ]
+ },
+ {
+  "orgId": "0ic9iB2GbjN66MtY",
+  "name": "Ethos Environmental Planning Ltd.",
+  "owners": [
+   "ethos_standard"
+  ],
+  "lgas": [
+   "Liverpool"
+  ]
+ },
+ {
+  "orgId": "HHh13VD6dsIUE722",
+  "name": "University of Liverpool",
+  "owners": [
+   "tinhodacruz"
+  ],
+  "lgas": [
+   "Liverpool"
+  ]
+ },
+ {
+  "orgId": "LTisjkyAR6ZTffiz",
+  "name": "PlotBox",
+  "owners": [
+   "plotboxmapping"
+  ],
+  "lgas": [
+   "Liverpool"
+  ]
+ },
+ {
+  "orgId": "JGF6qCAQFbROcocK",
+  "name": "Camden County",
+  "owners": [
+   "Devin.Bassi_CCDPW"
+  ],
+  "lgas": [
+   "Camden"
+  ]
+ },
+ {
+  "orgId": "Nzt3APH7h0GUTCYF",
+  "name": "Hopeworks",
+  "owners": [
+   "paulcaris_HopeworksCamden"
+  ],
+  "lgas": [
+   "Camden"
+  ]
+ },
+ {
+  "orgId": "CBiB2HwHGXUi8D4Y",
+  "name": "Rowan University",
+  "owners": [
+   "vivian35",
+   "paxton42"
+  ],
+  "lgas": [
+   "Camden"
+  ]
+ },
+ {
+  "orgId": "3R3y1KXaPJ9BFnsU",
+  "name": "Government of Jamaica",
+  "owners": [
+   "Kharriott_forestry",
+   "nepaportal_GOJ"
+  ],
+  "lgas": [
+   "Blue Mountains"
+  ]
+ },
+ {
+  "orgId": "wjcPoefzjpzCgffS",
+  "name": "Esri Canada",
+  "owners": [
+   "jpetillion@esri.ca_EsriCanada"
+  ],
+  "lgas": [
+   "Blue Mountains"
+  ]
+ },
+ {
+  "orgId": "O7h3OCRVxKceyg19",
+  "name": "University of Wisconsin-Milwaukee",
+  "owners": [
+   "swaray_UWM"
+  ],
+  "lgas": [
+   "Blue Mountains"
+  ]
+ },
+ {
+  "orgId": "77RwWrWtA8WMcLv1",
+  "name": "County of Simcoe",
+  "owners": [
+   "simcoecountygis"
+  ],
+  "lgas": [
+   "Canada Bay"
+  ]
+ },
+ {
+  "orgId": "lDFzr3JyGEn5Eymu",
+  "name": "National Audubon Society",
+  "owners": [
+   "eashcroft_audubon"
+  ],
+  "lgas": [
+   "Canada Bay"
+  ]
+ },
+ {
+  "orgId": "C964zBpHgJUpj4d0",
+  "name": "The City of Barrie",
+  "owners": [
+   "BarrieGIS"
+  ],
+  "lgas": [
+   "Canada Bay"
+  ]
+ },
+ {
+  "orgId": "NlsizNmbMFiinWw4",
+  "name": "The University of British Columbia",
+  "owners": [
+   "wu0229_UBC"
+  ],
+  "lgas": [
+   "Canada Bay"
+  ]
+ },
+ {
+  "orgId": "QaTbIA4urpZ5Hkb0",
+  "name": "Geography & Spatial Sciences, University of Tasmania",
+  "owners": [
+   "VM.Adams@utas.edu.au"
+  ],
+  "lgas": [
+   "North Sydney"
+  ]
+ }
+]

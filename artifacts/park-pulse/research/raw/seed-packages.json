@@ -1,0 +1,4802 @@
+[
+ {
+  "org": "bayside-council",
+  "name": "springvale-drain-and-floodvale-drain-flood-study-report",
+  "title": "Springvale Drain and Floodvale Drain Flood Study - Report",
+  "notes": "Volume 1 - Final Report, Volume 2 - Appendix A (pg 1 - 18), Volume 3 - Appendix A (pg 19 - 34), Volume 4 - Appendix B",
+  "metadata_modified": "2026-01-20T05:34:18.833563",
+  "resources": 4
+ },
+ {
+  "org": "bayside-council",
+  "name": "spring-street-drain-muddy-creek-and-scarborough-ponds-catchment-flood-study-final-report",
+  "title": "Spring Street Drain, Muddy Creek and Scarborough Ponds Catchment Flood Study Review - Final Report",
+  "notes": "Final Report and Mapping Compendium",
+  "metadata_modified": "2026-01-20T05:33:42.690505",
+  "resources": 2
+ },
+ {
+  "org": "bayside-council",
+  "name": "botany-bay-foreshore-beach-catchment-flood-study-final-report",
+  "title": "Botany Bay Foreshore Beach Catchment Flood Study - Final Report",
+  "notes": "Final Report",
+  "metadata_modified": "2026-01-20T05:32:55.796309",
+  "resources": 1
+ },
+ {
+  "org": "bayside-council",
+  "name": "mascot-rosebery-and-eastlakes-flood-study-report",
+  "title": "Mascot, Rosebery and Eastlakes Flood Study - Report",
+  "notes": "Volume 1 - Final Report,\r\nVolume 2 - Maps",
+  "metadata_modified": "2026-01-15T01:37:28.309038",
+  "resources": 2
+ },
+ {
+  "org": "bayside-council",
+  "name": "bonnie-doon-eve-street-cahill-park-pipe-overland-2d-flood-study-report",
+  "title": "Bonnie Doon, Eve Street/Cahill Park Pipe & Overland 2D Flood Study report",
+  "notes": "Final Report",
+  "metadata_modified": "2026-01-15T01:36:44.761096",
+  "resources": 1
+ },
+ {
+  "org": "bayside-council",
+  "name": "bardwell-creek-2d-flood-study-review-final-report",
+  "title": "Bardwell Creek 2D Flood Study Review - Final Report",
+  "notes": "The study was commissioned by Bayside Council, with the assistance of the NSW Government Office of Environment and Heritage (OEH). Additional information has been provided by Sydney Water Corporation ",
+  "metadata_modified": "2026-01-15T01:35:15.616547",
+  "resources": 2
+ },
+ {
+  "org": "bayside-council",
+  "name": "botany-bay-foreshore-beach-floodplain-risk-management-study-report",
+  "title": "Botany Bay Foreshore Beach Floodplain Risk Management Study and Plan - Report",
+  "notes": "Botany Bay Foreshore Beach Floodplain Risk Management Study Report ",
+  "metadata_modified": "2026-01-14T03:04:18.895581",
+  "resources": 1
+ },
+ {
+  "org": "bayside-council",
+  "name": "sans-souci-flood-study-report",
+  "title": "Sans Souci Flood Study - Report",
+  "notes": "3 parts",
+  "metadata_modified": "2026-01-14T00:36:19.607742",
+  "resources": 1
+ },
+ {
+  "org": "bayside-council",
+  "name": "bonnie-doon-pipe-and-overland-2d-flood-study-report",
+  "title": "Bonnie Doon Drainage Catchment Flood Study (Pipe and Overland 2D) - Report",
+  "notes": "All parts",
+  "metadata_modified": "2025-12-17T03:43:57.316243",
+  "resources": 2
+ },
+ {
+  "org": "bayside-council",
+  "name": "sans-souci-flood-study-tuflow",
+  "title": "Sans Souci Flood Study Review - TUFLOW",
+  "notes": "bc_dbase, check, model, runs, sms",
+  "metadata_modified": "2025-12-17T02:49:04.572672",
+  "resources": 1
+ },
+ {
+  "org": "bayside-council",
+  "name": "sans-souci-flood-study-gis-data",
+  "title": "Sans Souci Flood Study Review - GIS Data",
+  "notes": "Contains GIS Mapping",
+  "metadata_modified": "2025-12-17T02:48:49.021036",
+  "resources": 1
+ },
+ {
+  "org": "bayside-council",
+  "name": "springvale-drain-and-floodvale-drain-flood-study-gis-data",
+  "title": "Springvale Drain and Floodvale Drain Flood Study - GIS Data",
+  "notes": "Contains GIS Mapping folder and Result Grids",
+  "metadata_modified": "2025-12-17T02:45:37.548445",
+  "resources": 1
+ },
+ {
+  "org": "bayside-council",
+  "name": "spring-street-drain-muddy-creek-and-scarborough-ponds-catchment-flood-study-rafts",
+  "title": "Spring Street Drain, Muddy Creek and Scarborough Ponds Catchment Flood Study Review - RAFTS",
+  "notes": "RAFTS Data",
+  "metadata_modified": "2025-12-17T02:35:55.369688",
+  "resources": 1
+ },
+ {
+  "org": "bayside-council",
+  "name": "spring-street-drain-muddy-creek-and-scarborough-ponds-catchment-flood-study-gis-data",
+  "title": "Spring Street Drain, Muddy Creek and Scarborough Ponds Catchment Flood Study Review - GIS Data",
+  "notes": "Contains DEM, GIS_Data, Results and Catchment shp files",
+  "metadata_modified": "2025-12-17T02:34:08.562237",
+  "resources": 1
+ },
+ {
+  "org": "bayside-council",
+  "name": "sans-souci-flood-study-raw-results",
+  "title": "Sans Souci Flood Study Review - TUFLOW Raw Results",
+  "notes": "Contains 1d and 2d TUFLOW Raw Results. 2d contains - PMF, 1%, 5%, 10%, 20% AEP Events",
+  "metadata_modified": "2025-12-17T02:31:59.235734",
+  "resources": 1
+ },
+ {
+  "org": "bayside-council",
+  "name": "bonnie-doon-eve-street-cahill-park-pipe-overland-2d-peak-flood-level-grids",
+  "title": "Bonnie Doon, Eve Street/Cahill Park Pipe & Overland 2D - Peak Flood Level Grids",
+  "notes": "Peak flood level grids",
+  "metadata_modified": "2025-12-17T02:01:34.427177",
+  "resources": 1
+ },
+ {
+  "org": "bayside-council",
+  "name": "spring-street-drain-muddy-creek-and-scarborough-ponds-catchment-flood-study-tuflow-raw-results",
+  "title": "Spring Street Drain, Muddy Creek and Scarborough Ponds Catchment Flood Study Review - TUFLOW Raw Results",
+  "notes": "1d and 2d TUFLOW Raw Results",
+  "metadata_modified": "2025-12-17T01:18:40.732426",
+  "resources": 1
+ },
+ {
+  "org": "bayside-council",
+  "name": "springvale-drain-and-floodvale-drain-flood-study-community-consultation",
+  "title": "Springvale Drain and Floodvale Drain Flood Study - Community Consultation",
+  "notes": "Data contains: Questionnaire, newsletters and feedback",
+  "metadata_modified": "2025-12-17T01:04:38.784078",
+  "resources": 1
+ },
+ {
+  "org": "bayside-council",
+  "name": "springvale-drain-and-floodvale-drain-flood-study-tuflow",
+  "title": "Springvale Drain and Floodvale Drain Flood Study - TUFLOW",
+  "notes": "bc_dbase, materials, model, pit_dbase and runs",
+  "metadata_modified": "2025-12-17T01:01:55.880485",
+  "resources": 1
+ },
+ {
+  "org": "bayside-council",
+  "name": "sans-souci-flood-study-final-report",
+  "title": "Sans Souci Flood Study Review - Final Report",
+  "notes": "Volume 1 - Final Report, Volume 2 - Maps",
+  "metadata_modified": "2025-12-17T00:57:35.799462",
+  "resources": 2
+ },
+ {
+  "org": "bayside-council",
+  "name": "bonnie-doon-eve-street-cahill-park-pipe-overland-2d-flood-study-tuflow",
+  "title": "Bonnie Doon, Eve Street/Cahill Park Pipe & Overland 2D Flood Study - TUFLOW",
+  "notes": "bc_dbase, model, runs, raw results",
+  "metadata_modified": "2025-12-17T00:27:38.476067",
+  "resources": 1
+ },
+ {
+  "org": "blacktown-city-council",
+  "name": "hydrological-and-hydraulic-model",
+  "title": "Hydrological and hydraulic model",
+  "notes": "Hydrological and hydraulic model of Wianamatta South Creek Flood Study - Blacktown City Council",
+  "metadata_modified": "2026-06-02T01:07:51.884344",
+  "resources": 3
+ },
+ {
+  "org": "blacktown-city-council",
+  "name": "gis-dataset",
+  "title": "GIS dataset",
+  "notes": "Study area, regional catchment, flood extent polygons, flood level contours and flood hazard categories, LiDAR",
+  "metadata_modified": "2026-06-02T01:07:44.053358",
+  "resources": 2
+ },
+ {
+  "org": "blacktown-city-council",
+  "name": "modelling-results",
+  "title": "Modelling results",
+  "notes": "Modelling results of Wianamatta South Creek Flood Study - Blacktown City Council",
+  "metadata_modified": "2026-06-02T01:07:31.197222",
+  "resources": 6
+ },
+ {
+  "org": "blacktown-city-council",
+  "name": "south-creek-final-report",
+  "title": "Final report of Wianamatta South Creek Flood Study - Blacktown City Council",
+  "notes": "Final report of Wianamatta South Creek Flood Study - Blacktown City Council",
+  "metadata_modified": "2026-06-02T01:07:21.031272",
+  "resources": 1
+ },
+ {
+  "org": "blacktown-city-council",
+  "name": "dataset-checklist",
+  "title": "Dataset checklist",
+  "notes": "Handover checklist of Wianamatta South Creek Flood Study - Blacktown City Council",
+  "metadata_modified": "2026-06-02T01:07:14.436353",
+  "resources": 1
+ },
+ {
+  "org": "blacktown-city-council",
+  "name": "eastern-creek-catchment-hydrological-assessment-report",
+  "title": "Eastern Creek Catchment - Hydrological Assessment",
+  "notes": "Eastern Creek is a tributary of South Creek which in turn is a tributary of the Hawkesbury River. The Eastern Creek catchment is situated in New South Wales (NSW) approximately 35 km west of Sydney an",
+  "metadata_modified": "2026-01-15T01:45:35.356781",
+  "resources": 1
+ },
+ {
+  "org": "blacktown-city-council",
+  "name": "eastern-creek-hydraulic-assessment-report",
+  "title": "Eastern Creek Hydraulic Assessment - Report",
+  "notes": "Volume 1 and Volume 2",
+  "metadata_modified": "2026-01-14T02:40:43.245397",
+  "resources": 2
+ },
+ {
+  "org": "blacktown-city-council",
+  "name": "report_1",
+  "title": "Report",
+  "notes": "Volume 1 report, Volume 2 Figures + non-report figures",
+  "metadata_modified": "2025-12-17T04:44:21.456987",
+  "resources": 3
+ },
+ {
+  "org": "blacktown-city-council",
+  "name": "eastern-creek-catchment-development-scenario-hydraulic-assessment-hydrological-model-output-xp-rafts",
+  "title": "Eastern Creek Catchment - Development Scenario Hydraulic Assessment - Hydrological Model Outputs (XP-RAFTS)",
+  "notes": "Hydrological Model Outputs (XP-RAFTS)",
+  "metadata_modified": "2025-12-17T03:36:29.800094",
+  "resources": 1
+ },
+ {
+  "org": "blacktown-city-council",
+  "name": "eastern-creek-catchment-development-scenario-hydraulic-assessment-hydrological-model-inputs-xp-rafts",
+  "title": "Eastern Creek Catchment - Development Scenario Hydraulic Assessment - Hydrological Model Inputs (XP-RAFTS)",
+  "notes": "Hydrological Model Inputs (XP-RAFTS)",
+  "metadata_modified": "2025-12-17T03:36:25.667704",
+  "resources": 1
+ },
+ {
+  "org": "blacktown-city-council",
+  "name": "eastern-creek-catchment-development-scenario-hydraulic-assessment-dataset-handover-description",
+  "title": "Eastern Creek Catchment - Development Scenario Hydraulic Assessment - Dataset Handover Description",
+  "notes": "Dataset Handover Description",
+  "metadata_modified": "2025-12-17T03:36:21.763261",
+  "resources": 1
+ },
+ {
+  "org": "blacktown-city-council",
+  "name": "eastern-creek-catchment-development-scenario-hydraulic-assessment-post-processed-layers",
+  "title": "Eastern Creek Catchment - Development Scenario Hydraulic Assessment - Post-Processed Layers",
+  "notes": "Post-Processed TUFLOW Results",
+  "metadata_modified": "2025-12-17T03:36:17.911423",
+  "resources": 1
+ },
+ {
+  "org": "blacktown-city-council",
+  "name": "eastern-creek-catchment-development-scenario-hydraulic-assessment-report",
+  "title": "Eastern Creek Catchment - Development Scenario Hydraulic Assessment - Report",
+  "notes": "Report and Figures",
+  "metadata_modified": "2025-12-17T03:34:58.324441",
+  "resources": 2
+ },
+ {
+  "org": "blacktown-city-council",
+  "name": "eastern-creek-catchment-development-scenario-hydraulic-assessment-hydraulic-model-inputs-tuflow",
+  "title": "Eastern Creek Catchment - Development Scenario Hydraulic Assessment - Hydraulic Model Inputs (TUFLOW)",
+  "notes": "Hydraulic Model Inputs (TUFLOW)",
+  "metadata_modified": "2025-12-17T03:34:54.372074",
+  "resources": 1
+ },
+ {
+  "org": "blacktown-city-council",
+  "name": "eastern-creek-catchment-development-scenario-hydraulic-assessment-hydraulic-model-outputs-tuflow",
+  "title": "Eastern Creek Catchment - Development Scenario Hydraulic Assessment - Hydraulic Model Outputs (TUFLOW)",
+  "notes": "Hydraulic Model Outputs (TUFLOW)",
+  "metadata_modified": "2025-12-17T03:34:17.782882",
+  "resources": 9
+ },
+ {
+  "org": "blacktown-city-council",
+  "name": "eastern-creek-hydraulic-assessment-hydrological-model-xp-rafts",
+  "title": "Eastern Creek Hydraulic Assessment - Hydrological Model (XP-RAFTS)",
+  "notes": "Hydrological Model (XP-RAFTS) - Inputs and Outputs",
+  "metadata_modified": "2025-12-17T03:33:22.555253",
+  "resources": 1
+ },
+ {
+  "org": "blacktown-city-council",
+  "name": "eastern-creek-catchment-hydraulic-assessment-hydraulic-model-output",
+  "title": "Eastern Creek Catchment Hydraulic Assessment - Hydraulic Model Output",
+  "notes": "TUFLOW",
+  "metadata_modified": "2025-12-17T03:12:25.971707",
+  "resources": 4
+ },
+ {
+  "org": "blacktown-city-council",
+  "name": "eastern-creek-catchment-hydraulic-assessment-report",
+  "title": "Eastern Creek Catchment Hydraulic Assessment - Report",
+  "notes": "Volume 1- Report; \r\nVolume 2- Figures",
+  "metadata_modified": "2025-12-17T03:09:25.780835",
+  "resources": 2
+ },
+ {
+  "org": "blacktown-city-council",
+  "name": "eastern-creek-catchment-hydraulic-assessment-hydrologic-model",
+  "title": "Eastern Creek Catchment Hydraulic Assessment - Hydrologic Model",
+  "notes": "XP-RAFTS",
+  "metadata_modified": "2025-12-17T03:09:11.535023",
+  "resources": 1
+ },
+ {
+  "org": "blacktown-city-council",
+  "name": "eastern-creek-catchment-hydraulic-assessment-hydraulic-model-input",
+  "title": "Eastern Creek Catchment Hydraulic Assessment - Hydraulic Model Input",
+  "notes": "TUFLOW",
+  "metadata_modified": "2025-12-17T03:08:57.885313",
+  "resources": 1
+ },
+ {
+  "org": "blacktown-city-council",
+  "name": "eastern-creek-catchment-hydraulic-assessment-post-processed",
+  "title": "Eastern Creek Catchment Hydraulic Assessment - Post-processed",
+  "notes": "Design envelope results",
+  "metadata_modified": "2025-12-17T01:58:41.417723",
+  "resources": 1
+ },
+ {
+  "org": "blacktown-city-council",
+  "name": "greystanes-creek-pendle-hill-creek-flood-mitigation-study-fms",
+  "title": "Greystanes Creek and Pendle Hill Creek Flood Mitigation Study",
+  "notes": "Flood mitigation measures were investigated for eliminating flood\r\nproblems for the 1% annual exceedance probability flood for:\r\nGreystanes Creek from Fox Hills Golf Course to Fitzwilliam Road,\r\nToong",
+  "metadata_modified": "2025-12-17T01:33:31.841831",
+  "resources": 1
+ },
+ {
+  "org": "blue-mountains-city-council",
+  "name": "blue-mountains-eecs-vis_id",
+  "title": "Blue Mountains EECs. VIS_ID 4357",
+  "notes": "Endangered ecological communities in Blue Mountains Local Government Area. Over 800 site inspections were carried out in 2013 in the preparation of a new LEP. No report or other details are currently ",
+  "metadata_modified": "2026-10-01T07:41:40.102923",
+  "resources": 2
+ },
+ {
+  "org": "blue-mountains-city-council",
+  "name": "bullaburra-to-linden-frmsp-spatial-layers-flood-planning-area",
+  "title": "Bullaburra to Linden Floodplain Risk Management Study and Plan - spatial layers",
+  "notes": "Bullaburra to Linden Flood Planning Area ",
+  "metadata_modified": "2026-09-11T02:00:14.208553",
+  "resources": 7
+ },
+ {
+  "org": "blue-mountains-city-council",
+  "name": "jamison-creek-feasibility-study-options-report-pdf",
+  "title": "Jamison Creek Feasibility Study Options Report - PDF",
+  "notes": "Complete report",
+  "metadata_modified": "2026-01-14T05:03:46.104453",
+  "resources": 1
+ },
+ {
+  "org": "blue-mountains-city-council",
+  "name": "lapstone-south-glenbrook-and-south-blaxland-frmsp-report",
+  "title": "Lapstone, South Glenbrook and South Blaxland FRMSP Report",
+  "notes": "Report complete",
+  "metadata_modified": "2025-12-17T05:37:04.526797",
+  "resources": 1
+ },
+ {
+  "org": "blue-mountains-city-council",
+  "name": "hazelbrook-creek-and-woodford-creek-catchment-frms-p-hydraulic-model-outputs-tuflow",
+  "title": "Hazelbrook Creek and Woodford Creek Catchment FRMS&P - Hydraulic Model Outputs (TUFLOW)",
+  "notes": "Hydraulic Model Outputs (TUFLOW)",
+  "metadata_modified": "2025-12-17T04:22:45.704258",
+  "resources": 2
+ },
+ {
+  "org": "blue-mountains-city-council",
+  "name": "hazelbrook-creek-and-woodford-creek-catchment-frms-p-summary-of-data",
+  "title": "Hazelbrook Creek and Woodford Creek Catchment FRMS&P - Summary of Data",
+  "notes": "Summary of Data",
+  "metadata_modified": "2025-12-17T04:20:58.275141",
+  "resources": 1
+ },
+ {
+  "org": "blue-mountains-city-council",
+  "name": "hazelbrook-creek-and-woodford-creek-catchment-frms-p-report",
+  "title": "Hazelbrook Creek and Woodford Creek Catchment FRMS&P - Report",
+  "notes": "Complete Report",
+  "metadata_modified": "2025-12-17T04:20:10.718746",
+  "resources": 1
+ },
+ {
+  "org": "blue-mountains-city-council",
+  "name": "bullaburra-to-linden-frmsp",
+  "title": "Bullaburra to Linden Floodplain Risk Management Study and Plan - Report",
+  "notes": "FInal adopted report including all figures",
+  "metadata_modified": "2025-12-17T04:15:16.769992",
+  "resources": 1
+ },
+ {
+  "org": "blue-mountains-city-council",
+  "name": "r07_finalfrms",
+  "title": "Bullaburra to Linden FRMSP Final report",
+  "notes": "FInal report adopted by BMCC at Council meeting 23 February 2021.",
+  "metadata_modified": "2025-12-17T04:13:46.189453",
+  "resources": 1
+ },
+ {
+  "org": "blue-mountains-city-council",
+  "name": "jamison-creek-floodplain-risk-management-study-draft-planning",
+  "title": "Jamison Creek, Floodplain Risk Management Study (Draft) - Planning",
+  "notes": "* Site design;\r\n* Sample plans;\r\n* Stormwater.",
+  "metadata_modified": "2025-12-17T04:10:04.905138",
+  "resources": 1
+ },
+ {
+  "org": "blue-mountains-city-council",
+  "name": "hazelbrook-creek-and-woodford-creek-catchment-frms-p-option-locations-gis",
+  "title": "Hazelbrook Creek and Woodford Creek Catchment FRMS&P - Option Locations (GIS)",
+  "notes": "Option Locations (GIS)",
+  "metadata_modified": "2025-12-17T04:07:11.979914",
+  "resources": 1
+ },
+ {
+  "org": "blue-mountains-city-council",
+  "name": "hazelbrook-creek-and-woodford-creek-catchment-frms-p-fpl",
+  "title": "Hazelbrook Creek and Woodford Creek Catchment FRMS&P - FPL",
+  "notes": "Flood Planning Level",
+  "metadata_modified": "2025-12-17T04:06:02.785690",
+  "resources": 1
+ },
+ {
+  "org": "blue-mountains-city-council",
+  "name": "hazelbrook-creek-and-woodford-creek-catchment-frms-p-emergency-response-planning",
+  "title": "Hazelbrook Creek and Woodford Creek Catchment FRMS&P - Emergency Response Planning",
+  "notes": "* Hazard and Evacuation; \r\n* Road Overtopping Points;\r\n* Critical Infrastructure;\r\n* True Hazard.\r\n",
+  "metadata_modified": "2025-12-17T04:05:42.779888",
+  "resources": 4
+ },
+ {
+  "org": "blue-mountains-city-council",
+  "name": "hazelbrook-creek-and-woodford-creek-catchment-frms-p-post-processed-results",
+  "title": "Hazelbrook Creek and Woodford Creek Catchment FRMS&P - Post-Processed Results",
+  "notes": "Post-Processed Results",
+  "metadata_modified": "2025-12-17T04:05:21.798979",
+  "resources": 1
+ },
+ {
+  "org": "blue-mountains-city-council",
+  "name": "hazelbrook-creek-and-woodford-creek-catchment-frms-p-hydraulic-model-inputs-tuflow",
+  "title": "Hazelbrook Creek and Woodford Creek Catchment FRMS&P - Hydraulic Model Inputs (TUFLOW)",
+  "notes": "Hydraulic Model Inputs (TUFLOW)",
+  "metadata_modified": "2025-12-17T04:04:00.722722",
+  "resources": 1
+ },
+ {
+  "org": "blue-mountains-city-council",
+  "name": "hazelbrook-creek-and-woodford-creek-catchment-frms-p-community-consultation",
+  "title": "Hazelbrook Creek and Woodford Creek Catchment FRMS&P - Community Consultation",
+  "notes": "Community Consultation Files",
+  "metadata_modified": "2025-12-17T04:03:25.889385",
+  "resources": 1
+ },
+ {
+  "org": "blue-mountains-city-council",
+  "name": "hazelbrook-creek-and-woodford-creek-catchment-frms-p-floor-level-survey",
+  "title": "Hazelbrook Creek and Woodford Creek Catchment FRMS&P - Floor Level Survey",
+  "notes": "Floor Level Survey",
+  "metadata_modified": "2025-12-17T04:03:17.292362",
+  "resources": 1
+ },
+ {
+  "org": "blue-mountains-city-council",
+  "name": "jamison-creek-feasibility-study-options-report-animations",
+  "title": "Jamison Creek Feasibility Study Options Report - Animations",
+  "notes": "1% AEP",
+  "metadata_modified": "2025-12-17T03:32:27.194710",
+  "resources": 1
+ },
+ {
+  "org": "blue-mountains-city-council",
+  "name": "jamison-creek-feasibility-study-options-report-hydraulic-model-output",
+  "title": "Jamison Creek Feasibility Study Options Report - Hydraulic Model Output",
+  "notes": "TUFLOW",
+  "metadata_modified": "2025-12-17T03:31:34.396563",
+  "resources": 1
+ },
+ {
+  "org": "blue-mountains-city-council",
+  "name": "jamison-creek-feasibility-study-options-report-gis",
+  "title": "Jamison Creek Feasibility Study Options Report - GIS",
+  "notes": "Filtered",
+  "metadata_modified": "2025-12-17T03:31:18.673101",
+  "resources": 1
+ },
+ {
+  "org": "blue-mountains-city-council",
+  "name": "jamison-creek-feasibility-study-options-report-hydraulic-model-output-options",
+  "title": "Jamison Creek Feasibility Study Options Report - Hydraulic Model Output - Options",
+  "notes": "TUFLOW",
+  "metadata_modified": "2025-12-17T03:30:56.230006",
+  "resources": 1
+ },
+ {
+  "org": "blue-mountains-city-council",
+  "name": "jamison-creek-feasibility-study-options-report-waterride",
+  "title": "Jamison Creek Feasibility Study Options Report - WaterRIDE",
+  "notes": "WaterRIDE package",
+  "metadata_modified": "2025-12-17T03:30:52.252996",
+  "resources": 1
+ },
+ {
+  "org": "blue-mountains-city-council",
+  "name": "jamison-creek-feasibility-study-options-report-flood-damages",
+  "title": "Jamison Creek Feasibility Study Options Report - Flood Damages",
+  "notes": "Design + Options",
+  "metadata_modified": "2025-12-17T03:30:48.263039",
+  "resources": 1
+ },
+ {
+  "org": "blue-mountains-city-council",
+  "name": "jamison-creek-feasibility-study-options-report-hydraulic-model-input-design",
+  "title": "Jamison Creek Feasibility Study Options Report - Hydraulic Model Input - Design",
+  "notes": "TUFLOW",
+  "metadata_modified": "2025-12-17T03:20:13.216536",
+  "resources": 1
+ },
+ {
+  "org": "blue-mountains-city-council",
+  "name": "lapstone-south-glenbrook-and-south-blaxland-frmsp-flood-damages",
+  "title": "Lapstone, South Glenbrook and South Blaxland Floodplain Risk Management Study and Plan - Flood Damages",
+  "notes": "Includes mitigation",
+  "metadata_modified": "2025-12-17T02:47:18.303554",
+  "resources": 1
+ },
+ {
+  "org": "blue-mountains-city-council",
+  "name": "lapstone-south-glenbrook-and-south-blaxland-frmsp-community-consultation",
+  "title": "Lapstone, South Glenbrook and South Blaxland Floodplain Risk Management Study and Plan - Community Consultation",
+  "notes": "Memo and brochure",
+  "metadata_modified": "2025-12-17T02:47:13.961653",
+  "resources": 1
+ },
+ {
+  "org": "blue-mountains-city-council",
+  "name": "south-leura-flood-study-draft-report",
+  "title": "South Leura - Flood Study (Draft) - Report",
+  "notes": "Complete report",
+  "metadata_modified": "2025-12-17T02:39:12.859509",
+  "resources": 1
+ },
+ {
+  "org": "blue-mountains-city-council",
+  "name": "jamison-creek-floodplain-risk-management-study-draft-excel-data",
+  "title": "Jamison Creek, Floodplain Risk Management Study (Draft) - Excel Data",
+  "notes": "Associated with all model outputs and options",
+  "metadata_modified": "2025-12-17T02:33:51.142959",
+  "resources": 1
+ },
+ {
+  "org": "blue-mountains-city-council",
+  "name": "jamison-creek-floodplain-risk-management-study-draft-rainfall-data",
+  "title": "Jamison Creek, Floodplain Risk Management Study (Draft) - Rainfall Data",
+  "notes": "TXT and XLS",
+  "metadata_modified": "2025-12-17T02:33:14.417969",
+  "resources": 1
+ },
+ {
+  "org": "blue-mountains-city-council",
+  "name": "jamison-creek-floodplain-risk-management-study-draft-flood-damages",
+  "title": "Jamison Creek, Floodplain Risk Management Study (Draft) - Flood Damages",
+  "notes": "Sinclair, revised flood levels",
+  "metadata_modified": "2025-12-17T02:33:10.264075",
+  "resources": 1
+ },
+ {
+  "org": "blue-mountains-city-council",
+  "name": "jamison-creek-floodplain-risk-management-study-draft-plans-for-works",
+  "title": "Jamison Creek, Floodplain Risk Management Study (Draft) - Plans for Works",
+  "notes": "DWG files + survey",
+  "metadata_modified": "2025-12-17T02:32:39.050791",
+  "resources": 1
+ },
+ {
+  "org": "blue-mountains-city-council",
+  "name": "jamison-creek-floodplain-risk-management-study-draft-hydrologic-model",
+  "title": "Jamison Creek, Floodplain Risk Management Study (Draft) - Hydrologic Model",
+  "notes": "XP-RAFTS",
+  "metadata_modified": "2025-12-17T02:32:35.048364",
+  "resources": 1
+ },
+ {
+  "org": "blue-mountains-city-council",
+  "name": "jamison-creek-floodplain-risk-management-study-draft-hydraulic-model",
+  "title": "Jamison Creek, Floodplain Risk Management Study (Draft) - Hydraulic Model",
+  "notes": "XP-SWMM",
+  "metadata_modified": "2025-12-17T02:24:40.587956",
+  "resources": 1
+ },
+ {
+  "org": "blue-mountains-city-council",
+  "name": "jamison-creek-floodplain-risk-management-study-draft-report",
+  "title": "Jamison Creek, Floodplain Risk Management Study (Draft) - Report",
+  "notes": "Report + figures + appendices",
+  "metadata_modified": "2025-12-17T01:55:27.567169",
+  "resources": 3
+ },
+ {
+  "org": "blue-mountains-city-council",
+  "name": "south-leura-flood-study-draft-hydrology-sub-catchments",
+  "title": "South Leura - Flood Study (Draft) - Hydrology - Sub-catchments",
+  "notes": "Hydrology - Sub-catchments",
+  "metadata_modified": "2025-12-17T01:34:03.589189",
+  "resources": 1
+ },
+ {
+  "org": "blue-mountains-city-council",
+  "name": "south-leura-flood-study-draft-hydraulic-model-hec-ras",
+  "title": "South Leura - Flood Study (Draft) - Hydraulic Model (HEC-RAS)",
+  "notes": "Hydraulic Model (HEC-RAS) - Inputs and Outputs",
+  "metadata_modified": "2025-12-17T01:04:26.856010",
+  "resources": 1
+ },
+ {
+  "org": "blue-mountains-city-council",
+  "name": "south-leura-flood-study-draft-gis-files",
+  "title": "South Leura - Flood Study (Draft) - GIS Files",
+  "notes": "GIS Files",
+  "metadata_modified": "2025-12-17T01:03:48.955985",
+  "resources": 2
+ },
+ {
+  "org": "blue-mountains-city-council",
+  "name": "south-leura-floodplain-risk-management-study-plan-report",
+  "title": "South Leura Floodplain Risk Management Study & Plan - Report",
+  "notes": "Complete report",
+  "metadata_modified": "2025-12-17T00:57:39.756790",
+  "resources": 2
+ },
+ {
+  "org": "blue-mountains-city-council",
+  "name": "south-leura-flood-study-draft-hydraulic-model-xp-swmm",
+  "title": "South Leura - Flood Study (Draft) - Hydraulic Model (XP-SWMM)",
+  "notes": "Hydraulic Model (XP-SWMM) - Inputs and Outputs",
+  "metadata_modified": "2025-12-17T00:56:33.987945",
+  "resources": 1
+ },
+ {
+  "org": "blue-mountains-city-council",
+  "name": "lapstone-south-glenbrook-and-south-blaxland-frmsp-hydraulic-model-input",
+  "title": "Lapstone, South Glenbrook and South Blaxland Floodplain Risk Management Study and Plan - Hydraulic Model Input",
+  "notes": "TUFLOW",
+  "metadata_modified": "2025-12-17T00:45:13.070280",
+  "resources": 1
+ },
+ {
+  "org": "blue-mountains-city-council",
+  "name": "south-leura-floodplain-management-study-plan-draft-report",
+  "title": "South Leura Flood Study; South Leura Floodplain Management Study & Plan Draft - Report",
+  "notes": "Report + Appendix",
+  "metadata_modified": "2025-12-17T00:36:55.537114",
+  "resources": 2
+ },
+ {
+  "org": "blue-mountains-city-council",
+  "name": "lapstone-south-glenbrook-and-south-blaxland-frmsp-flood-hazard",
+  "title": "Lapstone, South Glenbrook and South Blaxland Floodplain Risk Management Study and Plan - Flood Hazard",
+  "notes": "5y, 20y, 100y, PMF",
+  "metadata_modified": "2025-12-17T00:27:12.174756",
+  "resources": 1
+ },
+ {
+  "org": "blue-mountains-city-council",
+  "name": "lapstone-south-glenbrook-and-south-blaxland-frmsp-flood-level",
+  "title": "Lapstone, South Glenbrook and South Blaxland Floodplain Risk Management Study and Plan - Flood Level",
+  "notes": "5y, 20y, 100y, PMF",
+  "metadata_modified": "2025-12-17T00:26:23.597254",
+  "resources": 1
+ },
+ {
+  "org": "blue-mountains-city-council",
+  "name": "lapstone-south-glenbrook-and-south-blaxland-frmsp-fpa",
+  "title": "Lapstone, South Glenbrook and South Blaxland Floodplain Risk Management Study and Plan - FPA",
+  "notes": "Existing and mitigation",
+  "metadata_modified": "2025-12-17T00:26:17.682423",
+  "resources": 1
+ },
+ {
+  "org": "blue-mountains-city-council",
+  "name": "lapstone-south-glenbrook-and-south-blaxland-frmsp-flooddepth",
+  "title": "Lapstone, South Glenbrook and South Blaxland Floodplain Risk Management Study and Plan - Flood Depth",
+  "notes": "Range of durations (5y to PMF)",
+  "metadata_modified": "2025-12-17T00:24:22.936253",
+  "resources": 1
+ },
+ {
+  "org": "blue-mountains-city-council",
+  "name": "lapstone-south-glenbrook-and-south-blaxland-frmsp-lidar",
+  "title": "Lapstone, South Glenbrook and South Blaxland Floodplain Risk Management Study and Plan - LiDAR",
+  "notes": "1m",
+  "metadata_modified": "2025-12-17T00:22:24.357311",
+  "resources": 1
+ },
+ {
+  "org": "blue-mountains-city-council",
+  "name": "lapstone-south-glenbrook-and-south-blaxland-frmsp-hydraulic-model-output",
+  "title": "Lapstone, South Glenbrook and South Blaxland Floodplain Risk Management Study and Plan - Hydraulic Model Output",
+  "notes": "TUFLOW",
+  "metadata_modified": "2025-12-17T00:20:58.294038",
+  "resources": 1
+ },
+ {
+  "org": "blue-mountains-city-council",
+  "name": "blue-mountains-city-council-waterway-health-explorer",
+  "title": "Blue Mountains City Council Waterway Health Explorer",
+  "notes": "The Blue Mountains Waterway Health Explorer allows you to discover water quality and aquatic macroinvertebrate data visualisations from Blue Mountains City Council’s Waterway Health Monitoring Program",
+  "metadata_modified": "2025-11-18T23:41:40.236497",
+  "resources": 2
+ },
+ {
+  "org": "blue-mountains-city-council",
+  "name": "blue-mountains-city-council-waterway-health-monitoring-program",
+  "title": "Blue Mountains City Council Waterway Health Monitoring Program",
+  "notes": "The Blue Mountains Waterway Health Monitoring Program is an ongoing initiative by Blue Mountains City Council to monitor and share information about the condition of local waterways. Its purpose is to",
+  "metadata_modified": "2025-11-17T21:27:44.515154",
+  "resources": 1
+ },
+ {
+  "org": "burwood-council",
+  "name": "dobroyd-canal-flood-study-report",
+  "title": "Dobroyd Canal Flood Study Report",
+  "notes": "Final report for Burwood Council",
+  "metadata_modified": "2025-12-17T03:49:37.650134",
+  "resources": 1
+ },
+ {
+  "org": "burwood-council",
+  "name": "dobroyd-canal-flood-study-spatial-data",
+  "title": "Dobroyd Canal Flood Study Spatial Data",
+  "notes": "includes depth, height, velocity, hazard grids\r\n\r\nprovisional flood planning area and hydraulic categories",
+  "metadata_modified": "2025-12-17T03:49:33.807738",
+  "resources": 1
+ },
+ {
+  "org": "burwood-council",
+  "name": "cooks-river-overland-flood-study-report",
+  "title": "Cooks River Overland Flood Study Report",
+  "notes": "The Cooks RIver Overland Flood Study  is in three parts:\r\nVolume 1- Report\r\nVolume 2- Flood Mapping\r\nVolume 3 - Sensitivity Mapping",
+  "metadata_modified": "2025-12-17T03:37:30.466554",
+  "resources": 3
+ },
+ {
+  "org": "burwood-council",
+  "name": "cooks-river-overland-flood-study-tuflow-results",
+  "title": "Cooks River Overland Flood Study Tuflow Results",
+  "notes": "includes flood extents, velocity contours and depth grids for 2, 20, 100 yr ARI and PMF\r\n",
+  "metadata_modified": "2025-12-17T03:33:10.206039",
+  "resources": 1
+ },
+ {
+  "org": "burwood-council",
+  "name": "exile-bay-st-lukes-and-william-street-flood-study-report",
+  "title": "Exile Bay,  St Lukes and William Street Flood Study - Report",
+  "notes": "also called Burwood North Flood Study",
+  "metadata_modified": "2025-12-17T02:48:37.031435",
+  "resources": 1
+ },
+ {
+  "org": "burwood-council",
+  "name": "powells-creek-flood-study-report",
+  "title": "Powells Creek Flood Study - Report",
+  "notes": "This study concerns the part of the Burwood LGA within the Powells Creek catchment.\r\nPowells Creek catchment is located in Sydney's Inner West region.\r\nThis study identifies mainstream and overland fl",
+  "metadata_modified": "2025-12-17T02:39:37.261530",
+  "resources": 1
+ },
+ {
+  "org": "camden-council",
+  "name": "nepean-river-flood-study-hydraulic-model-output-tuflow",
+  "title": "Nepean River Flood Study - Hydraulic Model Output",
+  "notes": "TUFLOW",
+  "metadata_modified": "2026-09-11T06:33:06.031581",
+  "resources": 1
+ },
+ {
+  "org": "camden-council",
+  "name": "nepean-river-flood-study-bathymetry",
+  "title": "Nepean River Flood Study - Bathymetry",
+  "notes": "Menangle to Wallacia Weir",
+  "metadata_modified": "2026-09-11T06:32:41.035261",
+  "resources": 1
+ },
+ {
+  "org": "camden-council",
+  "name": "nepean-river-flood-study-flood-planning-level",
+  "title": "Nepean River Flood Study - Flood Planning Level",
+  "notes": "100y, 36h",
+  "metadata_modified": "2026-09-11T06:32:27.787006",
+  "resources": 1
+ },
+ {
+  "org": "camden-council",
+  "name": "nepean-river-flood-study-hazard",
+  "title": "Nepean River Flood Study - Hazard",
+  "notes": "100y ARI",
+  "metadata_modified": "2026-09-11T06:31:07.501595",
+  "resources": 1
+ },
+ {
+  "org": "camden-council",
+  "name": "nepean-river-flood-study-hydraulic-categorisation",
+  "title": "Nepean River Flood Study - Hydraulic Categorisation",
+  "notes": "100y ARI",
+  "metadata_modified": "2026-09-11T06:30:55.087448",
+  "resources": 1
+ },
+ {
+  "org": "camden-council",
+  "name": "nepean-river-flood-study-hydrologic-model",
+  "title": "Nepean River Flood Study - Hydrologic Model",
+  "notes": "XP-RAFTS",
+  "metadata_modified": "2026-09-11T06:30:40.691847",
+  "resources": 1
+ },
+ {
+  "org": "camden-council",
+  "name": "nepean-river-flood-study-hydraulic-model-input-rorb",
+  "title": "Nepean River Flood Study - Hydraulic Model Input",
+  "notes": "RORB",
+  "metadata_modified": "2026-09-11T06:30:29.676110",
+  "resources": 1
+ },
+ {
+  "org": "camden-council",
+  "name": "nepean-river-flood-study-hydraulic-model-output-rorb",
+  "title": "Nepean River Flood Study - Hydraulic Model Output",
+  "notes": "RORB",
+  "metadata_modified": "2026-09-11T06:30:18.619880",
+  "resources": 1
+ },
+ {
+  "org": "camden-council",
+  "name": "nepean-river-flood-study-aerial",
+  "title": "Nepean River Flood Study - Aerial",
+  "notes": "Penrith and Wollongong ECW",
+  "metadata_modified": "2026-09-11T06:30:05.601364",
+  "resources": 1
+ },
+ {
+  "org": "camden-council",
+  "name": "nepean-river-flood-study-waterride",
+  "title": "Nepean River Flood Study - waterRIDE",
+  "notes": "Map, Palettes, Results",
+  "metadata_modified": "2026-09-11T06:29:52.159980",
+  "resources": 1
+ },
+ {
+  "org": "camden-council",
+  "name": "nepean-river-flood-study-hydraulic-model-input-tuflow",
+  "title": "Nepean River Flood Study - Hydraulic Model Input",
+  "notes": "TUFLOW",
+  "metadata_modified": "2026-09-11T06:29:41.272934",
+  "resources": 1
+ },
+ {
+  "org": "camden-council",
+  "name": "nepean-river-flood-study-dem",
+  "title": "Nepean River Flood Study - DEM",
+  "notes": "Includes the original data files and TUFLOW DEM",
+  "metadata_modified": "2026-09-11T06:29:29.160382",
+  "resources": 1
+ },
+ {
+  "org": "camden-council",
+  "name": "nepean-river-fs-report",
+  "title": "Nepean River Flood Study - Report",
+  "notes": "Complete report",
+  "metadata_modified": "2026-09-11T06:29:03.642834",
+  "resources": 1
+ },
+ {
+  "org": "camden-council",
+  "name": "update-of-narellan-creek-flood-study-hydraulic-model-outputs-tuflow",
+  "title": "Update of Narellan Creek Flood Study - Hydraulic Model Outputs (TUFLOW)",
+  "notes": "Hydraulic Model Outputs (TUFLOW)",
+  "metadata_modified": "2026-09-11T06:16:46.527975",
+  "resources": 1
+ },
+ {
+  "org": "camden-council",
+  "name": "update-of-narellan-creek-flood-study-flood-extents",
+  "title": "Update of Narellan Creek Flood Study - Flood Extents",
+  "notes": "Flood Extents",
+  "metadata_modified": "2026-09-11T06:16:15.264358",
+  "resources": 1
+ },
+ {
+  "org": "camden-council",
+  "name": "narellan-creek-flood-study-catchmentsim",
+  "title": "Narellan Creek Flood Study - CatchmentSIM",
+  "notes": "Range of spatial data",
+  "metadata_modified": "2026-09-11T06:15:50.539388",
+  "resources": 1
+ },
+ {
+  "org": "camden-council",
+  "name": "narellan-creek-flood-study-flood-damages",
+  "title": "Narellan Creek Flood Study - Flood Damages",
+  "notes": "All properties MGA 94",
+  "metadata_modified": "2026-09-11T06:15:37.125566",
+  "resources": 1
+ },
+ {
+  "org": "camden-council",
+  "name": "narellan-creek-flood-study-hydrologic-model-input",
+  "title": "Narellan Creek Flood Study - Hydrologic Model Input",
+  "notes": "XP-RAFTS",
+  "metadata_modified": "2026-09-11T06:15:26.112569",
+  "resources": 1
+ },
+ {
+  "org": "camden-council",
+  "name": "narellan-creek-flood-study-hydraulic-model-input",
+  "title": "Narellan Creek Flood Study - Hydraulic Model Input",
+  "notes": "TUFLOW",
+  "metadata_modified": "2026-09-11T06:15:12.433454",
+  "resources": 1
+ },
+ {
+  "org": "camden-council",
+  "name": "narellan-creek-flood-study-hydraulic-model-output",
+  "title": "Narellan Creek Flood Study - Hydraulic Model Output",
+  "notes": "TUFLOW",
+  "metadata_modified": "2026-09-11T06:14:59.127286",
+  "resources": 1
+ },
+ {
+  "org": "camden-council",
+  "name": "narellan-creek-flood-study-flood-extents",
+  "title": "Narellan Creek Flood Study - Flood Extents",
+  "notes": "20y, 100y, PMF",
+  "metadata_modified": "2026-09-11T06:14:46.858439",
+  "resources": 1
+ },
+ {
+  "org": "camden-council",
+  "name": "narellan-creek-flood-study-hazard",
+  "title": "Narellan Creek Flood Study - Hazard",
+  "notes": "100 year ARI",
+  "metadata_modified": "2026-09-11T06:14:33.107176",
+  "resources": 1
+ },
+ {
+  "org": "camden-council",
+  "name": "narellan-creek-flood-study-hydraulic",
+  "title": "Narellan Creek Flood Study - Hydraulic",
+  "notes": "100 year ARI - floodway, storage and fringe.",
+  "metadata_modified": "2026-09-11T06:14:18.599250",
+  "resources": 1
+ },
+ {
+  "org": "camden-council",
+  "name": "narellan-creek-flood-study-data-handover",
+  "title": "Narellan Creek Flood Study - Data Handover",
+  "notes": "PDF",
+  "metadata_modified": "2026-09-11T06:14:07.340667",
+  "resources": 1
+ },
+ {
+  "org": "camden-council",
+  "name": "narellan-creek-flood-study-report",
+  "title": "Narellan Creek Flood Study - Report",
+  "notes": "Report complete (incl. appendices)",
+  "metadata_modified": "2026-09-11T06:13:55.524148",
+  "resources": 1
+ },
+ {
+  "org": "camden-council",
+  "name": "upper-south-creek-flood-study-final-report",
+  "title": "Upper South Creek Flood Study",
+  "notes": "The Study has defined design flood behaviour for the Upper South Creek area. The model used\r\nto define design flood liability is calibrated and validated and is shown to be relatively insensitive\r\nto ",
+  "metadata_modified": "2026-01-15T01:50:39.160403",
+  "resources": 1
+ },
+ {
+  "org": "camden-council",
+  "name": "final-nepean-river-floodplain-risk-management-study-and-plan",
+  "title": "Final Nepean River Floodplain Risk Management Study and Plan",
+  "notes": "Nepean River Floodplain Risk Management Study and Plan - Final Report",
+  "metadata_modified": "2026-01-13T23:40:31.948920",
+  "resources": 2
+ },
+ {
+  "org": "camden-council",
+  "name": "nepean-river-floodplain-risk-management-study-and-plan-final-report",
+  "title": "Nepean River Floodplain Risk Management Study and Plan - Final Report and Appendices",
+  "notes": "Nepean River Floodplain Risk Management Study and Plan - Final Report Body",
+  "metadata_modified": "2026-01-13T23:37:17.427563",
+  "resources": 11
+ },
+ {
+  "org": "camden-council",
+  "name": "upper-south-creek-frmsp-report",
+  "title": "Upper South Creek FRMSP - Report",
+  "notes": "Complete report",
+  "metadata_modified": "2026-01-13T23:33:23.906885",
+  "resources": 1
+ },
+ {
+  "org": "camden-council",
+  "name": "narellan-creek-flood-study-volume-2",
+  "title": "Narellan Creek Flood Study Volume 2",
+  "notes": "Narellan Creek Flood Study Volume 2 - Figures",
+  "metadata_modified": "2025-12-17T05:24:58.803705",
+  "resources": 1
+ },
+ {
+  "org": "camden-council",
+  "name": "flood-study-report-volume-1",
+  "title": "Draft Narellan Creek FS Report Volume 1",
+  "notes": "1. Draft Narellan Creek Flood Study Including Detailed Overland Flow: Volume 1 - Report & Appendices\r\n",
+  "metadata_modified": "2025-12-17T05:24:29.597687",
+  "resources": 2
+ },
+ {
+  "org": "camden-council",
+  "name": "waterride-peakresults-timevarying",
+  "title": "Nepean River Floodplain Risk Management Study and Plan - WaterRIDE",
+  "notes": "WaterRIDE",
+  "metadata_modified": "2025-12-17T03:53:07.675029",
+  "resources": 1
+ },
+ {
+  "org": "camden-council",
+  "name": "final-draft-nepean-river-floodplain-risk-management-study-and-plan",
+  "title": "Nepean River Floodplain Risk Management Study and Plan - Draft Report",
+  "notes": "Nepean River Floodplain Risk Management Study and Plan - Draft Report",
+  "metadata_modified": "2025-12-17T03:52:34.247099",
+  "resources": 11
+ },
+ {
+  "org": "camden-council",
+  "name": "gis-data-and-model-results",
+  "title": "Nepean River Floodplain Risk Management Study and Plan - GIS Data and Model Results",
+  "notes": "GIS Data, Damages and MCA, ARR2016 Hazard, Climate Change Results, Models, Results, Camden Floor Levels 2017, Flood Damaged Properties ",
+  "metadata_modified": "2025-12-17T03:51:06.297336",
+  "resources": 1
+ },
+ {
+  "org": "camden-council",
+  "name": "harrington-park-flood-mitigation-preferred-flood-mitigation-options-and-concept-design-model-outputs",
+  "title": "Harrington Park Mitigation Works Narellan-Nepean: Preferred Flood Mitigation Options and Concept Design - Hydraulic Model Outputs (TUFLOW)",
+  "notes": "Hydraulic Model Outputs (TUFLOW)",
+  "metadata_modified": "2025-12-17T03:40:23.060527",
+  "resources": 1
+ },
+ {
+  "org": "camden-council",
+  "name": "harrington-park-flood-mitigation-preferred-flood-mitigation-options-and-concept-design-plans",
+  "title": "Harrington Park Mitigation Works Narellan-Nepean: Preferred Flood Mitigation Options and Concept Design - Plans for Works",
+  "notes": "Plans for Works",
+  "metadata_modified": "2025-12-17T03:39:50.110890",
+  "resources": 1
+ },
+ {
+  "org": "camden-council",
+  "name": "upper-south-creek-frmsp-hydraulic-model-outputs-tuflow",
+  "title": "Upper South Creek FRMSP - Hydraulic Model Outputs (TUFLOW)",
+  "notes": "Hydraulic Model Outputs (TUFLOW)",
+  "metadata_modified": "2025-12-17T03:39:31.151872",
+  "resources": 7
+ },
+ {
+  "org": "camden-council",
+  "name": "harrington-park-flood-mitigation-preferred-flood-mitigation-options-and-concept-design-data-handover",
+  "title": "Harrington Park Mitigation Works Narellan-Nepean: Preferred Flood Mitigation Options and Concept Design - Data Handover",
+  "notes": "Dataset handover description and exhaustive file list",
+  "metadata_modified": "2025-12-17T03:39:12.354927",
+  "resources": 1
+ },
+ {
+  "org": "camden-council",
+  "name": "upper-south-creek-frmsp-waterride",
+  "title": "Upper South Creek FRMSP - WaterRIDE",
+  "notes": "WaterRIDE Files",
+  "metadata_modified": "2025-12-17T03:38:45.866559",
+  "resources": 2
+ },
+ {
+  "org": "camden-council",
+  "name": "harrington-park-flood-mitigation-preferred-flood-mitigation-options-and-concept-design-model-inputs",
+  "title": "Harrington Park Mitigation Works Narellan-Nepean: Preferred Flood Mitigation Options and Concept Design - Hydraulic Model Inputs (TUFLOW)",
+  "notes": "Hydraulic Model Inputs (TUFLOW)",
+  "metadata_modified": "2025-12-17T03:38:41.501191",
+  "resources": 1
+ },
+ {
+  "org": "camden-council",
+  "name": "harrington-park-flood-mitigation-preferred-flood-mitigation-options-and-concept-design-report",
+  "title": "Harrington Park Mitigation Works Narellan-Nepean: Preferred Flood Mitigation Options and Concept Design - Report",
+  "notes": "Final Draft Report",
+  "metadata_modified": "2025-12-17T03:38:37.443176",
+  "resources": 1
+ },
+ {
+  "org": "camden-council",
+  "name": "harrington-park-flood-mitigation-site-assessment-for-flood-levee-and-channelisation-options-report",
+  "title": "Harrington Park Flood Mitigation - Site Assessment for Flood Levee and Channelisation Options - Report",
+  "notes": "Complete Report",
+  "metadata_modified": "2025-12-17T03:37:15.689864",
+  "resources": 1
+ },
+ {
+  "org": "camden-council",
+  "name": "narellan-creek-proposed-spillway-channel-harrington-park-vegetation-management-plan-report",
+  "title": "Narellan Creek Proposed Spillway Channel, Harrington Park - Vegetation Management Plan - Report",
+  "notes": "Complete Report",
+  "metadata_modified": "2025-12-17T03:36:44.839433",
+  "resources": 1
+ },
+ {
+  "org": "camden-council",
+  "name": "upper-south-creek-frmsp-hydraulic-model-inputs-tuflow",
+  "title": "Upper South Creek FRMSP - Hydraulic Model Inputs (TUFLOW)",
+  "notes": "Hydraulic Model Inputs (TUFLOW)",
+  "metadata_modified": "2025-12-17T03:35:59.812532",
+  "resources": 2
+ },
+ {
+  "org": "camden-council",
+  "name": "upper-south-creek-frmsp-animations",
+  "title": "Upper South Creek FRMSP - Animations",
+  "notes": "Flood Animations",
+  "metadata_modified": "2025-12-17T03:35:26.685861",
+  "resources": 1
+ },
+ {
+  "org": "camden-council",
+  "name": "harrington-park-flood-mitigation-works-ref-report",
+  "title": "Harrington Park Flood Mitigation Works - Review of Environmental Factors - Report",
+  "notes": "Complete Report",
+  "metadata_modified": "2025-12-17T03:31:30.362855",
+  "resources": 1
+ },
+ {
+  "org": "camden-council",
+  "name": "harrington-park-mitigation-works-narellan-post-flood-analysis-june-2016-event-report",
+  "title": "Harrington Park Mitigation Works, Narellan - Post Flood Analysis June 2016 Event - Report",
+  "notes": "Complete Report",
+  "metadata_modified": "2025-12-17T03:29:54.139254",
+  "resources": 1
+ },
+ {
+  "org": "camden-council",
+  "name": "harrington-park-flood-mitigation-preferred-flood-mitigation-options-and-concept-design-gis",
+  "title": "Harrington Park Mitigation Works Narellan-Nepean: Preferred Flood Mitigation Options and Concept Design - GIS Layers",
+  "notes": "GIS Layers",
+  "metadata_modified": "2025-12-17T03:27:14.929316",
+  "resources": 1
+ },
+ {
+  "org": "camden-council",
+  "name": "camden-flood-risk-management-policy-report",
+  "title": "Camden - Flood Risk Management Policy - Report",
+  "notes": "Complete Report",
+  "metadata_modified": "2025-12-17T03:23:54.721535",
+  "resources": 1
+ },
+ {
+  "org": "camden-council",
+  "name": "harrington-park-flood-mitigation-preferred-flood-mitigation-options-and-concept-design-aerials",
+  "title": "Harrington Park Mitigation Works Narellan-Nepean: Preferred Flood Mitigation Options and Concept Design - Aerial Imagery",
+  "notes": "Aerial Imagery",
+  "metadata_modified": "2025-12-17T03:22:40.791246",
+  "resources": 1
+ },
+ {
+  "org": "camden-council",
+  "name": "harrington-park-flood-mitigation-preferred-flood-mitigation-options-and-concept-design-waterride",
+  "title": "Harrington Park Mitigation Works Narellan-Nepean: Preferred Flood Mitigation Options and Concept Design - WaterRIDE",
+  "notes": "WaterRIDE Files",
+  "metadata_modified": "2025-12-17T03:22:36.703387",
+  "resources": 1
+ },
+ {
+  "org": "camden-council",
+  "name": "update-of-narellan-creek-flood-study-hydraulic-model-inputs-tuflow",
+  "title": "Update of Narellan Creek Flood Study - Hydraulic Model Inputs (TUFLOW)",
+  "notes": "Hydraulic Model Inputs (TUFLOW)",
+  "metadata_modified": "2025-12-17T03:16:44.937779",
+  "resources": 1
+ },
+ {
+  "org": "camden-council",
+  "name": "update-of-narellan-creek-flood-study-waterride",
+  "title": "Update of Narellan Creek Flood Study - WaterRIDE",
+  "notes": "WaterRIDE Files",
+  "metadata_modified": "2025-12-17T03:16:16.489796",
+  "resources": 1
+ },
+ {
+  "org": "camden-council",
+  "name": "update-of-narellan-creek-flood-study-dataset-handover-description",
+  "title": "Update of Narellan Creek Flood Study - Dataset Handover Description",
+  "notes": "Dataset Handover Description",
+  "metadata_modified": "2025-12-17T03:13:48.816126",
+  "resources": 1
+ },
+ {
+  "org": "camden-council",
+  "name": "upper-south-creek-frmsp-dataset-handover",
+  "title": "Upper South Creek FRMSP - Dataset Handover",
+  "notes": "Dataset Handover - Image",
+  "metadata_modified": "2025-12-17T03:06:32.866579",
+  "resources": 1
+ },
+ {
+  "org": "camden-council",
+  "name": "upper-nepean-river-floodplain-management-study-draft-plan-volume-3-report",
+  "title": "Upper Nepean River Floodplain Management Study and (Draft) Plan (Volume 3) - Report",
+  "notes": "Complete report",
+  "metadata_modified": "2025-12-17T02:41:40.097847",
+  "resources": 1
+ },
+ {
+  "org": "camden-council",
+  "name": "update-of-narellan-creek-flood-study-report",
+  "title": "Update of Narellan Creek Flood Study - Report",
+  "notes": "Complete Report",
+  "metadata_modified": "2025-12-17T01:32:25.154737",
+  "resources": 1
+ },
+ {
+  "org": "camden-council",
+  "name": "upper-south-creek-frmsp-user-guide",
+  "title": "Upper South Creek FRMSP - User Guide",
+  "notes": "TUFLOW",
+  "metadata_modified": "2025-12-17T01:10:04.899684",
+  "resources": 1
+ },
+ {
+  "org": "camden-council",
+  "name": "review-of-upper-south-creek-flood-study-final-report",
+  "title": "Review of Upper South Creek Flood Study - Final Report",
+  "notes": "Review of Upper South Creek Flood Study - Final Report including all figures and appendices",
+  "metadata_modified": "2025-12-17T00:48:39.820213",
+  "resources": 11
+ },
+ {
+  "org": "campbelltown-city-council",
+  "name": "bow-bowing-bunbury-curran-creek-strategic-frmsp-report",
+  "title": "Bow Bowing Bunbury Curran Creek Strategic FRMSP - Report",
+  "notes": "Complete",
+  "metadata_modified": "2026-01-14T05:06:29.204979",
+  "resources": 2
+ },
+ {
+  "org": "campbelltown-city-council",
+  "name": "_reports",
+  "title": "Campbelltown Southern Catchments Flood Study - Report",
+  "notes": "Contains high and low resolution versions of the flood study report in PDF format.  This includes Volume 1 (report & appendices) and Volume 2 (figures).",
+  "metadata_modified": "2025-12-17T04:47:50.207354",
+  "resources": 2
+ },
+ {
+  "org": "campbelltown-city-council",
+  "name": "bow-bowing-bunbury-curran-creek-strategic-frmsp-post-processed",
+  "title": "Bow Bowing Bunbury Curran Creek Strategic FRMSP - Post-Processed",
+  "notes": "Depth, Hazard, Hydraulic Categorisation, Level, Velocity",
+  "metadata_modified": "2025-12-17T03:36:13.928137",
+  "resources": 1
+ },
+ {
+  "org": "campbelltown-city-council",
+  "name": "bow-bowing-bunbury-curran-creek-strategic-frmsp-hydraulic-model-output",
+  "title": "Bow Bowing Bunbury Curran Creek Strategic FRMSP - Hydraulic Model Output",
+  "notes": "Each catchment area has its own TUFLOW raw result:\r\n\r\n* Birunji Creek\r\n* Blairmount\r\n* Campbelltown\r\n* Claymore\r\n* Glenfield\r\n* Ingleburn\r\n* Minto McBarron\r\n* Smiths Creek\r\n* Thompsons Creek\r\n* Upper ",
+  "metadata_modified": "2025-12-17T03:33:59.427376",
+  "resources": 30
+ },
+ {
+  "org": "campbelltown-city-council",
+  "name": "bow-bowing-bunbury-curran-creek-strategic-frmsp-hydraulic-model-input",
+  "title": "Bow Bowing Bunbury Curran Creek Strategic FRMSP - Hydraulic Model Input",
+  "notes": "Each catchment area has its own TUFLOW setup:\r\n\r\n* Birunji Creek\r\n* Blairmount\r\n* Campbelltown\r\n* Claymore\r\n* Glenfield\r\n* Ingleburn\r\n* Minto McBarron\r\n* Smiths Creek\r\n* Thompsons Creek\r\n* Upper Bow B",
+  "metadata_modified": "2025-12-17T03:27:51.286061",
+  "resources": 11
+ },
+ {
+  "org": "campbelltown-city-council",
+  "name": "bow-bowing-bunbury-curran-creek-strategic-frmsp-dem",
+  "title": "Bow Bowing Bunbury Curran Creek Strategic FRMSP - DEM",
+  "notes": "DEM",
+  "metadata_modified": "2025-12-17T03:27:01.272701",
+  "resources": 1
+ },
+ {
+  "org": "campbelltown-city-council",
+  "name": "bow-bowing-bunbury-curran-creek-strategic-frmsp-waterride",
+  "title": "Bow Bowing Bunbury Curran Creek Strategic FRMSP - WaterRIDE",
+  "notes": "Each catchment area has its own WaterRIDE output:\r\n\r\n* Birunji Creek\r\n* Blairmount\r\n* Campbelltown\r\n* Claymore\r\n* Glenfield\r\n* Ingleburn\r\n* Minto McBarron\r\n* Smiths Creek\r\n* Thompsons Creek\r\n* Upper B",
+  "metadata_modified": "2025-12-17T03:25:33.776781",
+  "resources": 11
+ },
+ {
+  "org": "campbelltown-city-council",
+  "name": "bow-bowing-bunbury-curran-creek-strategic-frmsp-flood-damages",
+  "title": "Bow Bowing Bunbury Curran Creek Strategic FRMSP - Flood Damages",
+  "notes": "With and without mitigation options",
+  "metadata_modified": "2025-12-17T03:23:36.698766",
+  "resources": 1
+ },
+ {
+  "org": "campbelltown-city-council",
+  "name": "design_flood_extents",
+  "title": "Design Flood Extents",
+  "notes": "Flood extent polygons in SHP and Tab file format",
+  "metadata_modified": "2025-12-17T00:28:24.907047",
+  "resources": 1
+ },
+ {
+  "org": "canterbury-bankstown-council",
+  "name": "wolumba-catchment-flood-study-report",
+  "title": "Wolumba Catchment Flood Study",
+  "notes": "#Study Area\r\nThe study area is located in south west Sydney and covers the northern part of the suburb of Chester\r\nHill. It is an urban catchment that drains through a stormwater pipe network in a nor",
+  "metadata_modified": "2026-01-20T05:32:19.173870",
+  "resources": 1
+ },
+ {
+  "org": "canterbury-bankstown-council",
+  "name": "rookwood-road-catchment-flood-study-report1",
+  "title": "Rookwood Road Catchment Flood Study Report",
+  "notes": "#Study Area\r\nThe study area is located in south west Sydney and covers most of the suburbs of Chullora and Potts\r\nHill and small parts of the suburbs of Yagoona, Greenacre and Bankstown. It is an urba",
+  "metadata_modified": "2026-01-20T05:31:33.059362",
+  "resources": 1
+ },
+ {
+  "org": "canterbury-bankstown-council",
+  "name": "punchbowl-catchment-flood-study-report",
+  "title": "Punchbowl Catchment Flood Study",
+  "notes": "#Study Area\r\nThe study area is located in south west Sydney and includes parts of the suburbs of Punchbowl,\r\nMount Lewis and Greenacre. It is an urban catchment that drains through a stormwater pipe n",
+  "metadata_modified": "2026-01-20T05:27:55.645954",
+  "resources": 1
+ },
+ {
+  "org": "canterbury-bankstown-council",
+  "name": "picnic-point-flood-study-report",
+  "title": "Picnic Point Catchment Flood Study",
+  "notes": "#Study Area\r\nThe study area is located in south west Sydney and includes the central part of the suburb of Picnic\r\nPoint. The northern part of the catchment is predominantly urban; the southern part i",
+  "metadata_modified": "2026-01-20T05:27:22.214988",
+  "resources": 1
+ },
+ {
+  "org": "canterbury-bankstown-council",
+  "name": "morris-gully-catchment-flood-study-report",
+  "title": "Morris Gully Catchment Flood Study",
+  "notes": "#Study Area\r\nThe study area is located in south west Sydney and includes parts of the suburbs of Revesby\r\nHeights, Revesby, Panania and Picnic Point. It is an urban catchment that drains in a south-ea",
+  "metadata_modified": "2026-01-20T05:26:31.613084",
+  "resources": 1
+ },
+ {
+  "org": "canterbury-bankstown-council",
+  "name": "milperra-catchment-draft-flood-study-update-report",
+  "title": "Milperra Catchment Draft Flood Study Update - Report",
+  "notes": "Complete",
+  "metadata_modified": "2026-01-20T05:25:50.683808",
+  "resources": 1
+ },
+ {
+  "org": "canterbury-bankstown-council",
+  "name": "miller-road-catchment-flood-study-report",
+  "title": "Miller Road Catchment Flood Study",
+  "notes": "#Study Area\r\nThe study area is located in Bankstown, south west Sydney and includes part of the suburb of\r\nChester Hill. It is an urban, predominantly residential catchment and drains in a westerly di",
+  "metadata_modified": "2026-01-20T05:25:23.116843",
+  "resources": 1
+ },
+ {
+  "org": "canterbury-bankstown-council",
+  "name": "lansdowne-catchment-fs-report",
+  "title": "Lansdowne Catchment Flood Study - Report",
+  "notes": "This report presents the Flood Study undertaken to define flooding characteristics of the Lansdowne catchment in the Bankstown City Council area in NSW.",
+  "metadata_modified": "2026-01-20T05:23:17.862293",
+  "resources": 1
+ },
+ {
+  "org": "canterbury-bankstown-council",
+  "name": "greenacre-park-stormwater-catchment-flood-study-report",
+  "title": "Greenacre Park Stormwater Catchment Flood Study",
+  "notes": "#Study Area\r\nThe study area is known as the Greenacre Park catchment. It is one of four catchment areas\r\nthat drain to the Upper Cooks River, which flows to Botany Bay through the Cooks River.\r\nThe st",
+  "metadata_modified": "2026-01-20T05:22:16.267056",
+  "resources": 1
+ },
+ {
+  "org": "canterbury-bankstown-council",
+  "name": "georges-hall-catchment-flood-study-report",
+  "title": "Georges Hall Catchment Flood Study",
+  "notes": "#The Study Area\r\nThe Georges Hall study area is located in Bankstown, south west Sydney and is contained within the\r\nsuburb of Georges Hall. The Georges Hall catchment area is approximately 140 hectar",
+  "metadata_modified": "2026-01-20T05:21:16.198393",
+  "resources": 1
+ },
+ {
+  "org": "canterbury-bankstown-council",
+  "name": "fairford-road-catchment-flood-study-report-data",
+  "title": "Fairford Road Catchment Flood Study Report",
+  "notes": "#Study Area\r\nThe study area is located in south west Sydney at the northern end of the suburbs of Revesby and\r\nPadstow. It is an urban catchment that drains in an easterly direction through a stormwat",
+  "metadata_modified": "2026-01-20T05:13:52.197892",
+  "resources": 1
+ },
+ {
+  "org": "canterbury-bankstown-council",
+  "name": "cooks-river-catchment-flood-study-report",
+  "title": "Cooks River Catchment Flood Study",
+  "notes": "BMT WBM was commissioned by Bankstown City Council to prepare a Flood Study for the Cooks\r\nRiver stormwater catchment. Similar studies were simultaneously commissioned for the Punchbowl,\r\nthe Georges ",
+  "metadata_modified": "2026-01-20T05:13:18.076780",
+  "resources": 1
+ },
+ {
+  "org": "canterbury-bankstown-council",
+  "name": "sub-catchments-of-the-mid-georges-river-frmsp",
+  "title": "Floodplain Risk Management Study and Plan for Sub-Catchments of the Mid Georges River - Report",
+  "notes": "Complete report",
+  "metadata_modified": "2026-01-20T05:12:22.490974",
+  "resources": 1
+ },
+ {
+  "org": "canterbury-bankstown-council",
+  "name": "east-hills-stormwater-catchment-flood-study-report",
+  "title": "East Hills Stormwater Catchment Flood Study",
+  "notes": "#Study Area\r\nThe study area is located within the Sydney suburb of East Hills. The study area is a small\r\nurban catchment centred on the East Hills Railway station, which drains through a\r\nstormwater ",
+  "metadata_modified": "2026-01-20T04:37:15.740026",
+  "resources": 1
+ },
+ {
+  "org": "canterbury-bankstown-council",
+  "name": "salt-pan-creek-fs-report",
+  "title": "Salt Pan Creek Flood Study - Report",
+  "notes": "PDF",
+  "metadata_modified": "2026-01-15T01:53:16.803442",
+  "resources": 1
+ },
+ {
+  "org": "canterbury-bankstown-council",
+  "name": "salt-pan-creek-catchment-final-overland-flow-study-report",
+  "title": "Canterbury LGA Salt Pan Creek Catchment: Final Overland Flow Study - Report",
+  "notes": "PDF",
+  "metadata_modified": "2026-01-13T23:43:12.514928",
+  "resources": 2
+ },
+ {
+  "org": "canterbury-bankstown-council",
+  "name": "cooks-river-catchment-final-overland-flow-study-report",
+  "title": "Canterbury LGA Cooks River Catchment: Final Overland Flow Study - Report",
+  "notes": "3 parts",
+  "metadata_modified": "2026-01-13T23:41:21.953615",
+  "resources": 1
+ },
+ {
+  "org": "canterbury-bankstown-council",
+  "name": "georges-river-flood-study-2020-reports",
+  "title": "Georges River Flood Study 2020 reports",
+  "notes": "This report is in two parts:\r\n\r\nGeorges River Flood Study 2020 Final Report\r\n\r\nGeorges River Flood Study 2020 Mapping Compendium",
+  "metadata_modified": "2026-01-13T04:54:25.959487",
+  "resources": 2
+ },
+ {
+  "org": "canterbury-bankstown-council",
+  "name": "lucas-road-catchment-flood-study-report",
+  "title": "Lucas Road Catchment Flood Study Report",
+  "notes": "#Study Area\r\nThe study area is located in south west Sydney and includes parts of the suburbs of East Hills,\r\nPanania and Picnic Point. It is an urban catchment that drains through a stormwater pipe n",
+  "metadata_modified": "2026-01-07T01:28:38.088674",
+  "resources": 1
+ },
+ {
+  "org": "canterbury-bankstown-council",
+  "name": "prospect-creek-frmsp-model-results-post-processed",
+  "title": "Prospect Creek FRMS&P Model Results - Post-processed",
+  "notes": "TUFLOW model results trimmed to the study area, including 20%, 5%, 2%, 1% AEP and PMF peak depths, levels, hazards results in TIF format.",
+  "metadata_modified": "2025-12-17T05:19:22.803723",
+  "resources": 1
+ },
+ {
+  "org": "canterbury-bankstown-council",
+  "name": "prospect-creek-frmsp-hydraulic-model-input-files",
+  "title": "Prospect Creek FRMS&P Hydraulic Model Input Files",
+  "notes": "Prospect Creek FRMS&P Hydraulic model input files",
+  "metadata_modified": "2025-12-17T05:17:42.440983",
+  "resources": 1
+ },
+ {
+  "org": "canterbury-bankstown-council",
+  "name": "prospect-creek-frmsp-report",
+  "title": "Prospect Creek FRMSP Report",
+  "notes": "# The Study Area\r\nThe study area comprises four sub-catchments within the Canterbury-Bankstown Council Local Government Area (LGA) that drain to Prospect Creek:\r\n\r\n* __Georges Hall Sub-Catchment__: Co",
+  "metadata_modified": "2025-12-17T05:17:02.715521",
+  "resources": 1
+ },
+ {
+  "org": "canterbury-bankstown-council",
+  "name": "cooks-river-stormwater-management-plan-report",
+  "title": "Cooks River - Stormwater Management Plan Report",
+  "notes": "Complete Report",
+  "metadata_modified": "2025-12-17T03:51:42.604929",
+  "resources": 1
+ },
+ {
+  "org": "canterbury-bankstown-council",
+  "name": "villawood-drain-works-as-executed-study-report",
+  "title": "Villawood Drain Works-as-Executed Study - Report",
+  "notes": "Complete Report ",
+  "metadata_modified": "2025-12-17T02:43:49.009741",
+  "resources": 1
+ },
+ {
+  "org": "canterbury-bankstown-council",
+  "name": "georges-river-at-carinya-road-picnic-point-structural-assessment-of-flood-deflector-levees-report",
+  "title": "Georges River at Carinya Road, Picnic Point - Structural Assessment of Flood Deflector Levees - Report",
+  "notes": "Complete report",
+  "metadata_modified": "2025-12-17T02:36:40.176914",
+  "resources": 1
+ },
+ {
+  "org": "canterbury-bankstown-council",
+  "name": "prospect-creek-frmsp-hydraulic-output-files-raw-results",
+  "title": "Prospect Creek FRMS&P Hydraulic Output Files - Raw Results",
+  "notes": "TUFLOW Model Output Files",
+  "metadata_modified": "2025-12-17T00:23:40.146630",
+  "resources": 1
+ },
+ {
+  "org": "city-of-canada-bay-council",
+  "name": "exile-bay-catchment-floodplain-risk-management-study-and-plan-figures",
+  "title": "Exile Bay Catchment Floodplain Risk Management Study and Plan - Figures",
+  "notes": "Exile Bay Catchment Floodplain Risk Management Study and Plan - Figures",
+  "metadata_modified": "2026-09-15T01:00:15.670990",
+  "resources": 1
+ },
+ {
+  "org": "city-of-canada-bay-council",
+  "name": "https-www-canadabay-nsw-gov-au-development-plans-policies-and-controls-flood-studies",
+  "title": "Exile Bay Catchment Floodplain Risk Management Study and Plan",
+  "notes": "Exile Bay Catchment Floodplain Risk Management Study and Plan",
+  "metadata_modified": "2026-09-15T00:59:58.913957",
+  "resources": 1
+ },
+ {
+  "org": "city-of-canada-bay-council",
+  "name": "exile-bay-flood-study-reports",
+  "title": "Exile Bay Catchment Flood Study - Reports",
+  "notes": "Exile Bay Flood Study reports",
+  "metadata_modified": "2026-01-14T02:54:04.013817",
+  "resources": 4
+ },
+ {
+  "org": "city-of-canada-bay-council",
+  "name": "exile-bay-description",
+  "title": "Exile Bay Description",
+  "notes": "Exile Bay Description of provided data",
+  "metadata_modified": "2025-12-17T01:30:32.242968",
+  "resources": 1
+ },
+ {
+  "org": "city-of-parramatta-council",
+  "name": "abcfs-hydraulic-model_results",
+  "title": "Hydraulic Model results",
+  "notes": "Hydraulic Model (TUFLOW) result files, including processed map outputs and selected time series data",
+  "metadata_modified": "2026-07-09T01:45:25.288035",
+  "resources": 1
+ },
+ {
+  "org": "city-of-parramatta-council",
+  "name": "parramatta-river-flood-study-report",
+  "title": "Parramatta River Flood Study - Report",
+  "notes": "Full report include appendices",
+  "metadata_modified": "2025-12-17T05:24:25.455939",
+  "resources": 1
+ },
+ {
+  "org": "city-of-parramatta-council",
+  "name": "homebush-bay-catchment-stormwater-management-plan-report",
+  "title": "Homebush Bay Catchment - Stormwater Management Plan - Report",
+  "notes": "Complete Report",
+  "metadata_modified": "2025-12-17T03:48:30.845012",
+  "resources": 1
+ },
+ {
+  "org": "city-of-parramatta-council",
+  "name": "parramatta-stormwater-asset-plan-commercial-industrial-report",
+  "title": "Parramatta - Commercial & Industrial  Stormwater Asset Plan - Report",
+  "notes": "Complete Report",
+  "metadata_modified": "2025-12-17T03:13:56.899217",
+  "resources": 1
+ },
+ {
+  "org": "city-of-parramatta-council",
+  "name": "parramatta-river-foreshore-plan-report",
+  "title": "Parramatta River - Foreshore Plan - Report",
+  "notes": "Complete",
+  "metadata_modified": "2025-12-17T03:08:44.771548",
+  "resources": 1
+ },
+ {
+  "org": "city-of-parramatta-council",
+  "name": "lower-parramatta-river-frmsp-report",
+  "title": "Lower Parramatta River Floodplain Risk Management Study and Plan (Draft) - Report",
+  "notes": "* Volume 1- Main report;\r\n* Volume 2- Planning",
+  "metadata_modified": "2025-12-17T01:59:53.078235",
+  "resources": 2
+ },
+ {
+  "org": "city-of-parramatta-council",
+  "name": "duck-river-and-duck-creek-flood-study-review-report",
+  "title": "Duck River and Duck Creek Flood Study Review - Report",
+  "notes": "Complete report",
+  "metadata_modified": "2025-12-17T01:35:25.341024",
+  "resources": 2
+ },
+ {
+  "org": "city-of-parramatta-council",
+  "name": "parramatta-local-floodplain-risk-management-policy-report",
+  "title": "Parramatta - Local Floodplain Risk Management Policy - Report",
+  "notes": "Flooding is a significant issue that affects existing and future developments in the Parramatta Local Government Area (LGA). This Policy establishes Council’s approach to floodplain planning and the g",
+  "metadata_modified": "2025-12-17T01:18:36.809287",
+  "resources": 1
+ },
+ {
+  "org": "city-of-parramatta-council",
+  "name": "brickfield-creek-supplementary-frmsp-report",
+  "title": "Brickfield Creek Supplementary FRMSP - Report",
+  "notes": "Complete report",
+  "metadata_modified": "2025-12-17T00:36:59.566487",
+  "resources": 1
+ },
+ {
+  "org": "council-of-the-city-of-sydney",
+  "name": "city-area-catchment-flood-study-report",
+  "title": "City Area Catchment - Flood Study - Report",
+  "notes": "Report + Appendix",
+  "metadata_modified": "2026-01-20T23:00:49.678030",
+  "resources": 2
+ },
+ {
+  "org": "council-of-the-city-of-sydney",
+  "name": "darling-harbour-catchment-flood-study-report",
+  "title": "Darling Harbour Catchment Flood Study - Report",
+  "notes": "3 parts",
+  "metadata_modified": "2026-01-20T05:52:00.442190",
+  "resources": 1
+ },
+ {
+  "org": "council-of-the-city-of-sydney",
+  "name": "city-area-catchment-floodplain-risk-management-plan-draft-report",
+  "title": "City Area Catchment Floodplain Risk Management Plan (Draft) - Report",
+  "notes": "Complete report",
+  "metadata_modified": "2026-01-19T04:46:58.319681",
+  "resources": 1
+ },
+ {
+  "org": "council-of-the-city-of-sydney",
+  "name": "woolloomooloo-catchment-frmp-report",
+  "title": "Woolloomooloo Catchment FRMP - Report",
+  "notes": "Complete report",
+  "metadata_modified": "2026-01-15T03:14:47.938494",
+  "resources": 1
+ },
+ {
+  "org": "council-of-the-city-of-sydney",
+  "name": "rushcutters-bay-catchment-frmp-report",
+  "title": "Rushcutters Bay Catchment FRMP - Report",
+  "notes": "Complete report",
+  "metadata_modified": "2026-01-15T03:13:59.055027",
+  "resources": 1
+ },
+ {
+  "org": "council-of-the-city-of-sydney",
+  "name": "johnstons-creek-catchment-frmp-report",
+  "title": "Johnstons Creek Catchment FRMP - Report",
+  "notes": "Complete report",
+  "metadata_modified": "2026-01-15T02:19:51.716891",
+  "resources": 1
+ },
+ {
+  "org": "council-of-the-city-of-sydney",
+  "name": "johnstons-creek-catchment-flood-study-report",
+  "title": "Johnstons Creek Catchment Flood Study - Report",
+  "notes": "2 parts",
+  "metadata_modified": "2026-01-15T02:19:06.355839",
+  "resources": 2
+ },
+ {
+  "org": "council-of-the-city-of-sydney",
+  "name": "darling-harbour-catchment-frmp-report",
+  "title": "Darling Harbour Catchment FRMP - Report",
+  "notes": "Complete report",
+  "metadata_modified": "2026-01-15T02:18:06.774728",
+  "resources": 1
+ },
+ {
+  "org": "council-of-the-city-of-sydney",
+  "name": "darling-harbour-catchment-frms-report",
+  "title": "Darling Harbour Catchment FRMS - Report",
+  "notes": "Complete report",
+  "metadata_modified": "2026-01-15T02:17:23.664337",
+  "resources": 1
+ },
+ {
+  "org": "council-of-the-city-of-sydney",
+  "name": "centennial-park-frmp-report",
+  "title": "Centennial Park FRMP - Report",
+  "notes": "Complete report",
+  "metadata_modified": "2026-01-15T02:16:40.790428",
+  "resources": 1
+ },
+ {
+  "org": "council-of-the-city-of-sydney",
+  "name": "centennial-park-flood-study-report",
+  "title": "Centennial Park Flood Study - Report",
+  "notes": "2 parts",
+  "metadata_modified": "2026-01-15T02:14:29.759255",
+  "resources": 2
+ },
+ {
+  "org": "council-of-the-city-of-sydney",
+  "name": "blackwattle-bay-catchment-floodplain-risk-management-plan-report",
+  "title": "Blackwattle Bay Catchment Floodplain Risk Management Plan - Report",
+  "notes": "Complete report",
+  "metadata_modified": "2026-01-15T02:12:23.659968",
+  "resources": 1
+ },
+ {
+  "org": "council-of-the-city-of-sydney",
+  "name": "blackwattle-bay-catchment-flood-study-report",
+  "title": "Blackwattle Bay Catchment Flood Study - Report",
+  "notes": "Final report (2 parts)",
+  "metadata_modified": "2026-01-15T02:10:38.392333",
+  "resources": 2
+ },
+ {
+  "org": "council-of-the-city-of-sydney",
+  "name": "green-square-catchment-floodplain-risk-management-plan-report",
+  "title": "Green Square Catchment Floodplain Risk Management Plan",
+  "notes": "The Green Square Floodplain Risk Management Plan has been prepared in accordance with\r\nthe NSW Floodplain Development Manual (April 2005) and:\r\nIs based on a comprehensive and detailed evaluation of a",
+  "metadata_modified": "2026-01-14T22:22:35.922092",
+  "resources": 1
+ },
+ {
+  "org": "council-of-the-city-of-sydney",
+  "name": "green-square-west-kensington-sheas-creek-victoria-branch-flood-study-report",
+  "title": "Green Square & West Kensington (Sheas Creek - Victoria Branch) - Flood Study - Report",
+  "notes": "Report + figures",
+  "metadata_modified": "2026-01-14T22:15:27.174636",
+  "resources": 2
+ },
+ {
+  "org": "council-of-the-city-of-sydney",
+  "name": "alexandra-canal-floodplain-risk-management-plan-report",
+  "title": "Alexandra Canal Floodplain Risk Management Plan - Report",
+  "notes": "Complete report",
+  "metadata_modified": "2026-01-14T00:09:55.982317",
+  "resources": 1
+ },
+ {
+  "org": "council-of-the-city-of-sydney",
+  "name": "alexandra-canal-floodplain-risk-management-study-report",
+  "title": "Alexandra Canal Floodplain Risk Management Study - Report",
+  "notes": "Part 1",
+  "metadata_modified": "2026-01-14T00:09:09.308447",
+  "resources": 1
+ },
+ {
+  "org": "council-of-the-city-of-sydney",
+  "name": "alexandra-canal-catchment-flood-study-report",
+  "title": "Alexandra Canal Catchment Flood Study - Report",
+  "notes": "Final report",
+  "metadata_modified": "2026-01-14T00:07:36.810065",
+  "resources": 1
+ },
+ {
+  "org": "council-of-the-city-of-sydney",
+  "name": "sydney-metropolitan-area-storms-floods-november-1984-newspaper-articles-report",
+  "title": "Sydney Metropolitan Area - Storms & Floods November 1984 Newspaper Articles - Report",
+  "notes": "Report",
+  "metadata_modified": "2025-12-17T04:16:37.655003",
+  "resources": 1
+ },
+ {
+  "org": "council-of-the-city-of-sydney",
+  "name": "alexandra-canal-catchment-flood-study-draft-report",
+  "title": "Alexandra Canal Catchment Flood Study (Draft) - Report",
+  "notes": "Complete report",
+  "metadata_modified": "2025-12-17T04:01:25.504211",
+  "resources": 1
+ },
+ {
+  "org": "council-of-the-city-of-sydney",
+  "name": "sydney-hydrological-aspects-of-storms-november-1984-report",
+  "title": "Sydney Storms November 1984 - Hydrological Aspects - Report",
+  "notes": "Sydney - Hydrological Aspects of Storms November 1984\r\n",
+  "metadata_modified": "2025-12-17T03:38:31.194071",
+  "resources": 1
+ },
+ {
+  "org": "council-of-the-city-of-sydney",
+  "name": "woolloomooloo-flood-study-draft-report",
+  "title": "Woolloomooloo Flood Study - Final Draft Report",
+  "notes": "Complete Report",
+  "metadata_modified": "2025-12-17T03:12:56.293462",
+  "resources": 1
+ },
+ {
+  "org": "council-of-the-city-of-sydney",
+  "name": "centennial-park-frms-report",
+  "title": "Centennial Park FRMS - Report",
+  "notes": "3 parts",
+  "metadata_modified": "2025-12-17T00:42:36.487262",
+  "resources": 1
+ },
+ {
+  "org": "council-of-the-city-of-sydney",
+  "name": "blackwattle-bay-catchment-frms-report",
+  "title": "Blackwattle Bay Catchment FRMS - Report",
+  "notes": "4 parts",
+  "metadata_modified": "2025-12-17T00:30:13.214685",
+  "resources": 1
+ },
+ {
+  "org": "cumberland-council",
+  "name": "auburn-flood-planning-maps-pdf",
+  "title": "Auburn - Flood Planning Maps",
+  "notes": "A ten-tile atlas map of Auburn City Council that displays the following legend items:\r\n\r\n* Floodway\r\n* Medium flood risk\r\n* Low flood risk\r\n* Overland flow lots\r\n\r\nA detailed cadastre is also displaye",
+  "metadata_modified": "2025-12-17T03:57:35.236290",
+  "resources": 1
+ },
+ {
+  "org": "fairfield-city-council",
+  "name": "canley-corridor-floodplain-risk-management-study-flood-extents",
+  "title": "Canley Corridor Floodplain Risk Management Study - Flood Extents",
+  "notes": "ASCI and shapefiles",
+  "metadata_modified": "2026-09-11T02:08:19.334353",
+  "resources": 1
+ },
+ {
+  "org": "fairfield-city-council",
+  "name": "smithfield-overland-flood-study-report",
+  "title": "Smithfield Overland Flood Study",
+  "notes": "The 292 ha Smithfield overland flow catchment is located in the north-eastern portion of the\r\nFairfield LGA, to the south-west of Prospect Creek, and encompasses parts of the suburbs of\r\nSmithfield, F",
+  "metadata_modified": "2026-01-14T22:08:40.308598",
+  "resources": 1
+ },
+ {
+  "org": "fairfield-city-council",
+  "name": "orphan-school-creek-green-valley-clear-paddock-creek-flood-study-report",
+  "title": "Flood Study for Orphan School Creek, Green Valley and Clear Paddock Creek",
+  "notes": "FCC has undertaken a number of flood studies over the last few years including:\r\n\r\n*  Cabramatta Creek Flood Study\r\n*  Prospect Creek Flood Study\r\n*  Georges River (FCC section) Flood Study.\r\n\r\nThese ",
+  "metadata_modified": "2026-01-14T22:07:55.067943",
+  "resources": 2
+ },
+ {
+  "org": "fairfield-city-council",
+  "name": "old-guildford-overland-flood-study-2010-report",
+  "title": "Old Guildford Overland Flood Study",
+  "notes": "#Study Objectives\r\nKey objectives of this study are to:\r\n\r\n* Identify the major overland flow paths within the Old Guildford catchment study area.\r\n* Determine the nature and extent of overland floodi",
+  "metadata_modified": "2026-01-14T22:01:27.497341",
+  "resources": 1
+ },
+ {
+  "org": "fairfield-city-council",
+  "name": "canley-corridor-overland-flood-study-report",
+  "title": "Canley Corridor Overland Flood Study",
+  "notes": "This report is structured as follows:\r\n##Section 1 – Introduction\r\n##Section 2 – Background: \r\nExplanation of the need for this overland flow study, of Fairfield’s\r\noverland flow study program, the si",
+  "metadata_modified": "2026-01-14T22:00:41.274225",
+  "resources": 1
+ },
+ {
+  "org": "fairfield-city-council",
+  "name": "burns-creek-flood-study-2011-report",
+  "title": "Burns Creek Flood Study",
+  "notes": "FCC has undertaken a number of recent mainstream flood studies, including:\r\n\r\n* Cabramatta Creek Flood Study\r\n* Prospect Creek Flood Study\r\n*\u0001 Georges River (FCC section) Flood Study\r\n* Orphan School ",
+  "metadata_modified": "2026-01-14T21:58:57.416439",
+  "resources": 1
+ },
+ {
+  "org": "fairfield-city-council",
+  "name": "canley-corridor-floodplain-risk-management-study-report",
+  "title": "Canley Corridor Floodplain Risk Management Study - Report",
+  "notes": "Complete report",
+  "metadata_modified": "2026-01-14T05:20:09.643037",
+  "resources": 2
+ },
+ {
+  "org": "fairfield-city-council",
+  "name": "wetherill-park-overland-flood-study-report",
+  "title": "Wetherill Park Overland Flood Study - Report",
+  "notes": "Version 2 - final report",
+  "metadata_modified": "2026-01-14T00:10:33.749428",
+  "resources": 1
+ },
+ {
+  "org": "fairfield-city-council",
+  "name": "cabravale-overland-flood-study-gis-outputs",
+  "title": "Cabravale Overland Flood Study GIS Outputs",
+  "notes": "Includes Flood Risk Precincts, Historic Flood Marks and Post Processed Model Outputs (Design and Historic Events). To be viewed in conjunction with the flood study report.",
+  "metadata_modified": "2025-12-17T04:50:13.812473",
+  "resources": 1
+ },
+ {
+  "org": "fairfield-city-council",
+  "name": "cabravale-overland-flood-study-report",
+  "title": "Cabravale Overland Flood Study - Report",
+  "notes": "The Cabravale Overland Flow Flood Study report  was prepared for Fairfield City Council to define overland flood behaviour across the 11.5 km2 Cabravale study area.  The flood study was overseen by Fa",
+  "metadata_modified": "2025-12-17T04:50:09.750077",
+  "resources": 2
+ },
+ {
+  "org": "fairfield-city-council",
+  "name": "cabramatta-creek-flood-planning-map-pdf",
+  "title": "Cabramatta Creek - Flood Planning Map",
+  "notes": "Illustrates high, medium and low flood risk precinct areas surrounding Cabramatta Creek.",
+  "metadata_modified": "2025-12-17T04:26:20.791260",
+  "resources": 1
+ },
+ {
+  "org": "fairfield-city-council",
+  "name": "eastern-reedy-ropes-creeks-flood-planning-map-pdf",
+  "title": "Eastern, Reedy & Ropes Creeks - Flood Planning Map",
+  "notes": "100 year flood extent, which does not include local stormwater flooding.\r\n",
+  "metadata_modified": "2025-12-17T04:22:29.220693",
+  "resources": 1
+ },
+ {
+  "org": "fairfield-city-council",
+  "name": "prospect-creek-review-of-flood-levels-report",
+  "title": "Review of Prospect Creek Flood Levels - Report",
+  "notes": "Report and Figures (A.1 and A.15)",
+  "metadata_modified": "2025-12-17T03:28:17.138291",
+  "resources": 2
+ },
+ {
+  "org": "fairfield-city-council",
+  "name": "prospect-creek-flood-planning-map-pdf",
+  "title": "Prospect Creek - Flood Planning Map - PDF",
+  "notes": "Map",
+  "metadata_modified": "2025-12-17T03:07:23.582530",
+  "resources": 1
+ },
+ {
+  "org": "fairfield-city-council",
+  "name": "canley-corridor-floodplain-risk-management-study-damages",
+  "title": "Canley Corridor Floodplain Risk Management Study - Damages",
+  "notes": "XLSX",
+  "metadata_modified": "2025-12-17T02:33:33.029232",
+  "resources": 1
+ },
+ {
+  "org": "fairfield-city-council",
+  "name": "three-tributaries-frmsp-ground-levels",
+  "title": "Three Tributaries FRMSP - Ground Levels",
+  "notes": "LiDAR 2m and TUFLOW model grid 5m",
+  "metadata_modified": "2025-12-17T02:28:10.902793",
+  "resources": 1
+ },
+ {
+  "org": "fairfield-city-council",
+  "name": "three-tributaries-frmsp-waterride-and-wmawater-results",
+  "title": "Three Tributaries FRMSP - waterRIDE and WMAwater Results",
+  "notes": "Post-processed results",
+  "metadata_modified": "2025-12-17T02:28:06.484031",
+  "resources": 2
+ },
+ {
+  "org": "fairfield-city-council",
+  "name": "three-tributaries-frmsp-reports",
+  "title": "Three Tributaries FRMSP - Reports",
+  "notes": "Includes main report + others",
+  "metadata_modified": "2025-12-17T02:27:51.585345",
+  "resources": 2
+ },
+ {
+  "org": "fairfield-city-council",
+  "name": "three-tributaries-frmsp-hydraulic-model-input",
+  "title": "Three Tributaries FRMSP - Hydraulic Model Input",
+  "notes": "TUFLOW",
+  "metadata_modified": "2025-12-17T02:27:07.031160",
+  "resources": 1
+ },
+ {
+  "org": "fairfield-city-council",
+  "name": "three-tributaries-frmsp-hydrologic-model-input",
+  "title": "Three Tributaries FRMSP - Hydrologic Model Input",
+  "notes": "XP-RAFTS",
+  "metadata_modified": "2025-12-17T02:26:35.550161",
+  "resources": 1
+ },
+ {
+  "org": "fairfield-city-council",
+  "name": "canley-corridor-floodplain-risk-management-study-hydraulic-model-input",
+  "title": "Canley Corridor Floodplain Risk Management Study - Hydraulic Model Input",
+  "notes": "TUFLOW",
+  "metadata_modified": "2025-12-17T02:04:56.869004",
+  "resources": 1
+ },
+ {
+  "org": "fairfield-city-council",
+  "name": "canley-corridor-floodplain-risk-management-study-aerial",
+  "title": "Canley Corridor Floodplain Risk Management Study - Aerial",
+  "notes": "* 1943 aerial SIX\r\n* 2014 aerial tiles",
+  "metadata_modified": "2025-12-17T02:03:25.915689",
+  "resources": 1
+ },
+ {
+  "org": "fairfield-city-council",
+  "name": "orphan-school-clear-paddock-green-valley-creeks-flood-planning-maps-pdf",
+  "title": "Orphan School, Clear Paddock & Green Valley Creeks - Flood Planning Maps",
+  "notes": "3 pages",
+  "metadata_modified": "2025-12-17T01:56:34.945509",
+  "resources": 1
+ },
+ {
+  "org": "fairfield-city-council",
+  "name": "canley-corridor-floodplain-risk-management-study-provided-data-for-bmt-wbm",
+  "title": "Canley Corridor Floodplain Risk Management Study - Provided Data for BMT WBM",
+  "notes": "Model outputs - TUFLOW, RAFTS, DRAINS",
+  "metadata_modified": "2025-12-17T01:37:15.817462",
+  "resources": 1
+ },
+ {
+  "org": "fairfield-city-council",
+  "name": "canley-corridor-floodplain-risk-management-study-photos",
+  "title": "Canley Corridor Floodplain Risk Management Study - Photos",
+  "notes": "Photos and illustrations",
+  "metadata_modified": "2025-12-17T01:36:54.305913",
+  "resources": 1
+ },
+ {
+  "org": "fairfield-city-council",
+  "name": "burns-creek-flood-study-draft-report",
+  "title": "Burns Creek Flood Study (Draft) - Report",
+  "notes": "Complete report",
+  "metadata_modified": "2025-12-17T01:35:48.057144",
+  "resources": 1
+ },
+ {
+  "org": "fairfield-city-council",
+  "name": "canley-corridor-floodplain-risk-management-study-gis-spatial",
+  "title": "Canley Corridor Floodplain Risk Management Study - GIS Spatial",
+  "notes": "Various",
+  "metadata_modified": "2025-12-17T01:34:57.307986",
+  "resources": 1
+ },
+ {
+  "org": "fairfield-city-council",
+  "name": "canley-corridor-floodplain-risk-management-study-summary",
+  "title": "Canley Corridor Floodplain Risk Management Study - Summary",
+  "notes": "Folder directory",
+  "metadata_modified": "2025-12-17T01:34:49.106311",
+  "resources": 1
+ },
+ {
+  "org": "fairfield-city-council",
+  "name": "canley-corridor-floodplain-risk-management-study-waterride",
+  "title": "Canley Corridor Floodplain Risk Management Study - waterRIDE",
+  "notes": "Includes peak flood depth",
+  "metadata_modified": "2025-12-17T01:21:24.955317",
+  "resources": 1
+ },
+ {
+  "org": "fairfield-city-council",
+  "name": "fairfield-flood-planning-map-pdf",
+  "title": "Fairfield - Flood Planning Map",
+  "notes": "Illustrates the high, medium and low flood risk precincts in Fairfield.",
+  "metadata_modified": "2025-12-17T01:13:51.690522",
+  "resources": 1
+ },
+ {
+  "org": "fairfield-city-council",
+  "name": "three-tributaries-frmsp-aerial",
+  "title": "Three Tributaries FRMSP - Aerial",
+  "notes": "2014 aerial tiles",
+  "metadata_modified": "2025-12-17T01:10:17.572828",
+  "resources": 1
+ },
+ {
+  "org": "fairfield-city-council",
+  "name": "three-tributaries-frmsp-gis-spatial",
+  "title": "Three Tributaries FRMSP - GIS Spatial",
+  "notes": "Various spatial layers associated with this FRMSP",
+  "metadata_modified": "2025-12-17T01:10:13.545858",
+  "resources": 1
+ },
+ {
+  "org": "fairfield-city-council",
+  "name": "old-guildford-flood-planning-map-pdf",
+  "title": "Old Guildford - Flood Planning Map",
+  "notes": "Illustrates the high, medium and low flood risk precincts in Old Guildford, not including local stormwater flooding. \r\n",
+  "metadata_modified": "2025-12-17T01:01:13.215141",
+  "resources": 1
+ },
+ {
+  "org": "fairfield-city-council",
+  "name": "my-dataset",
+  "title": "Mimosa Road Detention Basin Upgrade: Investigation and Design - Reports",
+  "notes": "* Design Report\r\n* Aboriginal Heritage Assessment\r\n* Flora and Fauna Impact Assessment\r\n* Microbat Management Plan\r\n* Soil Contamination Assessment",
+  "metadata_modified": "2025-12-17T00:59:29.024375",
+  "resources": 5
+ },
+ {
+  "org": "fairfield-city-council",
+  "name": "three-tributaries-frmsp-hydraulic-model-output",
+  "title": "Three Tributaries FRMSP - Hydraulic Model Output",
+  "notes": "TUFLOW",
+  "metadata_modified": "2025-12-17T00:42:23.892890",
+  "resources": 1
+ },
+ {
+  "org": "fairfield-city-council",
+  "name": "three-tributaries-frmsp-description",
+  "title": "Three Tributaries FRMSP - Description",
+  "notes": "Folder summary",
+  "metadata_modified": "2025-12-17T00:41:53.449693",
+  "resources": 1
+ },
+ {
+  "org": "georges-river-council",
+  "name": "kogarah-bay-creek-flood-overland-flow-study-spatial-flood-layers-post-processed",
+  "title": "Kogarah Bay Creek - Flood & Overland Flow Study - Spatial Flood Layers (Post-Processed)",
+  "notes": "* Flood Contours;\r\n* Flood Extents;\r\n* Flood Hazard;\r\n* Flood Hydraulic Categories;\r\n* Flood Levels.",
+  "metadata_modified": "2026-09-11T04:11:41.706412",
+  "resources": 5
+ },
+ {
+  "org": "georges-river-council",
+  "name": "blakehurst-and-kogarah-bay-wards-overland-flow-flood-study-final-report-pdf",
+  "title": "Blakehurst and Kogarah Bay Wards Overland Flow Flood Study (Final Report PDF)",
+  "notes": "Final report - Blakehurst and Kogarah Bay Wards Overland Flow Flood Study ",
+  "metadata_modified": "2026-05-29T00:25:52.704822",
+  "resources": 1
+ },
+ {
+  "org": "georges-river-council",
+  "name": "blakehurst-and-kogarah-bay-wards-overland-flow-flood-study-outputs",
+  "title": "Blakehurst and Kogarah Bay Wards Overland Flow Flood Study (Outputs)",
+  "notes": "Post-processed Model Outputs",
+  "metadata_modified": "2026-05-06T05:38:41.302107",
+  "resources": 1
+ },
+ {
+  "org": "georges-river-council",
+  "name": "blakehurst-and-kogarah-bay-wards-overland-flow-flood-study-tuflow-model",
+  "title": "Blakehurst and Kogarah Bay Wards Overland Flow Flood Study (TUFLOW Model)",
+  "notes": "TUFLOW Hydraulic Model",
+  "metadata_modified": "2026-05-06T05:38:37.240805",
+  "resources": 1
+ },
+ {
+  "org": "georges-river-council",
+  "name": "kogarah-bay-creek-frmp",
+  "title": "Kogarah Bay Creek Floodplain Risk Management Plan",
+  "notes": "Kogarah Bay Creek is a 2.8 km2 catchment which drains into Kogarah Bay forming part of the\r\nGeorges River estuary feeding into Botany Bay (Figure 1). It is one of the largest catchments in the\r\nKogara",
+  "metadata_modified": "2026-01-15T00:46:33.119118",
+  "resources": 1
+ },
+ {
+  "org": "georges-river-council",
+  "name": "kogarah-bay-creek-floodplain-risk-management-study-report",
+  "title": "Kogarah Bay Creek Floodplain Risk Management Study",
+  "notes": "Kogarah Bay Creek is a 2.8 km2 catchment which drains into Kogarah Bay forming part of the\r\nGeorges River estuary feeding into Botany Bay (Figure 1). It is one of the largest catchments in the\r\nKogara",
+  "metadata_modified": "2026-01-15T00:45:24.744661",
+  "resources": 1
+ },
+ {
+  "org": "georges-river-council",
+  "name": "kogarah-bay-creek-flood-overland-flow-study-draft-report",
+  "title": "Kogarah Bay Creek - Flood & Overland Flow Study - Report",
+  "notes": "Complete Report",
+  "metadata_modified": "2026-01-15T00:27:06.665358",
+  "resources": 1
+ },
+ {
+  "org": "georges-river-council",
+  "name": "beverley-park-overland-flow-risk-management-study-plan-report",
+  "title": "Beverley Park Overland Flow Risk Management Study & Plan",
+  "notes": "A  Floodplain  Risk  Management  Study  and  Plan  (FRMS&P)  for  the  Beverley  Park \r\ncatchment  has  been  prepared  by Cardno  Lawson  Treloar  for  Kogarah Council.    The \r\nFRMS&P  identify  and",
+  "metadata_modified": "2026-01-14T02:28:10.665806",
+  "resources": 1
+ },
+ {
+  "org": "georges-river-council",
+  "name": "poulton-park-overland-flow-management-study-and-plan-report",
+  "title": "Poulton Park Overland Flow Management Study and Plan - Report",
+  "notes": "Complete report (Volume 1 & 2) + Figures + Appendices",
+  "metadata_modified": "2026-01-14T00:26:24.684382",
+  "resources": 4
+ },
+ {
+  "org": "georges-river-council",
+  "name": "gis-for-mapping-and-flood-damages",
+  "title": "Floodplain Risk Management Study and Plan - GIS for mapping and flood damages",
+  "notes": "This folder contains the GIS layers used for the mapping as well as :\r\n->Damages_IK\r\n->Flood_Risk_Preccinct\r\n->Floor_Level\r\n->FPA",
+  "metadata_modified": "2025-12-17T04:53:39.847814",
+  "resources": 1
+ },
+ {
+  "org": "georges-river-council",
+  "name": "kogarah-bay-creek-flood-overland-flow-study-hydrological-model-inputs-xp-rafts",
+  "title": "Kogarah Bay Creek - Flood & Overland Flow Study - Hydrological Model Inputs (XP-RAFTS)",
+  "notes": "Hydrological Model Inputs (XP-RAFTS)",
+  "metadata_modified": "2025-12-17T04:24:36.824925",
+  "resources": 1
+ },
+ {
+  "org": "georges-river-council",
+  "name": "kogarah-bay-creek-flood-overland-flow-study-hydrological-model-outputs-wbnm",
+  "title": "Kogarah Bay Creek - Flood & Overland Flow Study - Hydrological Model Outputs (WBNM)",
+  "notes": "Hydrological Model Outputs (WBNM)",
+  "metadata_modified": "2025-12-17T04:23:36.125575",
+  "resources": 1
+ },
+ {
+  "org": "georges-river-council",
+  "name": "kogarah-bay-creek-flood-overland-flow-study-hydrological-model-outputs-xp-rafts",
+  "title": "Kogarah Bay Creek - Flood & Overland Flow Study - Hydrological Model Outputs (XP-RAFTS)",
+  "notes": "Hydrological Model Outputs (XP-RAFTS)",
+  "metadata_modified": "2025-12-17T04:23:31.916152",
+  "resources": 1
+ },
+ {
+  "org": "georges-river-council",
+  "name": "kogarah-bay-creek-flood-overland-flow-study-hydrological-model-outputs-mike-storm",
+  "title": "Kogarah Bay Creek - Flood & Overland Flow Study - Hydrological Model Outputs (MIKE STORM)",
+  "notes": "Hydrological Model Outputs (MIKE STORM)",
+  "metadata_modified": "2025-12-17T04:21:53.572353",
+  "resources": 1
+ },
+ {
+  "org": "georges-river-council",
+  "name": "kogarah-bay-creek-flood-overland-flow-study-hydraulic-model-hec-ras",
+  "title": "Kogarah Bay Creek - Flood & Overland Flow Study - Hydraulic Model (HEC-RAS)",
+  "notes": "Hydraulic Model (HEC-RAS) - Inputs and Outputs",
+  "metadata_modified": "2025-12-17T04:21:11.947025",
+  "resources": 1
+ },
+ {
+  "org": "georges-river-council",
+  "name": "kogarah-bay-creek-flood-overland-flow-study-hydraulic-model-sobek",
+  "title": "Kogarah Bay Creek - Flood & Overland Flow Study - Hydraulic Model (SOBEK)",
+  "notes": "Hydraulic Model (SOBEK) - Inputs and Outputs",
+  "metadata_modified": "2025-12-17T04:21:07.883416",
+  "resources": 1
+ },
+ {
+  "org": "georges-river-council",
+  "name": "kogarah-bay-creek-flood-overland-flow-study-hydrological-model-inputs-mike-storm",
+  "title": "Kogarah Bay Creek - Flood & Overland Flow Study - Hydrological Model Inputs (MIKE STORM)",
+  "notes": "Hydrological Model Inputs (MIKE STORM)",
+  "metadata_modified": "2025-12-17T04:21:03.683713",
+  "resources": 1
+ },
+ {
+  "org": "georges-river-council",
+  "name": "kogarah-bay-creek-flood-overland-flow-study-hydraulic-model-inputs-mike-11",
+  "title": "Kogarah Bay Creek - Flood & Overland Flow Study - Hydraulic Model Inputs (MIKE-11)",
+  "notes": "Hydraulic Model Inputs (MIKE-11)",
+  "metadata_modified": "2025-12-17T04:19:58.912024",
+  "resources": 1
+ },
+ {
+  "org": "georges-river-council",
+  "name": "kogarah-bay-creek-flood-overland-flow-study-collected-data",
+  "title": "Kogarah Bay Creek - Flood & Overland Flow Study - Collected Data",
+  "notes": "Collected Data",
+  "metadata_modified": "2025-12-17T04:19:23.310525",
+  "resources": 1
+ },
+ {
+  "org": "georges-river-council",
+  "name": "kogarah-bay-creek-flood-overland-flow-study-hydraulic-model-outputs-mike-11",
+  "title": "Kogarah Bay Creek - Flood & Overland Flow Study - Hydraulic Model Outputs (MIKE-11)",
+  "notes": "Hydraulic Model Outputs (MIKE-11)",
+  "metadata_modified": "2025-12-17T04:19:08.692518",
+  "resources": 1
+ },
+ {
+  "org": "georges-river-council",
+  "name": "kogarah-bay-creek-flood-overland-flow-study-hydrological-model-inputs-wbnm",
+  "title": "Kogarah Bay Creek - Flood & Overland Flow Study - Hydrological Model Inputs (WBNM)",
+  "notes": "Hydrological Model Inputs (WBNM)",
+  "metadata_modified": "2025-12-17T04:19:04.461699",
+  "resources": 1
+ },
+ {
+  "org": "georges-river-council",
+  "name": "kogarah-bay-creek-flood-overland-flow-study-cd-label",
+  "title": "Kogarah Bay Creek - Flood & Overland Flow Study - CD Label",
+  "notes": "CD Label",
+  "metadata_modified": "2025-12-17T04:18:44.934128",
+  "resources": 1
+ },
+ {
+  "org": "georges-river-council",
+  "name": "beverley-park-flood-planning-level-mapping-report",
+  "title": "Beverley Park Flood Planning Level Mapping - Report",
+  "notes": "Complete Report",
+  "metadata_modified": "2025-12-17T03:18:17.017610",
+  "resources": 1
+ },
+ {
+  "org": "georges-river-council",
+  "name": "poulton-park-overland-flow-risk-management-study-and-plan-report",
+  "title": "Poulton Park Overland Flow Risk Management Study and Plan - Report",
+  "notes": "Volume 1 & 2",
+  "metadata_modified": "2025-12-17T02:06:09.263061",
+  "resources": 2
+ },
+ {
+  "org": "georges-river-council",
+  "name": "poulton-park-overland-flow-management-study-and-plan-options",
+  "title": "Poulton Park Overland Flow Management Study and Plan - Options",
+  "notes": "9 options",
+  "metadata_modified": "2025-12-17T01:53:51.347452",
+  "resources": 1
+ },
+ {
+  "org": "georges-river-council",
+  "name": "poulton-park-overland-flow-management-study-and-plan-community-consultation",
+  "title": "Poulton Park Overland Flow Management Study and Plan - Community Consultation",
+  "notes": "Brochure + questionnaire",
+  "metadata_modified": "2025-12-17T01:09:56.437985",
+  "resources": 1
+ },
+ {
+  "org": "georges-river-council",
+  "name": "poulton-park-overland-flow-management-study-and-plan-hydraulic-model-input",
+  "title": "Poulton Park Overland Flow Management Study and Plan - Hydraulic Model Input",
+  "notes": "SOBEK",
+  "metadata_modified": "2025-12-17T01:09:44.381002",
+  "resources": 1
+ },
+ {
+  "org": "georges-river-council",
+  "name": "georges-river-council-overland-flow-flood-study-report",
+  "title": "Georges River Council - Overland Flow Flood Study - Report",
+  "notes": "Complete report",
+  "metadata_modified": "2025-12-17T00:50:52.232213",
+  "resources": 1
+ },
+ {
+  "org": "georges-river-council",
+  "name": "poulton-park-overland-flow-management-study-and-plan-survey",
+  "title": "Poulton Park Overland Flow Management Study and Plan - Survey",
+  "notes": "* Cross sections;\r\n* DEM;\r\n* Ground level and floor level survey.",
+  "metadata_modified": "2025-12-17T00:47:00.692308",
+  "resources": 1
+ },
+ {
+  "org": "georges-river-council",
+  "name": "poulton-park-overland-flow-management-study-and-plan-hydraulic-model-output",
+  "title": "Poulton Park Overland Flow Management Study and Plan - Hydraulic Model Output",
+  "notes": "SOBEK",
+  "metadata_modified": "2025-12-17T00:45:44.562378",
+  "resources": 1
+ },
+ {
+  "org": "georges-river-council",
+  "name": "poulton-park-overland-flow-management-study-and-plan-property-photos",
+  "title": "Poulton Park Overland Flow Management Study and Plan - Property Photos",
+  "notes": "Photos of properties",
+  "metadata_modified": "2025-12-17T00:44:12.938791",
+  "resources": 1
+ },
+ {
+  "org": "georges-river-council",
+  "name": "poulton-park-overland-flow-management-study-and-plan-summary",
+  "title": "Poulton Park Overland Flow Management Study and Plan - Summary",
+  "notes": "Data Summary",
+  "metadata_modified": "2025-12-17T00:44:04.514458",
+  "resources": 1
+ },
+ {
+  "org": "hawkesbury-city-council",
+  "name": "hawkesbury-city-council-vegetation-mapping-2007-vis_id-3958c2c4b",
+  "title": "Hawkesbury City Council Vegetation Mapping, 2007. VIS_ID 3958",
+  "notes": "A field based update of vegetation community mapping (2005)within the Hawkesbury City Council area. VIS_ID 3958",
+  "metadata_modified": "2026-10-01T08:11:35.403962",
+  "resources": 5
+ },
+ {
+  "org": "hawkesbury-city-council",
+  "name": "hawkesbury-frmsp2025-flood-planning-area",
+  "title": "Flood Planning Area",
+  "notes": "Flood Planning Area",
+  "metadata_modified": "2026-02-17T22:30:32.363217",
+  "resources": 1
+ },
+ {
+  "org": "hawkesbury-city-council",
+  "name": "hawkesbury-floodplain-risk-management-study-and-plan-2025-report",
+  "title": "Report Hawkesbury Floodplain Risk Management Study and Plan 2025",
+  "notes": "Report pdf of Hawkesbury Floodplain Risk Management Study and Plan 2025",
+  "metadata_modified": "2026-02-17T22:30:28.117538",
+  "resources": 1
+ },
+ {
+  "org": "hawkesbury-city-council",
+  "name": "flood-damages-assessment-hawkesbury-frmsp",
+  "title": "Flood Damages Assessment",
+  "notes": "Flood Damages Assessment",
+  "metadata_modified": "2026-02-17T22:30:23.777542",
+  "resources": 3
+ },
+ {
+  "org": "hawkesbury-city-council",
+  "name": "hawkesbury-frmsp-2025-flood-emergency-response-classification-maps",
+  "title": "Flood emergency response classification maps",
+  "notes": "Flood emergency response classification maps",
+  "metadata_modified": "2026-02-17T22:30:17.656653",
+  "resources": 1
+ },
+ {
+  "org": "hawkesbury-city-council",
+  "name": "hawkesbury-frmsp-2025-remapped-flood-levels",
+  "title": "Hawkesbury FRMSP 2025 Remapped Flood Levels",
+  "notes": "This handover contains level grids from the flood study, remapped to the resolution of the Lidar (2m).\r\n",
+  "metadata_modified": "2026-02-17T22:30:13.540742",
+  "resources": 1
+ },
+ {
+  "org": "hawkesbury-city-council",
+  "name": "hawkesbury-floodplain-risk-management-study-plan-report",
+  "title": "Hawkesbury Floodplain Risk Management Study & Plan",
+  "notes": "The study area of the Hawkesbury Floodplain Risk Management Study & Plan comprises all\r\nof the Hawkesbury River and its immediate surrounds that fall within the Hawkesbury Local\r\nGovernment Area. It e",
+  "metadata_modified": "2026-01-20T04:16:38.846891",
+  "resources": 3
+ },
+ {
+  "org": "hawkesbury-city-council",
+  "name": "hydrological-model-input-files",
+  "title": "Hydrological model input files",
+  "notes": "Hydrological model input files for all design events.",
+  "metadata_modified": "2025-12-17T05:48:51.464153",
+  "resources": 1
+ },
+ {
+  "org": "hawkesbury-city-council",
+  "name": "flood-damage-assessment_spreadsheet",
+  "title": "Flood damage assessment",
+  "notes": "Flood damage assessment spreadsheet",
+  "metadata_modified": "2025-12-17T05:45:28.300058",
+  "resources": 2
+ },
+ {
+  "org": "hawkesbury-city-council",
+  "name": "hydrological-model-outputs",
+  "title": "Hydrological model outputs",
+  "notes": "Hydrological model outputs for all design events.",
+  "metadata_modified": "2025-12-17T05:45:14.913426",
+  "resources": 1
+ },
+ {
+  "org": "hawkesbury-city-council",
+  "name": "tuflow-raw-output-xmdf-files",
+  "title": "TUFLOW raw output XMDf files",
+  "notes": "TUFLOW raw output XMDf files",
+  "metadata_modified": "2025-12-17T05:43:57.724831",
+  "resources": 1
+ },
+ {
+  "org": "hawkesbury-city-council",
+  "name": "flood-project-handover-template-nsw-flood-data-portal",
+  "title": "Flood Project Handover Template - NSW Flood Data Portal",
+  "notes": "Flood Project Handover Template - NSW Flood Data Portal",
+  "metadata_modified": "2025-12-17T05:43:08.695457",
+  "resources": 1
+ },
+ {
+  "org": "hawkesbury-city-council",
+  "name": "tuflow-hydraulic-model-input-files",
+  "title": "TUFLOW Hydraulic model input files",
+  "notes": "TUFLOW control and input files for all design event simulations. See \"TUFLOW_modelling_log.xlsx\" describing simulated event/scenario combinations. ",
+  "metadata_modified": "2025-12-17T05:34:50.534855",
+  "resources": 1
+ },
+ {
+  "org": "hawkesbury-city-council",
+  "name": "final-report-redbankcreekfloodstudy",
+  "title": "Final report Redbank Creek Flood Study",
+  "notes": "The final report provides a comprehensive summary of the project's objectives, data collection and review, methodology, key flood modelling results, consequences of flooding on the community and concl",
+  "metadata_modified": "2025-12-17T05:34:38.336005",
+  "resources": 1
+ },
+ {
+  "org": "hawkesbury-city-council",
+  "name": "windsor-flood-evacuation-route-south-creek-project-overview-in-conjunction-with-the-eis-report",
+  "title": "Windsor - Flood Evacuation Route South Creek Project Overview In Conjunction With The EIS - Report",
+  "notes": "Complete Report",
+  "metadata_modified": "2025-12-17T04:29:11.570749",
+  "resources": 1
+ },
+ {
+  "org": "hawkesbury-city-council",
+  "name": "mcwg-2025-reports",
+  "title": "Reports",
+  "notes": "Reports for the Combined Macdonald River, Colo River, Webbs Creek and Greens Creek Flood Study and Floodplain Risk Management Study and Plan.",
+  "metadata_modified": "2025-12-17T04:08:46.127773",
+  "resources": 1
+ },
+ {
+  "org": "hawkesbury-city-council",
+  "name": "hobartville-evacuation-route-study-report",
+  "title": "Hobartville - Evacuation Route Study - Report",
+  "notes": "Complete Report",
+  "metadata_modified": "2025-12-17T03:20:41.736523",
+  "resources": 1
+ },
+ {
+  "org": "hawkesbury-city-council",
+  "name": "bligh-park-evacuation-route-study-report",
+  "title": "Bligh Park - Evacuation Route Study - Report",
+  "notes": "Complete Report",
+  "metadata_modified": "2025-12-17T03:17:12.885635",
+  "resources": 1
+ },
+ {
+  "org": "hawkesbury-city-council",
+  "name": "hawkesbury-nepean-river-assessment-of-the-variability-of-rates-of-rise-for-hydrographs-report",
+  "title": "Assessment of the Variability of Rates of Rise for Hydrographs on the Hawkesbury Nepean River - Report",
+  "notes": "Complete Report",
+  "metadata_modified": "2025-12-17T03:16:50.888830",
+  "resources": 1
+ },
+ {
+  "org": "hawkesbury-city-council",
+  "name": "hawkesbury-nepean-flood-excavation-routes-upgrade-review-report",
+  "title": "Hawkesbury Nepean - Flood Excavation Routes Upgrade Review - Report",
+  "notes": "Complete Report",
+  "metadata_modified": "2025-12-17T03:14:29.757757",
+  "resources": 1
+ },
+ {
+  "org": "hawkesbury-city-council",
+  "name": "hobartville-evacuation-route-options-study-report",
+  "title": "Hobartville - Evacuation Route Options Study - Report",
+  "notes": "Complete report",
+  "metadata_modified": "2025-12-17T03:07:53.460207",
+  "resources": 1
+ },
+ {
+  "org": "hawkesbury-city-council",
+  "name": "bligh-park-evacuation-route-options-study-report",
+  "title": "Bligh Park - Evacuation Route Options Study - Report",
+  "notes": "Complete",
+  "metadata_modified": "2025-12-17T03:05:45.266918",
+  "resources": 1
+ },
+ {
+  "org": "hawkesbury-city-council",
+  "name": "hawkesbury-and-nepean-june-2007-flood-summary-report",
+  "title": "Hawkesbury and Nepean - June 2007 Flood Summary - Report",
+  "notes": "Report No. MHL1756",
+  "metadata_modified": "2025-12-17T01:58:49.620758",
+  "resources": 1
+ },
+ {
+  "org": "hawkesbury-city-council",
+  "name": "processed-output-files",
+  "title": "Processed output files",
+  "notes": "Processed output files include : \r\n- Peak enveloped and filtered level, depth, and velocity for a range of events from the 20% to 1 in 5000 AEP events and PMF as well as 2040, 2090 and 2100 climate ch",
+  "metadata_modified": "2025-11-17T02:14:08.235178",
+  "resources": 1
+ },
+ {
+  "org": "hornsby-shire-council",
+  "name": "hornsby-local-government-area-remnant-trees-2008-vis_id-4472",
+  "title": "Hornsby Local Government Area Remnant Trees, 2008. VIS_ID 4472",
+  "notes": "Stands of remnant trees are important for conservation of biodiversity in the Urban District of Hornsby Shire. Particularly important are the stands of Blue Gum Shale Forest, Blue Gum Diatreme Forest ",
+  "metadata_modified": "2026-10-01T13:43:35.397541",
+  "resources": 5
+ },
+ {
+  "org": "hornsby-shire-council",
+  "name": "hornsby-local-government-area-threatened-ecological-communities-2008-vis_id-4470",
+  "title": "Hornsby Local Government Area Threatened Ecological Communities, 2008. VIS_ID 4470",
+  "notes": "Updated mapping of Threatened Ecological Communities (TECs). \r\nThe native vegetation communities of Hornsby Shire were originally identified and mapped in 1990-1993. The present study updates the clas",
+  "metadata_modified": "2026-10-01T13:42:35.590909",
+  "resources": 5
+ },
+ {
+  "org": "hornsby-shire-council",
+  "name": "hornsby-local-government-area-vegetation-map-update-2017-vis_id-5065",
+  "title": "Hornsby Local Government Area Vegetation Map Update, 2017. VIS_ID 5065",
+  "notes": "The Hornsby Vegetation Map 2017 provides current information on the native vegetation in the study area. Previous Hornsby Vegetation mapping was completed in 2008. There are substantial changes in the",
+  "metadata_modified": "2026-10-01T11:18:18.122320",
+  "resources": 2
+ },
+ {
+  "org": "hornsby-shire-council",
+  "name": "hornsby-local-government-area-vegetation-communities-2008-vis_id-4471",
+  "title": "Hornsby Local Government Area Vegetation Communities, 2008. VIS_ID 4471",
+  "notes": "Between 1990-1993, the native vegetation communities in the bushland of Hornsby Shire were identified and mapped. The present study, carried out between 2006 and 2008, updates the classification and m",
+  "metadata_modified": "2026-10-01T07:05:13.553227",
+  "resources": 5
+ },
+ {
+  "org": "hornsby-shire-council",
+  "name": "hawkesburywatch-estuary-health-dashboard",
+  "title": "HawkesburyWatch Estuary Health Dashboard",
+  "notes": "The HawkesburyWatch Dashboard provides access to raw water quality data collected from seven real-time telemetric monitoring stations along the Hawkesbury estuary. This data is analysed to deliver ins",
+  "metadata_modified": "2026-01-22T23:09:25.210248",
+  "resources": 4
+ },
+ {
+  "org": "inner-west-council",
+  "name": "dobroyd-and-hawthorn-canal-frmsp-processed-model-files",
+  "title": "Dobroyd and Hawthorn Canal FRMSP - Processed Model Files",
+  "notes": "Includes: FPA, Depth, Hazard, Height, Hydraulic Category, Velocity and SEPP Polygons. \r\nGenerally for 20%, 5%, 1% and PMF",
+  "metadata_modified": "2026-09-11T02:15:57.884492",
+  "resources": 2
+ },
+ {
+  "org": "inner-west-council",
+  "name": "cooks-river-floodplain-risk-management-study-and-plan-frmsp-report",
+  "title": "Cooks River Floodplain Risk Management Study and Plan - Report",
+  "notes": "Report + figures",
+  "metadata_modified": "2026-01-19T04:47:40.577802",
+  "resources": 1
+ },
+ {
+  "org": "inner-west-council",
+  "name": "dobroyd-and-hawthorne-canal-frmsp-report",
+  "title": "Dobroyd and Hawthorne Canal FRMSP - Report",
+  "notes": "Dobroyd and Hawthorne Canal  Floodplain Risk Management Study and Plan Report files",
+  "metadata_modified": "2026-01-15T05:56:34.097737",
+  "resources": 1
+ },
+ {
+  "org": "inner-west-council",
+  "name": "alexandra-canal-flood-study-report",
+  "title": "Alexandra Canal Flood Study - Report",
+  "notes": "Complete report",
+  "metadata_modified": "2026-01-15T05:55:55.769592",
+  "resources": 1
+ },
+ {
+  "org": "inner-west-council",
+  "name": "hawthorne-canal-flood-study-report",
+  "title": "Hawthorne Canal Flood Study - Report",
+  "notes": "Complete Report",
+  "metadata_modified": "2026-01-15T01:34:47.229492",
+  "resources": 1
+ },
+ {
+  "org": "inner-west-council",
+  "name": "marrickville-valley-frmp-report",
+  "title": "Marrickville Valley Floodplain Risk Management Plan - Report",
+  "notes": "Prepared for Inner West Council\r\n",
+  "metadata_modified": "2026-01-14T00:25:12.908353",
+  "resources": 2
+ },
+ {
+  "org": "inner-west-council",
+  "name": "marrickville-valley-floodplain-risk-management-study-report",
+  "title": "Marrickville Valley Floodplain Risk Management Study - Report",
+  "notes": "Report only.",
+  "metadata_modified": "2026-01-14T00:24:33.424688",
+  "resources": 1
+ },
+ {
+  "org": "inner-west-council",
+  "name": "leichhardt-flood-study-draft-report",
+  "title": "Leichhardt Flood Study (Draft) - Report",
+  "notes": "* Volume 1- Report;\r\n* Volume 2- Figures",
+  "metadata_modified": "2026-01-14T00:13:47.972781",
+  "resources": 2
+ },
+ {
+  "org": "inner-west-council",
+  "name": "cooks-river-floodplain-risk-management-study-and-plan-appendices-frmsp",
+  "title": "Cooks River Floodplain Risk Management Study and Plan - Appendices",
+  "notes": "Appendix A: Glossary of Terms\r\n\r\nAppendix B: Flood Mapping\r\n\r\nAppendix C: Cooks River Model Validation - 8th March 2012 Flood Event",
+  "metadata_modified": "2025-12-17T04:34:44.729183",
+  "resources": 3
+ },
+ {
+  "org": "inner-west-council",
+  "name": "hawthorne-canal-flood-study-survey",
+  "title": "Hawthorne Canal Flood Study - Survey",
+  "notes": "Survey (03/2013)",
+  "metadata_modified": "2025-12-17T04:18:35.747139",
+  "resources": 1
+ },
+ {
+  "org": "inner-west-council",
+  "name": "hawthorne-canal-flood-study-photos",
+  "title": "Hawthorne Canal Flood Study - Photos",
+  "notes": "Photos",
+  "metadata_modified": "2025-12-17T04:18:19.043188",
+  "resources": 1
+ },
+ {
+  "org": "inner-west-council",
+  "name": "hawthorne-canal-flood-study-old-reports",
+  "title": "Hawthorne Canal Flood Study - Old Reports",
+  "notes": "Old Reports",
+  "metadata_modified": "2025-12-17T04:17:43.638748",
+  "resources": 1
+ },
+ {
+  "org": "inner-west-council",
+  "name": "hawthorne-canal-flood-study-hydrological-model-outputs-drains",
+  "title": "Hawthorne Canal Flood Study - Hydrological Model Outputs (DRAINS)",
+  "notes": "Hydrological Model Outputs (DRAINS)",
+  "metadata_modified": "2025-12-17T04:17:24.738484",
+  "resources": 1
+ },
+ {
+  "org": "inner-west-council",
+  "name": "hawthorne-canal-flood-study-hydrological-model-inputs-drains",
+  "title": "Hawthorne Canal Flood Study - Hydrological Model Inputs (DRAINS)",
+  "notes": "Hydrological Model Inputs (DRAINS)",
+  "metadata_modified": "2025-12-17T04:17:16.599023",
+  "resources": 1
+ },
+ {
+  "org": "inner-west-council",
+  "name": "hawthorne-canal-flood-study-hydraulic-model-inputs-tuflow",
+  "title": "Hawthorne Canal Flood Study - Hydraulic Model Inputs (TUFLOW)",
+  "notes": "Hawthorne Canal Flood Study - Hydraulic Model Inputs (TUFLOW)",
+  "metadata_modified": "2025-12-17T04:17:05.845625",
+  "resources": 1
+ },
+ {
+  "org": "inner-west-council",
+  "name": "hawthorne-canal-flood-study-spatial-flood-layers-post-processed",
+  "title": "Hawthorne Canal Flood Study - Spatial Flood Layers (Post-Processed)",
+  "notes": "* Flood Planning Area;\r\n* Flood Depth;\r\n* Ground Grids;\r\n* Flood Hazard;\r\n* Flood Heights;\r\n* Hydraulic Categories;\r\n* Flood Velocity;\r\n* SEPP Polygons.",
+  "metadata_modified": "2025-12-17T04:17:00.062407",
+  "resources": 8
+ },
+ {
+  "org": "inner-west-council",
+  "name": "eastern-channel-east-subcatchment-management-plan-appendix",
+  "title": "Eastern Channel East Subcatchment Management Plan - Appendix",
+  "notes": "F - G",
+  "metadata_modified": "2025-12-17T03:37:11.384269",
+  "resources": 1
+ },
+ {
+  "org": "inner-west-council",
+  "name": "leichhardt-floodplain-risk-management-study-report",
+  "title": "Leichhardt Floodplain Risk Management Study - Report",
+  "notes": "Prepared for Inner West Council",
+  "metadata_modified": "2025-12-17T02:17:23.151487",
+  "resources": 1
+ },
+ {
+  "org": "inner-west-council",
+  "name": "leichhardt-frmsp-flood-study-addendum-report",
+  "title": "Leichhardt Floodplain Risk Management Study and Plan: Flood Study Addendum - Report",
+  "notes": "Complete report",
+  "metadata_modified": "2025-12-17T01:23:03.267323",
+  "resources": 1
+ },
+ {
+  "org": "inner-west-council",
+  "name": "leichhardt-floodplain-risk-management-plan-report",
+  "title": "Leichhardt Floodplain Risk Management Plan - Report",
+  "notes": "Prepared for Inner West Council",
+  "metadata_modified": "2025-12-17T01:21:54.922364",
+  "resources": 1
+ },
+ {
+  "org": "inner-west-council",
+  "name": "eastern-channel-east-subcatchment-management-plan-report",
+  "title": "Eastern Channel East Subcatchment Management Plan - Report",
+  "notes": "The Eastern Channel East Subcatchment Plan was prepared in 2011 by OurRiver - Cooks River Sustainability Initiative and Marrickville Council, who would like to acknowledge contributions made by the EC",
+  "metadata_modified": "2025-12-17T00:45:54.806937",
+  "resources": 1
+ },
+ {
+  "org": "ku-ring-gai-council",
+  "name": "lovers-jump-creek-flood-study-spatial",
+  "title": "Lovers Jump Creek Flood Study - Spatial",
+  "notes": "* Hazard;\r\n* Hydraulic categorisation;\r\n* SES Communities;\r\n* GIS Layers;\r\n* Trimmed results;\r\n* Flood level;\r\n* Flood planning area;",
+  "metadata_modified": "2026-09-11T05:45:06.269556",
+  "resources": 7
+ },
+ {
+  "org": "ku-ring-gai-council",
+  "name": "middle-harbour-northern-catchments-flood-map-outputs",
+  "title": "Middle Harbour Northern Catchments Flood Map Outputs",
+  "notes": "Spatial layers for flood characteristics for design floods from 20% Annual Exceedance Probability to the Probable Maximum Flood. ",
+  "metadata_modified": "2026-05-26T00:36:24.980174",
+  "resources": 1
+ },
+ {
+  "org": "ku-ring-gai-council",
+  "name": "middle-harbour-northern-catchments-flood-study-report",
+  "title": "Middle Harbour Northern Catchments Flood Study Report",
+  "notes": "Flood Study report for the Middle Harbour Northern Catchments. The study area includes Middle Harbour Creek (and associated tributaries) in St Ives and Rocky Creek (including Stoney Creek and High Rid",
+  "metadata_modified": "2026-05-26T00:36:21.232594",
+  "resources": 1
+ },
+ {
+  "org": "ku-ring-gai-council",
+  "name": "lovers-jump-creek-flood-study-report",
+  "title": "Lovers Jump Creek Flood Study - Report",
+  "notes": "Includes stage reports",
+  "metadata_modified": "2026-01-14T03:13:56.828888",
+  "resources": 2
+ },
+ {
+  "org": "ku-ring-gai-council",
+  "name": "blackbutt-creek-flood-study-report",
+  "title": "Blackbutt Creek Flood Study - Report",
+  "notes": "Complete report + other associated reports + damage estimation and mapping.",
+  "metadata_modified": "2026-01-14T03:13:26.339356",
+  "resources": 2
+ },
+ {
+  "org": "ku-ring-gai-council",
+  "name": "lovers-jump-creek-flood-study-hydraulic-model-output",
+  "title": "Lovers Jump Creek Flood Study - Hydraulic Model Output",
+  "notes": "TUFLOW",
+  "metadata_modified": "2025-12-17T02:56:58.721457",
+  "resources": 1
+ },
+ {
+  "org": "ku-ring-gai-council",
+  "name": "lovers-jump-creek-flood-study-hydraulic-model-input",
+  "title": "Lovers Jump Creek Flood Study - Hydraulic Model Input",
+  "notes": "TUFLOW",
+  "metadata_modified": "2025-12-17T02:56:39.788591",
+  "resources": 1
+ },
+ {
+  "org": "ku-ring-gai-council",
+  "name": "lovers-jump-creek-flood-study-rainfall",
+  "title": "Lovers Jump Creek Flood Study - Rainfall",
+  "notes": "BoM",
+  "metadata_modified": "2025-12-17T02:56:35.738366",
+  "resources": 1
+ },
+ {
+  "org": "ku-ring-gai-council",
+  "name": "lovers-jump-creek-flood-study-community-consultation",
+  "title": "Lovers Jump Creek Flood Study - Community Consultation",
+  "notes": "Feedback, newsletters, questionnaire, workshop",
+  "metadata_modified": "2025-12-17T02:55:50.473031",
+  "resources": 1
+ },
+ {
+  "org": "ku-ring-gai-council",
+  "name": "lovers-jump-creek-flood-study-hydrologic-model",
+  "title": "Lovers Jump Creek Flood Study - Hydrologic Model",
+  "notes": "DRAINS",
+  "metadata_modified": "2025-12-17T02:55:46.613088",
+  "resources": 1
+ },
+ {
+  "org": "ku-ring-gai-council",
+  "name": "lovers-jump-creek-final-floodplain-risk-management-study-and-plan",
+  "title": "Lovers Jump Creek Final Floodplain Risk Management Study and Plan",
+  "notes": "Final FRMSP",
+  "metadata_modified": "2025-12-17T02:41:21.677180",
+  "resources": 1
+ },
+ {
+  "org": "ku-ring-gai-council",
+  "name": "blackbutt-creek-flood-study-hydrologic-model-output",
+  "title": "Blackbutt Creek Flood Study - Hydrologic Model Output",
+  "notes": "DRAINS",
+  "metadata_modified": "2025-12-17T02:25:45.475669",
+  "resources": 1
+ },
+ {
+  "org": "ku-ring-gai-council",
+  "name": "blackbutt-creek-flood-study-hydraulic-model-output",
+  "title": "Blackbutt Creek Flood Study - Hydraulic Model Output",
+  "notes": "TUFLOW",
+  "metadata_modified": "2025-12-17T02:06:29.885818",
+  "resources": 1
+ },
+ {
+  "org": "ku-ring-gai-council",
+  "name": "blackbutt-creek-flood-study-hydrologic-model-input",
+  "title": "Blackbutt Creek Flood Study - Hydrologic Model Input",
+  "notes": "DRAINS",
+  "metadata_modified": "2025-12-17T02:01:04.737577",
+  "resources": 1
+ },
+ {
+  "org": "ku-ring-gai-council",
+  "name": "blackbutt-creek-flood-study-rainfall",
+  "title": "Blackbutt Creek Flood Study - Rainfall",
+  "notes": "Gauges and BoM",
+  "metadata_modified": "2025-12-17T02:00:36.133177",
+  "resources": 1
+ },
+ {
+  "org": "ku-ring-gai-council",
+  "name": "blackbutt-creek-flood-study-hydraulic-model-input",
+  "title": "Blackbutt Creek Flood Study - Hydraulic Model Input",
+  "notes": "TUFLOW",
+  "metadata_modified": "2025-12-17T02:00:31.999496",
+  "resources": 1
+ },
+ {
+  "org": "ku-ring-gai-council",
+  "name": "blackbutt-creek-flood-study-community-consultation",
+  "title": "Blackbutt Creek Flood Study - Community Consultation",
+  "notes": "Newsletter, workshop, questionnaire",
+  "metadata_modified": "2025-12-17T01:47:47.080901",
+  "resources": 1
+ },
+ {
+  "org": "ku-ring-gai-council",
+  "name": "blackbutt-creek-flood-study-lidar",
+  "title": "Blackbutt Creek Flood Study - LiDAR",
+  "notes": "DEM and LiDAR contours",
+  "metadata_modified": "2025-12-17T01:47:38.897954",
+  "resources": 1
+ },
+ {
+  "org": "ku-ring-gai-council",
+  "name": "blackbutt-creek-flood-study-survey",
+  "title": "Blackbutt Creek Flood Study - Survey",
+  "notes": "Includes creek alignments",
+  "metadata_modified": "2025-12-17T01:47:10.476808",
+  "resources": 1
+ },
+ {
+  "org": "ku-ring-gai-council",
+  "name": "blackbutt-creek-hydrologic-model-input",
+  "title": "Blackbutt Creek Floodplain Risk Management Study and Plan - Hydrologic Model Input",
+  "notes": "DRAINS",
+  "metadata_modified": "2025-12-17T01:42:27.795980",
+  "resources": 1
+ },
+ {
+  "org": "ku-ring-gai-council",
+  "name": "blackbutt-creek-hazard-categorisation",
+  "title": "Blackbutt Creek Floodplain Risk Management Study and Plan - Hazard Categorisation",
+  "notes": "5y, 20y, 100y, PMF",
+  "metadata_modified": "2025-12-17T01:27:37.750476",
+  "resources": 1
+ },
+ {
+  "org": "ku-ring-gai-council",
+  "name": "blackbutt-creek-hydraulic-model-output",
+  "title": "Blackbutt Creek Floodplain Risk Management Study and Plan - Hydraulic Model Output",
+  "notes": "TUFLOW",
+  "metadata_modified": "2025-12-17T01:27:25.779866",
+  "resources": 1
+ },
+ {
+  "org": "ku-ring-gai-council",
+  "name": "blackbutt-creek-hydraulic-model-input",
+  "title": "Blackbutt Creek Floodplain Risk Management Study and Plan - Hydraulic Model Input",
+  "notes": "TUFLOW",
+  "metadata_modified": "2025-12-17T01:14:22.311528",
+  "resources": 1
+ },
+ {
+  "org": "ku-ring-gai-council",
+  "name": "blackbutt-creek-hydrologic-model-output",
+  "title": "Blackbutt Creek Floodplain Risk Management Study and Plan - Hydrologic Model Output",
+  "notes": "DRAINS",
+  "metadata_modified": "2025-12-17T01:14:18.359062",
+  "resources": 1
+ },
+ {
+  "org": "ku-ring-gai-council",
+  "name": "blackbutt-creek-floodplain-risk-management-study-and-plan-report",
+  "title": "Blackbutt Creek Floodplain Risk Management Study and Plan - Report",
+  "notes": "Complete report",
+  "metadata_modified": "2025-12-17T01:14:13.998755",
+  "resources": 1
+ },
+ {
+  "org": "ku-ring-gai-council",
+  "name": "blackbutt-creek-flood-damages",
+  "title": "Blackbutt Creek Floodplain Risk Management Study and Plan - Flood Damages",
+  "notes": "Includes results, curves, assessments",
+  "metadata_modified": "2025-12-17T00:42:40.787410",
+  "resources": 1
+ },
+ {
+  "org": "ku-ring-gai-council",
+  "name": "blackbutt-creek-report-figures",
+  "title": "Blackbutt Creek Floodplain Risk Management Study and Plan - Report Figures",
+  "notes": "Includes modelling updates and sensitivity tests.",
+  "metadata_modified": "2025-12-17T00:39:31.575706",
+  "resources": 1
+ },
+ {
+  "org": "ku-ring-gai-council",
+  "name": "blackbutt-creek-memos",
+  "title": "Blackbutt Creek Floodplain Risk Management Study and Plan - Memos",
+  "notes": "ARR16 and Model Update",
+  "metadata_modified": "2025-12-17T00:22:42.535892",
+  "resources": 1
+ },
+ {
+  "org": "ku-ring-gai-council",
+  "name": "blackbutt-creek-hydrologic-model",
+  "title": "Blackbutt Creek Floodplain Risk Management Study and Plan - Hydrologic Model",
+  "notes": "RFFE",
+  "metadata_modified": "2025-12-17T00:20:43.171355",
+  "resources": 1
+ },
+ {
+  "org": "liverpool-city-council",
+  "name": "liverpool-city-centre-overland-flow-path-mapping-report",
+  "title": "Liverpool City Centre Overland Flow Path Mapping- Report",
+  "notes": "Complete Report ",
+  "metadata_modified": "2026-01-19T05:31:33.912420",
+  "resources": 1
+ },
+ {
+  "org": "liverpool-city-council",
+  "name": "liverpool-overland-flow-path-study-stage-2-report",
+  "title": "Liverpool Overland Flow Path Study Stage 2 - Final Report",
+  "notes": "This report documents the Study’s objectives, results and recommendations.\r\n\r\n* Section 1 introduces the study.\r\n* Section 2 provides some background information and a summary of available data.\r\n* Se",
+  "metadata_modified": "2026-01-19T05:31:04.336093",
+  "resources": 1
+ },
+ {
+  "org": "liverpool-city-council",
+  "name": "liverpool-overland-flow-path-study-stage-4-report",
+  "title": "Liverpool Overland Flow Path Study Stage 4",
+  "notes": "#Conclusions\r\nThe objective of the study was to undertake a preliminary investigation to identify and map sub-catchments and major overland flow paths within urban areas of the Liverpool LGA. This was",
+  "metadata_modified": "2026-01-13T04:57:09.720562",
+  "resources": 1
+ },
+ {
+  "org": "liverpool-city-council",
+  "name": "liverpool-overland-flow-path-study-stage-3-report",
+  "title": "Liverpool - Overland Flow Path Study Stage 3 - Report",
+  "notes": "Report + Appendix",
+  "metadata_modified": "2026-01-13T04:55:30.216882",
+  "resources": 2
+ },
+ {
+  "org": "liverpool-city-council",
+  "name": "anzac-creek-floodplain-risk-management-study-plan-report",
+  "title": "Anzac Creek Floodplain Risk Management Study and Plan - Report",
+  "notes": "Complete report",
+  "metadata_modified": "2026-01-13T04:53:22.191710",
+  "resources": 1
+ },
+ {
+  "org": "liverpool-city-council",
+  "name": "39-newbridge-rd_ver1",
+  "title": "39 Newbridge Rd Chipping Norton_ver1",
+  "notes": "Valuation report, contamination assessment report, property purchase documents, demolition and site remediation documents, site photos (pre and post).\r\n\r\n",
+  "metadata_modified": "2025-12-17T05:11:28.942668",
+  "resources": 1
+ },
+ {
+  "org": "liverpool-city-council",
+  "name": "ver1",
+  "title": "ver1",
+  "notes": "Valuation report, property purchase documentation, demolition, contamination assessment report",
+  "metadata_modified": "2025-12-17T05:03:48.091174",
+  "resources": 1
+ },
+ {
+  "org": "liverpool-city-council",
+  "name": "version_one",
+  "title": "version_one",
+  "notes": "Valuation report, contamination assessment report, property purchase documents, demolition and site remediation documents, site photos (pre and post). ",
+  "metadata_modified": "2025-12-17T05:03:19.511660",
+  "resources": 1
+ },
+ {
+  "org": "liverpool-city-council",
+  "name": "liverpool-city-centre-overland-flow-path-mapping-hydraulic-model-outputs-tuflow",
+  "title": "Liverpool City Centre Overland Flow Path Mapping - Hydraulic Model Outputs (TUFLOW) - Raw",
+  "notes": "Hydraulic Model Outputs (TUFLOW) - Raw",
+  "metadata_modified": "2025-12-17T03:42:36.710599",
+  "resources": 3
+ },
+ {
+  "org": "liverpool-city-council",
+  "name": "liverpool-city-centre-overland-flow-path-mapping-aerial-imagery",
+  "title": "Liverpool City Centre Overland Flow Path Mapping - Aerial Imagery",
+  "notes": "Aerial Imagery",
+  "metadata_modified": "2025-12-17T03:42:09.557515",
+  "resources": 1
+ },
+ {
+  "org": "liverpool-city-council",
+  "name": "liverpool-city-centre-overland-flow-path-mapping-gis-layers",
+  "title": "Liverpool City Centre Overland Flow Path Mapping - GIS Layers",
+  "notes": "GIS Layers",
+  "metadata_modified": "2025-12-17T03:41:59.541337",
+  "resources": 1
+ },
+ {
+  "org": "liverpool-city-council",
+  "name": "liverpool-city-centre-overland-flow-path-mapping-hydrological-model-inputs-xp-rafts",
+  "title": "Liverpool City Centre Overland Flow Path Mapping - Hydrological Model Inputs (XP-RAFTS)",
+  "notes": "Hydrological Model Inputs (XP-RAFTS)",
+  "metadata_modified": "2025-12-17T03:31:57.498555",
+  "resources": 1
+ },
+ {
+  "org": "liverpool-city-council",
+  "name": "liverpool-city-centre-overland-flow-path-mapping-hydraulic-model-outputs-tuflow-post-processed",
+  "title": "Liverpool City Centre Overland Flow Path Mapping - Hydraulic Model Outputs (TUFLOW) - Processed",
+  "notes": "Hydraulic Model Outputs (TUFLOW) - Processed",
+  "metadata_modified": "2025-12-17T03:16:24.707555",
+  "resources": 1
+ },
+ {
+  "org": "liverpool-city-council",
+  "name": "liverpool-city-centre-overland-flow-path-mapping-hydrological-model-catchmentsim",
+  "title": "Liverpool City Centre Overland Flow Path Mapping - Hydrological Model (CatchmentSIM)",
+  "notes": "Hydrological Model (CatchmentSIM) - Inputs and Outputs",
+  "metadata_modified": "2025-12-17T03:13:53.024217",
+  "resources": 1
+ },
+ {
+  "org": "liverpool-city-council",
+  "name": "liverpool-city-centre-overland-flow-path-mapping-spatial-flood-layers",
+  "title": "Liverpool City Centre Overland Flow Path Mapping - Spatial Flood Layers",
+  "notes": "* Flood Depths;\r\n* Flood Levels;\r\n* Flood Velocity;\r\n* Flood VelocityxDepth;\r\n* Flood Hazard;\r\n* Hydraulic Categorisation;\r\n* Flood Risk Precinct;\r\n* Sensitivity Analysis Results.\r\n",
+  "metadata_modified": "2025-12-17T03:13:29.962544",
+  "resources": 8
+ },
+ {
+  "org": "liverpool-city-council",
+  "name": "liverpool-city-centre-overland-flow-path-mapping-post-processed-summary",
+  "title": "Liverpool City Centre Overland Flow Path Mapping - Post-Processed Summary",
+  "notes": "Liverpool CBD Model Scenarios",
+  "metadata_modified": "2025-12-17T03:11:13.702261",
+  "resources": 1
+ },
+ {
+  "org": "liverpool-city-council",
+  "name": "liverpool-city-centre-overland-flow-path-mapping-dem",
+  "title": "Liverpool City Centre Overland Flow Path Mapping - DEM",
+  "notes": "DEM",
+  "metadata_modified": "2025-12-17T03:10:12.490753",
+  "resources": 1
+ },
+ {
+  "org": "liverpool-city-council",
+  "name": "liverpool-city-centre-overland-flow-path-mapping-hydraulic-model-inputs-tuflow",
+  "title": "Liverpool City Centre Overland Flow Path Mapping - Hydraulic Model Inputs (TUFLOW)",
+  "notes": "Hydraulic Model Inputs (TUFLOW)",
+  "metadata_modified": "2025-12-17T02:52:51.937959",
+  "resources": 1
+ },
+ {
+  "org": "liverpool-city-council",
+  "name": "liverpool-city-centre-overland-flow-path-mapping-hydrological-model-outputs-xp-rafts",
+  "title": "Liverpool City Centre Overland Flow Path Mapping - Hydrological Model Outputs (XP-RAFTS)",
+  "notes": "Hydrological Model Outputs (XP-RAFTS)",
+  "metadata_modified": "2025-12-17T02:51:39.366688",
+  "resources": 1
+ },
+ {
+  "org": "liverpool-city-council",
+  "name": "liverpool-cbd-trunk-drainage-works-george-and-scott-streets-design-plans",
+  "title": "Liverpool CBD Trunk Drainage Works - George and Scott Streets - Design Plans",
+  "notes": "Stormwater Drainage Amplification Works -Scott St. to Moore St. \r\nGeorge St., Liverpool",
+  "metadata_modified": "2025-12-17T02:08:34.955886",
+  "resources": 2
+ },
+ {
+  "org": "mosman-municipal-council",
+  "name": "mosman-lga-flood-study-main-report",
+  "title": "Mosman LGA Flood Study - Final Report",
+  "notes": "Final Report and Appendices for Mosman LGA Flood Study",
+  "metadata_modified": "2026-05-06T05:04:54.099997",
+  "resources": 2
+ },
+ {
+  "org": "mosman-municipal-council",
+  "name": "tuflow-model-outputs-mosman-lga-flood-study",
+  "title": "TUFLOW Model Outputs - Mosman LGA Flood Study",
+  "notes": "Post processed TUFLOW model results",
+  "metadata_modified": "2026-05-06T05:04:49.820343",
+  "resources": 1
+ },
+ {
+  "org": "mosman-municipal-council",
+  "name": "dataset-checklist-mosman-lga-flood-study",
+  "title": "Dataset checklist - Mosman LGA Flood Study",
+  "notes": "Dataset handover checklist for Mosman LGA Flood Study",
+  "metadata_modified": "2026-05-06T05:04:45.185836",
+  "resources": 1
+ },
+ {
+  "org": "mosman-municipal-council",
+  "name": "other-relevant-dataset",
+  "title": "Other relevant dataset",
+  "notes": "All other relevant dataset utilised for Mosman LGA Flood Study",
+  "metadata_modified": "2026-05-06T05:04:40.236579",
+  "resources": 1
+ },
+ {
+  "org": "mosman-municipal-council",
+  "name": "wbnm-hydrology-model-files",
+  "title": "WBNM Hydrology Model files",
+  "notes": "Files related to hydrologic modelling, including WBNM model inputs and outputs, and rainfall data.",
+  "metadata_modified": "2026-05-06T05:04:36.282628",
+  "resources": 1
+ },
+ {
+  "org": "northern-beaches-council",
+  "name": "results-summary",
+  "title": "Results Summary",
+  "notes": "The 1% AEP, PMF and FPA",
+  "metadata_modified": "2026-05-06T23:51:18.866624",
+  "resources": 1
+ },
+ {
+  "org": "northern-beaches-council",
+  "name": "manly-lagoon-floodplain-risk-management-study-and-plan",
+  "title": "Manly Lagoon Flood Study",
+  "notes": "This report comprises an overview of the work that has been undertaken by WMAwater on the Manly Lagoon Floodplain Risk Management Study and Plan. It builds on prior stage reports and, in accordance wi",
+  "metadata_modified": "2026-05-06T23:51:12.493162",
+  "resources": 1
+ },
+ {
+  "org": "northern-beaches-council",
+  "name": "narrabeen-lagoon-flood-study-report-2013",
+  "title": "Narrabeen Lagoon Flood Study Report",
+  "notes": "The Narrabeen Lagoon Flood Study has been prepared for Warringah and Pittwater Councils (The Councils) to define the existing flood behaviour in the Narrabeen Lagoon catchment and establish the basis ",
+  "metadata_modified": "2026-04-08T03:25:37.347389",
+  "resources": 1
+ },
+ {
+  "org": "northern-beaches-council",
+  "name": "mccarrs-creek-mona-vale-and-bayview-1-and-pmf",
+  "title": "McCarrs Creek, Mona Vale and Bayview 1% and PMF",
+  "notes": "1% AEP and PMF design extents",
+  "metadata_modified": "2026-03-04T02:22:16.570632",
+  "resources": 1
+ },
+ {
+  "org": "northern-beaches-council",
+  "name": "mccarrs-monavale-bayview-fs-2019",
+  "title": "McCarrs Creek, Mona Vale and Bayview Flood Study Report 2019",
+  "notes": "Report for flood study",
+  "metadata_modified": "2026-03-04T02:22:12.494649",
+  "resources": 1
+ },
+ {
+  "org": "northern-beaches-council",
+  "name": "narrabeen-lagoon-frms",
+  "title": "Narrabeen Lagoon FRMS Report 2019",
+  "notes": "Report containing the FRMS",
+  "metadata_modified": "2026-03-04T02:20:07.227335",
+  "resources": 2
+ },
+ {
+  "org": "northern-beaches-council",
+  "name": "narrabeen-1-aep",
+  "title": "Narrabeen 1% AEP and PMF",
+  "notes": "1% AEP and PMF extents",
+  "metadata_modified": "2026-03-04T02:20:01.290879",
+  "resources": 1
+ },
+ {
+  "org": "northern-beaches-council",
+  "name": "avalon-to-palm-beach-1-aep-and-pmf",
+  "title": "Avalon to Palm Beach 1% AEP and PMF",
+  "notes": "1% AEP and PMF extent data",
+  "metadata_modified": "2026-03-04T02:16:06.273005",
+  "resources": 1
+ },
+ {
+  "org": "northern-beaches-council",
+  "name": "avalon-to-palm-beach-frmsp-2017",
+  "title": "Avalon to Palm Beach FRMSP 2017",
+  "notes": "Report for the Floodplain Risk Management Study and Plan",
+  "metadata_modified": "2026-03-04T02:16:01.319781",
+  "resources": 1
+ },
+ {
+  "org": "northern-beaches-council",
+  "name": "ingleside-elanora-and-warriewood-offs-main-report",
+  "title": "Ingleside, Elanora and Warriewood OFFS (2019)",
+  "notes": "Ingleside, Elanora and Warriewood OFFS - Main Report and Appendices",
+  "metadata_modified": "2026-01-15T06:18:46.510770",
+  "resources": 2
+ },
+ {
+  "org": "northern-beaches-council",
+  "name": "south-creek-flood-study-may-2006-report",
+  "title": "South Creek Flood Study",
+  "notes": "South Creek is a 7.3 km2 catchment which drains to the southern shore of Narrabeen Lagoon\r\nthrough Cromer Golf Course (Figures 1, 2 and 3). The catchment area is predominantly occupied\r\nby urban devel",
+  "metadata_modified": "2026-01-15T01:33:38.407796",
+  "resources": 1
+ },
+ {
+  "org": "northern-beaches-council",
+  "name": "ryan-place-overland-flood-study-report",
+  "title": "Ryan Place Overland Flood Study",
+  "notes": "The catchment area to Old Pittwater Road is 11.9 hectares (Figure 1). Downstream of Old Pittwater\r\nRoad runoff flows through the Warringah Mall Shopping Centre and into Brookvale Creek through\r\nWarrin",
+  "metadata_modified": "2026-01-15T01:28:11.523492",
+  "resources": 1
+ },
+ {
+  "org": "northern-beaches-council",
+  "name": "great-mackerel-beach-floodplain-risk-management-study-plan-report",
+  "title": "Great Mackerel Beach Floodplain Risk Management Study & Plan",
+  "notes": "#Study area\r\nAs previously mentioned, Great Mackerel Beach (Figure 1) is a small coastal community on the western shore of Pittwater. The entrance system at Great Mackerel Beach is termed an ICOLL (In",
+  "metadata_modified": "2026-01-15T00:49:24.252711",
+  "resources": 1
+ },
+ {
+  "org": "northern-beaches-council",
+  "name": "avalon-to-palm-beach-frmsp-report",
+  "title": "Avalon to Palm Beach FRMSP - Report",
+  "notes": "Complete report",
+  "metadata_modified": "2026-01-14T05:05:26.215304",
+  "resources": 1
+ },
+ {
+  "org": "northern-beaches-council",
+  "name": "dee-why-cbd-flood-study-update-report",
+  "title": "Dee Why CBD Flood Study Update",
+  "notes": "Warringah Council has identified a need to prepare a drainage and flood mitigation plan\r\nfor the Dee Why Town Centre. The plan is needed to accompany the Dee Why Town\r\nCentre Masterplan and Public Dom",
+  "metadata_modified": "2026-01-14T04:49:39.533470",
+  "resources": 1
+ },
+ {
+  "org": "northern-beaches-council",
+  "name": "mona-vale-bayview-frmsp",
+  "title": "Mona Vale / Bayview Floodplain Risk Management Study and Plan",
+  "notes": "This Floodplain Risk Management Study and Plan for Mona Vale/Bayview has been\r\nundertaken by Cardno Lawson Treloar for Pittwater Council to identify and examine options\r\nfor the management of flooding",
+  "metadata_modified": "2026-01-14T02:33:33.512170",
+  "resources": 1
+ },
+ {
+  "org": "northern-beaches-council",
+  "name": "south-creek-floodplain-risk-management-plan-report",
+  "title": "South Creek Floodplain Risk Management Plan report",
+  "notes": "#Study Context\r\nThe preparation of this plan follows on from the Flood Study (WMA, 2006) and Floodplain\r\nRisk Management Study (Cardno Lawson Treloar, 2007a) and forms the fifth stage of the\r\nFloodpla",
+  "metadata_modified": "2026-01-14T02:30:16.621235",
+  "resources": 1
+ },
+ {
+  "org": "northern-beaches-council",
+  "name": "dee-why-south-catchment-frms",
+  "title": "Dee Why South Catchment FRMS -",
+  "notes": "Complete report",
+  "metadata_modified": "2026-01-14T00:57:37.498336",
+  "resources": 1
+ },
+ {
+  "org": "northern-beaches-council",
+  "name": "dee-why-south-catchment-flood-study-report",
+  "title": "Dee Why South Catchment Flood Study",
+  "notes": "This report has been prepared for Warringah Council to define the nature and extent of flood in the Dee Why\r\nSouth Catchment. Flood modelling was completed to define flood behaviour for a range of sto",
+  "metadata_modified": "2026-01-14T00:57:06.141872",
+  "resources": 1
+ },
+ {
+  "org": "northern-beaches-council",
+  "name": "manly-lagoon-flood-study-final-report2013",
+  "title": "Manly Lagoon Flood Study",
+  "notes": "#Conclusions\r\nProvided below is a summary of the key findings of the Flood Study, in particular some of the\r\nimportant considerations for future floodplain risk management in the catchment:\r\n\r\n* The d",
+  "metadata_modified": "2026-01-13T04:59:54.269654",
+  "resources": 1
+ },
+ {
+  "org": "northern-beaches-council",
+  "name": "mccarrs-creek-mona-vale-and-bayview-flood-study-report",
+  "title": "McCarrs Creek, Mona Vale and Bayview Flood Study Report",
+  "notes": "This report details the results and findings of the Flood Study investigations. The key elements include: \r\n•\ta description of the study area; \r\n•\ta summary of available historical flood related data;",
+  "metadata_modified": "2025-12-17T05:24:21.402572",
+  "resources": 1
+ },
+ {
+  "org": "northern-beaches-council",
+  "name": "ingleside-eleanora-warriewood-offs-climate-change",
+  "title": "Ingleside, Eleanora, Warriewood OFFS Climate Change",
+  "notes": "The effect of climate change on the study area was investigated for the 1% AEP design and PMF events. The following scenarios were modelled:\r\n- 1% AEP design storm event plus 0.9 m sea level rise;\r\n- ",
+  "metadata_modified": "2025-12-17T05:02:37.250782",
+  "resources": 1
+ },
+ {
+  "org": "northern-beaches-council",
+  "name": "manly-to-seaforth-data-description",
+  "title": "Manly to Seaforth Data Description",
+  "notes": "Cardno was commissioned by Northern Beaches Council to undertake the Manly to Seaforth Flood Study for urban catchments, which comprises the suburbs of Clontarf and Balgowlah Heights and parts of Seaf",
+  "metadata_modified": "2025-12-17T05:01:34.758025",
+  "resources": 1
+ },
+ {
+  "org": "northern-beaches-council",
+  "name": "manly-to-seaforth-fs-gis-data",
+  "title": "Manly to Seaforth FS GIS Data",
+  "notes": "GIS data utilised aerial photos, building outlines, cadastre, GIS layers, study area, rainfall gauges, RTA Classified Roads, site inspection and the study area.",
+  "metadata_modified": "2025-12-17T05:00:44.487923",
+  "resources": 1
+ },
+ {
+  "org": "northern-beaches-council",
+  "name": "mccarrs-creek-mona-vale-and-bayview-fs-gis-results",
+  "title": "McCarrs Creek, Mona Vale and Bayview FS GIS Results",
+  "notes": "A range of design event durations were simulated to determine the critical duration for flooding throughout the study area.  Generally, shorter duration events are critical in the upstream, smaller an",
+  "metadata_modified": "2025-12-17T04:54:51.560797",
+  "resources": 1
+ },
+ {
+  "org": "northern-beaches-council",
+  "name": "newport-flood-study-gis",
+  "title": "Newport Flood Study GIS",
+  "notes": "A number of GIS layers were provided by Council to assist with the study. This included:\r\n•\tAerial Photography – provides 2014 ortho-rectified aerial imagery at a 0.5 metre pixel size;\r\n•\tCadastre – p",
+  "metadata_modified": "2025-12-17T04:54:03.375308",
+  "resources": 1
+ },
+ {
+  "org": "northern-beaches-council",
+  "name": "newport-flood-study-report",
+  "title": "Newport Flood Study Report",
+  "notes": "This report forms the Flood Study for Newport.  It documents flood behaviour across the catchment for a range of historic and design floods.  This includes information on flood discharges, levels, dep",
+  "metadata_modified": "2025-12-17T04:53:58.169630",
+  "resources": 1
+ },
+ {
+  "org": "northern-beaches-council",
+  "name": "greendale-creek-flood-study-gis-layers",
+  "title": "Greendale Creek Flood Study GIS Layers",
+  "notes": "Post-processed layers for Depth, Height, Velocity, Hydraulic Categories, Z0, Z1, ZAEM1.\r\nFlood events: 0.5%, 0.2%, 1%, 2%, 5%, 10%, 20%, 50%, PMF, 1% with 0.4m SLR and 10% increased intensity of rainf",
+  "metadata_modified": "2025-12-17T04:53:12.907621",
+  "resources": 1
+ },
+ {
+  "org": "northern-beaches-council",
+  "name": "greendale-creek-flood-study-handover",
+  "title": "Handover list of data",
+  "notes": "Handover list of electronic data, consisting of the hydraulic, hydrologic, and GIS data used in the preparation of the Greendale Creek Flood Study.",
+  "metadata_modified": "2025-12-17T04:52:55.856858",
+  "resources": 1
+ },
+ {
+  "org": "northern-beaches-council",
+  "name": "greendale-creek-fs-extents",
+  "title": "Greendale Creek Flood Study Extents",
+  "notes": "Extents for 50%, 20%, 10%, 5%, 2%, 1%, 0.5%, 0.2% AEP, PMF and FPA.\r\n",
+  "metadata_modified": "2025-12-17T04:52:51.786145",
+  "resources": 1
+ },
+ {
+  "org": "northern-beaches-council",
+  "name": "dee-why-south-catchment-floodplain-risk-management-plan-draft-report",
+  "title": "Dee Why South Catchment Floodplain Risk Management Plan (Draft) - Report",
+  "notes": "Complete report",
+  "metadata_modified": "2025-12-17T04:28:10.824153",
+  "resources": 1
+ },
+ {
+  "org": "northern-beaches-council",
+  "name": "bangaroo-street-north-balgowlah-flood-investigation-draft-report",
+  "title": "Bangaroo Street, North Balgowlah - Flood Investigation Draft - Report",
+  "notes": "Report and Figures",
+  "metadata_modified": "2025-12-17T04:26:50.395288",
+  "resources": 2
+ },
+ {
+  "org": "northern-beaches-council",
+  "name": "careel-creek-floodplain-risk-management-plan-spatial-flood-layers-post-processed",
+  "title": "Careel Creek Floodplain Risk Management Plan - Spatial Flood Layers (Post-Processed)",
+  "notes": "* Flood Extents;\r\n* Hazard Categorisation;\r\n* Hydraulic Categorisation.",
+  "metadata_modified": "2025-12-17T04:24:32.744225",
+  "resources": 3
+ },
+ {
+  "org": "northern-beaches-council",
+  "name": "careel-creek-floodplain-risk-management-plan-report-figures-wor",
+  "title": "Careel Creek Floodplain Risk Management Plan - Report Figures (.WOR)",
+  "notes": "Report Figures (.WOR)",
+  "metadata_modified": "2025-12-17T04:02:26.893097",
+  "resources": 1
+ },
+ {
+  "org": "northern-beaches-council",
+  "name": "careel-creek-floodplain-risk-management-plan-community-consultation-questionnaire-responses",
+  "title": "Careel Creek Floodplain Risk Management Plan - Community Consultation (Questionnaire Responses)",
+  "notes": "Community Consultation (Questionnaire Responses)",
+  "metadata_modified": "2025-12-17T04:02:22.907433",
+  "resources": 1
+ },
+ {
+  "org": "northern-beaches-council",
+  "name": "careel-creek-floodplain-risk-management-plan-hydrological-model-inputs-xp-rafts",
+  "title": "Careel Creek Floodplain Risk Management Plan - Hydrological Model Inputs (XP-RAFTS)",
+  "notes": "Hydrological Model Inputs (XP-RAFTS)",
+  "metadata_modified": "2025-12-17T04:02:14.479366",
+  "resources": 1
+ },
+ {
+  "org": "northern-beaches-council",
+  "name": "mccarrs-creek-mona-vale-and-bayview-flood-study-2017-report",
+  "title": "McCarrs Creek, Mona Vale and Bayview Flood Study, 2017 - Report",
+  "notes": " Main Report; \r\n\r\nAppendix A - Flood Mapping; \r\n\r\nAppendix B - Community Consultation; \r\n\r\nAppendix C - Design Hydrographs",
+  "metadata_modified": "2025-12-17T03:59:28.501730",
+  "resources": 4
+ },
+ {
+  "org": "northern-beaches-council",
+  "name": "careel-creek-floodplain-risk-management-plan-gis-layers-mapinfo",
+  "title": "Careel Creek Floodplain Risk Management Plan - GIS Layers (MapInfo)",
+  "notes": "GIS Layers (MapInfo)",
+  "metadata_modified": "2025-12-17T03:59:07.594469",
+  "resources": 1
+ },
+ {
+  "org": "northern-beaches-council",
+  "name": "careel-creek-floodplain-risk-management-plan-hydraulic-model-mouse",
+  "title": "Careel Creek Floodplain Risk Management Plan - Hydraulic Model (MOUSE)",
+  "notes": "Hydraulic Model (MOUSE) - Inputs and Outputs",
+  "metadata_modified": "2025-12-17T03:58:37.325655",
+  "resources": 1
+ },
+ {
+  "org": "northern-beaches-council",
+  "name": "careel-creek-floodplain-risk-management-plan-hydraulic-model-mike-11",
+  "title": "Careel Creek Floodplain Risk Management Plan - Hydraulic Model (MIKE-11)",
+  "notes": "Hydraulic Model (MIKE-11) - Inputs and Outputs",
+  "metadata_modified": "2025-12-17T03:58:31.128941",
+  "resources": 1
+ },
+ {
+  "org": "northern-beaches-council",
+  "name": "manly-to-seaforth-fs-model-results",
+  "title": "Manly to Seaforth FS Model Results",
+  "notes": "Data contains Mapinfo and  shapefiles modelled results for design events, flood planning levels, flood precincts, overland flow categorised as local storm water and a properties at risk spreadsheet.",
+  "metadata_modified": "2025-12-17T03:41:28.417408",
+  "resources": 1
+ },
+ {
+  "org": "northern-beaches-council",
+  "name": "data-handover-explanation",
+  "title": "Ingleside, Eleanora, Warriewood OFFS Data description",
+  "notes": "This document explains the location and contents of the mapping data.",
+  "metadata_modified": "2025-12-17T03:28:37.032911",
+  "resources": 1
+ },
+ {
+  "org": "northern-beaches-council",
+  "name": "bangaroo-street-north-balgowlah-flood-investigation-report",
+  "title": "Bangaroo Street, North Balgowlah - Flood Investigation - Report",
+  "notes": "Report and Figures",
+  "metadata_modified": "2025-12-17T03:23:44.931324",
+  "resources": 2
+ },
+ {
+  "org": "northern-beaches-council",
+  "name": "south-creek-bank-management-plan-report",
+  "title": "South Creek - Bank Management Plan - Report",
+  "notes": "Complete Report",
+  "metadata_modified": "2025-12-17T03:20:04.778830",
+  "resources": 1
+ },
+ {
+  "org": "northern-beaches-council",
+  "name": "manly-lagoon-rehabilitation-works-sediment-removal-from-sites-3-5-see-report",
+  "title": "Manly Lagoon Rehabilitation Works - Sediment Removal from Sites 3 & 5 Statement of Environmental Effects - Report",
+  "notes": "Report",
+  "metadata_modified": "2025-12-17T03:17:37.392221",
+  "resources": 1
+ },
+ {
+  "org": "northern-beaches-council",
+  "name": "careel-creek-drainage-catchment-flood-study-report",
+  "title": "Careel Creek Drainage Catchment Flood Study - Report",
+  "notes": "Complete report",
+  "metadata_modified": "2025-12-17T02:51:59.879746",
+  "resources": 1
+ },
+ {
+  "org": "northern-beaches-council",
+  "name": "narrabeen-lagoon-floodplain-risk-management-study-2019",
+  "title": "Narrabeen Lagoon Floodplain Risk Management Study and Plan 2019",
+  "notes": "Narrabeen Lagoon Floodplain Risk Management Study and Plan 2019 - Reports",
+  "metadata_modified": "2025-12-17T02:48:32.794439",
+  "resources": 2
+ },
+ {
+  "org": "northern-beaches-council",
+  "name": "dee-why-curl-curl-lagoons-floodplain-risk-management-plan-vol-3-draft-report",
+  "title": "Dee Why and Curl Curl Lagoons - Floodplain Risk Management Plan (Vol 3 Draft) - Report",
+  "notes": "Complete report",
+  "metadata_modified": "2025-12-17T01:46:38.767787",
+  "resources": 1
+ },
+ {
+  "org": "northern-beaches-council",
+  "name": "frenchs-creek-flood-study-property-survey-report",
+  "title": "Frenchs Creek - Flood Study Property Survey Report",
+  "notes": "Property Survey Report",
+  "metadata_modified": "2025-12-17T01:13:39.310179",
+  "resources": 1
+ },
+ {
+  "org": "northern-beaches-council",
+  "name": "frenchs-creek-flood-study-report",
+  "title": "Frenchs Creek Flood Study - Report",
+  "notes": "Complete report",
+  "metadata_modified": "2025-12-17T01:12:08.157693",
+  "resources": 1
+ },
+ {
+  "org": "northern-beaches-council",
+  "name": "newport-beach-frms-figures",
+  "title": "Newport Beach FRMS - Figures",
+  "notes": "PDF",
+  "metadata_modified": "2025-12-17T00:49:27.589099",
+  "resources": 1
+ },
+ {
+  "org": "northern-beaches-council",
+  "name": "dee-why-central-business-district-flood-study-report",
+  "title": "Dee Why Central Business District Flood Study - Report",
+  "notes": "Complete report",
+  "metadata_modified": "2025-12-17T00:45:27.423663",
+  "resources": 1
+ },
+ {
+  "org": "northern-beaches-council",
+  "name": "newport-beach-frms-maps",
+  "title": "Newport Beach FRMS - Maps",
+  "notes": "Flood extent, AEP Hazard and PMF Hazard",
+  "metadata_modified": "2025-12-17T00:42:56.835436",
+  "resources": 1
+ },
+ {
+  "org": "northern-beaches-council",
+  "name": "newport-beach-frms-report",
+  "title": "Newport Beach FRMS - Report",
+  "notes": "Report only",
+  "metadata_modified": "2025-12-17T00:42:19.521189",
+  "resources": 1
+ },
+ {
+  "org": "northern-beaches-council",
+  "name": "newport-beach-frms-appendices",
+  "title": "Newport Beach FRMS - Appendices",
+  "notes": "A-E",
+  "metadata_modified": "2025-12-17T00:40:02.875492",
+  "resources": 1
+ },
+ {
+  "org": "north-sydney-council",
+  "name": "north-sydney-flood-study-report",
+  "title": "North Sydney Flood Study",
+  "notes": "North Sydney Area Local Government wide Flood Study Report. Includes Main report and output figures.",
+  "metadata_modified": "2026-01-15T06:18:12.034356",
+  "resources": 2
+ },
+ {
+  "org": "north-sydney-council",
+  "name": "flood-damages-estimations",
+  "title": "North Sydney LGA wide Floodplain Risk Management Study and Plan - Flood Damages Estimations",
+  "notes": "Spreadsheets used for the Flood Damages Estimations",
+  "metadata_modified": "2025-12-17T04:49:05.723764",
+  "resources": 2
+ },
+ {
+  "org": "north-sydney-council",
+  "name": "floodplain-risk-management-study-and-plan-spatial-flood-extent-layers",
+  "title": "North Sydney LGA wide Floodplain Risk Management Study and Plan -  Spatial flood Extent Layers",
+  "notes": "spatial flood extent layers Shape files",
+  "metadata_modified": "2025-12-17T04:48:31.433572",
+  "resources": 1
+ },
+ {
+  "org": "north-sydney-council",
+  "name": "handover-spreadsheet",
+  "title": "North Sydney LGA wide Floodplain Risk Management Study and Plan - Handover spreadsheet",
+  "notes": "Handover Checklist",
+  "metadata_modified": "2025-12-17T04:48:10.625825",
+  "resources": 1
+ },
+ {
+  "org": "north-sydney-council",
+  "name": "flood-model-and-results",
+  "title": "North Sydney LGA wide Floodplain Risk Management Study and Plan - Flood Model and Results",
+  "notes": "North Sydney LGA wide Floodplain Risk Management Study and Plan Flood Model and Results",
+  "metadata_modified": "2025-12-17T04:37:52.392708",
+  "resources": 1
+ },
+ {
+  "org": "north-sydney-council",
+  "name": "flood-study-model",
+  "title": "Flood Study Model",
+  "notes": "Flood Study Model for NSC LGA wide flood Study",
+  "metadata_modified": "2025-12-17T02:17:31.613218",
+  "resources": 1
+ },
+ {
+  "org": "penrith-city-council",
+  "name": "rickabys-creek-tuflow-1d-model-inputs",
+  "title": "TUFLOW Model Inputs",
+  "notes": "Rickabys Creek TUFLOW Model Inputs",
+  "metadata_modified": "2026-03-02T03:02:56.475827",
+  "resources": 1
+ },
+ {
+  "org": "penrith-city-council",
+  "name": "rickabys-creek-catchment-flood-study-gis-outputs",
+  "title": "Flood Study GIS Outputs",
+  "notes": "Rickabys Creek Catchment Flood Study GIS Outputs",
+  "metadata_modified": "2026-03-02T03:02:51.826342",
+  "resources": 1
+ },
+ {
+  "org": "penrith-city-council",
+  "name": "tuflow-2d-model-outputs-for-calibration-events",
+  "title": "TUFLOW 2D Model Outputs for Calibration Events",
+  "notes": "TUFLOW 2D Model Outputs for Calibration Events",
+  "metadata_modified": "2026-03-02T03:02:46.654398",
+  "resources": 13
+ },
+ {
+  "org": "penrith-city-council",
+  "name": "tuflow-2d-model-outputs-for-cumulative-development-conditions",
+  "title": "TUFLOW 2D Model Outputs for Cumulative Development Conditions",
+  "notes": "TUFLOW 2D Model Outputs for Cumulative Development Conditions",
+  "metadata_modified": "2026-03-02T03:02:36.861954",
+  "resources": 1
+ },
+ {
+  "org": "penrith-city-council",
+  "name": "tuflow-2d-model-outputs-for-sensitivity-runs",
+  "title": "TUFLOW 2D Model Outputs for Sensitivity Runs",
+  "notes": "TUFLOW 2D Model Outputs for Sensitivity Runs",
+  "metadata_modified": "2026-03-02T03:02:31.464363",
+  "resources": 17
+ },
+ {
+  "org": "penrith-city-council",
+  "name": "tuflow-2d-model-outputs-for-existing-conditions",
+  "title": "TUFLOW 2D Model Outputs for Existing Conditions",
+  "notes": "TUFLOW 2D Model Outputs for Existing Conditions",
+  "metadata_modified": "2026-03-02T03:02:22.395259",
+  "resources": 9
+ },
+ {
+  "org": "penrith-city-council",
+  "name": "flood-study-report-and-figures",
+  "title": "Flood Study Report and Figures",
+  "notes": "Flood Study Report and Figures",
+  "metadata_modified": "2026-03-02T03:02:12.999258",
+  "resources": 1
+ },
+ {
+  "org": "penrith-city-council",
+  "name": "tuflow-1d-model-outputs",
+  "title": "TUFLOW 1D Model Outputs",
+  "notes": "TUFLOW 1D Model Outputs",
+  "metadata_modified": "2026-03-02T03:02:07.898455",
+  "resources": 1
+ },
+ {
+  "org": "penrith-city-council",
+  "name": "nepean-river-flood-study-reporr",
+  "title": "Nepean River Flood Study",
+  "notes": "The Hawkesbury-Nepean River catchment is one of the largest coastal basins in NSW with an area of 21,400 square kilometres. The catchment at Penrith is 52% of the total area and of this portion, 80% i",
+  "metadata_modified": "2026-01-07T00:21:08.652045",
+  "resources": 3
+ },
+ {
+  "org": "penrith-city-council",
+  "name": "little-creek-catchment-overland-flow-flood-study-report",
+  "title": "Little Creek Catchment Overland Flow Flood Study - Report",
+  "notes": "Volume 1 - final report",
+  "metadata_modified": "2025-12-17T05:29:39.715952",
+  "resources": 2
+ },
+ {
+  "org": "penrith-city-council",
+  "name": "floodplain-risk-management-study-plan-summary-report",
+  "title": "Reports",
+  "notes": "Floodplain Risk Management Study (Volume 1 & 2)\r\nFloodplain Risk Management Plan\r\nFloodplain Risk Management Study & Plan Summary Report",
+  "metadata_modified": "2025-12-17T05:29:16.248490",
+  "resources": 3
+ },
+ {
+  "org": "penrith-city-council",
+  "name": "penrith-cbd-detailed-overland-flow-flood-study-report-pdf",
+  "title": "Penrith CBD Detailed Overland Flow Flood Study - Report",
+  "notes": "All parts",
+  "metadata_modified": "2025-12-17T04:08:28.583037",
+  "resources": 2
+ },
+ {
+  "org": "penrith-city-council",
+  "name": "peach-tree-and-lower-surveyors-creek-flood-study-gis",
+  "title": "Peach Tree and Lower Surveyors Creek Flood Study - GIS",
+  "notes": "* Calibration (Historical Flood Marks and Historical Rainfall Data);\r\n* Miscellaneous (Collected data, peak discharge locations, potential flood mitigation options, questionnaire responses, rainfall a",
+  "metadata_modified": "2025-12-17T03:48:07.397501",
+  "resources": 2
+ },
+ {
+  "org": "penrith-city-council",
+  "name": "peach-tree-and-lower-surveyors-creek-flood-study-hydrological-model-outputs-xp-rafts",
+  "title": "Peach Tree and Lower Surveyors Creek Flood Study - Hydrological Model Outputs (XP-RAFTS)",
+  "notes": "Hydrological Model Outputs (XP-RAFTS)",
+  "metadata_modified": "2025-12-17T03:47:53.080875",
+  "resources": 2
+ },
+ {
+  "org": "penrith-city-council",
+  "name": "peach-tree-and-lower-surveyors-creek-flood-study-survey-information",
+  "title": "Peach Tree and Lower Surveyors Creek Flood Study - Survey Information",
+  "notes": "Survey Information",
+  "metadata_modified": "2025-12-17T03:47:48.956258",
+  "resources": 1
+ },
+ {
+  "org": "penrith-city-council",
+  "name": "peach-tree-and-lower-surveyors-creek-flood-study-dataset-handover-description",
+  "title": "Peach Tree and Lower Surveyors Creek Flood Study - Dataset Handover Description",
+  "notes": "Dataset Handover Description",
+  "metadata_modified": "2025-12-17T03:47:44.938153",
+  "resources": 1
+ },
+ {
+  "org": "penrith-city-council",
+  "name": "peach-tree-and-lower-surveyors-creek-flood-study-emergency-response-classification",
+  "title": "Peach Tree and Lower Surveyors Creek Flood Study - Emergency Response Classification",
+  "notes": "Emergency Response Classification",
+  "metadata_modified": "2025-12-17T03:47:01.065278",
+  "resources": 1
+ },
+ {
+  "org": "penrith-city-council",
+  "name": "peach-tree-and-lower-surveyors-creek-flood-study-collected-data-photos",
+  "title": "Peach Tree and Lower Surveyors Creek Flood Study - Collected Data (Photos)",
+  "notes": "Collected Data (Photos)",
+  "metadata_modified": "2025-12-17T03:46:38.408064",
+  "resources": 1
+ },
+ {
+  "org": "penrith-city-council",
+  "name": "peach-tree-and-lower-surveyors-creek-flood-study-dem",
+  "title": "Peach Tree and Lower Surveyors Creek Flood Study - DEM",
+  "notes": "DEM",
+  "metadata_modified": "2025-12-17T03:46:26.727543",
+  "resources": 1
+ },
+ {
+  "org": "penrith-city-council",
+  "name": "peach-tree-and-lower-surveyors-creek-flood-study-aerial-imagery",
+  "title": "Peach Tree and Lower Surveyors Creek Flood Study - Aerial Imagery",
+  "notes": "Aerial Imagery",
+  "metadata_modified": "2025-12-17T03:45:59.182394",
+  "resources": 1
+ },
+ {
+  "org": "penrith-city-council",
+  "name": "peach-tree-and-lower-surveyors-creek-flood-study-hydrological-model-inputs-xp-rafts",
+  "title": "Peach Tree and Lower Surveyors Creek Flood Study - Hydrological Model Inputs (XP-RAFTS)",
+  "notes": "Hydrological Model Inputs (XP-RAFTS)",
+  "metadata_modified": "2025-12-17T03:40:27.034386",
+  "resources": 1
+ },
+ {
+  "org": "penrith-city-council",
+  "name": "peach-tree-and-lower-surveyors-creek-flood-study-hydrological-model-inputs-catchmentsim",
+  "title": "Peach Tree and Lower Surveyors Creek Flood Study - Hydrological Model Inputs (CatchmentSIM)",
+  "notes": "Hydrological Model Inputs (CatchmentSIM)",
+  "metadata_modified": "2025-12-17T03:39:35.569745",
+  "resources": 1
+ },
+ {
+  "org": "penrith-city-council",
+  "name": "emu-plains-road-evacuation-route-upgrade-strategy-local-hydraulics-specification-study-report",
+  "title": "Road Evacuation Route Upgrade Strategy Local Hydraulics Specification Study Emu Plains - Report",
+  "notes": "Report",
+  "metadata_modified": "2025-12-17T03:17:29.084803",
+  "resources": 1
+ },
+ {
+  "org": "penrith-city-council",
+  "name": "peach-tree-and-lower-surveyors-creek-flood-study-hydraulic-model-outputs-tuflow",
+  "title": "Peach Tree and Lower Surveyors Creek Flood Study - Hydraulic Model Outputs (TUFLOW)",
+  "notes": "Hydraulic Model Outputs (TUFLOW)",
+  "metadata_modified": "2025-12-17T03:14:52.621458",
+  "resources": 9
+ },
+ {
+  "org": "penrith-city-council",
+  "name": "st-marys-byrnes-creek-catchment-detailed-overland-flow-flood-study-report",
+  "title": "St Marys (Byrnes Creek) Catchment Detailed Overland Flow Flood Study - Report",
+  "notes": "Complete",
+  "metadata_modified": "2025-12-17T03:06:14.317206",
+  "resources": 3
+ },
+ {
+  "org": "penrith-city-council",
+  "name": "little-creek-floodplain-risk-management-study-and-plan-reports",
+  "title": "Little Creek Catchment Floodplain Risk Management Study and Plan - Reports",
+  "notes": "Final Little Creek Floodplain Risk Management Study and Plan reports in PDF format. ",
+  "metadata_modified": "2025-12-17T03:04:36.493366",
+  "resources": 7
+ },
+ {
+  "org": "penrith-city-council",
+  "name": "peach-tree-and-lower-surveyors-creek-flood-study-post-processed-results",
+  "title": "Peach Tree and Lower Surveyors Creek Flood Study - Post-Processed Results",
+  "notes": "Post-Processed Results",
+  "metadata_modified": "2025-12-17T03:01:56.067401",
+  "resources": 2
+ },
+ {
+  "org": "penrith-city-council",
+  "name": "peach-tree-and-lower-surveyors-creek-flood-study-hydraulic-model-inputs-tuflow",
+  "title": "Peach Tree and Lower Surveyors Creek Flood Study - Hydraulic Model Inputs (TUFLOW)",
+  "notes": "Hydraulic Model Inputs (TUFLOW)",
+  "metadata_modified": "2025-12-17T03:01:45.447634",
+  "resources": 1
+ },
+ {
+  "org": "penrith-city-council",
+  "name": "college-orth-and-werrington-creeks-catchment-floodplain-risk-management-study-and-plan-reports",
+  "title": "College, Orth and Werrington Creeks Catchment Floodplain Risk Management Study and Plan - Reports (PDF)",
+  "notes": "The data contains:\r\n\r\n*  Final Floodplain Risk Management Plan report in PDF (high and low resolution) format\r\n\r\n*  Final Floodplain Risk Management Study report in PDF (high and low resolution) forma",
+  "metadata_modified": "2025-12-17T02:48:44.893910",
+  "resources": 1
+ },
+ {
+  "org": "penrith-city-council",
+  "name": "little-creek-catchment-overland-flow-flood-study-report-appendices",
+  "title": "Little Creek Catchment Overland Flow Flood Study - Report Appendices",
+  "notes": "Appendix B, C, D, E",
+  "metadata_modified": "2025-12-17T02:07:54.402005",
+  "resources": 1
+ },
+ {
+  "org": "penrith-city-council",
+  "name": "hawkesbury-nepean-floodplain-management-strategy-implementation-report",
+  "title": "Hawkesbury-Nepean Floodplain Management Strategy Implementation - Report",
+  "notes": "Complete report",
+  "metadata_modified": "2025-12-17T01:57:12.083037",
+  "resources": 1
+ },
+ {
+  "org": "penrith-city-council",
+  "name": "college-orth-and-werrington-creeks-catchment-overland-flow-fs-report",
+  "title": "College, Orth and Werrington Creeks Catchment Overland Flow Flood Study - Report",
+  "notes": "Report and Appendices",
+  "metadata_modified": "2025-12-17T01:54:37.202596",
+  "resources": 1
+ },
+ {
+  "org": "penrith-city-council",
+  "name": "hawkesbury-nepean-flood-extent-map-pdf",
+  "title": "Hawkesbury Nepean - Flood Extent Map",
+  "notes": "Map",
+  "metadata_modified": "2025-12-17T01:52:29.433449",
+  "resources": 1
+ },
+ {
+  "org": "penrith-city-council",
+  "name": "peach-tree-and-lower-surveyors-creek-flood-study-report",
+  "title": "Peach Tree and Lower Surveyors Creek Flood Study - Report",
+  "notes": "* Volume 1 - Main Report;\r\n* Volume 2 - Figures;\r\n* Volume 3 - Appendices.",
+  "metadata_modified": "2025-12-17T01:03:25.498574",
+  "resources": 3
+ },
+ {
+  "org": "penrith-city-council",
+  "name": "updated-south-creek-flood-study-waterride",
+  "title": "Updated South Creek Flood Study - waterRIDE",
+  "notes": "Maps, palettes, results, SMP",
+  "metadata_modified": "2025-12-17T00:52:08.551796",
+  "resources": 1
+ },
+ {
+  "org": "penrith-city-council",
+  "name": "st-marys-byrnes-creek-catchment-floodplain-risk-management-study-and-plan-reports",
+  "title": "St Marys (Byrnes Creek) Floodplain Risk Management Study and Plan Report includes all volumes",
+  "notes": "St Marys (Byrnes Creek) Catchment Floodplain Risk Management Study and Plan Report includes volume 1 - report and volume 2 - Figures",
+  "metadata_modified": "2025-12-17T00:51:45.217293",
+  "resources": 2
+ },
+ {
+  "org": "penrith-city-council",
+  "name": "south-creek-floodplain-risk-management-study-and-plan-reports",
+  "title": "South Creek Floodplain Risk Management Study and Plan Reports",
+  "notes": "South Creek Floodplain Risk Management Study and South Creek Floodplain Risk Management Plan reports ",
+  "metadata_modified": "2025-12-17T00:49:57.559517",
+  "resources": 2
+ },
+ {
+  "org": "penrith-city-council",
+  "name": "penrith-cbd-floodplain-risk-management-study-and-plan-report-includes-all-volumes",
+  "title": "Penrith CBD Floodplain Risk Management Study and Plan Report includes all volumes",
+  "notes": "Penrith CBD Floodplain Risk Management Study and Plan report includes Volume 1 - Report and Volume 2 - Maps",
+  "metadata_modified": "2025-12-17T00:49:05.275989",
+  "resources": 2
+ },
+ {
+  "org": "penrith-city-council",
+  "name": "updated-south-creek-flood-study-gis",
+  "title": "Updated South Creek Flood Study - GIS",
+  "notes": "Cadastre, extents, Badgery's Creek Airport, Flood planning area",
+  "metadata_modified": "2025-12-17T00:45:17.431143",
+  "resources": 3
+ },
+ {
+  "org": "penrith-city-council",
+  "name": "updated-south-creek-flood-study-hydraulic-categories",
+  "title": "Updated South Creek Flood Study - Hydraulic Categories",
+  "notes": "Flood storage, floodway corridor",
+  "metadata_modified": "2025-12-17T00:43:51.436604",
+  "resources": 1
+ },
+ {
+  "org": "penrith-city-council",
+  "name": "updated-south-creek-flood-study-aerial",
+  "title": "Updated South Creek Flood Study - Aerial",
+  "notes": "Aerial fix, BCC, FCC, LCC, PCC",
+  "metadata_modified": "2025-12-17T00:42:48.767519",
+  "resources": 1
+ },
+ {
+  "org": "penrith-city-council",
+  "name": "updated-south-creek-flood-study-dem",
+  "title": "Updated South Creek Flood Study - DEM",
+  "notes": "Merged DEM",
+  "metadata_modified": "2025-12-17T00:42:11.388765",
+  "resources": 1
+ },
+ {
+  "org": "penrith-city-council",
+  "name": "updated-south-creek-flood-study-ascii-grids",
+  "title": "Updated South Creek Flood Study - ASCII Grids",
+  "notes": "Depth, level, velocity",
+  "metadata_modified": "2025-12-17T00:41:28.930063",
+  "resources": 1
+ },
+ {
+  "org": "penrith-city-council",
+  "name": "updated-south-creek-flood-study-report",
+  "title": "Updated South Creek Flood Study - Report",
+  "notes": "Volume 1 & 2",
+  "metadata_modified": "2025-12-17T00:41:17.107884",
+  "resources": 2
+ },
+ {
+  "org": "penrith-city-council",
+  "name": "updated-south-creek-flood-study-hydraulic-model",
+  "title": "Updated South Creek Flood Study - Hydraulic Model",
+  "notes": "RMA-2",
+  "metadata_modified": "2025-12-17T00:39:02.927538",
+  "resources": 1
+ },
+ {
+  "org": "penrith-city-council",
+  "name": "peach-tree-and-lower-surveyors-creek-flood-study-waterride",
+  "title": "Peach Tree and Lower Surveyors Creek Flood Study - WaterRIDE",
+  "notes": "WaterRIDE Files",
+  "metadata_modified": "2025-12-17T00:37:19.084265",
+  "resources": 1
+ },
+ {
+  "org": "penrith-city-council",
+  "name": "college-orth-and-werrington-creeks-catchment-overland-flow-fs-figures",
+  "title": "College, Orth and Werrington Creeks Catchment Overland Flow Flood Study - Figures",
+  "notes": "PDF",
+  "metadata_modified": "2025-12-17T00:18:55.315592",
+  "resources": 1
+ },
+ {
+  "org": "randwick-city-council",
+  "name": "maroubra-bay-report",
+  "title": "Maroubra Bay Floodplain Risk Management Study and Plan",
+  "notes": "Report PDF.",
+  "metadata_modified": "2026-01-19T03:00:19.113659",
+  "resources": 1
+ },
+ {
+  "org": "randwick-city-council",
+  "name": "kensington-to-centennial-park-frmsp-report",
+  "title": "Kensington to Centennial Park FRMSP - Report",
+  "notes": "Volume 1 and Volume 2",
+  "metadata_modified": "2026-01-19T02:59:30.739548",
+  "resources": 2
+ },
+ {
+  "org": "randwick-city-council",
+  "name": "green-square-west-kensington-floodplain-risk-management-study-report",
+  "title": "Green Square, West Kensington Floodplain Risk Management Study",
+  "notes": "#FLOODPLAIN RISK MANAGEMENT STUDY\r\nThe specific aims of this study are to:\r\n\r\n* review the results from the Flood Study,\r\n* identify development and planning controls to regulate redevelopment in the ",
+  "metadata_modified": "2026-01-14T22:16:15.830343",
+  "resources": 1
+ },
+ {
+  "org": "randwick-city-council",
+  "name": "coogee-bay-floodplain-risk-management-study-plan",
+  "title": "Coogee Bay Floodplain Risk Management Study & Plan",
+  "notes": "Coogee Bay Floodplain Risk Management Study & Plan - Final Report",
+  "metadata_modified": "2026-01-14T00:35:31.476857",
+  "resources": 1
+ },
+ {
+  "org": "randwick-city-council",
+  "name": "kensington-to-centennial-park-frmsp-hydraulic-model-outputs-tuflow",
+  "title": "Kensington to Centennial Park FRMSP - Hydraulic Model Outputs (TUFLOW)",
+  "notes": "Hydraulic Model Outputs (TUFLOW)",
+  "metadata_modified": "2025-12-17T03:41:09.087947",
+  "resources": 2
+ },
+ {
+  "org": "randwick-city-council",
+  "name": "kensington-to-centennial-park-frmsp-property-tagging-database",
+  "title": "Kensington to Centennial Park FRMSP - Property Tagging Database",
+  "notes": "Property Tagging Database",
+  "metadata_modified": "2025-12-17T03:40:30.985643",
+  "resources": 1
+ },
+ {
+  "org": "randwick-city-council",
+  "name": "kensington-to-centennial-park-frmsp-spatial-flood-layers",
+  "title": "Kensington to Centennial Park FRMSP - Processed Results",
+  "notes": "* Flood Depth;\r\n* Flood Velocity;\r\n* Water Level;\r\n* Water Level Contours;\r\n* Flood Hazard;\r\n* Hydraulic Categories;\r\n* FERP Classification;\r\n* Z0 and Z1;\r\n* Pipe Capacity.",
+  "metadata_modified": "2025-12-17T03:40:18.618029",
+  "resources": 9
+ },
+ {
+  "org": "randwick-city-council",
+  "name": "kensington-to-centennial-park-frmsp-dataset-handover-description",
+  "title": "Kensington to Centennial Park FRMSP - Dataset Handover Description",
+  "notes": "Dataset Handover Description",
+  "metadata_modified": "2025-12-17T03:40:13.369484",
+  "resources": 1
+ },
+ {
+  "org": "randwick-city-council",
+  "name": "kensington-to-centennial-park-frmsp-hydraulic-model-inputs-tuflow",
+  "title": "Kensington to Centennial Park FRMSP - Hydraulic Model Inputs (TUFLOW)",
+  "notes": "Hydraulic Model Inputs (TUFLOW)",
+  "metadata_modified": "2025-12-17T03:40:09.016078",
+  "resources": 1
+ },
+ {
+  "org": "randwick-city-council",
+  "name": "kensington-to-centennial-park-frmsp-floor-level-survey",
+  "title": "Kensington to Centennial Park FRMSP - Floor Level Survey",
+  "notes": "Floor Level Survey",
+  "metadata_modified": "2025-12-17T03:40:04.521467",
+  "resources": 1
+ },
+ {
+  "org": "randwick-city-council",
+  "name": "pdf_report",
+  "title": "Lurline Bay, Matraville, Malabar & Yarra Bay Flood Study - Reports",
+  "notes": "Contains high and low resolution version of volume 1 and volume 2 of the flood study report",
+  "metadata_modified": "2025-12-17T03:38:27.099253",
+  "resources": 2
+ },
+ {
+  "org": "randwick-city-council",
+  "name": "birds-gully-and-bunnerong-road-flood-study-gis",
+  "title": "Birds Gully and Bunnerong Road Flood Study - GIS",
+  "notes": "Various GIS layers",
+  "metadata_modified": "2025-12-17T03:38:16.887446",
+  "resources": 1
+ },
+ {
+  "org": "randwick-city-council",
+  "name": "birds-gully-and-bunnerong-road-flood-study-waterride",
+  "title": "Birds Gully and Bunnerong Road Flood Study - Waterride",
+  "notes": "WaterRide",
+  "metadata_modified": "2025-12-17T03:37:26.177563",
+  "resources": 1
+ },
+ {
+  "org": "randwick-city-council",
+  "name": "birds-gully-and-bunnerong-road-flood-study-data-handover-description",
+  "title": "Birds Gully and Bunnerong Road Flood Study - Data Handover Description",
+  "notes": "Birds Gully Flood Study Data handover - Folder structure and contents",
+  "metadata_modified": "2025-12-17T03:36:59.671523",
+  "resources": 1
+ },
+ {
+  "org": "randwick-city-council",
+  "name": "birds-gully-and-bunnerong-road-flood-study-report",
+  "title": "Birds Gully and Bunnerong Road Flood Study - Report",
+  "notes": "Volume 1 and Volume 2",
+  "metadata_modified": "2025-12-17T03:36:55.540020",
+  "resources": 2
+ },
+ {
+  "org": "randwick-city-council",
+  "name": "birds-gully-and-bunnerong-road-flood-study-hydrological-model-drains",
+  "title": "Birds Gully and Bunnerong Road Flood Study - Hydrological Model (DRAINS)",
+  "notes": "Hydrological Model (DRAINS) - Inputs and Outputs",
+  "metadata_modified": "2025-12-17T03:33:30.872155",
+  "resources": 1
+ },
+ {
+  "org": "randwick-city-council",
+  "name": "birds-gully-and-bunnerong-road-flood-study-hydraulic-model-inputs-tuflow",
+  "title": "Birds Gully and Bunnerong Road Flood Study - Hydraulic Model Inputs (TUFLOW)",
+  "notes": "Hydraulic Model Inputs (TUFLOW)",
+  "metadata_modified": "2025-12-17T03:33:26.862172",
+  "resources": 1
+ },
+ {
+  "org": "randwick-city-council",
+  "name": "birds-gully-and-bunnerong-road-flood-study-post-processed",
+  "title": "Birds Gully and Bunnerong Road Flood Study - Post-Processed",
+  "notes": "Post-processed results ",
+  "metadata_modified": "2025-12-17T03:31:10.428867",
+  "resources": 1
+ },
+ {
+  "org": "randwick-city-council",
+  "name": "birds-gully-and-bunnerong-road-flood-study-hydraulic-model-outputs-tuflow",
+  "title": "Birds Gully and Bunnerong Road Flood Study - Hydraulic Model Outputs (TUFLOW)",
+  "notes": "Hydraulic Model Outputs (TUFLOW)\r\n\r\n* Design\r\n* Calibration\r\n* Sensitivity",
+  "metadata_modified": "2025-12-17T03:28:46.070261",
+  "resources": 3
+ },
+ {
+  "org": "randwick-city-council",
+  "name": "coogee-bay-floodplain-risk-management-study-and-plan-hydraulic-model-input",
+  "title": "Coogee Bay Floodplain Risk Management Study and Plan - Hydraulic Model Input",
+  "notes": "TUFLOW",
+  "metadata_modified": "2025-12-17T02:05:21.648663",
+  "resources": 1
+ },
+ {
+  "org": "randwick-city-council",
+  "name": "maroubra-bay-flood-study-draft-report",
+  "title": "Maroubra Bay Flood Study (Draft) - Report",
+  "notes": "Complete report",
+  "metadata_modified": "2025-12-17T01:50:10.350064",
+  "resources": 1
+ },
+ {
+  "org": "randwick-city-council",
+  "name": "coogee-bay-floodplain-risk-management-study-and-plan-council-data",
+  "title": "Coogee Bay Floodplain Risk Management Study and Plan - Council Data",
+  "notes": "RCC",
+  "metadata_modified": "2025-12-17T01:42:39.809101",
+  "resources": 1
+ },
+ {
+  "org": "randwick-city-council",
+  "name": "coogee-bay-floodplain-risk-management-study-and-plan-community-consultation",
+  "title": "Coogee Bay Floodplain Risk Management Study and Plan - Community Consultation",
+  "notes": "Newsletter, survey, FAQs, public exhibition, stakeholder survey",
+  "metadata_modified": "2025-12-17T01:41:50.330886",
+  "resources": 1
+ },
+ {
+  "org": "randwick-city-council",
+  "name": "coogee-bay-floodplain-risk-management-study-and-plan-floor-level-survey",
+  "title": "Coogee Bay Floodplain Risk Management Study and Plan - Floor Level Survey",
+  "notes": "* Floor level survey\r\n* Ground level survey\r\n* Survey photos\r\n* Survey levels",
+  "metadata_modified": "2025-12-17T01:40:11.656970",
+  "resources": 1
+ },
+ {
+  "org": "randwick-city-council",
+  "name": "coogee-bay-floodplain-risk-management-study-and-plan-property-tagging",
+  "title": "Coogee Bay Floodplain Risk Management Study and Plan - Property Tagging",
+  "notes": "Includes flood extents and flood-affected properties",
+  "metadata_modified": "2025-12-17T01:39:31.684148",
+  "resources": 1
+ },
+ {
+  "org": "randwick-city-council",
+  "name": "coogee-bay-floodplain-risk-management-study-and-plan-damages",
+  "title": "Coogee Bay Floodplain Risk Management Study and Plan - Damages",
+  "notes": "* Existing output\r\n* Mitigation output",
+  "metadata_modified": "2025-12-17T01:38:26.743681",
+  "resources": 1
+ },
+ {
+  "org": "randwick-city-council",
+  "name": "coogee-bay-floodplain-risk-management-study-and-plan-options",
+  "title": "Coogee Bay Floodplain Risk Management Study and Plan - Options",
+  "notes": "Options list and summary",
+  "metadata_modified": "2025-12-17T01:38:12.832683",
+  "resources": 1
+ },
+ {
+  "org": "randwick-city-council",
+  "name": "coogee-bay-floodplain-risk-management-study-and-plan-hydraulic-model-output",
+  "title": "Coogee Bay Floodplain Risk Management Study and Plan - Hydraulic Model Output",
+  "notes": "TUFLOW",
+  "metadata_modified": "2025-12-17T01:37:31.765810",
+  "resources": 1
+ },
+ {
+  "org": "randwick-city-council",
+  "name": "coogee-bay-floodplain-risk-management-study-and-plan-emergency-management",
+  "title": "Coogee Bay Floodplain Risk Management Study and Plan - Emergency Management",
+  "notes": "Includes evacuation information",
+  "metadata_modified": "2025-12-17T01:36:20.062344",
+  "resources": 1
+ },
+ {
+  "org": "randwick-city-council",
+  "name": "kensington-centennial-park-flood-study-draft-report",
+  "title": "Kensington - Centennial Park Flood Study (Draft) - Report",
+  "notes": "Complete report",
+  "metadata_modified": "2025-12-17T01:22:24.384513",
+  "resources": 1
+ },
+ {
+  "org": "randwick-city-council",
+  "name": "coogee-bay-fs-draft-report",
+  "title": "Coogee Bay Flood Study Draft for public Exhibition - Report",
+  "notes": "Complete report",
+  "metadata_modified": "2025-12-17T01:03:53.002861",
+  "resources": 2
+ },
+ {
+  "org": "randwick-city-council",
+  "name": "maroubra-bay-floodplain-risk-management-study-and-plan-figures",
+  "title": "Maroubra Bay Floodplain Risk Management Study and Plan - Figures",
+  "notes": "Ten figures containing layers such as catchment boundary, road lines, suburbs and cadastre.",
+  "metadata_modified": "2025-12-17T00:34:43.976290",
+  "resources": 1
+ },
+ {
+  "org": "randwick-city-council",
+  "name": "maroubra-bay-floodplain-risk-management-study-and-plan-appendix-d",
+  "title": "Maroubra Bay Floodplain Risk Management Study and Plan - Appendix D",
+  "notes": "Mitigation options mapping",
+  "metadata_modified": "2025-12-17T00:34:00.559744",
+  "resources": 1
+ },
+ {
+  "org": "randwick-city-council",
+  "name": "maroubra-bay-floodplain-risk-management-study-and-plan-appendix-b",
+  "title": "Maroubra Bay Floodplain Risk Management Study and Plan - Appendix B",
+  "notes": "Flood Study and model conversion to TUFLOW.",
+  "metadata_modified": "2025-12-17T00:33:19.635314",
+  "resources": 1
+ },
+ {
+  "org": "randwick-city-council",
+  "name": "maroubra-bay-floodplain-risk-management-study-and-plan-property-tagging-report",
+  "title": "Maroubra Bay Floodplain Risk Management Study and Plan - Property Tagging Report",
+  "notes": "Zip folder includes a report, along with shapefiles and an excel sheet.",
+  "metadata_modified": "2025-12-17T00:32:33.237272",
+  "resources": 1
+ },
+ {
+  "org": "randwick-city-council",
+  "name": "maroubra-bay-floodplain-risk-management-study-and-plan-hydrologic-model-output",
+  "title": "Maroubra Bay Floodplain Risk Management Study and Plan - Hydrologic Model Output",
+  "notes": "PKG MIKESTORM",
+  "metadata_modified": "2025-12-17T00:32:08.263438",
+  "resources": 1
+ },
+ {
+  "org": "randwick-city-council",
+  "name": "maroubra-bay-floodplain-risk-management-study-and-plan-hydrologic-model-input",
+  "title": "Maroubra Bay Floodplain Risk Management Study and Plan - Hydrologic Model Input",
+  "notes": "PKG MIKESTORM",
+  "metadata_modified": "2025-12-17T00:31:05.087523",
+  "resources": 1
+ },
+ {
+  "org": "randwick-city-council",
+  "name": "maroubra-bay-floodplain-risk-management-study-and-plan-hydraulic-model-output-options",
+  "title": "Maroubra Bay Floodplain Risk Management Study and Plan - Hydraulic Model Output - Options",
+  "notes": "TUFLOW",
+  "metadata_modified": "2025-12-17T00:27:19.998065",
+  "resources": 1
+ },
+ {
+  "org": "randwick-city-council",
+  "name": "maroubra-bay-floodplain-risk-management-study-and-plan-hydraulic-model-output",
+  "title": "Maroubra Bay Floodplain Risk Management Study and Plan - Hydraulic Model Output",
+  "notes": "TUFLOW",
+  "metadata_modified": "2025-12-17T00:27:16.168504",
+  "resources": 1
+ },
+ {
+  "org": "randwick-city-council",
+  "name": "maroubra-bay-floodplain-risk-management-study-and-plan-hydraulic-model-input",
+  "title": "Maroubra Bay Floodplain Risk Management Study and Plan - Hydraulic Model Input",
+  "notes": "TUFLOW",
+  "metadata_modified": "2025-12-17T00:24:19.013523",
+  "resources": 1
+ },
+ {
+  "org": "ryde-city-council",
+  "name": "lower-parramatta-river-catchment-stormwater-management-plan-report",
+  "title": "Lower Parramatta River Catchment Stormwater Management Plan - Report",
+  "notes": "Complete report",
+  "metadata_modified": "2025-12-17T02:50:54.729272",
+  "resources": 1
+ },
+ {
+  "org": "ryde-city-council",
+  "name": "eastwood-terrys-creek-floodplain-risk-management-study-plan-main-report-october-2009",
+  "title": "Eastwood & Terrys Creek Floodplain Risk Management Study & Plan Main Report",
+  "notes": "#Reasons for the Study and Plan\r\nFlooding problems within the Eastwood town centre and other areas within the Terry’s Creek\r\ncatchment are well documented. Significant flooding problems have been expe",
+  "metadata_modified": "2025-12-17T02:15:40.305580",
+  "resources": 1
+ },
+ {
+  "org": "ryde-city-council",
+  "name": "macquarie-park-floodplain-risk-management-study-plan-flood-study-report",
+  "title": "Macquarie Park Floodplain Risk Management Study & Plan",
+  "notes": "In accordance with NSW Government policy, the Council of the City of Ryde is committed to\r\npreparing a Floodplain Risk Management Plan for Macquarie Park. This report documents the\r\nfirst stage of the",
+  "metadata_modified": "2025-12-17T02:14:06.234363",
+  "resources": 1
+ },
+ {
+  "org": "ryde-city-council",
+  "name": "macquarie-park-floodplain-risk-management-study-plan-flood-study-report-pdf",
+  "title": "Macquarie Park Floodplain Risk Management Study & Plan - Flood Study - Report",
+  "notes": "Complete report",
+  "metadata_modified": "2025-12-17T01:03:40.421418",
+  "resources": 1
+ },
+ {
+  "org": "ryde-city-council",
+  "name": "parramatta-river-ryde-sub-catchments-frmsp-report",
+  "title": "Parramatta River - Ryde Sub Catchments FRMSP - Report",
+  "notes": "Complete report",
+  "metadata_modified": "2025-12-17T00:57:54.276740",
+  "resources": 1
+ },
+ {
+  "org": "ryde-city-council",
+  "name": "buffalo-and-kittys-creek-flood-study-report",
+  "title": "Buffalo and Kittys Creek Flood Study - Report",
+  "notes": "Complete report",
+  "metadata_modified": "2025-12-17T00:36:47.480660",
+  "resources": 1
+ },
+ {
+  "org": "ryde-city-council",
+  "name": "buffalo-and-kittys-creek-frmsp-report",
+  "title": "Buffalo and Kittys Creek FRMSP - Report",
+  "notes": "Complete report",
+  "metadata_modified": "2025-12-17T00:36:00.872906",
+  "resources": 1
+ },
+ {
+  "org": "ryde-city-council",
+  "name": "eastwood-terrys-creek-floodplain-risk-management-study-plan-flood-study-report-october-2009",
+  "title": "Eastwood & Terrys Creek Floodplain Risk Management Study & Plan Flood Study Report",
+  "notes": "The study area includes that portion of Terrys Creek within the City of Ryde from Terry\r\nRoad to the creek’s confluence with the Lane Cove River. In addition, as shown in\r\nFigure 1, it includes all si",
+  "metadata_modified": "2025-12-17T00:29:36.743210",
+  "resources": 1
+ },
+ {
+  "org": "strathfield-municipal-council",
+  "name": "cooks-river-coxs-creek-flood-study-report",
+  "title": "Cooks River & Coxs Creek Flood Study",
+  "notes": "#Objectives\r\nStrathfield Municipal Council engaged WMAwater to undertake the Cooks River and Coxs Creek Flood Study utilising current technology and data. The information and results obtained from the",
+  "metadata_modified": "2025-12-17T02:15:36.425014",
+  "resources": 1
+ },
+ {
+  "org": "strathfield-municipal-council",
+  "name": "powells-creek-and-saleyards-creek-revised-flood-study-cadastre",
+  "title": "Powells Creek and Saleyards Creek Revised Flood Study - Cadastre",
+  "notes": "Tagged properties - full cadastre",
+  "metadata_modified": "2025-12-17T01:09:03.014933",
+  "resources": 1
+ },
+ {
+  "org": "strathfield-municipal-council",
+  "name": "powells-creek-and-saleyards-creek-revised-flood-study-hydraulic-model-output",
+  "title": "Powells Creek and Saleyards Creek Revised Flood Study - Hydraulic Model Output",
+  "notes": "TUFLOW",
+  "metadata_modified": "2025-12-17T01:08:12.166883",
+  "resources": 1
+ },
+ {
+  "org": "strathfield-municipal-council",
+  "name": "powells-creek-and-saleyards-creek-revised-flood-study-hydrologic-model-input",
+  "title": "Powells Creek and Saleyards Creek Revised Flood Study - Hydrologic Model Input",
+  "notes": "DRAINS",
+  "metadata_modified": "2025-12-17T01:07:54.047199",
+  "resources": 1
+ },
+ {
+  "org": "strathfield-municipal-council",
+  "name": "powells-creek-and-saleyards-creek-revised-flood-study-figures",
+  "title": "Powells Creek and Saleyards Creek Revised Flood Study - Figures",
+  "notes": "45 figures",
+  "metadata_modified": "2025-12-17T01:07:10.484875",
+  "resources": 1
+ },
+ {
+  "org": "strathfield-municipal-council",
+  "name": "powells-creek-and-saleyards-creek-revised-flood-study-hydrologic-model-output",
+  "title": "Powells Creek and Saleyards Creek Revised Flood Study - Hydrologic Model Output",
+  "notes": "DRAINS",
+  "metadata_modified": "2025-12-17T01:06:12.139106",
+  "resources": 1
+ },
+ {
+  "org": "sutherland-shire-council",
+  "name": "gwawley-bay-catchment-flood-study-report",
+  "title": "Gwawley Bay Catchment Flood Study",
+  "notes": "The study investigates flood behaviour throughout the Gwawley Bay catchment. This\r\nincludes the analysis of:\r\n\r\n1. surface runoff across the catchment\r\n2. flows within the underground pipe drainage ne",
+  "metadata_modified": "2026-01-20T04:17:12.622676",
+  "resources": 1
+ },
+ {
+  "org": "sutherland-shire-council",
+  "name": "bundeena-creek-flood-study-2014-report",
+  "title": "Bundeena Creek Flood Study 2014",
+  "notes": "2014 Bundeena Creek Flood Study report",
+  "metadata_modified": "2026-01-19T05:25:18.281546",
+  "resources": 1
+ },
+ {
+  "org": "sutherland-shire-council",
+  "name": "woolooware-bay-flood-study-reports",
+  "title": "Woolooware Bay Flood Study Reports",
+  "notes": "This Flood Study has been prepared by WMAwater (formally Webb, McKeown & Associates) on behalf of Sutherland Shire Council (Council). The main objective of this study is to define the flood behaviour ",
+  "metadata_modified": "2026-01-19T03:42:39.210965",
+  "resources": 1
+ },
+ {
+  "org": "sutherland-shire-council",
+  "name": "revised-oyster-creek-flood-study-report",
+  "title": "Revised Oyster Creek Flood Study - Report",
+  "notes": "Complete report",
+  "metadata_modified": "2026-01-15T01:26:36.929309",
+  "resources": 1
+ },
+ {
+  "org": "sutherland-shire-council",
+  "name": "kurnell-flood-study-report-and-figures",
+  "title": "Kurnell Township Flood Study",
+  "notes": "#Objectives\r\nSutherland Shire Council engaged Webb, McKeown & Associates to prepare the Kurnell\r\nTownship Flood Study, utilising current technology and data. The information and results\r\nobtained from",
+  "metadata_modified": "2026-01-15T01:26:07.120750",
+  "resources": 5
+ },
+ {
+  "org": "sutherland-shire-council",
+  "name": "oyster-creek-floodplain-risk-management-plan-report",
+  "title": "Oyster Creek Floodplain Risk Management Plan - Report",
+  "notes": "Final & draft report",
+  "metadata_modified": "2025-12-17T02:38:58.944731",
+  "resources": 2
+ },
+ {
+  "org": "sutherland-shire-council",
+  "name": "oyster-creek-flood-study-draft-gis-layers",
+  "title": "Oyster Creek Flood Study (Draft) - GIS Layers",
+  "notes": "Miscellaneous shapefiles",
+  "metadata_modified": "2025-12-17T02:38:52.878896",
+  "resources": 1
+ },
+ {
+  "org": "sutherland-shire-council",
+  "name": "oyster-creek-flood-study-draft-hydraulic-model-input",
+  "title": "Oyster Creek Flood Study (Draft) - Hydraulic Model Input",
+  "notes": "MIKE-11",
+  "metadata_modified": "2025-12-17T02:38:48.962996",
+  "resources": 1
+ },
+ {
+  "org": "sutherland-shire-council",
+  "name": "oyster-creek-flood-study-draft-hydraulic-model-output",
+  "title": "Oyster Creek Flood Study (Draft) - Hydraulic Model Output",
+  "notes": "MIKE-11",
+  "metadata_modified": "2025-12-17T02:38:40.926514",
+  "resources": 1
+ },
+ {
+  "org": "sutherland-shire-council",
+  "name": "oyster-creek-flood-study-draft-hydrologic-model-output",
+  "title": "Oyster Creek Flood Study (Draft) - Hydrologic Model Output",
+  "notes": "WBNM",
+  "metadata_modified": "2025-12-17T02:38:08.278286",
+  "resources": 1
+ },
+ {
+  "org": "sutherland-shire-council",
+  "name": "oyster-creek-floodplain-risk-management-plan-figures",
+  "title": "Oyster Creek Floodplain Risk Management Plan - Figures",
+  "notes": "5 PDF figures",
+  "metadata_modified": "2025-12-17T02:37:46.385508",
+  "resources": 1
+ },
+ {
+  "org": "sutherland-shire-council",
+  "name": "oyster-creek-floodplain-risk-management-study-figures",
+  "title": "Oyster Creek Floodplain Risk Management Study - Figures",
+  "notes": "7 PDF figures",
+  "metadata_modified": "2025-12-17T02:37:34.294770",
+  "resources": 1
+ },
+ {
+  "org": "sutherland-shire-council",
+  "name": "oyster-creek-flood-study-draft-report",
+  "title": "Oyster Creek Flood Study (Draft) - Report",
+  "notes": "Complete report",
+  "metadata_modified": "2025-12-17T02:37:30.307502",
+  "resources": 2
+ },
+ {
+  "org": "sutherland-shire-council",
+  "name": "oyster-creek-floodplain-risk-management-study-report",
+  "title": "Oyster Creek Floodplain Risk Management Study - Report",
+  "notes": "Final & draft report",
+  "metadata_modified": "2025-12-17T02:36:13.818527",
+  "resources": 2
+ },
+ {
+  "org": "sutherland-shire-council",
+  "name": "oyster-creek-flood-study-draft-hydrologic-model-input",
+  "title": "Oyster Creek Flood Study (Draft) - Hydrologic Model Input",
+  "notes": "WBNM",
+  "metadata_modified": "2025-12-17T02:34:33.060653",
+  "resources": 1
+ },
+ {
+  "org": "sutherland-shire-council",
+  "name": "woolooware-bay-floodplain-risk-management-study-plan-hydraulic-model",
+  "title": "Woolooware Bay Floodplain Risk Management Study & Plan - Hydraulic Model",
+  "notes": "TUFLOW hydraulic model.",
+  "metadata_modified": "2025-12-17T02:24:51.105376",
+  "resources": 1
+ },
+ {
+  "org": "sutherland-shire-council",
+  "name": "woolooware-bay-floodplain-risk-management-study-plan-hydrologic-model",
+  "title": "Woolooware Bay Floodplain Risk Management Study & Plan - Hydrologic Model",
+  "notes": "DRAINS hydrologic model and results.",
+  "metadata_modified": "2025-12-17T02:10:37.211701",
+  "resources": 1
+ },
+ {
+  "org": "sutherland-shire-council",
+  "name": "woolooware-bay-floodplain-risk-management-study-plan-hydraulic-model-results-for-report-figures",
+  "title": "Woolooware Bay Floodplain Risk Management Study & Plan - Hydraulic Model Results for Report Figures",
+  "notes": "Hydraulic model results for report figures.",
+  "metadata_modified": "2025-12-17T01:45:08.348015",
+  "resources": 1
+ },
+ {
+  "org": "sutherland-shire-council",
+  "name": "woolooware-bay-floodplain-risk-management-study-and-plan-report",
+  "title": "Woolooware Bay Floodplain Risk Management Study & Plan - Report",
+  "notes": "PDF copy of final report.",
+  "metadata_modified": "2025-12-17T01:42:50.410780",
+  "resources": 2
+ },
+ {
+  "org": "sutherland-shire-council",
+  "name": "gwawley-bay-catchment-floodplain-risk-management-study-and-plan-draft-report",
+  "title": "Gwawley Bay Catchment Floodplain Risk Management Study and Plan (Draft) - Report",
+  "notes": "Complete report",
+  "metadata_modified": "2025-12-17T01:39:27.528311",
+  "resources": 1
+ },
+ {
+  "org": "sutherland-shire-council",
+  "name": "woolooware-bay-floodplain-risk-management-study-plan-hydraulic-model-results-processed",
+  "title": "Woolooware Bay Floodplain Risk Management Study & Plan - Hydraulic Model Results Processed",
+  "notes": "TUFLOW model results processed and categorised.",
+  "metadata_modified": "2025-12-17T01:28:15.775544",
+  "resources": 1
+ },
+ {
+  "org": "sutherland-shire-council",
+  "name": "revised-oyster-creek-flood-study-hydrologic-model-output",
+  "title": "Revised Oyster Creek Flood Study - Hydrologic Model Output",
+  "notes": "WBNM",
+  "metadata_modified": "2025-12-17T01:07:06.455361",
+  "resources": 1
+ },
+ {
+  "org": "sutherland-shire-council",
+  "name": "revised-oyster-creek-flood-study-gis",
+  "title": "Revised Oyster Creek Flood Study - GIS",
+  "notes": "GIS files",
+  "metadata_modified": "2025-12-17T01:06:56.773018",
+  "resources": 1
+ },
+ {
+  "org": "sutherland-shire-council",
+  "name": "revised-oyster-creek-flood-study-hydrologic-model-input",
+  "title": "Revised Oyster Creek Flood Study - Hydrologic Model Input",
+  "notes": "WBNM",
+  "metadata_modified": "2025-12-17T01:06:34.522591",
+  "resources": 1
+ },
+ {
+  "org": "sutherland-shire-council",
+  "name": "revised-oyster-creek-flood-study-hydraulic-model-output",
+  "title": "Revised Oyster Creek Flood Study - Hydraulic Model Output",
+  "notes": "MIKE-11",
+  "metadata_modified": "2025-12-17T01:06:16.344590",
+  "resources": 1
+ },
+ {
+  "org": "sutherland-shire-council",
+  "name": "revised-oyster-creek-flood-study-figures",
+  "title": "Revised Oyster Creek Flood Study - Figures",
+  "notes": "From the original flood study",
+  "metadata_modified": "2025-12-17T01:06:02.643351",
+  "resources": 1
+ },
+ {
+  "org": "sutherland-shire-council",
+  "name": "bundeena-creek-floodplain-risk-management-study-plan-2019-report",
+  "title": "Bundeena Creek Floodplain Risk Management Study & Plan 2019",
+  "notes": "2019 Bundeena Creek Floodplain Risk Management Study & Plan report including all appendices",
+  "metadata_modified": "2025-12-17T00:59:53.697410",
+  "resources": 1
+ },
+ {
+  "org": "sutherland-shire-council",
+  "name": "revised-oyster-creek-flood-study-hydraulic-model-input",
+  "title": "Revised Oyster Creek Flood Study - Hydraulic Model Input",
+  "notes": "MIKE-11",
+  "metadata_modified": "2025-12-17T00:50:56.235076",
+  "resources": 1
+ },
+ {
+  "org": "woollahra-municipal-council",
+  "name": "double-bay-catchment-frmsp-report",
+  "title": "Double Bay Catchment - FRMSP - Report",
+  "notes": "3 parts",
+  "metadata_modified": "2026-01-20T04:36:32.082651",
+  "resources": 3
+ },
+ {
+  "org": "woollahra-municipal-council",
+  "name": "watsons-bay-frmsp-report",
+  "title": "Watsons Bay FRMSP - Report",
+  "notes": "Complete report",
+  "metadata_modified": "2026-01-19T04:09:43.516370",
+  "resources": 1
+ },
+ {
+  "org": "woollahra-municipal-council",
+  "name": "rushcutters-bay-catchment-flood-study-report",
+  "title": "Rushcutters Bay Catchment Flood Study",
+  "notes": "The Rushcutters Bay catchment between Sydney Harbour and Oxford Street (Figure 1) is located\r\nprimarily within the Woollahra Municipal Council Local Government Area (LGA). A small part is\r\nlocated wit",
+  "metadata_modified": "2026-01-19T04:05:11.656672",
+  "resources": 2
+ },
+ {
+  "org": "woollahra-municipal-council",
+  "name": "rose-bay-floodplain-risk-management-study-and-plan-report",
+  "title": "Rose Bay Floodplain Risk Management Study and Plan",
+  "notes": "As described in the Floodplain Development Manual (Reference 1), the Floodplain Risk\r\nManagement Process entails four sequential stages:\r\n\r\n* Stage 1: Flood Study\r\n* Stage 2: Floodplain Risk Managemen",
+  "metadata_modified": "2026-01-19T03:49:06.849873",
+  "resources": 1
+ },
+ {
+  "org": "woollahra-municipal-council",
+  "name": "rushcutters-bay-catchment-fs-report",
+  "title": "Rushcutters Bay Catchment Flood Study - Report",
+  "notes": "2 parts",
+  "metadata_modified": "2026-01-15T03:12:15.779565",
+  "resources": 2
+ },
+ {
+  "org": "woollahra-municipal-council",
+  "name": "watsons-bay-updated-flood-study-report",
+  "title": "Watsons Bay Updated Flood Study - Report",
+  "notes": "Complete report",
+  "metadata_modified": "2026-01-14T02:17:31.902441",
+  "resources": 1
+ },
+ {
+  "org": "woollahra-municipal-council",
+  "name": "camp-st-victoria-st-watsons-bay-drainage-investigation-report",
+  "title": "Camp St/Victoria St Watsons Bay Drainage Investigation - Report",
+  "notes": "Report and Figures",
+  "metadata_modified": "2025-12-17T03:14:47.394945",
+  "resources": 2
+ },
+ {
+  "org": "woollahra-municipal-council",
+  "name": "paddington-frmsp-report",
+  "title": "Paddington Floodplain Risk Management Study and Draft Plan - Report",
+  "notes": "Complete report",
+  "metadata_modified": "2025-12-17T00:32:03.991708",
+  "resources": 1
+ }
+]

@@ -1,0 +1,61 @@
+### northern-beaches-council — 54 total, 0 non-fdp:
+### sutherland-shire-council — 28 total, 0 non-fdp:
+### cumberland-council — 10 total, 0 non-fdp:
+### council-of-the-city-of-sydney — 24 total, 0 non-fdp:
+### 5-cityofsydney--parks-1: FAILED
+### 5-cityofsydney--playgrounds: FAILED
+### 5-cityofsydney--drinking-fountains-water-bubblers-1: FAILED
+### 5-cityofsydney--dog-off-leash-parks: FAILED
+### 5-cityofsydney--library-details: FAILED
+### q="playground" — 7 hits
+  5-cityofsydney--playgrounds | City of Sydney | License Not Specified
+  5-cityofsydney--parks-1 | City of Sydney | License Not Specified
+  2-nsw-rest-areas | Transport for NSW | Creative Commons Attribution
+  5-cityofsydney--drinking-fountains-water-bubblers-1 | City of Sydney | License Not Specified
+  5-cityofsydney--drinking-fountains-water-bubblers | City of Sydney | License Not Specified
+  5-cityofsydney--dog-off-leash-parks | City of Sydney | License Not Specified
+  asset-infrastructure-facility-point | NSW Department of Climate Change, Energy, the Environment and Water | Creative Commons Attribution
+### q="off-leash" — 108 hits
+  5-cityofsydney--dog-off-leash-parks | City of Sydney | License Not Specified
+  3-16207-13-december-2016---switch-off-before-you-take-off | NSW Government | Licence Specified by Agency
+  2-off-street-parking | Transport for NSW | Creative Commons Attribution
+  ambulance-off-stretcher-times | NSW Ambulance | Creative Commons Attribution
+  3-16232-25-june-2015---switch-off-before-taking-off-to-keep-your-home-safe | NSW Government | Licence Specified by Agency
+  3-16282-20-december-2012---switch-off-before-taking-off-to-keep-your-home-safe | NSW Government | Licence Specified by Agency
+  3-16259-17-december-2013---switch-off-before-taking-off-to-keep-your-home-safe | NSW Government | Licence Specified by Agency
+  3-16248-17-december-2013---switch-off-before-taking-off-to-keep-your-home-safe | NSW Government | Licence Specified by Agency
+  roads-static-parking-off-street | Roads and Maritime Services | Creative Commons Attribution
+  2-opal-tap-on-and-tap-off | Transport for NSW | Creative Commons Attribution
+  fdp-ingleside-elanora-and-warriewood-offs-main-report | Northern Beaches Council | Creative Commons Attribution
+  fdp-ingleside-eleanora-warriewood-offs-climate-change | Northern Beaches Council | Licence Specified by Agency
+### q="drinking fountain" — 2 hits
+  5-cityofsydney--drinking-fountains-water-bubblers-1 | City of Sydney | License Not Specified
+  5-cityofsydney--drinking-fountains-water-bubblers | City of Sydney | License Not Specified
+### q="public toilet" — 5 hits
+  2-nsw-rest-areas | Transport for NSW | Creative Commons Attribution
+  2-interchange-facilities-data | Transport for NSW | Creative Commons Attribution
+  2-nsw-transport-theme-transport-facility-line | Transport for NSW | License Not Specified
+  1-b0f10b029554479aa08861558f0dd7bd | Spatial Services (DCS) | License Not Specified
+  1-edecda8bd0524651b4c4fca37398c8b2 | Spatial Services (DCS) | License Not Specified
+### q="sports facility" — 17 hits
+  5-cityofsydney--sports-and-recreation-facilities-1 | City of Sydney | License Not Specified
+  5-cityofsydney--sports-and-recreation-facilities | City of Sydney | License Not Specified
+  5-cityofsydney--our-villages-1 | City of Sydney | License Not Specified
+  5-cityofsydney--library-locations-1 | City of Sydney | License Not Specified
+  5-cityofsydney--library-locations | City of Sydney | License Not Specified
+  5-cityofsydney--recreation-centres | City of Sydney | License Not Specified
+  5-cityofsydney--venues-for-hire-2 | City of Sydney | License Not Specified
+  5-cityofsydney--venues-for-hire | City of Sydney | License Not Specified
+  5-cityofsydney--parks-1 | City of Sydney | License Not Specified
+  5-cityofsydney--cycle-network-3 | City of Sydney | License Not Specified
+  5-cityofsydney--sydney-cycling-map | City of Sydney | License Not Specified
+  5-cityofsydney--community-gardens | City of Sydney | License Not Specified
+### q="recreation centre" — 5 hits
+  5-cityofsydney--recreation-centres | City of Sydney | License Not Specified
+  5-cityofsydney--recreation-centres-1 | City of Sydney | License Not Specified
+  2-regional-day-return-indicator | Transport for NSW | Creative Commons Attribution
+  1-86f960184b2e445e95162fad7a00d118 | Spatial Services (DCS) | License Not Specified
+  1-a5f3bc7668be403aa88cdf6d1f7668b9 | Spatial Services (DCS) | License Not Specified
+### q="park bench" — 0 hits
+### q="BBQ" — 1 hits
+  2-maritime-nsw-boat-ramps | Transport for NSW | Creative Commons Attribution

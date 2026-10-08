@@ -1,0 +1,12 @@
+City of Sydney|Parks|L0|Parks|fields=8|OBJECTID,Asset_ID,Type,Name,Playgrounds,ESRI_OID,Shape__Area,Shape__Length
+City of Sydney|Playgrounds|L0|Playgrounds|fields=3|OBJECTID,Name,Type
+City of Sydney|Sports and recreation facilities|L0|undefined|fields=0|
+City of Sydney|National public toilets|L0|undefined|fields=0|
+City of Sydney|Seats|L0|Seats|fields=2|OBJECTID,Central_Asset_ID
+City of Parramatta|Playground Equipment|L0|undefined|fields=0|
+City of Parramatta|Public Toilets|L0|undefined|fields=0|
+City of Parramatta|Sporting Fields|L0|undefined|fields=0|
+Woollahra|WMC Open Space and Reserves|L0|undefined|fields=0|
+Hornsby|Crown Reserves|L0|undefined|fields=0|
+
+Saved raw/schemas.json

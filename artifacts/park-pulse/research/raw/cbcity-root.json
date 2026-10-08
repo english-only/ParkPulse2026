@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0">
+  <title>Redirecting...</title>
+</head>
+
+<body>
+  <p>If you are not redirected automatically, follow this <a id="redirect-link"
+       href="#">link</a>.</p>
+  <script>
+    document.getElementById('redirect-link').href = window.location.href.replace(window.location.origin, 'https://www.cbcity.nsw.gov.au');
+    window.location.replace(window.location.href.replace(window.location.origin, 'https://www.cbcity.nsw.gov.au'));
+  </script>
+</body>
+
+</html>

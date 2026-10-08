@@ -1,20 +1,14 @@
-// Export your models here. Add one export per file
-// export * from "./posts";
+// Drizzle schema for this project.
 //
-// Each model/table should ideally be split into different files.
-// Each model/table should define a Drizzle table, insert schema, and types:
+// There are currently no tables. The Park Pulse app ships its park, tree,
+// facility and dog-park data as static GeoJSON/JSON in
+// `artifacts/park-pulse/public/data`, so nothing has needed a database yet.
 //
-//   import { pgTable, text, serial } from "drizzle-orm/pg-core";
-//   import { createInsertSchema } from "drizzle-zod";
-//   import { z } from "zod/v4";
+// To add the first table:
+//   1. define it with pgTable in its own file and re-export it here
+//   2. add `createInsertSchema(table)` + `z.infer` to get a validated insert type
+//   3. generate migrations with `pnpm --filter @workspace/db run push`
 //
-//   export const postsTable = pgTable("posts", {
-//     id: serial("id").primaryKey(),
-//     title: text("title").notNull(),
-//   });
-//
-//   export const insertPostSchema = createInsertSchema(postsTable).omit({ id: true });
-//   export type InsertPost = z.infer<typeof insertPostSchema>;
-//   export type Post = typeof postsTable.$inferSelect;
-
-export {}
+// `scripts/post-merge.sh` detects the empty state and skips the push, so
+// leaving this file as-is is safe.
+export {};

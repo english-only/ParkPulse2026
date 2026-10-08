@@ -1,0 +1,64 @@
+City of Sydney|National public toilets|L0|National_public_toilets|geom=esriGeometryPoint|fields=48
+    OBJECTID, FacilityID, URL, Name, FacilityType, Address1, Town, State, AddressNote, Parking, ParkingAccessible, ParkingNote, KeyRequired, MLAK24, MLAKAfterHours, PaymentRequired, AccessNote, AdultChange, ChangingPlaces, BYOSling, ACShower, ACMLAK, AdultChangeNote, BabyChange, BabyCareRoom, BabyChangeNote, DumpPoint, DPWashout, DPAfterHours, DumpPointNote, OpeningHours, OpeningHoursNote, Male, Female, Unisex, AllGender, Ambulant, Accessible, LHTransfer, RHTransfer, ToiletNote, SharpsDisposal, DrinkingWater, SanitaryDisposal, MensPadDisposal, Shower, Status, Within500mSydney
+City of Sydney|Sports and recreation facilities|L0|Sport|geom=esriGeometryPoint|fields=30
+    OBJECTID, ID, FacilityName, Address, Suburb, Postcode, FacilityType, URL, Status, Owner, AFL, Athletics, Badminton, Basketball, CityPrograms, Cricket, Futsal, Hockey, IndoorGym, Netball, OutdoorGym, Pickleball, Pool, Rugby, SkatePark, Soccer, TableTennis, TennisCourts, Volleyball, GDB_GEOMATTR_DATA
+City of Sydney|Playgrounds|L0|Playgrounds|geom=esriGeometryPoint|fields=3
+    OBJECTID, Name, Type
+City of Sydney|Parks|L0|Parks|geom=esriGeometryPolygon|fields=8
+    OBJECTID, Asset_ID, Type, Name, Playgrounds, ESRI_OID, Shape__Area, Shape__Length
+City of Sydney|Seats|L0|Seats|geom=esriGeometryPoint|fields=2
+    OBJECTID, Central_Asset_ID
+City of Parramatta|PARKS_ASSETS_WEB_PUBLISH_Rec|L0|Playgrounds|geom=esriGeometryPoint|fields=24
+    OBJECTID, STREET_FACILITY_NAME, LABEL, PARK_CATEGORY, EQUIPMENT_DESCRIP, REPLACEMENT_SCHED, REF_NO, COMMISSION_YEAR, USER_AGE_C, FENCING, WATER_FEAT, CHIP_SOFTF, WARD, SUBURB, ADDRESS, SAND_SOFTF, SHADE, PUB_TOILETS_AVAIL, PUB_TOILETS_TIMES, ABOUT_PARK, MORE_INFO, DRINK_FOUNTAIN_AVAIL, BIKE_WALK_TRACK_AVAIL, CATCHMENT
+City of Parramatta|PARKS_ASSETS_WEB_PUBLISH_Rec|L1|Picnic Areas|geom=esriGeometryPoint|fields=16
+    OBJECTID, PARK, FACILITY_DESCRIPT, POWER_AVAILABLE, AMOUNT_BBQs, PUBLIC_TOILETS, PLAYGROUND, WALKING_TRACKS, DISABILITY, ADDRESS, PARKING, LABEL, SUBURB, WARD, MORE_INFO, PUB_TOILETS_TIMES
+City of Parramatta|PARKS_ASSETS_WEB_PUBLISH_Rec|L2|Buildings|geom=esriGeometryPoint|fields=28
+    OBJECTID, STREET_FACILITY_NAME, OPERATIONAL_NAME, BUILDING_TYPE, WARD, SUBURB, PUBLIC_TOILETS, BABY_CHANGE, DISABILITY, PUBLIC_TOILET_TIMES, SHARPS_DISPOSAL, BOOKABLE_VENUE, VENUE_FEATURES, MAIN_HALL_SIZE, VENUE_CAPACITY, PUBLIC_TRANSPORT, PARKING, VENUE_NAME, VENUE_AVAIL, UNI_OR_GEN_SPEC, SHOWERS, BOOKING_CONTACT_PHONE, VENUE_ADDRESS, BOOKING_CONTACT_EMAIL, BOOKING_CONTACT, BUILDING_NAME, MORE_INFO, ACTIVE_PARRA_PROGRAMS
+City of Parramatta|Public Toilets|L0|PARK_ASSETS_CURRENT_BL_Buildings|geom=esriGeometryPoint|fields=9
+    BOOKABLE_VENUE, BUILDING_NAME, DISABLED_TOILETS_COUNT, OBJECTID, PARK, PUB_TOILET_TIMES, PUB_TOILETS_AVAIL, PUBLIC_ACESSIBLE_TOILETS, OBJECTID_1
+City of Parramatta|Parks for GeoHub|L0|PARKS_PUBLISHED_AGOL|geom=esriGeometryPolygon|fields=22
+    NAME, NAME_resolved, Ciruit_Pathway_Present, Dog_Off_Leash_Areas, Public_Toilets_Available, Bookable_Venue, Water_Parks, Cricket_Practice, Fitness_Equipment, PIC_Available, Building_Name, BBQs_Available, Hardcourts, Skate_and_BMX_Facilities, PE_available, Goal_Posts_Available, Tennis_Facilities, Drinking_Fountains, Rugby_Football_Cricket, OBJECTID, SHAPE__Area, SHAPE__Length
+City of Parramatta|Drinking Fountains|L0|PARK_ASSETS_CURRENT_DF_Drinking_Fountains|geom=esriGeometryPoint|fields=11
+    OBJECTID, REF_NO, STREET_FACILITY_NAME, DOG_DRINKER, BOWL, DISABILITY_USABLE, ASSET_DESCRIPTION, ASSET_NARRATION, ASSET_SHORT_DESCRIPTION, TAP_PRESENT, OBJECTID_1
+City of Parramatta|Playground Equipment|L0|PARK_ASSETS_CURRENT_PE_Playground_Equipment|geom=esriGeometryPoint|fields=7
+    OBJECTID_1, STREET_FACILITY_NAME, LABEL, ASSET_DESCRIPTION, ASSET_NARRATION, ASSET_SHORT_DESCRIPTION, OBJECTID
+City of Parramatta|Hard Court Sport Surfaces|L0|PARK_ASSETS_CURRENT_HC_Sports_Surfaces_Hard|geom=esriGeometryPolygon|fields=8
+    OBJECTID, REF_NO, STREET_FACILITY_NAME, COURT_TYPE, COURT_SIZE, OBJECTID_1, SHAPE__Area, SHAPE__Length
+City of Parramatta|BBQs|L0|PARK_ASSETS_CURRENT_BQ_BBQs|geom=esriGeometryPoint|fields=7
+    OBJECTID, STREET_FACILITY_NAME, ASSET_DESCRIPTION, ASSET_NARRATION, ASSET_SHORT_DESCRIPTION, PLATES, OBJECTID_1
+City of Parramatta|Sporting Fields|L0|PARK_ASSETS_CURRENT_WEBSITE_Sporting_Fields|geom=esriGeometryPolygon|fields=7
+    OBJECTID, FIELD_NAME, PARK, Field_Type, OBJECTID_1, SHAPE__Area, SHAPE__Length
+City of Parramatta|Fitness Equipment|L0|PARK_ASSETS_CURRENT_FE_Fitness_Equipment_Multi|geom=esriGeometryPoint|fields=9
+    OBJECTID, REF_NO, STREET_FACILITY_NAME, LABEL, ASSET_DESCRIPTION, ASSET_NARRATION, ASSET_SHORT_DESCRIPTION, F_geometry_name, OBJECTID_1
+City of Parramatta|Tennis Courts|L0|PARK_ASSETS_CURRENT_WEBSITE_Tennis_Courts|geom=esriGeometryPolygon|fields=10
+    OBJECTID, REF_NO, PARK, SURFACE_TYPE, COURTS, LABEL, LIGHTING, OBJECTID_1, SHAPE__Area, SHAPE__Length
+City of Parramatta|Water Playground Equipment|L0|PARK_ASSETS_CURRENT_WE_Water_Playground_Equipment|geom=esriGeometryPolygon|fields=8
+    OBJECTID, REF_NO, STREET_FACILITY_NAME, ASSET_DESCRIPTION, ASSET_NARRATION, OBJECTID_1, SHAPE__Area, SHAPE__Length
+City of Parramatta|Skate and BMX|L0|PARK_ASSETS_CURRENT_XG_Skate_BMX_Park|geom=esriGeometryPoint|fields=7
+    OBJECTID, REF_NO, STREET_FACILITY_NAME, ASSET_DESCRIPTION, ASSET_NARRATION, ASSET_SHORT_DESCRIPTION, OBJECTID_1
+City of Parramatta|Picnic Areas|L0|PARK_ASSETS_CURRENT_WEBSITE_Picnic_Areas|geom=esriGeometryPoint|fields=6
+    OBJECTID, PARK, FACILITY_DESCRIPT, POWER_AVAILABLE, AMOUNT_BBQs, OBJECTID_1
+Northern Beaches|Toilets|L0|AccessibleToiletsJune2019|geom=esriGeometryPoint|fields=49
+    OBJECTID, ToiletID, URL, Name, Address1, Town, State, Postcode, AddressNote, Male, Female, Unisex, DumpPoint, FacilityTy, ToiletType, AccessLimi, PaymentReq, KeyRequire, AccessNote, Parking, ParkingNot, AccessibleMale, AccessibleFemale, AccessibleUnisex, AccessibleNote, MLAK, ParkingAcc, AccessibleParkingNote, Ambulant, LHTransfer, RHTransfer, AdultChang, ChangingPl, IsOpen, OpeningHou, OpeningH_1, BabyChange, Showers, DrinkingWa, SharpsDisp, SanitaryDi, IconURL, IconAltTex, Notes, Status, Latitude, Longitude, Address, GlobalID
+Northern Beaches|Toilets|L1|PublicToiletsJune2019|geom=esriGeometryPoint|fields=49
+    OBJECTID, ToiletID, URL, Name, Address1, Town, State, Postcode, AddressNote, Male, Female, Unisex, DumpPoint, FacilityTy, ToiletType, AccessLimi, PaymentReq, KeyRequire, AccessNote, Parking, ParkingNot, AccessibleMale, AccessibleFemale, AccessibleUnisex, AccessibleNote, MLAK, ParkingAcc, AccessibleParkingNote, Ambulant, LHTransfer, RHTransfer, AdultChang, ChangingPl, IsOpen, OpeningHou, OpeningH_1, BabyChange, Showers, DrinkingWa, SharpsDisp, SanitaryDi, IconURL, IconAltTex, Notes, Status, Latitude, Longitude, Address, GlobalID
+Hornsby|HSC Care and Control|L4|HSC Care and Control|geom=esriGeometryPolygon|fields=31
+    OBJECTID, LR_REF, NUMBER_, STREET, TYPE, SUBURB_ID, USE_ID, LOT, SECTION_, PLAN_, OWNER_ID, SECT94, LEGAL_DOC, CLASS_TYPE, TITLE, TENURE, GAZETTED, NOTES, TRUSTEES, PROP_REF, PARC_REF, IFC_UID, CLASS_1994, LANDUSE_19, NAME, SUBURB_TXT, USE_TXT, OWNER_TXT, CLASS_TEXT, Shape__Area, Shape__Length
+Hornsby|CRR Assets_PUBLIC|L0|CRR_Assets_20200513|geom=esriGeometryPoint|fields=8
+    OBJECTID, Asset_ID, DEVICE_TYPE, DEVICE_GROUP, STREET, SUBURB, UBD, COMMISSIONED
+Inner West|Active Inner West|L1|Facility_Point|geom=esriGeometryPoint|fields=9
+    OBJECTID, facility_name, description, website, facility_type, address, suburb, img_url, GlobalID
+Inner West|Active Inner West|L2|Facility_Lines|geom=esriGeometryPolyline|fields=8
+    OBJECTID, facility_name, description, website, facility_type, GlobalID, accessible, Shape__Length
+Woollahra|Parks Online Map|L0|Parks|geom=esriGeometryMultipoint|fields=12
+    OBJECTID, NAME, GlobalID, ONLINE_MAP, INFO_1, INFO_2, LINK, PHOTO, CreationDate, Creator, EditDate, Editor
+Woollahra|Parks Online Map|L1|Playgrounds|geom=esriGeometryMultipoint|fields=11
+    OBJECTID, NAME, GlobalID, ONLINE_MAP, INFO_1, LINK, PHOTO, CreationDate, Creator, EditDate, Editor
+Woollahra|Parks Online Map|L2|Fitness Stations|geom=esriGeometryMultipoint|fields=8
+    OBJECTID, NAME, GlobalID, ONLINE_MAP, CreationDate, Creator, EditDate, Editor
+Woollahra|Tennis Courts|L0|Tennis Courts|geom=esriGeometryMultipoint|fields=9
+    OBJECTID, NAME, SOURCE, TYPE, GlobalID, ONLINE_MAP, INFO_1, INFO_2, LINK
+Woollahra|WMC Open Space and Reserves|L0|WMC Open Space and Reserves|geom=esriGeometryPolygon|fields=7
+    OBJECTID, PARK_NAME, MANAGED_BY, SUBURB, TYPE, Shape__Area, Shape__Length
+
+Saved 31 layer schemas to raw/schemas2.json

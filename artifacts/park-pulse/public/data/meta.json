@@ -3,11 +3,12 @@
   "version": "2.0.0",
   "sources": {
     "parks": "City of Sydney Open Data",
-    "blacktown": "Blacktown City Council",
+    "blacktown": "Derived from OpenStreetMap contributors (ODbL) — spans Blacktown, Cumberland and Parramatta; not council data",
     "npws": "NSW National Parks & Wildlife Service",
     "dogs": "City of Sydney Open Data",
     "fountains": "City of Sydney Open Data",
-    "toilets": "City of Sydney Open Data",
-    "transport": "Transport for NSW"
+    "toilets": "National Public Toilet Map (Australian Government — Department of Health, Disability and Ageing), CC-BY",
+    "transport": "Transport for NSW (GTFS stops extract)",
+    "trees": "City of Sydney Open Data (extract; live layer is newer)"
   }
 }

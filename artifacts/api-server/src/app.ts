@@ -6,6 +6,8 @@ import { logger } from "./lib/logger";
 
 const app: Express = express();
 
+app.disable("x-powered-by");
+
 app.use(
   pinoHttp({
     logger,
@@ -25,9 +27,33 @@ app.use(
     },
   }),
 );
-app.use(cors());
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+
+// Reflecting every origin hands any website on the internet read access to
+// this API from a user's browser. Origins are opt-in via CORS_ORIGINS, and the
+// no-credentials default means cookie-bearing cross-site calls still fail.
+const allowedOrigins = (process.env.CORS_ORIGINS ?? "")
+  .split(",")
+  .map((o) => o.trim())
+  .filter(Boolean);
+
+app.use(
+  cors({
+    origin: allowedOrigins.length
+      ? allowedOrigins
+      : false,
+    credentials: false,
+    methods: ["GET", "HEAD", "OPTIONS"],
+  }),
+);
+
+app.use((_req, res, next) => {
+  res.setHeader("X-Content-Type-Options", "nosniff");
+  res.setHeader("Referrer-Policy", "no-referrer");
+  next();
+});
+
+app.use(express.json({ limit: "100kb" }));
+app.use(express.urlencoded({ extended: true, limit: "100kb" }));
 
 app.use("/api", router);
 

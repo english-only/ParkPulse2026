@@ -1,0 +1,94 @@
+[
+ {
+  "org": "City of Sydney",
+  "title": "Parks",
+  "layer": 0,
+  "name": "Parks",
+  "geometryType": "esriGeometryPolygon",
+  "fieldCount": 8,
+  "fields": [
+   "OBJECTID",
+   "Asset_ID",
+   "Type",
+   "Name",
+   "Playgrounds",
+   "ESRI_OID",
+   "Shape__Area",
+   "Shape__Length"
+  ]
+ },
+ {
+  "org": "City of Sydney",
+  "title": "Playgrounds",
+  "layer": 0,
+  "name": "Playgrounds",
+  "geometryType": "esriGeometryPoint",
+  "fieldCount": 3,
+  "fields": [
+   "OBJECTID",
+   "Name",
+   "Type"
+  ]
+ },
+ {
+  "org": "City of Sydney",
+  "title": "Sports and recreation facilities",
+  "layer": 0,
+  "fieldCount": 0,
+  "fields": []
+ },
+ {
+  "org": "City of Sydney",
+  "title": "National public toilets",
+  "layer": 0,
+  "fieldCount": 0,
+  "fields": []
+ },
+ {
+  "org": "City of Sydney",
+  "title": "Seats",
+  "layer": 0,
+  "name": "Seats",
+  "geometryType": "esriGeometryPoint",
+  "fieldCount": 2,
+  "fields": [
+   "OBJECTID",
+   "Central_Asset_ID"
+  ]
+ },
+ {
+  "org": "City of Parramatta",
+  "title": "Playground Equipment",
+  "layer": 0,
+  "fieldCount": 0,
+  "fields": []
+ },
+ {
+  "org": "City of Parramatta",
+  "title": "Public Toilets",
+  "layer": 0,
+  "fieldCount": 0,
+  "fields": []
+ },
+ {
+  "org": "City of Parramatta",
+  "title": "Sporting Fields",
+  "layer": 0,
+  "fieldCount": 0,
+  "fields": []
+ },
+ {
+  "org": "Woollahra",
+  "title": "WMC Open Space and Reserves",
+  "layer": 0,
+  "fieldCount": 0,
+  "fields": []
+ },
+ {
+  "org": "Hornsby",
+  "title": "Crown Reserves",
+  "layer": 0,
+  "fieldCount": 0,
+  "fields": []
+ }
+]

@@ -8,6 +8,10 @@ out-tsc
 .expo
 .expo-shared
 
+# generated map data shards (rebuilt from public/data/trees.geojson by
+# artifacts/park-pulse/scripts/shard-trees.mjs on every dev/build)
+artifacts/park-pulse/public/data/trees/
+
 # dependencies
 node_modules
 

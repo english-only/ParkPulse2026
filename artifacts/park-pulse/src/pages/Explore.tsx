@@ -1,10 +1,21 @@
 import { useEffect, useRef, useState, useCallback, useMemo } from "react";
+import { useCulledMarkerLayer } from "../hooks/useCulledMarkerLayer";
 import Navbar from "../components/Navbar";
 import ParkModal from "../components/ParkModal";
+import Footer from "../components/Footer";
 import type { Park } from "../types/park";
 import { useTheme, THEMES, type Theme } from "../hooks/useTheme";
 import { useToast } from "../context/ToastContext";
-import { fetchWithCache, clearAllCache } from "../utils/dataCache";
+import { fetchWithCache, clearAllCache, onCacheNotice } from "../utils/dataCache";
+import { haversineKm, calcCentroid, NearestIndex } from "../utils/geo";
+import {
+  readLatLng,
+  readFeatureCentroid,
+  type FeatureCollection,
+  type MixedCollection,
+} from "../utils/geojson";
+import { fmtArea, fuzzyScore, searchParks, sizeLabel } from "../utils/search";
+import { loadTreesForBounds, type TreeRecord, type TreeSourceInfo } from "../utils/treeData";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import "leaflet.markercluster";
@@ -14,68 +25,32 @@ import "leaflet.markercluster/dist/MarkerCluster.Default.css";
 const BASE = import.meta.env.BASE_URL;
 const TREE_ZOOM_THRESHOLD = 16;
 
+/**
+ * Basemap tiles.
+ *
+ * CARTO's hosted basemaps (basemaps.cartocdn.com) now require an API key and
+ * return an "API KEY REQUIRED" placeholder without one, so the vector themes
+ * are served from OpenStreetMap's standard tiles, which need no key. The dark,
+ * sunset and neon looks are applied as CSS filters over the tile pane in
+ * index.css rather than by swapping in a second paid provider.
+ *
+ * Esri World Imagery is keyless and is kept for the satellite theme.
+ */
+const OSM_TILES = "https://tile.openstreetmap.org/{z}/{x}/{y}.png";
+
 const TILE_URLS: Record<string, string> = {
-  default:   "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png",
-  dark:      "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png",
-  sunset:    "https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png",
-  neon:      "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png",
-  minimal:   "https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}{r}.png",
+  default:   OSM_TILES,
+  dark:      OSM_TILES,
+  sunset:    OSM_TILES,
+  neon:      OSM_TILES,
+  minimal:   OSM_TILES,
   satellite: "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
 };
 
-const TILE_ATTR_DEFAULT  = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/">CARTO</a>';
+const TILE_ATTR_DEFAULT  = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
 const TILE_ATTR_SAT      = 'Tiles &copy; Esri &mdash; Source: Esri, Maxar, USGS';
 
 // ── Helpers ──────────────────────────────────────────────────────────────────
-function haversineKm(lat1: number, lng1: number, lat2: number, lng2: number): number {
-  const R = 6371;
-  const dLat = (lat2 - lat1) * (Math.PI / 180);
-  const dLng = (lng2 - lng1) * (Math.PI / 180);
-  const a = Math.sin(dLat / 2) ** 2
-    + Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) * Math.sin(dLng / 2) ** 2;
-  return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-}
-
-function fuzzyScore(park: Park, q: string): number {
-  if (!q) return 100;
-  const name = park.name.toLowerCase();
-  const suburb = (park.suburb || "").toLowerCase();
-  const type = (park.type || "").toLowerCase();
-  if (name === q) return 100;
-  if (name.startsWith(q)) return 82;
-  if (name.includes(q)) return 62;
-  if (suburb === q) return 55;
-  if (suburb.startsWith(q)) return 46;
-  if (suburb.includes(q)) return 35;
-  if (type.includes(q)) return 25;
-  // Sequential character match
-  let qi = 0;
-  for (let i = 0; i < name.length && qi < q.length; i++) {
-    if (name[i] === q[qi]) qi++;
-  }
-  if (qi === q.length) return Math.max(8, 18 - (name.length - q.length));
-  return 0;
-}
-
-function sizeLabel(area: number): { label: string; cls: string } {
-  if (area < 1000)  return { label: "Tiny",   cls: "pp-size-tiny" };
-  if (area < 5000)  return { label: "Small",  cls: "pp-size-small" };
-  if (area < 10000) return { label: "Medium", cls: "pp-size-med" };
-  if (area < 50000) return { label: "Large",  cls: "pp-size-large" };
-  return                   { label: "Massive",cls: "pp-size-massive" };
-}
-
-function fmtArea(area: number): string {
-  if (area >= 10000) return `${(area / 10000).toFixed(1)} ha`;
-  return `${area >= 1000 ? area.toLocaleString() : Math.round(area)} m²`;
-}
-
-function calcCentroid(coords: number[][]): { lat: number; lng: number } {
-  let sumLat = 0, sumLng = 0;
-  coords.forEach(([lng, lat]) => { sumLng += lng; sumLat += lat; });
-  return { lat: sumLat / coords.length, lng: sumLng / coords.length };
-}
-
 function parkMarkerColor(park: Park): string {
   if (park.hasPlayground) return "#E76F51";
   if (park.type === "Iconic") return "#FFD166";
@@ -95,6 +70,115 @@ function makeIcon(color: string, size = 24, radius = "50%", inner = "") {
   });
 }
 
+/**
+ * Leaflet reuses an icon's DOM only when handed the same object, so handing it
+ * a freshly built divIcon on every render means every icon element is thrown
+ * away and rebuilt. There are only a handful of distinct park marker styles,
+ * so they are cached by their full appearance signature.
+ */
+const iconCache = new Map<string, L.DivIcon>();
+
+function cachedIcon(key: string, build: () => L.DivIcon): L.DivIcon {
+  const hit = iconCache.get(key);
+  if (hit) return hit;
+  const icon = build();
+  iconCache.set(key, icon);
+  return icon;
+}
+
+function getParkIcon(park: Park): L.DivIcon {
+  const color = parkMarkerColor(park);
+  return cachedIcon(`park:${color}`, () => makeIcon(color));
+}
+
+/** Cached icon for the fixed-colour overlay layers. */
+function getOverlayIcon(color: string, size: number, radius: string): L.DivIcon {
+  return cachedIcon(`overlay:${color}:${size}:${radius}`, () => makeIcon(color, size, radius));
+}
+
+/** Popup with a coloured type badge and a single line of text. */
+function buildSimplePopup(color: string, badge: string, name: string): HTMLElement {
+  const div = document.createElement("div");
+  div.className = "pp-popup";
+
+  const badgeEl = document.createElement("span");
+  badgeEl.className = "pp-popup-type";
+  badgeEl.style.background = color;
+  badgeEl.textContent = badge;
+  div.appendChild(badgeEl);
+
+  const heading = document.createElement("h3");
+  heading.textContent = name;
+  div.appendChild(heading);
+
+  return div;
+}
+
+/**
+ * Park popup assembled with DOM APIs. Park names come from an open municipal
+ * dataset, so they are set as text rather than interpolated into markup.
+ */
+function buildParkPopup(park: Park): HTMLElement {
+  const div = document.createElement("div");
+  div.className = "pp-popup";
+
+  const type = document.createElement("span");
+  type.className = "pp-popup-type";
+  type.textContent = park.type;
+  div.appendChild(type);
+
+  const heading = document.createElement("h3");
+  heading.textContent = park.name;
+  div.appendChild(heading);
+
+  if (park.suburb) {
+    const suburb = document.createElement("p");
+    suburb.style.fontSize = "12px";
+    suburb.style.color = "var(--pp-text-muted)";
+    suburb.style.marginBottom = "2px";
+    suburb.textContent = `📍 ${park.suburb}`;
+    div.appendChild(suburb);
+  }
+
+  if (park.area) {
+    const area = document.createElement("p");
+    area.style.fontSize = "12px";
+    area.textContent = `📐 ${fmtArea(park.area)}`;
+    div.appendChild(area);
+  }
+
+  if (park.hasPlayground) {
+    const playground = document.createElement("p");
+    playground.style.fontSize = "12px";
+    playground.style.marginTop = "2px";
+    playground.textContent = "🛝 Has Playground";
+    div.appendChild(playground);
+  }
+
+  const row = document.createElement("div");
+  row.style.display = "flex";
+  row.style.alignItems = "center";
+  row.style.gap = "6px";
+  row.style.marginTop = "8px";
+
+  const button = document.createElement("button");
+  button.className = "pp-popup-btn";
+  button.textContent = "View Details";
+  button.addEventListener("click", () => setSelectedParkRef.current(park));
+  row.appendChild(button);
+
+  const link = document.createElement("a");
+  link.href = `https://www.google.com/maps/dir/?api=1&destination=${park.lat},${park.lng}`;
+  link.target = "_blank";
+  link.rel = "noopener noreferrer";
+  link.className = "pp-popup-dir-link";
+  link.textContent = "Directions ↗";
+  row.appendChild(link);
+
+  div.appendChild(row);
+  return div;
+}
+
 function npwsColor(subtype: string): string {
   if (subtype.includes("BBQ") || subtype.includes("Fire")) return "#FF6B35";
   if (subtype.includes("Picnic")) return "#8B5E3C";
@@ -102,6 +186,167 @@ function npwsColor(subtype: string): string {
   if (subtype.includes("Playground")) return "#E91E8C";
   if (subtype.includes("Seat")) return "#6B8CBA";
   return "#888888";
+}
+
+/** Off-leash dog park popup, assembled without interpolating markup. */
+function buildDogPopup(p: DogProperties): HTMLElement {
+  const div = document.createElement("div");
+  div.className = "pp-popup";
+
+  const badge = document.createElement("span");
+  badge.className = "pp-popup-type";
+  badge.style.background = "#AACC00";
+  badge.style.color = "#000";
+  badge.textContent = "🐕 Dog Park";
+  div.appendChild(badge);
+
+  const heading = document.createElement("h3");
+  heading.textContent = p.ParkName || "Dog Park";
+  div.appendChild(heading);
+
+  if (p.Suburb) {
+    const suburb = document.createElement("p");
+    suburb.textContent = p.Suburb;
+    div.appendChild(suburb);
+  }
+
+  if (p.OffLeashTime) {
+    const status = document.createElement("span");
+    status.className =
+      p.OffLeashTime === "At all times" ? "pp-popup-badge-green" : "pp-popup-badge-orange";
+    status.textContent =
+      p.OffLeashTime === "At all times" ? "Always Off-Leash" : p.OffLeashTime;
+    div.appendChild(status);
+  }
+
+  if (p.ProhibitedAreas) {
+    const warn = document.createElement("p");
+    warn.className = "pp-popup-warn";
+    warn.textContent = `⚠ Not allowed: ${p.ProhibitedAreas}`;
+    div.appendChild(warn);
+  }
+
+  if (p.OffLeashDescription) {
+    const desc = document.createElement("p");
+    desc.style.fontSize = "12px";
+    desc.style.marginTop = "4px";
+    desc.textContent = p.OffLeashDescription;
+    div.appendChild(desc);
+  }
+
+  return div;
+}
+
+/** NPWS facility popup, assembled without interpolating markup. */
+function buildNpwsPopup(p: NpwsProperties, color: string): HTMLElement {
+  const div = document.createElement("div");
+  div.className = "pp-popup";
+
+  const badge = document.createElement("span");
+  badge.className = "pp-popup-type";
+  badge.style.background = color;
+  badge.textContent = p.d_SubtypeC || "Facility";
+  div.appendChild(badge);
+
+  const heading = document.createElement("h3");
+  heading.textContent = p.AssetName || "NPWS Facility";
+  div.appendChild(heading);
+
+  if (p.d_LGA) {
+    const lga = document.createElement("p");
+    lga.textContent = p.d_LGA;
+    div.appendChild(lga);
+  }
+
+  if (p.d_Branch) {
+    const branch = document.createElement("p");
+    branch.className = "pp-popup-muted";
+    branch.textContent = p.d_Branch;
+    div.appendChild(branch);
+  }
+
+  if (p.Comments) {
+    const comments = document.createElement("p");
+    comments.style.fontSize = "11px";
+    comments.style.marginTop = "4px";
+    comments.textContent = p.Comments;
+    div.appendChild(comments);
+  }
+
+  return div;
+}
+
+/**
+ * Set by the Explore component so the module-level popup builders can act
+ * without needing the component's closures.
+ */
+let selectParkFromPopup: ((p: Park) => void) | null = null;
+let setSelectedParkRef: { current: (p: Park) => void } = { current: () => {} };
+let toastForPopup: (msg: string, type?: "success" | "info" | "error" | "warning") => void = () => {};
+
+/**
+ * Tree popup, built on demand and assembled with DOM APIs rather than an HTML
+ * string so that species names and asset ids coming from the open dataset are
+ * never parsed as markup.
+ */
+function buildTreePopup(tree: TreeRecord, park: Park | null): HTMLElement {
+  const div = document.createElement("div");
+  div.className = "pp-popup";
+
+  const badge = document.createElement("span");
+  badge.className = "pp-popup-type";
+  badge.style.background = "#40916C";
+  badge.textContent = "🌳 Tree";
+  div.appendChild(badge);
+
+  const heading = document.createElement("h3");
+  heading.textContent = tree.commonName || tree.speciesName || "Tree";
+  div.appendChild(heading);
+
+  if (tree.speciesName && tree.speciesName !== tree.commonName) {
+    const species = document.createElement("p");
+    species.style.fontSize = "11px";
+    species.style.color = "var(--pp-text-muted)";
+    species.textContent = tree.speciesName;
+    div.appendChild(species);
+  }
+
+  const details: string[] = [];
+  if (tree.treeType) details.push(tree.treeType);
+  if (tree.age) details.push(tree.age);
+  if (tree.dbhCm != null) details.push(`${tree.dbhCm} cm trunk`);
+  if (tree.height != null) details.push(`${tree.height} m`);
+  if (details.length) {
+    const meta = document.createElement("p");
+    meta.style.fontSize = "11px";
+    meta.style.color = "var(--pp-text-muted)";
+    meta.textContent = details.join(" · ");
+    div.appendChild(meta);
+  }
+
+  if (park) {
+    const nearest = document.createElement("p");
+    nearest.style.fontSize = "11px";
+    nearest.style.marginTop = "4px";
+    nearest.textContent = `Nearest park: ${park.name}`;
+    div.appendChild(nearest);
+  }
+
+  const button = document.createElement("button");
+  button.className = "pp-popup-btn";
+  button.style.marginTop = "8px";
+  button.textContent = park ? "View nearest park" : "View details";
+  button.addEventListener("click", () => {
+    if (park) {
+      selectParkFromPopup?.(park);
+    } else {
+      console.info("[trees] no nearest park within range:", tree.assetId);
+      toastForPopup(`Tree: ${tree.commonName || tree.speciesName || "unknown"}`, "info");
+    }
+  });
+  div.appendChild(button);
+
+  return div;
 }
 
 // ── Types ─────────────────────────────────────────────────────────────────────
@@ -120,6 +365,34 @@ const defaultFilters: Filters = {
 interface NpwsRaw { name: string; subtype: string; lat: number; lng: number }
 interface DogRaw  { name: string; lat: number; lng: number }
 
+/** Properties actually present on the shipped dog off-leash dataset. */
+interface DogProperties {
+  ParkName?: string;
+  Suburb?: string;
+  OffLeashTime?: string;
+  OffLeashDescription?: string;
+  ProhibitedAreas?: string;
+}
+
+/** Properties actually present on the shipped NPWS facilities dataset. */
+interface NpwsProperties {
+  AssetName?: string;
+  d_SubtypeC?: string;
+  d_LGA?: string;
+  d_Branch?: string;
+  Comments?: string;
+}
+
+/** Properties actually present on the shipped parks dataset. */
+interface ParksProperties {
+  OBJECTID?: number;
+  Name?: string;
+  Type?: string;
+  Playgrounds?: string;
+  Shape__Area?: number;
+  Asset_ID?: string;
+}
+
 // ── Component ────────────────────────────────────────────────────────────────
 export default function Explore() {
   const { theme, setTheme } = useTheme();
@@ -129,25 +402,24 @@ export default function Explore() {
   const mapRef             = useRef<L.Map | null>(null);
   const mapContainerRef    = useRef<HTMLDivElement>(null);
   const tileLayerRef       = useRef<L.TileLayer | null>(null);
-  const markersRef         = useRef<L.Marker[]>([]);
+  const markersByIdRef     = useRef<Map<number, L.Marker>>(new Map());
   const fountainLayerRef   = useRef<L.LayerGroup | null>(null);
   const transportLayerRef  = useRef<L.LayerGroup | null>(null);
   const treeLayerRef       = useRef<L.LayerGroup | null>(null);
   const toiletLayerRef     = useRef<L.LayerGroup | null>(null);
-  const blacktownLayerRef  = useRef<L.LayerGroup | null>(null);
   const dogLayerRef        = useRef<L.LayerGroup | null>(null);
   const npwsLayerRef       = useRef<L.LayerGroup | null>(null);
   const locationMarkerRef  = useRef<L.Marker | null>(null);
   const locationCircleRef  = useRef<L.Circle | null>(null);
   const treeRendererRef    = useRef<L.Canvas | null>(null);
+  const treeIndexRef       = useRef<NearestIndex<Park> | null>(null);
   const allParksRef        = useRef<Park[]>([]);
   const deepLinkHandledRef = useRef(false);
 
   // Stable refs for map callbacks
   const filteredRef        = useRef<Park[]>([]);
   const geocodeNearbyRef   = useRef<Park[] | null>(null);
-  const setSelectedParkRef = useRef<(p: Park) => void>(() => {});
-  const userLocationRef    = useRef<{lat:number;lng:number}|null>(null);
+  const setSelectedParkRefLocal = useRef<(p: Park) => void>(() => {});  const userLocationRef    = useRef<{lat:number;lng:number}|null>(null);
   const handleLocateRef    = useRef<() => void>(() => {});
   const searchInputRef     = useRef<HTMLInputElement>(null);
   const loadMoreSentinelRef = useRef<HTMLDivElement>(null);
@@ -170,7 +442,13 @@ export default function Explore() {
   const [sortBy,          setSortBy]          = useState<"default"|"name"|"nearest"|"size">("default");
   const [userLocation,    setUserLocation]    = useState<{lat:number;lng:number}|null>(null);
   const [searchHistory,   setSearchHistory]   = useState<string[]>(() => {
-    try { return JSON.parse(localStorage.getItem("parkpulse_history") || "[]"); } catch { return []; }
+    try {
+      const parsed = JSON.parse(localStorage.getItem("parkpulse_history") || "[]");
+      return Array.isArray(parsed) ? parsed : [];
+    } catch (err) {
+      console.warn("[explore] corrupt search history, starting empty:", err);
+      return [];
+    }
   });
   const [showHistory,     setShowHistory]     = useState(false);
   const [searchFocused,   setSearchFocused]   = useState(false);
@@ -184,24 +462,59 @@ export default function Explore() {
   const [dogRawData,      setDogRawData]      = useState<DogRaw[]>([]);
   const [filtersOpen,     setFiltersOpen]     = useState(false);
   const [visibleMapCount, setVisibleMapCount] = useState(0);
+  // The map instance is held in state as well as a ref so hooks that depend on
+  // it re-run once Leaflet has actually created it.
+  const [mapInstance, setMapInstance] = useState<L.Map | null>(null);
+  const [treeSourceInfo, setTreeSourceInfo] = useState<TreeSourceInfo | null>(null);
+  const [cacheWarning, setCacheWarning] = useState<string | null>(null);
   const [favoriteIds,     setFavoriteIds]     = useState<Set<number>>(() => {
     try { return new Set<number>(JSON.parse(localStorage.getItem("parkpulse_favs") || "[]")); }
-    catch { return new Set<number>(); }
+    catch (err) {
+      console.warn("[explore] corrupt favourites list, starting empty:", err);
+      return new Set<number>();
+    }
   });
   const [showFavOnly,     setShowFavOnly]     = useState(false);
   const [recentParks,    setRecentParks]     = useState<Array<{id: number; name: string; type: string; suburb: string}>>(() => {
-    try { return JSON.parse(localStorage.getItem("parkpulse_recent") || "[]"); } catch { return []; }
+    try {
+      const parsed = JSON.parse(localStorage.getItem("parkpulse_recent") || "[]");
+      return Array.isArray(parsed) ? parsed : [];
+    } catch (err) {
+      console.warn("[explore] corrupt recent-parks history, starting empty:", err);
+      return [];
+    }
   });
 
-  setSelectedParkRef.current = setSelectedPark;
+  // Keep the module-level popup bridge and the local refs in step with the
+  // committed values, in an effect rather than during render so a discarded
+  // concurrent render cannot leave them pointing at stale state.
+  useEffect(() => {
+    setSelectedParkRef.current = setSelectedPark;
+    setSelectedParkRefLocal.current = setSelectedPark;
+  }, [setSelectedPark]);
   selectedParkRef.current    = selectedPark;
+
+  // Surface cache pressure instead of silently dropping data.
+  useEffect(() =>
+    onCacheNotice((notice) => {
+      if (notice.kind === "oversized") {
+        setCacheWarning("Some map data is too large to cache offline and will reload each visit.");
+      } else if (notice.kind === "quota") {
+        setCacheWarning("Browser storage is full; map data may not persist between visits.");
+      }
+    }), []);
 
   // ── Refresh recents + scroll-to-card when modal closes ───────────────────
   useEffect(() => {
     if (selectedPark !== null) {
       lastViewedParkIdRef.current = selectedPark.id;
     } else {
-      try { setRecentParks(JSON.parse(localStorage.getItem("parkpulse_recent") || "[]")); } catch {}
+      try {
+        const parsed = JSON.parse(localStorage.getItem("parkpulse_recent") || "[]");
+        setRecentParks(Array.isArray(parsed) ? parsed : []);
+      } catch (err) {
+        console.warn("[explore] could not refresh recent parks:", err);
+      }
       const id = lastViewedParkIdRef.current;
       if (id !== null) {
         setTimeout(() => {
@@ -305,7 +618,7 @@ export default function Explore() {
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
       if (!resultsListRef.current) return;
-      const cards = Array.from(resultsListRef.current.querySelectorAll<HTMLElement>(".pp-park-card[tabindex]"));
+      const cards = Array.from(resultsListRef.current.querySelectorAll<HTMLElement>(".pp-park-card-title"));
       if (!cards.length) return;
       const active = document.activeElement as HTMLElement;
       const idx = cards.indexOf(active);
@@ -328,47 +641,43 @@ export default function Explore() {
     window.addEventListener("keydown", handler);
     return () => window.removeEventListener("keydown", handler);
   }, []);
-
-  // ── Viewport-culled marker renderer ──────────────────────────────────────
+// ── Viewport-culled marker renderer ──────────────────────────────────────
+  // Reconciles by park id rather than tearing the layer down on every
+  // viewport change, so a pan only adds/removes the markers that actually
+  // changed instead of destroying and rebuilding every icon in view.
   const renderMarkersForBounds = useCallback((parksToRender: Park[]) => {
     const map = mapRef.current;
     if (!map) return;
     const bounds = map.getBounds().pad(0.5);
     const tightBounds = map.getBounds();
-    markersRef.current.forEach(m => map.removeLayer(m));
-    markersRef.current = [];
+
+    const visible = parksToRender.filter((park) => bounds.contains([park.lat, park.lng]));
+    const visibleIds = new Set(visible.map((p) => p.id));
+
+    // Remove markers that scrolled out of range.
+    for (const [id, marker] of markersByIdRef.current) {
+      if (!visibleIds.has(id)) {
+        marker.remove();
+        markersByIdRef.current.delete(id);
+      }
+    }
+
     let inViewport = 0;
-    parksToRender.forEach(park => {
-      if (!bounds.contains([park.lat, park.lng])) return;
+    for (const park of visible) {
       if (tightBounds.contains([park.lat, park.lng])) inViewport++;
+      const existing = markersByIdRef.current.get(park.id);
+      if (existing) continue;
       const marker = L.marker([park.lat, park.lng], {
-        icon: makeIcon(parkMarkerColor(park)),
+        icon: getParkIcon(park),
         title: park.name,
       });
-      marker.bindPopup(() => {
-        const div = document.createElement("div");
-        div.className = "pp-popup";
-        div.innerHTML = `
-          <span class="pp-popup-type">${park.type}</span>
-          <h3>${park.name}</h3>
-          ${park.suburb ? `<p style="font-size:12px;color:var(--pp-text-muted);margin-bottom:2px">📍 ${park.suburb}</p>` : ""}
-          ${park.area ? `<p style="font-size:12px">📐 ${fmtArea(park.area)}</p>` : ""}
-          ${park.hasPlayground ? `<p style="font-size:12px;margin-top:2px">🛝 Has Playground</p>` : ""}
-          <div style="display:flex;align-items:center;gap:6px;margin-top:8px">
-            <button class="pp-popup-btn">View Details</button>
-            <a href="https://www.google.com/maps/dir/?api=1&destination=${park.lat},${park.lng}" target="_blank" rel="noopener noreferrer" class="pp-popup-dir-link">Directions ↗</a>
-          </div>`;
-        div.querySelector(".pp-popup-btn")?.addEventListener("click", () =>
-          setSelectedParkRef.current(park)
-        );
-        return div;
-      }, { maxWidth: 280 });
+      marker.bindPopup(() => buildParkPopup(park), { maxWidth: 280 });
       marker.addTo(map);
-      markersRef.current.push(marker);
-    });
+      markersByIdRef.current.set(park.id, marker);
+    }
+
     setVisibleMapCount(inViewport);
   }, []);
-
   useEffect(() => { filteredRef.current = filtered; }, [filtered]);
   useEffect(() => { geocodeNearbyRef.current = geocodeNearby; }, [geocodeNearby]);
   useEffect(() => { userLocationRef.current = userLocation; }, [userLocation]);
@@ -380,7 +689,12 @@ export default function Explore() {
       if (searchInput.trim().length >= 2) {
         setSearchHistory(prev => {
           const updated = [searchInput.trim(), ...prev.filter(h => h !== searchInput.trim())].slice(0, 5);
-          try { localStorage.setItem("parkpulse_history", JSON.stringify(updated)); } catch {}
+          try {
+            localStorage.setItem("parkpulse_history", JSON.stringify(updated));
+          } catch (err) {
+            // Private browsing can refuse writes; the in-memory list still works.
+            console.warn("[explore] could not persist search history:", err);
+          }
           return updated;
         });
       }
@@ -415,7 +729,7 @@ export default function Explore() {
     }, { threshold: 0.1 });
     observer.observe(sentinel);
     return () => observer.disconnect();
-  });
+  }, []);
 
   // ── URL params (on mount) ─────────────────────────────────────────────────
   useEffect(() => {
@@ -483,7 +797,6 @@ export default function Explore() {
     const isSat = initialTheme === "satellite";
     tileLayerRef.current = L.tileLayer(TILE_URLS[initialTheme] || TILE_URLS.default, {
       attribution: isSat ? TILE_ATTR_SAT : TILE_ATTR_DEFAULT,
-      subdomains: isSat ? "" : "abcd",
       maxZoom: 19,
     }).addTo(map);
 
@@ -506,6 +819,7 @@ export default function Explore() {
     });
 
     mapRef.current = map;
+    setMapInstance(map);
     return () => { map.remove(); mapRef.current = null; };
   }, [renderMarkersForBounds]);
 
@@ -514,10 +828,9 @@ export default function Explore() {
     if (!tileLayerRef.current) return;
     const isSat = theme === "satellite";
     tileLayerRef.current.setUrl(TILE_URLS[theme] || TILE_URLS.default);
-    tileLayerRef.current.options.subdomains = isSat ? "" : "abcd";
     const map = mapRef.current;
     if (map) {
-      const attrCtrl = (map as any).attributionControl;
+      const attrCtrl = map.attributionControl;
       if (attrCtrl) {
         attrCtrl.removeAttribution(TILE_ATTR_DEFAULT);
         attrCtrl.removeAttribution(TILE_ATTR_SAT);
@@ -531,25 +844,27 @@ export default function Explore() {
     async function load() {
       try {
         const [{ data: geojson, fromCache: cached }, { data: suburbs }] = await Promise.all([
-          fetchWithCache<any>(`${BASE}data/Parks.geojson`, "pp_parks"),
+          fetchWithCache<MixedCollection<ParksProperties>>(`${BASE}data/Parks.geojson`, "pp_parks"),
           fetchWithCache<Record<string, { suburb: string }>>(`${BASE}data/parks-suburbs.json`, "pp_suburbs")
             .catch(() => ({ data: {} as Record<string, { suburb: string }>, fromCache: false })),
         ]);
         setFromCache(cached);
-        const parks: Park[] = geojson.features.map((f: any, i: number) => {
-          const p = f.properties; const g = f.geometry;
-          let lat = -33.8688, lng = 151.2093;
-          if (g.type === "Polygon") { const c = calcCentroid(g.coordinates[0]); lat = c.lat; lng = c.lng; }
-          else if (g.type === "MultiPolygon") { const c = calcCentroid(g.coordinates[0][0]); lat = c.lat; lng = c.lng; }
+        const SYDNEY = calcCentroid([[151.2093, -33.8688]]);
+        const parks: Park[] = geojson.features.map((f, i) => {
+          const p = f.properties ?? {};
+          // Parks are area geometry; fall back to the city centre for the rare
+          // feature with no usable coordinates so it is still searchable.
+          const centre = readFeatureCentroid(f) ?? SYDNEY;
           return {
             id: p.OBJECTID ?? i,
             name: p.Name || "Unnamed Park",
             type: p.Type || "Unknown",
-            suburb: (suburbs[String(p.OBJECTID)] || {}).suburb || "",
+            suburb: suburbs[String(p.OBJECTID)]?.suburb || "",
             hasPlayground: p.Playgrounds === "Yes",
             area: p.Shape__Area ? Math.round(p.Shape__Area) : null,
             assetId: p.Asset_ID || "",
-            lat, lng,
+            lat: centre.lat,
+            lng: centre.lng,
           };
         });
         allParksRef.current = parks;
@@ -564,29 +879,29 @@ export default function Explore() {
     load();
   }, []);
 
-  // ── Blacktown layer (cached) ──────────────────────────────────────────────
-  useEffect(() => {
-    const map = mapRef.current;
-    if (!map) return;
-    fetchWithCache<any>(`${BASE}data/blacktown.geojson`, "pp_blacktown")
-      .then(({ data }) => {
-        if (!mapRef.current) return;
-        const layer = L.layerGroup();
-        (data.features || []).forEach((f: any) => {
-          if (!f.geometry?.coordinates) return;
-          const [lng, lat] = f.geometry.coordinates;
-          const p = f.properties;
-          const isPlayground = p.leisure === "playground";
-          const color = isPlayground ? "#DC267F" : "#8B1A6B";
-          const marker = L.marker([lat, lng], { icon: makeIcon(color, isPlayground ? 16 : 20, isPlayground ? "50%" : "4px") });
-          marker.bindPopup(`<div class="pp-popup"><span class="pp-popup-type" style="background:${color}">${isPlayground ? "Playground" : "Park"} · Blacktown</span><h3>${p.name || (isPlayground ? "Playground" : "Park")}</h3></div>`, { maxWidth: 240 });
-          layer.addLayer(marker);
-        });
-        blacktownLayerRef.current = layer;
-        layer.addTo(mapRef.current);
-      })
-      .catch(() => {});
-  }, []);
+  // ── Blacktown layer (cached, viewport-culled) ────────────────────────────
+  // Always-on, and 1,605 features — previously every one of them was added to
+  // the DOM on load regardless of whether it was on screen.
+  useCulledMarkerLayer<Record<string, unknown>>(mapInstance, {
+    enabled: true,
+    url: `${BASE}data/blacktown.geojson`,
+    cacheId: "pp_blacktown",
+    label: "Blacktown parks",
+    build: (p, [lat, lng]) => {
+      const isPlayground = p.leisure === "playground";
+      const color = isPlayground ? "#DC267F" : "#8B1A6B";
+      const label = isPlayground ? "Playground" : "Park";
+      const name = (p.name as string) || label;
+      const marker = L.marker([lat, lng], {
+        icon: getOverlayIcon(color, isPlayground ? 16 : 20, isPlayground ? "50%" : "4px"),
+        title: name,
+      });
+      marker.bindPopup(() => buildSimplePopup(color, `${label} · Blacktown`, name), { maxWidth: 240 });
+      return marker;
+    },
+    onCount: (total) => setLayerCounts((prev) => ({ ...prev, blacktown: total })),
+    onError: (label) => toast(`Could not load ${label}`, "error"),
+  });
 
   // ── Re-render markers when filtered or geocodeNearby changes ──────────────
   useEffect(() => {
@@ -601,67 +916,87 @@ export default function Explore() {
     else renderMarkersForBounds(filteredRef.current);
   }, [geocodeNearby, renderMarkersForBounds]);
 
-  // ── Overlay layers ────────────────────────────────────────────────────────
+  // ── Culled point overlays (fountains, transport, toilets) ──────────────────
+  // These datasets hold between 273 and 3,127 points each. They used to be
+  // added to the map in one shot, so ticking a filter created thousands of
+  // marker DOM nodes whether or not they were on screen.
+  useCulledMarkerLayer<Record<string, unknown>>(mapInstance, {
+    enabled: filters.fountains,
+    url: `${BASE}data/drinking-fountains.geojson`,
+    cacheId: "pp_fountains",
+    label: "drinking fountains",
+    build: (p, [lat, lng]) => {
+      const name = (p.name as string) || "Water Fountain";
+      const marker = L.marker([lat, lng], { icon: getOverlayIcon("#0077B6", 16, "50%"), title: name });
+      marker.bindPopup(() => buildSimplePopup("#0077B6", "Drinking Fountain", name), { maxWidth: 200 });
+      return marker;
+    },
+    onCount: (total) => setLayerCounts((prev) => ({ ...prev, fountains: total })),
+    onError: (label) => toast(`Could not load ${label}`, "error"),
+  });
+
+  useCulledMarkerLayer<Record<string, unknown>>(mapInstance, {
+    enabled: filters.transport,
+    url: `${BASE}data/public-transports.json`,
+    cacheId: "pp_transport",
+    label: "public transport",
+    build: (p, [lat, lng]) => {
+      const name =
+        (p.name as string) ||
+        ((p.properties as Record<string, unknown> | undefined)?.stop_name as string) ||
+        "Transport Stop";
+      const marker = L.marker([lat, lng], { icon: getOverlayIcon("#9B2335", 16, "3px"), title: name });
+      marker.bindPopup(() => buildSimplePopup("#9B2335", "Transport", name), { maxWidth: 200 });
+      return marker;
+    },
+    onCount: (total) => setLayerCounts((prev) => ({ ...prev, transport: total })),
+    onError: (label) => toast(`Could not load ${label}`, "error"),
+  });
+
+  useCulledMarkerLayer<Record<string, unknown>>(mapInstance, {
+    enabled: filters.toilets,
+    url: `${BASE}data/toilets-sydney.json`,
+    cacheId: "pp_toilets",
+    label: "public toilets",
+    build: (p, [lat, lng]) => {
+      const name =
+        (p.name as string) ||
+        (p.toilet_name as string) ||
+        ((p.properties as Record<string, unknown> | undefined)?.name as string) ||
+        "Public Toilet";
+      const marker = L.marker([lat, lng], { icon: getOverlayIcon("#6D597A", 16, "3px"), title: name });
+      marker.bindPopup(() => buildSimplePopup("#6D597A", "Public Toilet", name), { maxWidth: 200 });
+      return marker;
+    },
+    onCount: (total) => setLayerCounts((prev) => ({ ...prev, toilets: total })),
+    onError: (label) => toast(`Could not load ${label}`, "error"),
+  });
+
+  // ── Trees layer (sharded, canvas-rendered) ───────────────────────────────
   useEffect(() => {
     const map = mapRef.current;
     if (!map) return;
 
-    const loadFountains = async () => {
-      if (fountainLayerRef.current) return;
-      try {
-        const { data } = await fetchWithCache<any>(`${BASE}data/drinking-fountains.geojson`, "pp_fountains");
-        const layer = L.layerGroup();
-        (data.features || []).forEach((f: any) => {
-          if (!f.geometry?.coordinates) return;
-          const [lng, lat] = f.geometry.coordinates;
-          const m = L.marker([lat, lng], { icon: makeIcon("#0077B6", 16), title: f.properties?.name || "Water Fountain" });
-          m.bindPopup(`<div class="pp-popup"><span class="pp-popup-type" style="background:#0077B6">Drinking Fountain</span><h3>${f.properties?.name || "Water Fountain"}</h3></div>`, { maxWidth: 200 });
-          layer.addLayer(m);
-        });
-        fountainLayerRef.current = layer;
-        setLayerCounts(prev => ({ ...prev, fountains: data.features?.length ?? 0 }));
-      } catch {}
-    };
-
-    const loadTransport = async () => {
-      if (transportLayerRef.current) return;
-      try {
-        const { data } = await fetchWithCache<any>(`${BASE}data/public-transports.json`, "pp_transport");
-        const items = Array.isArray(data) ? data : (data.features || []);
-        const layer = L.layerGroup();
-        items.forEach((item: any) => {
-          const lat = item.lat ?? item.geometry?.coordinates?.[1];
-          const lng = item.lng ?? item.geometry?.coordinates?.[0];
-          if (!lat || !lng) return;
-          const name = item.name || item.properties?.stop_name || "Transport Stop";
-          const m = L.marker([lat, lng], { icon: makeIcon("#9B2335", 16, "3px"), title: name });
-          m.bindPopup(`<div class="pp-popup"><span class="pp-popup-type" style="background:#9B2335">Transport</span><h3>${name}</h3></div>`, { maxWidth: 200 });
-          layer.addLayer(m);
-        });
-        transportLayerRef.current = layer;
-        setLayerCounts(prev => ({ ...prev, transport: items.length }));
-      } catch {}
-    };
-
-    // Trees: canvas renderer + circleMarker for maximum performance
     const loadTrees = async () => {
       if (treeLayerRef.current) return;
+      if (!treeRendererRef.current) {
+        treeRendererRef.current = L.canvas({ padding: 0.5 });
+      }
+      const renderer = treeRendererRef.current;
+      const bounds = map.getBounds();
       try {
-        if (!treeRendererRef.current) {
-          treeRendererRef.current = L.canvas({ padding: 0.5 });
-        }
-        const renderer = treeRendererRef.current;
-        const { data } = await fetchWithCache<any>(`${BASE}data/trees.geojson`, "pp_trees");
-        if (!data.features?.length) return;
+        const { trees, info } = await loadTreesForBounds({
+          south: bounds.getSouth(),
+          west: bounds.getWest(),
+          north: bounds.getNorth(),
+          east: bounds.getEast(),
+        });
+        if (!trees.length) return;
         const layer = L.layerGroup();
-        const features = (data.features as any[]).filter(f => f.geometry?.coordinates);
-        features.forEach((f: any) => {
-          const [lng, lat] = f.geometry.coordinates;
-          const p = f.properties || {};
-          const park = allParksRef.current
-            .map(candidate => ({ candidate, dist: haversineKm(lat, lng, candidate.lat, candidate.lng) }))
-            .sort((a, b) => a.dist - b.dist)[0]?.candidate ?? null;
-          const circle = L.circleMarker([lat, lng], {
+        const index = treeIndexRef.current ?? new NearestIndex(allParksRef.current);
+        treeIndexRef.current = index;
+        for (const tree of trees) {
+          const circle = L.circleMarker([tree.lat, tree.lng], {
             renderer,
             radius: 3,
             color: "#2D6A4F",
@@ -670,68 +1005,36 @@ export default function Explore() {
             weight: 0.5,
             interactive: true,
           });
-          const popup = document.createElement("div");
-          popup.className = "pp-popup";
-          popup.innerHTML = `
-            <span class="pp-popup-type" style="background:#40916C">🌳 Tree</span>
-            <h3>${p.common_name || p.species || "Tree"}</h3>
-            ${p.genus ? `<p style="font-size:11px;color:var(--pp-text-muted)">${p.genus}</p>` : ""}
-            ${p.location ? `<p>${p.location}</p>` : ""}
-            ${park ? `<p style="font-size:11px;margin-top:4px">Nearest park: ${park.name}</p>` : ""}
-            <button class="pp-popup-btn" style="margin-top:8px">${park ? "View nearest park" : "View details"}</button>
-          `;
-          popup.querySelector(".pp-popup-btn")?.addEventListener("click", () => {
-            if (park) setSelectedParkRef.current(park);
-            else if (p.common_name || p.species || p.genus) toast(`Tree: ${p.common_name || p.species || "unknown"}`, "info");
-          });
-          circle.bindPopup(popup, { maxWidth: 240 });
+          // Lazy: the nearest-park lookup runs when the popup is opened, not
+          // once per tree at load time.
+          circle.bindPopup(() => buildTreePopup(tree, index.nearest(tree.lat, tree.lng)), { maxWidth: 240 });
           layer.addLayer(circle);
-        });
+        }
         treeLayerRef.current = layer;
-        setLayerCounts(prev => ({ ...prev, trees: features.length }));
-      } catch {}
+        setLayerCounts((prev) => ({ ...prev, trees: info.total }));
+        setTreeSourceInfo(info);
+      } catch (err) {
+        console.error("[explore] failed to load tree data:", err);
+        toast("Could not load tree data", "error");
+      }
     };
-
-    const loadToilets = async () => {
-      if (toiletLayerRef.current) return;
-      try {
-        const { data } = await fetchWithCache<any>(`${BASE}data/toilets-sydney.json`, "pp_toilets");
-        const items = Array.isArray(data) ? data : (data.features || data.rows || []);
-        if (!items.length) return;
-        const layer = L.layerGroup();
-        items.forEach((item: any) => {
-          const lat = item.lat ?? item.latitude ?? item.geometry?.coordinates?.[1];
-          const lng = item.lng ?? item.longitude ?? item.geometry?.coordinates?.[0];
-          if (!lat || !lng) return;
-          const name = item.name || item.toilet_name || item.properties?.name || "Public Toilet";
-          const m = L.marker([lat, lng], { icon: makeIcon("#6D597A", 16, "3px"), title: name });
-          m.bindPopup(`<div class="pp-popup"><span class="pp-popup-type" style="background:#6D597A">Public Toilet</span><h3>${name}</h3></div>`, { maxWidth: 200 });
-          layer.addLayer(m);
-        });
-        toiletLayerRef.current = layer;
-        setLayerCounts(prev => ({ ...prev, toilets: items.length }));
-      } catch {}
-    };
-
-    if (filters.fountains) { loadFountains().then(() => { if (fountainLayerRef.current && !map.hasLayer(fountainLayerRef.current)) map.addLayer(fountainLayerRef.current); }); }
-    else if (fountainLayerRef.current && map.hasLayer(fountainLayerRef.current)) map.removeLayer(fountainLayerRef.current);
-
-    if (filters.transport) { loadTransport().then(() => { if (transportLayerRef.current && !map.hasLayer(transportLayerRef.current)) map.addLayer(transportLayerRef.current); }); }
-    else if (transportLayerRef.current && map.hasLayer(transportLayerRef.current)) map.removeLayer(transportLayerRef.current);
-
-    if (filters.toilets) { loadToilets().then(() => { if (toiletLayerRef.current && !map.hasLayer(toiletLayerRef.current)) map.addLayer(toiletLayerRef.current); }); }
-    else if (toiletLayerRef.current && map.hasLayer(toiletLayerRef.current)) map.removeLayer(toiletLayerRef.current);
 
     if (filters.trees) {
-      loadTrees().then(() => {
+      void loadTrees().then(() => {
         if (treeLayerRef.current) {
-          if (map.getZoom() >= TREE_ZOOM_THRESHOLD) { if (!map.hasLayer(treeLayerRef.current)) map.addLayer(treeLayerRef.current); setTreeZoomHint(false); }
-          else setTreeZoomHint(true);
+          if (map.getZoom() >= TREE_ZOOM_THRESHOLD) {
+            if (!map.hasLayer(treeLayerRef.current)) map.addLayer(treeLayerRef.current);
+            setTreeZoomHint(false);
+          } else {
+            setTreeZoomHint(true);
+          }
         }
       });
-    } else { if (treeLayerRef.current && map.hasLayer(treeLayerRef.current)) map.removeLayer(treeLayerRef.current); setTreeZoomHint(false); }
-  }, [filters.fountains, filters.transport, filters.toilets, filters.trees]);
-
+    } else {
+      if (treeLayerRef.current && map.hasLayer(treeLayerRef.current)) map.removeLayer(treeLayerRef.current);
+      setTreeZoomHint(false);
+    }
+  }, [filters.trees]);
   // ── Dog parks layer (cached + raw data for modal cross-ref) ───────────────
   useEffect(() => {
     const map = mapRef.current;
@@ -739,26 +1042,27 @@ export default function Explore() {
     const loadDogs = async () => {
       if (dogLayerRef.current) return;
       try {
-        const { data } = await fetchWithCache<any>(`${BASE}data/Dog_off-leash_parks.geojson`, "pp_dogs");
+        const { data } = await fetchWithCache<FeatureCollection<DogProperties>>(
+          `${BASE}data/Dog_off-leash_parks.geojson`, "pp_dogs",
+        );
         const layer = L.layerGroup();
         const raw: DogRaw[] = [];
-        (data.features || []).forEach((f: any) => {
-          if (!f.geometry?.coordinates) return;
-          const [lng, lat] = f.geometry.coordinates;
-          const p = f.properties;
-          raw.push({ name: p.ParkName, lat, lng });
-          const always = p.OffLeashTime === "At all times";
-          const marker = L.marker([lat, lng], { icon: makeIcon("#AACC00", 26, "50%", "🐾"), title: p.ParkName });
-          const badge = always
-            ? `<span class="pp-popup-badge-green">Always Off-Leash</span>`
-            : `<span class="pp-popup-badge-orange">${p.OffLeashTime}</span>`;
-          marker.bindPopup(`<div class="pp-popup"><span class="pp-popup-type" style="background:#AACC00;color:#000">🐕 Dog Park</span><h3>${p.ParkName}</h3><p>${p.Suburb}</p>${badge}${p.ProhibitedAreas ? `<p style="font-size:11px;margin-top:4px;color:#666">⚠ Not allowed: ${p.ProhibitedAreas}</p>` : ""}<p style="font-size:12px;margin-top:4px">${p.OffLeashDescription}</p></div>`, { maxWidth: 280 });
+        (data.features || []).forEach((f) => {
+          const at = readLatLng(f);
+          if (!at) return;
+          const p = f.properties ?? {};
+          raw.push({ name: p.ParkName ?? "Dog off-leash area", lat: at.lat, lng: at.lng });
+          const marker = L.marker([at.lat, at.lng], { icon: makeIcon("#AACC00", 26, "50%", "🐾"), title: p.ParkName });
+          marker.bindPopup(() => buildDogPopup(p), { maxWidth: 280 });
           layer.addLayer(marker);
         });
         dogLayerRef.current = layer;
         setDogRawData(raw);
         setLayerCounts(prev => ({ ...prev, dogs: raw.length }));
-      } catch {}
+      } catch (err) {
+        console.error("[explore] failed to load dog parks:", err);
+        toast("Could not load dog parks", "error");
+      }
     };
     if (filters.dogs) { loadDogs().then(() => { if (dogLayerRef.current && !map.hasLayer(dogLayerRef.current)) map.addLayer(dogLayerRef.current); }); }
     else if (dogLayerRef.current && map.hasLayer(dogLayerRef.current)) map.removeLayer(dogLayerRef.current);
@@ -771,23 +1075,32 @@ export default function Explore() {
     const loadNPWS = async () => {
       if (npwsLayerRef.current) return;
       try {
-        const { data } = await fetchWithCache<any>(`${BASE}data/npws-facilities-greater-sydney.geojson`, "pp_npws");
-        const cluster = (L as any).markerClusterGroup({ maxClusterRadius: 50, disableClusteringAtZoom: 17, chunkedLoading: true });
+        const { data } = await fetchWithCache<FeatureCollection<NpwsProperties>>(
+          `${BASE}data/npws-facilities-greater-sydney.geojson`, "pp_npws",
+        );
+        const cluster = L.markerClusterGroup({ maxClusterRadius: 50, disableClusteringAtZoom: 17, chunkedLoading: true });
         const raw: NpwsRaw[] = [];
-        (data.features || []).forEach((f: any) => {
-          if (!f.geometry?.coordinates) return;
-          const [lng, lat] = f.geometry.coordinates;
-          const p = f.properties;
-          raw.push({ name: p.AssetName || "NPWS Facility", subtype: p.d_SubtypeC || "Facility", lat, lng });
+        (data.features || []).forEach((f) => {
+          const at = readLatLng(f);
+          if (!at) return;
+          const p = f.properties ?? {};
+          raw.push({
+            name: p.AssetName || "NPWS Facility",
+            subtype: p.d_SubtypeC || "Facility",
+            lat: at.lat, lng: at.lng,
+          });
           const color = npwsColor(p.d_SubtypeC || "");
-          const marker = L.marker([lat, lng], { icon: makeIcon(color, 14), title: p.AssetName });
-          marker.bindPopup(`<div class="pp-popup"><span class="pp-popup-type" style="background:${color}">${p.d_SubtypeC || "Facility"}</span><h3>${p.AssetName || "NPWS Facility"}</h3>${p.d_LGA ? `<p>${p.d_LGA}</p>` : ""}${p.d_Branch ? `<p style="font-size:11px;color:#888">${p.d_Branch}</p>` : ""}${p.Comments ? `<p style="font-size:11px;margin-top:4px">${p.Comments}</p>` : ""}</div>`, { maxWidth: 260 });
+          const marker = L.marker([at.lat, at.lng], { icon: makeIcon(color, 14), title: p.AssetName });
+          marker.bindPopup(() => buildNpwsPopup(p, color), { maxWidth: 260 });
           cluster.addLayer(marker);
         });
         npwsLayerRef.current = cluster;
         setNpwsRawData(raw);
         setLayerCounts(prev => ({ ...prev, npws: raw.length }));
-      } catch {}
+      } catch (err) {
+        console.error("[explore] failed to load NPWS facilities:", err);
+        toast("Could not load NPWS facilities", "error");
+      }
     };
     if (filters.npws) { loadNPWS().then(() => { if (npwsLayerRef.current && !map.hasLayer(npwsLayerRef.current)) map.addLayer(npwsLayerRef.current); }); }
     else if (npwsLayerRef.current && map.hasLayer(npwsLayerRef.current)) map.removeLayer(npwsLayerRef.current);
@@ -847,10 +1160,15 @@ export default function Explore() {
           setGeocodePlace(place);
           toast(`Showing parks near "${place}"`, "info");
         }
-      } catch {}
+      } catch (err) {
+        console.error("[explore] failed to load geocoding:", err);
+        toast("Could not load geocoding", "error");
+      }
     })();
     return () => controller.abort();
   }, [search, filtered.length, geocodeNearby, allParks, toast]);
+
+  const closeParkModal = useCallback(() => setSelectedPark(null), []);
 
   // ── Computed values ───────────────────────────────────────────────────────
   const parkStats = useMemo(() => ({
@@ -946,14 +1264,17 @@ export default function Explore() {
     if (!mapRef.current) return;
     setSelectedPark(park);
     mapRef.current.flyTo([park.lat, park.lng], 17, { duration: 1.2, easeLinearity: 0.25 });
+    // Wait for the fly-to animation to settle before revealing the marker.
     setTimeout(() => {
-      const marker = markersRef.current.find(m => {
-        const ll = m.getLatLng();
-        return Math.abs(ll.lat - park.lat) < 0.00001 && Math.abs(ll.lng - park.lng) < 0.00001;
-      });
-      if (marker) marker.openPopup();
+      markersByIdRef.current.get(park.id)?.openPopup();
     }, 1300);
   }, []);
+
+  // Expose the component's handlers to the module-level popup builders.
+  useEffect(() => {
+    selectParkFromPopup = selectPark;
+    toastForPopup = toast;
+  }, [selectPark, toast]);
 
   const handleLocate = useCallback(() => {
     if (!navigator.geolocation) { toast("Geolocation not supported by your browser", "error"); return; }
@@ -1060,7 +1381,11 @@ export default function Explore() {
   }, [allParks, toast]);
 
   const activeFilterCount = Object.values(filters).filter(Boolean).length + (search ? 1 : 0) + (showFavOnly ? 1 : 0);
-  const totalCount = allParks.length + 1605;
+  // The Blacktown layer reported its real feature count once loaded; the
+  // previous hard-coded 1605 made the header lie whenever the dataset changed
+  // (and before the first load, showing parks alone).
+  const blacktownCount = layerCounts.blacktown ?? 0;
+  const totalCount = allParks.length + blacktownCount;
   const displayParks = sortedDisplayParks;
 
   // ── Filter items config ───────────────────────────────────────────────────
@@ -1114,18 +1439,19 @@ export default function Explore() {
   // ── JSX ───────────────────────────────────────────────────────────────────
   return (
     <div className="pp-explore-page">
+      <a href="#main-content" className="pp-visually-hidden pp-skip-link">Skip to main content</a>
       <Navbar />
-      <main className="pp-explore-main">
+      <main id="main-content" className="pp-explore-main">
 
         {/* ── Sidebar ── */}
         <aside className={`pp-sidebar${sidebarCollapsed ? " collapsed" : ""}`}>
 
           {/* Header */}
           <div className="pp-sidebar-header">
-            <h2>
+            <h1>
               Find Parks{" "}
               {activeFilterCount > 0 && <span className="pp-active-badge">{activeFilterCount}</span>}
-            </h2>
+            </h1>
             <button
               className="pp-sidebar-toggle"
               aria-label="Collapse sidebar"
@@ -1154,7 +1480,7 @@ export default function Explore() {
                   if (e.key === "Escape") { clearAll(); }
                   else if (e.key === "ArrowDown") {
                     e.preventDefault();
-                    const first = resultsListRef.current?.querySelector<HTMLElement>(".pp-park-card[tabindex]");
+                    const first = resultsListRef.current?.querySelector<HTMLElement>(".pp-park-card-title");
                     first?.focus(); first?.scrollIntoView({ block: "nearest" });
                   }
                 }}
@@ -1264,7 +1590,7 @@ export default function Explore() {
                         {item.icon}
                         {item.label}
                         {item.key === "trees" && filters.trees && treeZoomHint && (
-                          <small style={{ color: "#999", fontSize: 10, marginLeft: 4 }}>(zoom in)</small>
+                          <small className="pp-zoom-hint">(zoom in)</small>
                         )}
                         {item.countKey && layerCounts[item.countKey] !== undefined && (
                           <span className="pp-layer-count">{layerCounts[item.countKey].toLocaleString()}</span>
@@ -1450,7 +1776,7 @@ export default function Explore() {
                 {([
                   { emoji: "🛝", count: parkStats.playgrounds,       filterKey: "playground"    as const, label: "playgrounds" },
                   { emoji: "⭐", count: parkStats.iconic,            filterKey: "iconic"        as const, label: "iconic parks" },
-                  { emoji: "🐕", count: layerCounts.dogs ?? 29,      filterKey: "dogs"          as const, label: "dog parks" },
+                  { emoji: "🐕", count: layerCounts.dogs ?? 0,      filterKey: "dogs"          as const, label: "dog parks" },
                   { emoji: "🌿", count: parkStats.pocket,            filterKey: "pocket"        as const, label: "pocket parks" },
                   { emoji: "🏘",  count: parkStats.neighbourhood,    filterKey: "neighbourhood" as const, label: "neighbourhood parks" },
                   { emoji: "⚽", count: parkStats.sports,            filterKey: "sportsfield"   as const, label: "sportsfields" },
@@ -1489,7 +1815,13 @@ export default function Explore() {
                   <polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-.49-4.49"/>
                 </svg>
                 Cached data
-                <button onClick={handleClearCache} title="Clear cache and reload fresh data">↺ refresh</button>
+                <button onClick={handleClearCache} title="Clear cache and reload fresh data" style={{ padding: ".25rem .5rem" }}>↺ refresh</button>
+              </div>
+            )}
+            {/* Cache warning */}
+            {cacheWarning && (
+              <div className="pp-cache-warning" role="alert" style={{ padding: ".5rem 1.25rem", fontSize: ".75rem", color: "var(--pp-text-muted)", background: "var(--pp-bg-alt)", borderBottom: "1px solid var(--pp-border-light)" }}>
+                {cacheWarning}
               </div>
             )}
 
@@ -1673,11 +2005,6 @@ export default function Explore() {
                         data-park-id={park.id}
                         className={`pp-park-card pp-card-stagger${compactView ? " compact" : ""}${showRank ? " pp-ranked" : ""}`}
                         style={{ animationDelay: `${Math.min(i, 15) * 35}ms` }}
-                        onClick={() => selectPark(park)}
-                        role="button"
-                        tabIndex={0}
-                        onKeyDown={e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); selectPark(park); } }}
-                        aria-label={`View ${park.name}`}
                       >
                         {showRank && (
                           <span
@@ -1685,7 +2012,7 @@ export default function Explore() {
                             title={`#${i + 1} largest`}
                             style={i === 0 ? { background: "#FFD700", color: "#7A5C00" }
                                  : i === 1 ? { background: "#C0C0C0", color: "#444" }
-                                 : i === 2 ? { background: "#CD7F32", color: "#fff" }
+                                 : i === 2 ? { background: "#8A4B14", color: "#fff" }
                                  : undefined}
                           >#{i + 1}</span>
                         )}
@@ -1717,7 +2044,11 @@ export default function Explore() {
                           onClick={async e => {
                             e.stopPropagation();
                             const url = `${window.location.origin}${window.location.pathname}?park=${encodeURIComponent(park.name)}`;
-                            try { await navigator.clipboard.writeText(url); } catch { /* fallback ignored */ }
+                            try {
+                              await navigator.clipboard.writeText(url);
+                            } catch (err) {
+                              console.warn("[explore] clipboard write failed:", err);
+                            }
                             toast("Link copied!", "success");
                           }}
                           aria-label={`Copy link to ${park.name}`}
@@ -1728,12 +2059,21 @@ export default function Explore() {
                           </svg>
                         </button>
                         <div className="pp-park-card-header">
-                          <h4>{search ? (() => {
-                            const q = search.trim();
-                            const idx = park.name.toLowerCase().indexOf(q.toLowerCase());
-                            if (idx === -1) return park.name;
-                            return (<>{park.name.slice(0, idx)}<mark className="pp-highlight-match">{park.name.slice(idx, idx + q.length)}</mark>{park.name.slice(idx + q.length)}</>);
-                          })() : park.name}</h4>
+                          <h4>
+                            <button
+                              type="button"
+                              className="pp-park-card-title"
+                              onClick={() => selectPark(park)}
+                              aria-label={`View details for ${park.name}`}
+                            >
+                              {search ? (() => {
+                                const q = search.trim();
+                                const idx = park.name.toLowerCase().indexOf(q.toLowerCase());
+                                if (idx === -1) return park.name;
+                                return (<>{park.name.slice(0, idx)}<mark className="pp-highlight-match">{park.name.slice(idx, idx + q.length)}</mark>{park.name.slice(idx + q.length)}</>);
+                              })() : park.name}
+                            </button>
+                          </h4>
                           <button
                             className={`pp-park-type-badge ${typeClass} pp-type-badge-btn`}
                             onClick={e => {
@@ -1901,6 +2241,7 @@ export default function Explore() {
           </button>
         )}
 
+      <Footer compact />
       </main>
 
       {/* Modal */}
@@ -1910,7 +2251,7 @@ export default function Explore() {
         return (
           <ParkModal
             park={selectedPark}
-            onClose={() => setSelectedPark(null)}
+            onClose={closeParkModal}
             nearbyNPWS={nearbyNPWSFacilities}
             nearbyDogPark={nearbyDogParkName}
             isFavorite={favoriteIds.has(selectedPark.id)}

@@ -1,8 +1,12 @@
 import { Link } from "wouter";
 
-export default function Footer() {
+interface FooterProps {
+  compact?: boolean;
+}
+
+export default function Footer({ compact = false }: FooterProps) {
   return (
-    <footer className="pp-footer">
+    <footer className={`pp-footer${compact ? " pp-footer--compact" : ""}`}>
       <div className="pp-container">
         <div className="pp-footer-content">
           <div className="pp-footer-brand">
@@ -101,20 +105,22 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="pp-footer-bottom">
-          <p>© 2025–{new Date().getFullYear()} Park Pulse — Open Data Project</p>
-          <div style={{ display: "flex", alignItems: "center", gap: "1rem", flexWrap: "wrap" }}>
-            <p>Built by Raghav Kumawat · Data updated 2025</p>
-            <button
-              className="pp-footer-back-top"
-              onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-              aria-label="Back to top"
-              title="Scroll to top"
-            >
-              ↑ Top
-            </button>
+        {!compact && (
+          <div className="pp-footer-bottom">
+            <p>© 2025–{new Date().getFullYear()} Park Pulse — Open Data Project</p>
+            <div style={{ display: "flex", alignItems: "center", gap: "1rem", flexWrap: "wrap" }}>
+              <p>Built by Raghav Kumawat · Data updated 2025</p>
+              <button
+                className="pp-footer-back-top"
+                onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+                aria-label="Back to top"
+                title="Scroll to top"
+              >
+                ↑ Top
+              </button>
+            </div>
           </div>
-        </div>
+        )}
       </div>
     </footer>
   );

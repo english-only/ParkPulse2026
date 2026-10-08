@@ -1,0 +1,32 @@
+Sydney|0|
+Blacktown|0|
+Cumberland|0|
+Parramatta|0|
+Canterbury-Bankstown|0|
+Georges River|0|
+Bayside|0|
+Northern Beaches|0|
+Sutherland|0|
+Hornsby|0|
+Ryde|0|
+Penrith|0|
+Hawkesbury|0|
+Strathfield|0|
+Inner West|0|
+Randwick|0|
+Woollahra|0|
+Waverley|0|
+Lane Cove|0|
+Willoughby|0|
+Ku-ring-gai|0|
+Mosman|0|
+Hunters Hill|0|
+Fairfield|0|
+Liverpool|0|
+Camden|0|
+Campbelltown|0|
+Blue Mountains|0|
+Canada Bay|0|
+North Sydney|0|
+
+=== ORG SUMMARY (name non-empty) ===

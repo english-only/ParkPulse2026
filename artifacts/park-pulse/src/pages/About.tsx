@@ -24,7 +24,7 @@ export default function About() {
 
   const dataSources = [
     { title: "City of Sydney Parks", desc: "Comprehensive dataset of over 400 parks including location boundaries, park types, and playground information.", href: "https://data.cityofsydney.nsw.gov.au/datasets/cityofsydney::parks-1", badge: "GeoJSON" },
-    { title: "Blacktown City Council", desc: "Parks and playground locations across the Blacktown local government area.", href: "https://www.blacktown.nsw.gov.au/", badge: "GeoJSON" },
+    { title: "Blacktown Parks (OpenStreetMap)", desc: "1,605 park and playground features for Blacktown LGA sourced from OpenStreetMap (ODbL licensed).", href: "https://www.openstreetmap.org/", badge: "GeoJSON" },
     { title: "NPWS Facilities", desc: "1,795 National Parks & Wildlife Service facility points across Greater Sydney — BBQs, shelters, picnic tables, playgrounds and more.", href: "https://datasets.seed.nsw.gov.au/", badge: "GeoJSON", isNew: true },
     { title: "Off-Leash Dog Parks", desc: "City of Sydney off-leash dog areas with hours, restrictions, and descriptions for 29 designated parks.", href: "https://data.cityofsydney.nsw.gov.au/", badge: "GeoJSON", isNew: true },
     { title: "Drinking Fountains", desc: "Locations of public drinking fountains and water stations throughout Sydney.", href: "https://data.cityofsydney.nsw.gov.au/", badge: "GeoJSON" },

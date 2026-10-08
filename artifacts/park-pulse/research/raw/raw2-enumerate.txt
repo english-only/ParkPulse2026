@@ -1,0 +1,454 @@
+### Blacktown (data.nsw) — 22 packages
+  fdp-south-creek-final-report | Final report of Wianamatta South Creek Flood Study - Blacktown City Council | Creative Commons Attribution
+  fdp-hydrological-and-hydraulic-model | Hydrological and hydraulic model | Licence Specified by Agency
+  fdp-gis-dataset | GIS dataset | Licence Specified by Agency
+  fdp-modelling-results | Modelling results | Licence Specified by Agency
+  fdp-dataset-checklist | Dataset checklist | Licence Specified by Agency
+  fdp-eastern-creek-catchment-hydrological-assessment-report | Eastern Creek Catchment - Hydrological Assessment | Creative Commons Attribution
+  fdp-eastern-creek-hydraulic-assessment-report | Eastern Creek Hydraulic Assessment - Report | Creative Commons Attribution
+  fdp-report_1 | Report | Creative Commons Attribution
+  fdp-eastern-creek-catchment-development-scenario-hydraulic-assessment-hydrological-model-outa71eabaa | Eastern Creek Catchment - Development Scenario Hydraulic Assessment - Hydrological Model Outputs (XP-RAFTS) | Licence Specified by Agency
+  fdp-eastern-creek-catchment-development-scenario-hydraulic-assessment-hydrological-model-inpfb3e1035 | Eastern Creek Catchment - Development Scenario Hydraulic Assessment - Hydrological Model Inputs (XP-RAFTS) | Licence Specified by Agency
+  fdp-eastern-creek-catchment-development-scenario-hydraulic-assessment-dataset-handover-description | Eastern Creek Catchment - Development Scenario Hydraulic Assessment - Dataset Handover Description | Licence Specified by Agency
+  fdp-eastern-creek-catchment-development-scenario-hydraulic-assessment-post-processed-layers | Eastern Creek Catchment - Development Scenario Hydraulic Assessment - Post-Processed Layers | Licence Specified by Agency
+  fdp-eastern-creek-catchment-development-scenario-hydraulic-assessment-report | Eastern Creek Catchment - Development Scenario Hydraulic Assessment - Report | Licence Specified by Agency
+  fdp-eastern-creek-catchment-development-scenario-hydraulic-assessment-hydraulic-model-inputs-tuflow | Eastern Creek Catchment - Development Scenario Hydraulic Assessment - Hydraulic Model Inputs (TUFLOW) | Licence Specified by Agency
+  fdp-eastern-creek-catchment-development-scenario-hydraulic-assessment-hydraulic-model-outputs-tuflow | Eastern Creek Catchment - Development Scenario Hydraulic Assessment - Hydraulic Model Outputs (TUFLOW) | Licence Specified by Agency
+  fdp-eastern-creek-hydraulic-assessment-hydrological-model-xp-rafts | Eastern Creek Hydraulic Assessment - Hydrological Model (XP-RAFTS) | Licence Specified by Agency
+  fdp-eastern-creek-catchment-hydraulic-assessment-hydraulic-model-output | Eastern Creek Catchment Hydraulic Assessment - Hydraulic Model Output | Licence Specified by Agency
+  fdp-eastern-creek-catchment-hydraulic-assessment-report | Eastern Creek Catchment Hydraulic Assessment - Report | Licence Specified by Agency
+  fdp-eastern-creek-catchment-hydraulic-assessment-hydrologic-model | Eastern Creek Catchment Hydraulic Assessment - Hydrologic Model | Licence Specified by Agency
+  fdp-eastern-creek-catchment-hydraulic-assessment-hydraulic-model-input | Eastern Creek Catchment Hydraulic Assessment - Hydraulic Model Input | Licence Specified by Agency
+  fdp-eastern-creek-catchment-hydraulic-assessment-post-processed | Eastern Creek Catchment Hydraulic Assessment - Post-processed | Licence Specified by Agency
+  fdp-greystanes-creek-pendle-hill-creek-flood-mitigation-study-fms | Greystanes Creek and Pendle Hill Creek Flood Mitigation Study | Licence Specified by Agency
+
+### Blacktown (data.gov.au) — 22 packages
+  nsw-fdp-south-creek-final-report | Final report of Wianamatta South Creek Flood Study - Blacktown City Council | Creative Commons Attribution 3.0 Australia
+  nsw-fdp-dataset-checklist | Dataset checklist | lsba
+  nsw-fdp-modelling-results | Modelling results | lsba
+  nsw-fdp-gis-dataset | GIS dataset | lsba
+  nsw-fdp-hydrological-and-hydraulic-model | Hydrological and hydraulic model | lsba
+  nsw-fdp-eastern-creek-catchment-hydrological-assessment-report | Eastern Creek Catchment - Hydrological Assessment | Creative Commons Attribution 3.0 Australia
+  nsw-fdp-eastern-creek-hydraulic-assessment-report | Eastern Creek Hydraulic Assessment - Report | Creative Commons Attribution 3.0 Australia
+  nsw-fdp-eastern-creek-catchment-development-scenario-hydraulic-assessment-hydraulic-model-input | Eastern Creek Catchment - Development Scenario Hydraulic Assessment - Hydraulic Model Inputs (TUFLOW) | lsba
+  nsw-fdp-eastern-creek-hydraulic-assessment-hydrological-model-xp-rafts | Eastern Creek Hydraulic Assessment - Hydrological Model (XP-RAFTS) | lsba
+  nsw-fdp-eastern-creek-catchment-hydraulic-assessment-report | Eastern Creek Catchment Hydraulic Assessment - Report | lsba
+  nsw-fdp-eastern-creek-catchment-development-scenario-hydraulic-assessment-hydrological-model-ou | Eastern Creek Catchment - Development Scenario Hydraulic Assessment - Hydrological Model Outputs (XP-RAFTS) | lsba
+  nsw-fdp-eastern-creek-catchment-development-scenario-hydraulic-assessment-hydrological-model-in | Eastern Creek Catchment - Development Scenario Hydraulic Assessment - Hydrological Model Inputs (XP-RAFTS) | lsba
+  nsw-fdp-eastern-creek-catchment-development-scenario-hydraulic-assessment-dataset-handover-desc | Eastern Creek Catchment - Development Scenario Hydraulic Assessment - Dataset Handover Description | lsba
+  nsw-fdp-eastern-creek-catchment-hydraulic-assessment-hydraulic-model-input | Eastern Creek Catchment Hydraulic Assessment - Hydraulic Model Input | lsba
+  nsw-fdp-eastern-creek-catchment-hydraulic-assessment-post-processed | Eastern Creek Catchment Hydraulic Assessment - Post-processed | lsba
+  nsw-fdp-eastern-creek-catchment-development-scenario-hydraulic-assessment-post-processed-layers | Eastern Creek Catchment - Development Scenario Hydraulic Assessment - Post-Processed Layers | lsba
+  nsw-fdp-eastern-creek-catchment-hydraulic-assessment-hydrologic-model | Eastern Creek Catchment Hydraulic Assessment - Hydrologic Model | lsba
+  nsw-fdp-greystanes-creek-pendle-hill-creek-flood-mitigation-study-fms | Greystanes Creek and Pendle Hill Creek Flood Mitigation Study | lsba
+  nsw-fdp-eastern-creek-catchment-development-scenario-hydraulic-assessment-hydraulic-model-outpu | Eastern Creek Catchment - Development Scenario Hydraulic Assessment - Hydraulic Model Outputs (TUFLOW) | lsba
+  nsw-fdp-eastern-creek-catchment-hydraulic-assessment-hydraulic-model-output | Eastern Creek Catchment Hydraulic Assessment - Hydraulic Model Output | lsba
+  nsw-fdp-report_1 | Report | Creative Commons Attribution 3.0 Australia
+  nsw-fdp-eastern-creek-catchment-development-scenario-hydraulic-assessment-report | Eastern Creek Catchment - Development Scenario Hydraulic Assessment - Report | lsba
+
+### Canterbury-Bankstown (data.nsw) — 27 packages
+  fdp-wolumba-catchment-flood-study-report | Wolumba Catchment Flood Study | Creative Commons Attribution
+  fdp-rookwood-road-catchment-flood-study-report1 | Rookwood Road Catchment Flood Study Report | Creative Commons Attribution
+  fdp-punchbowl-catchment-flood-study-report | Punchbowl Catchment Flood Study | Creative Commons Attribution
+  fdp-picnic-point-flood-study-report | Picnic Point Catchment Flood Study | Creative Commons Attribution
+  fdp-morris-gully-catchment-flood-study-report | Morris Gully Catchment Flood Study | Creative Commons Attribution
+  fdp-milperra-catchment-draft-flood-study-update-report | Milperra Catchment Draft Flood Study Update - Report | Creative Commons Attribution
+  fdp-miller-road-catchment-flood-study-report | Miller Road Catchment Flood Study | Creative Commons Attribution
+  fdp-lansdowne-catchment-fs-report | Lansdowne Catchment Flood Study - Report | Creative Commons Attribution
+  fdp-greenacre-park-stormwater-catchment-flood-study-report | Greenacre Park Stormwater Catchment Flood Study | Creative Commons Attribution
+  fdp-georges-hall-catchment-flood-study-report | Georges Hall Catchment Flood Study | Creative Commons Attribution
+  fdp-fairford-road-catchment-flood-study-report-data | Fairford Road Catchment Flood Study Report | Creative Commons Attribution
+  fdp-cooks-river-catchment-flood-study-report | Cooks River Catchment Flood Study | Creative Commons Attribution
+  fdp-sub-catchments-of-the-mid-georges-river-frmsp | Floodplain Risk Management Study and Plan for Sub-Catchments of the Mid Georges River - Report | Creative Commons Attribution
+  fdp-east-hills-stormwater-catchment-flood-study-report | East Hills Stormwater Catchment Flood Study | Creative Commons Attribution
+  fdp-kelso-stormwater-catchment-flood-study-report | Kelso Stormwater Catchment Flood Study | Creative Commons Attribution
+  fdp-salt-pan-creek-fs-report | Salt Pan Creek Flood Study - Report | Creative Commons Attribution
+  fdp-prospect-creek-frmsp-report | Prospect Creek FRMSP Report | Creative Commons Attribution
+  fdp-salt-pan-creek-catchment-final-overland-flow-study-report | Canterbury LGA Salt Pan Creek Catchment: Final Overland Flow Study - Report | Creative Commons Attribution
+  fdp-cooks-river-catchment-final-overland-flow-study-report | Canterbury LGA Cooks River Catchment: Final Overland Flow Study - Report | Creative Commons Attribution
+  fdp-georges-river-flood-study-2020-reports | Georges River Flood Study 2020 reports | Creative Commons Attribution
+  fdp-lucas-road-catchment-flood-study-report | Lucas Road Catchment Flood Study Report | Creative Commons Attribution
+  fdp-prospect-creek-frmsp-model-results-post-processed | Prospect Creek FRMS&P Model Results - Post-processed | Licence Specified by Agency
+  fdp-prospect-creek-frmsp-hydraulic-model-input-files | Prospect Creek FRMS&P Hydraulic Model Input Files | Licence Specified by Agency
+  fdp-cooks-river-stormwater-management-plan-report | Cooks River - Stormwater Management Plan Report | Licence Specified by Agency
+  fdp-villawood-drain-works-as-executed-study-report | Villawood Drain Works-as-Executed Study - Report | Licence Specified by Agency
+  fdp-georges-river-at-carinya-road-picnic-point-structural-assessment-of-flood-deflector-leve4ad3d5f4 | Georges River at Carinya Road, Picnic Point - Structural Assessment of Flood Deflector Levees - Report | Licence Specified by Agency
+  fdp-prospect-creek-frmsp-hydraulic-output-files-raw-results | Prospect Creek FRMS&P Hydraulic Output Files - Raw Results | Licence Specified by Agency
+
+### Canterbury-Bankstown (data.gov.au) — 28 packages
+  nsw-fdp-fairford-road-catchment-flood-study-report-data | Fairford Road Catchment Flood Study Report | Creative Commons Attribution 3.0 Australia
+  nsw-fdp-east-hills-stormwater-catchment-flood-study-report | East Hills Stormwater Catchment Flood Study | Creative Commons Attribution 3.0 Australia
+  nsw-fdp-lansdowne-catchment-fs-report | Lansdowne Catchment Flood Study - Report | Creative Commons Attribution 3.0 Australia
+  nsw-fdp-cooks-river-catchment-flood-study-report | Cooks River Catchment Flood Study | Creative Commons Attribution 3.0 Australia
+  nsw-fdp-picnic-point-flood-study-report | Picnic Point Catchment Flood Study | Creative Commons Attribution 3.0 Australia
+  nsw-fdp-milperra-catchment-draft-flood-study-update-report | Milperra Catchment Draft Flood Study Update - Report | Creative Commons Attribution 3.0 Australia
+  nsw-fdp-punchbowl-catchment-flood-study-report | Punchbowl Catchment Flood Study | Creative Commons Attribution 3.0 Australia
+  nsw-fdp-georges-hall-catchment-flood-study-report | Georges Hall Catchment Flood Study | Creative Commons Attribution 3.0 Australia
+  nsw-fdp-miller-road-catchment-flood-study-report | Miller Road Catchment Flood Study | Creative Commons Attribution 3.0 Australia
+  nsw-fdp-rookwood-road-catchment-flood-study-report1 | Rookwood Road Catchment Flood Study Report | Creative Commons Attribution 3.0 Australia
+  nsw-fdp-morris-gully-catchment-flood-study-report | Morris Gully Catchment Flood Study | Creative Commons Attribution 3.0 Australia
+  nsw-fdp-kelso-stormwater-catchment-flood-study-report | Kelso Stormwater Catchment Flood Study | Creative Commons Attribution 3.0 Australia
+  nsw-fdp-greenacre-park-stormwater-catchment-flood-study-report | Greenacre Park Stormwater Catchment Flood Study | Creative Commons Attribution 3.0 Australia
+  nsw-fdp-wolumba-catchment-flood-study-report | Wolumba Catchment Flood Study | Creative Commons Attribution 3.0 Australia
+  nsw-fdp-sub-catchments-of-the-mid-georges-river-frmsp | Floodplain Risk Management Study and Plan for Sub-Catchments of the Mid Georges River - Report | Creative Commons Attribution 3.0 Australia
+  nsw-fdp-salt-pan-creek-floodplain-risk-management-study-and-plan-draft-report | Salt Pan Creek Floodplain Risk Management Study and Plan (Draft) - Report | Creative Commons Attribution 3.0 Australia
+  nsw-fdp-salt-pan-creek-catchment-final-overland-flow-study-report | Canterbury LGA Salt Pan Creek Catchment: Final Overland Flow Study - Report | Creative Commons Attribution 3.0 Australia
+  nsw-fdp-salt-pan-creek-fs-report | Salt Pan Creek Flood Study - Report | Creative Commons Attribution 3.0 Australia
+  nsw-fdp-cooks-river-catchment-final-overland-flow-study-report | Canterbury LGA Cooks River Catchment: Final Overland Flow Study - Report | Creative Commons Attribution 3.0 Australia
+  nsw-fdp-prospect-creek-frmsp-report | Prospect Creek FRMSP Report | Creative Commons Attribution 3.0 Australia
+  nsw-fdp-georges-river-flood-study-2020-reports | Georges River Flood Study 2020 reports | Creative Commons Attribution 3.0 Australia
+  nsw-fdp-lucas-road-catchment-flood-study-report | Lucas Road Catchment Flood Study Report | Creative Commons Attribution 3.0 Australia
+  nsw-fdp-georges-river-at-carinya-road-picnic-point-structural-assessment-of-flood-deflector-lev | Georges River at Carinya Road, Picnic Point - Structural Assessment of Flood Deflector Levees - Report | lsba
+  nsw-fdp-villawood-drain-works-as-executed-study-report | Villawood Drain Works-as-Executed Study - Report | lsba
+  nsw-fdp-cooks-river-stormwater-management-plan-report | Cooks River - Stormwater Management Plan Report | lsba
+  nsw-fdp-prospect-creek-frmsp-hydraulic-model-input-files | Prospect Creek FRMS&P Hydraulic Model Input Files | lsba
+  nsw-fdp-prospect-creek-frmsp-hydraulic-output-files-raw-results | Prospect Creek FRMS&P Hydraulic Output Files - Raw Results | lsba
+  nsw-fdp-prospect-creek-frmsp-model-results-post-processed | Prospect Creek FRMS&P Model Results - Post-processed | lsba
+
+### Georges River (data.nsw) — 33 packages
+  fdp-kogarah-bay-creek-flood-overland-flow-study-spatial-flood-layers-post-processed | Kogarah Bay Creek - Flood & Overland Flow Study - Spatial Flood Layers (Post-Processed) | Creative Commons Attribution
+  fdp-blakehurst-and-kogarah-bay-wards-overland-flow-flood-study-final-report-pdf | Blakehurst and Kogarah Bay Wards Overland Flow Flood Study (Final Report PDF) | Creative Commons Attribution
+  fdp-blakehurst-and-kogarah-bay-wards-overland-flow-flood-study-outputs | Blakehurst and Kogarah Bay Wards Overland Flow Flood Study (Outputs) | Licence Specified by Agency
+  fdp-blakehurst-and-kogarah-bay-wards-overland-flow-flood-study-tuflow-model | Blakehurst and Kogarah Bay Wards Overland Flow Flood Study (TUFLOW Model) | Licence Specified by Agency
+  fdp-blakehurst-and-kogarah-bay-wards-overland-flow-flood-study-final-report | Blakehurst and Kogarah Bay Wards Overland Flow Flood Study (Final Report) | Licence Specified by Agency
+  fdp-kogarah-bay-creek-frmp | Kogarah Bay Creek Floodplain Risk Management Plan | Creative Commons Attribution
+  fdp-kogarah-bay-creek-floodplain-risk-management-study-report | Kogarah Bay Creek Floodplain Risk Management Study | Creative Commons Attribution
+  fdp-kogarah-bay-creek-flood-overland-flow-study-draft-report | Kogarah Bay Creek - Flood & Overland Flow Study - Report | Creative Commons Attribution
+  fdp-beverley-park-overland-flow-risk-management-study-plan-report | Beverley Park Overland Flow Risk Management Study & Plan | Creative Commons Attribution
+  fdp-poulton-park-overland-flow-management-study-and-plan-report | Poulton Park Overland Flow Management Study and Plan - Report | Creative Commons Attribution
+  fdp-gis-for-mapping-and-flood-damages | Floodplain Risk Management Study and Plan - GIS for mapping and flood damages | Licence Specified by Agency
+  fdp-kogarah-bay-creek-flood-overland-flow-study-hydrological-model-inputs-xp-rafts | Kogarah Bay Creek - Flood & Overland Flow Study - Hydrological Model Inputs (XP-RAFTS) | Licence Specified by Agency
+  fdp-kogarah-bay-creek-flood-overland-flow-study-hydrological-model-outputs-wbnm | Kogarah Bay Creek - Flood & Overland Flow Study - Hydrological Model Outputs (WBNM) | Licence Specified by Agency
+  fdp-kogarah-bay-creek-flood-overland-flow-study-hydrological-model-outputs-xp-rafts | Kogarah Bay Creek - Flood & Overland Flow Study - Hydrological Model Outputs (XP-RAFTS) | Licence Specified by Agency
+  fdp-kogarah-bay-creek-flood-overland-flow-study-hydrological-model-outputs-mike-storm | Kogarah Bay Creek - Flood & Overland Flow Study - Hydrological Model Outputs (MIKE STORM) | Licence Specified by Agency
+  fdp-kogarah-bay-creek-flood-overland-flow-study-hydraulic-model-hec-ras | Kogarah Bay Creek - Flood & Overland Flow Study - Hydraulic Model (HEC-RAS) | Licence Specified by Agency
+  fdp-kogarah-bay-creek-flood-overland-flow-study-hydraulic-model-sobek | Kogarah Bay Creek - Flood & Overland Flow Study - Hydraulic Model (SOBEK) | Licence Specified by Agency
+  fdp-kogarah-bay-creek-flood-overland-flow-study-hydrological-model-inputs-mike-storm | Kogarah Bay Creek - Flood & Overland Flow Study - Hydrological Model Inputs (MIKE STORM) | Licence Specified by Agency
+  fdp-kogarah-bay-creek-flood-overland-flow-study-hydraulic-model-inputs-mike-11 | Kogarah Bay Creek - Flood & Overland Flow Study - Hydraulic Model Inputs (MIKE-11) | Licence Specified by Agency
+  fdp-kogarah-bay-creek-flood-overland-flow-study-collected-data | Kogarah Bay Creek - Flood & Overland Flow Study - Collected Data | Licence Specified by Agency
+  fdp-kogarah-bay-creek-flood-overland-flow-study-hydraulic-model-outputs-mike-11 | Kogarah Bay Creek - Flood & Overland Flow Study - Hydraulic Model Outputs (MIKE-11) | Licence Specified by Agency
+  fdp-kogarah-bay-creek-flood-overland-flow-study-hydrological-model-inputs-wbnm | Kogarah Bay Creek - Flood & Overland Flow Study - Hydrological Model Inputs (WBNM) | Licence Specified by Agency
+  fdp-kogarah-bay-creek-flood-overland-flow-study-cd-label | Kogarah Bay Creek - Flood & Overland Flow Study - CD Label | Licence Specified by Agency
+  fdp-beverley-park-flood-planning-level-mapping-report | Beverley Park Flood Planning Level Mapping - Report | Licence Specified by Agency
+  fdp-poulton-park-overland-flow-risk-management-study-and-plan-report | Poulton Park Overland Flow Risk Management Study and Plan - Report | Licence Specified by Agency
+  fdp-poulton-park-overland-flow-management-study-and-plan-options | Poulton Park Overland Flow Management Study and Plan - Options | Licence Specified by Agency
+  fdp-poulton-park-overland-flow-management-study-and-plan-community-consultation | Poulton Park Overland Flow Management Study and Plan - Community Consultation | Licence Specified by Agency
+  fdp-poulton-park-overland-flow-management-study-and-plan-hydraulic-model-input | Poulton Park Overland Flow Management Study and Plan - Hydraulic Model Input | Licence Specified by Agency
+  fdp-georges-river-council-overland-flow-flood-study-report | Georges River Council - Overland Flow Flood Study - Report | Licence Specified by Agency
+  fdp-poulton-park-overland-flow-management-study-and-plan-survey | Poulton Park Overland Flow Management Study and Plan - Survey | Licence Specified by Agency
+  fdp-poulton-park-overland-flow-management-study-and-plan-hydraulic-model-output | Poulton Park Overland Flow Management Study and Plan - Hydraulic Model Output | Licence Specified by Agency
+  fdp-poulton-park-overland-flow-management-study-and-plan-property-photos | Poulton Park Overland Flow Management Study and Plan - Property Photos | Licence Specified by Agency
+  fdp-poulton-park-overland-flow-management-study-and-plan-summary | Poulton Park Overland Flow Management Study and Plan - Summary | Licence Specified by Agency
+
+### Georges River (data.gov.au) — 35 packages
+  nsw-fdp-blakehurst-and-kogarah-bay-wards-overland-flow-flood-study-final-report-pdf | Blakehurst and Kogarah Bay Wards Overland Flow Flood Study (Final Report PDF) | Creative Commons Attribution 3.0 Australia
+  nsw-fdp-blakehurst-and-kogarah-bay-wards-overland-flow-flood-study-final-report | Blakehurst and Kogarah Bay Wards Overland Flow Flood Study (Final Report) | lsba
+  nsw-fdp-blakehurst-and-kogarah-bay-wards-overland-flow-flood-study-outputs | Blakehurst and Kogarah Bay Wards Overland Flow Flood Study (Outputs) | lsba
+  nsw-fdp-blakehurst-and-kogarah-bay-wards-overland-flow-flood-study-tuflow-model | Blakehurst and Kogarah Bay Wards Overland Flow Flood Study (TUFLOW Model) | lsba
+  nsw-fdp-beverley-park-overland-flow-risk-management-study-plan-report | Beverley Park Overland Flow Risk Management Study & Plan | Creative Commons Attribution 3.0 Australia
+  nsw-fdp-kogarah-bay-creek-frmp | Kogarah Bay Creek Floodplain Risk Management Plan | Creative Commons Attribution 3.0 Australia
+  nsw-fdp-kogarah-bay-creek-flood-overland-flow-study-draft-report | Kogarah Bay Creek - Flood & Overland Flow Study - Report | Creative Commons Attribution 3.0 Australia
+  nsw-fdp-kogarah-bay-creek-floodplain-risk-management-study-report | Kogarah Bay Creek Floodplain Risk Management Study | Creative Commons Attribution 3.0 Australia
+  nsw-fdp-poulton-park-overland-flow-management-study-and-plan-report | Poulton Park Overland Flow Management Study and Plan - Report | Creative Commons Attribution 3.0 Australia
+  nsw-fdp-kogarah-bay-creek-flood-overland-flow-study-spatial-flood-layers-post-processed | Kogarah Bay Creek - Flood & Overland Flow Study - Spatial Flood Layers (Post-Processed) | lsba
+  nsw-fdp-poulton-park-overland-flow-risk-management-study-and-plan-report | Poulton Park Overland Flow Risk Management Study and Plan - Report | lsba
+  nsw-fdp-kogarah-bay-creek-flood-overland-flow-study-hydrological-model-inputs-wbnm | Kogarah Bay Creek - Flood & Overland Flow Study - Hydrological Model Inputs (WBNM) | lsba
+  nsw-fdp-floodplain-risk-management-study-and-plan-tuflow-model | Floodplain Risk Management Study and Plan - Tuflow model | lsba
+  nsw-fdp-floodplain-risk-management-study-and-plan-tuflow-result | Floodplain Risk Management Study and Plan - TUFLOW result | lsba
+  nsw-fdp-kogarah-bay-creek-flood-overland-flow-study-hydrological-model-outputs-wbnm | Kogarah Bay Creek - Flood & Overland Flow Study - Hydrological Model Outputs (WBNM) | lsba
+  nsw-fdp-poulton-park-overland-flow-management-study-and-plan-survey | Poulton Park Overland Flow Management Study and Plan - Survey | lsba
+  nsw-fdp-kogarah-bay-creek-flood-overland-flow-study-cd-label | Kogarah Bay Creek - Flood & Overland Flow Study - CD Label | lsba
+  nsw-fdp-kogarah-bay-creek-flood-overland-flow-study-hydraulic-model-outputs-mike-11 | Kogarah Bay Creek - Flood & Overland Flow Study - Hydraulic Model Outputs (MIKE-11) | lsba
+  nsw-fdp-poulton-park-overland-flow-management-study-and-plan-hydraulic-model-output | Poulton Park Overland Flow Management Study and Plan - Hydraulic Model Output | lsba
+  nsw-fdp-kogarah-bay-creek-flood-overland-flow-study-hydraulic-model-hec-ras | Kogarah Bay Creek - Flood & Overland Flow Study - Hydraulic Model (HEC-RAS) | lsba
+  nsw-fdp-beverley-park-flood-planning-level-mapping-report | Beverley Park Flood Planning Level Mapping - Report | lsba
+  nsw-fdp-kogarah-bay-creek-flood-overland-flow-study-hydrological-model-inputs-xp-rafts | Kogarah Bay Creek - Flood & Overland Flow Study - Hydrological Model Inputs (XP-RAFTS) | lsba
+  nsw-fdp-kogarah-bay-creek-flood-overland-flow-study-hydrological-model-inputs-mike-storm | Kogarah Bay Creek - Flood & Overland Flow Study - Hydrological Model Inputs (MIKE STORM) | lsba
+  nsw-fdp-poulton-park-overland-flow-management-study-and-plan-options | Poulton Park Overland Flow Management Study and Plan - Options | lsba
+  nsw-fdp-kogarah-bay-creek-flood-overland-flow-study-collected-data | Kogarah Bay Creek - Flood & Overland Flow Study - Collected Data | lsba
+  nsw-fdp-kogarah-bay-creek-flood-overland-flow-study-hydraulic-model-sobek | Kogarah Bay Creek - Flood & Overland Flow Study - Hydraulic Model (SOBEK) | lsba
+  nsw-fdp-gis-for-mapping-and-flood-damages | Floodplain Risk Management Study and Plan - GIS for mapping and flood damages | lsba
+  nsw-fdp-poulton-park-overland-flow-management-study-and-plan-summary | Poulton Park Overland Flow Management Study and Plan - Summary | lsba
+  nsw-fdp-poulton-park-overland-flow-management-study-and-plan-hydraulic-model-input | Poulton Park Overland Flow Management Study and Plan - Hydraulic Model Input | lsba
+  nsw-fdp-kogarah-bay-creek-flood-overland-flow-study-hydrological-model-outputs-xp-rafts | Kogarah Bay Creek - Flood & Overland Flow Study - Hydrological Model Outputs (XP-RAFTS) | lsba
+  nsw-fdp-poulton-park-overland-flow-management-study-and-plan-property-photos | Poulton Park Overland Flow Management Study and Plan - Property Photos | lsba
+  nsw-fdp-kogarah-bay-creek-flood-overland-flow-study-hydraulic-model-inputs-mike-11 | Kogarah Bay Creek - Flood & Overland Flow Study - Hydraulic Model Inputs (MIKE-11) | lsba
+  nsw-fdp-kogarah-bay-creek-flood-overland-flow-study-hydrological-model-outputs-mike-storm | Kogarah Bay Creek - Flood & Overland Flow Study - Hydrological Model Outputs (MIKE STORM) | lsba
+  nsw-fdp-poulton-park-overland-flow-management-study-and-plan-community-consultation | Poulton Park Overland Flow Management Study and Plan - Community Consultation | lsba
+  nsw-fdp-georges-river-council-overland-flow-flood-study-report | Georges River Council - Overland Flow Flood Study - Report | lsba
+
+### Parramatta (data.nsw) — 10 packages
+  fdp-mode_results | Hydraulic Model results | Creative Commons Attribution
+  fdp-floodstudyreport-and-figures | Flood study report and figures | Creative Commons Attribution
+  fdp-parramatta-river-flood-study-report | Parramatta River Flood Study - Report | Creative Commons Attribution
+  fdp-homebush-bay-catchment-stormwater-management-plan-report | Homebush Bay Catchment - Stormwater Management Plan - Report | Licence Specified by Agency
+  fdp-parramatta-stormwater-asset-plan-commercial-industrial-report | Parramatta - Commercial & Industrial  Stormwater Asset Plan - Report | Licence Specified by Agency
+  fdp-parramatta-river-foreshore-plan-report | Parramatta River - Foreshore Plan - Report | Licence Specified by Agency
+  fdp-lower-parramatta-river-frmsp-report | Lower Parramatta River Floodplain Risk Management Study and Plan (Draft) - Report | Licence Specified by Agency
+  fdp-duck-river-and-duck-creek-flood-study-review-report | Duck River and Duck Creek Flood Study Review - Report | Licence Specified by Agency
+  fdp-parramatta-local-floodplain-risk-management-policy-report | Parramatta - Local Floodplain Risk Management Policy - Report | Licence Specified by Agency
+  fdp-brickfield-creek-supplementary-frmsp-report | Brickfield Creek Supplementary FRMSP - Report | Licence Specified by Agency
+
+### Parramatta (data.gov.au) — 10 packages
+  nsw-fdp-floodstudyreport-and-figures | Flood study report and figures | Creative Commons Attribution 3.0 Australia
+  nsw-fdp-duck-river-and-duck-creek-flood-study-review-report | Duck River and Duck Creek Flood Study Review - Report | lsba
+  nsw-fdp-homebush-bay-catchment-stormwater-management-plan-report | Homebush Bay Catchment - Stormwater Management Plan - Report | lsba
+  nsw-fdp-parramatta-stormwater-asset-plan-commercial-industrial-report | Parramatta - Commercial & Industrial  Stormwater Asset Plan - Report | lsba
+  nsw-fdp-parramatta-river-flood-study-report | Parramatta River Flood Study - Report | Creative Commons Attribution 3.0 Australia
+  nsw-fdp-lower-parramatta-river-frmsp-report | Lower Parramatta River Floodplain Risk Management Study and Plan (Draft) - Report | lsba
+  nsw-fdp-parramatta-river-foreshore-plan-report | Parramatta River - Foreshore Plan - Report | lsba
+  nsw-fdp-parramatta-local-floodplain-risk-management-policy-report | Parramatta - Local Floodplain Risk Management Policy - Report | lsba
+  nsw-fdp-brickfield-creek-supplementary-frmsp-report | Brickfield Creek Supplementary FRMSP - Report | lsba
+  nsw-fdp-upper-parramatta-river-catchment-floodplain-risk-management-plan-report | Upper Parramatta River Catchment Floodplain Risk Management Study | lsba
+
+### Bayside (data.nsw) — 21 packages
+  fdp-springvale-drain-and-floodvale-drain-flood-study-report | Springvale Drain and Floodvale Drain Flood Study - Report | Creative Commons Attribution
+  fdp-spring-street-drain-muddy-creek-and-scarborough-ponds-catchment-flood-study-final-report | Spring Street Drain, Muddy Creek and Scarborough Ponds Catchment Flood Study Review - Final Report | Creative Commons Attribution
+  fdp-botany-bay-foreshore-beach-catchment-flood-study-final-report | Botany Bay Foreshore Beach Catchment Flood Study - Final Report | Creative Commons Attribution
+  fdp-mascot-rosebery-and-eastlakes-flood-study-report | Mascot, Rosebery and Eastlakes Flood Study - Report | Creative Commons Attribution
+  fdp-bonnie-doon-eve-street-cahill-park-pipe-overland-2d-flood-study-report | Bonnie Doon, Eve Street/Cahill Park Pipe & Overland 2D Flood Study report | Creative Commons Attribution
+  fdp-bardwell-creek-2d-flood-study-review-final-report | Bardwell Creek 2D Flood Study Review - Final Report | Creative Commons Attribution
+  fdp-botany-bay-foreshore-beach-floodplain-risk-management-study-report | Botany Bay Foreshore Beach Floodplain Risk Management Study and Plan - Report | Creative Commons Attribution
+  fdp-sans-souci-flood-study-report | Sans Souci Flood Study - Report | Creative Commons Attribution
+  fdp-bonnie-doon-pipe-and-overland-2d-flood-study-report | Bonnie Doon Drainage Catchment Flood Study (Pipe and Overland 2D) - Report | Licence Specified by Agency
+  fdp-sans-souci-flood-study-tuflow | Sans Souci Flood Study Review - TUFLOW | Licence Specified by Agency
+  fdp-sans-souci-flood-study-gis-data | Sans Souci Flood Study Review - GIS Data | Licence Specified by Agency
+  fdp-springvale-drain-and-floodvale-drain-flood-study-gis-data | Springvale Drain and Floodvale Drain Flood Study - GIS Data | Licence Specified by Agency
+  fdp-spring-street-drain-muddy-creek-and-scarborough-ponds-catchment-flood-study-rafts | Spring Street Drain, Muddy Creek and Scarborough Ponds Catchment Flood Study Review - RAFTS | Licence Specified by Agency
+  fdp-spring-street-drain-muddy-creek-and-scarborough-ponds-catchment-flood-study-gis-data | Spring Street Drain, Muddy Creek and Scarborough Ponds Catchment Flood Study Review - GIS Data | Licence Specified by Agency
+  fdp-sans-souci-flood-study-raw-results | Sans Souci Flood Study Review - TUFLOW Raw Results | Licence Specified by Agency
+  fdp-bonnie-doon-eve-street-cahill-park-pipe-overland-2d-peak-flood-level-grids | Bonnie Doon, Eve Street/Cahill Park Pipe & Overland 2D - Peak Flood Level Grids | Licence Specified by Agency
+  fdp-spring-street-drain-muddy-creek-and-scarborough-ponds-catchment-flood-study-tuflow-raw-results | Spring Street Drain, Muddy Creek and Scarborough Ponds Catchment Flood Study Review - TUFLOW Raw Results | Licence Specified by Agency
+  fdp-springvale-drain-and-floodvale-drain-flood-study-community-consultation | Springvale Drain and Floodvale Drain Flood Study - Community Consultation | Licence Specified by Agency
+  fdp-springvale-drain-and-floodvale-drain-flood-study-tuflow | Springvale Drain and Floodvale Drain Flood Study - TUFLOW | Licence Specified by Agency
+  fdp-sans-souci-flood-study-final-report | Sans Souci Flood Study Review - Final Report | Licence Specified by Agency
+  fdp-bonnie-doon-eve-street-cahill-park-pipe-overland-2d-flood-study-tuflow | Bonnie Doon, Eve Street/Cahill Park Pipe & Overland 2D Flood Study - TUFLOW | Licence Specified by Agency
+
+### Sydney (data.nsw) — 24 packages
+  fdp-city-area-catchment-flood-study-report | City Area Catchment - Flood Study - Report | Creative Commons Attribution
+  fdp-darling-harbour-catchment-flood-study-report | Darling Harbour Catchment Flood Study - Report | Creative Commons Attribution
+  fdp-city-area-catchment-floodplain-risk-management-plan-draft-report | City Area Catchment Floodplain Risk Management Plan (Draft) - Report | Creative Commons Attribution
+  fdp-woolloomooloo-catchment-frmp-report | Woolloomooloo Catchment FRMP - Report | Creative Commons Attribution
+  fdp-rushcutters-bay-catchment-frmp-report | Rushcutters Bay Catchment FRMP - Report | Creative Commons Attribution
+  fdp-johnstons-creek-catchment-frmp-report | Johnstons Creek Catchment FRMP - Report | Creative Commons Attribution
+  fdp-johnstons-creek-catchment-flood-study-report | Johnstons Creek Catchment Flood Study - Report | Creative Commons Attribution
+  fdp-darling-harbour-catchment-frmp-report | Darling Harbour Catchment FRMP - Report | Creative Commons Attribution
+  fdp-darling-harbour-catchment-frms-report | Darling Harbour Catchment FRMS - Report | Creative Commons Attribution
+  fdp-centennial-park-frmp-report | Centennial Park FRMP - Report | Creative Commons Attribution
+  fdp-centennial-park-flood-study-report | Centennial Park Flood Study - Report | Creative Commons Attribution
+  fdp-blackwattle-bay-catchment-floodplain-risk-management-plan-report | Blackwattle Bay Catchment Floodplain Risk Management Plan - Report | Creative Commons Attribution
+  fdp-blackwattle-bay-catchment-flood-study-report | Blackwattle Bay Catchment Flood Study - Report | Creative Commons Attribution
+  fdp-green-square-catchment-floodplain-risk-management-plan-report | Green Square Catchment Floodplain Risk Management Plan | Creative Commons Attribution
+  fdp-green-square-west-kensington-sheas-creek-victoria-branch-flood-study-report | Green Square & West Kensington (Sheas Creek - Victoria Branch) - Flood Study - Report | Creative Commons Attribution
+  fdp-alexandra-canal-floodplain-risk-management-plan-report | Alexandra Canal Floodplain Risk Management Plan - Report | Creative Commons Attribution
+  fdp-alexandra-canal-floodplain-risk-management-study-report | Alexandra Canal Floodplain Risk Management Study - Report | Creative Commons Attribution
+  fdp-alexandra-canal-catchment-flood-study-report | Alexandra Canal Catchment Flood Study - Report | Creative Commons Attribution
+  fdp-sydney-metropolitan-area-storms-floods-november-1984-newspaper-articles-report | Sydney Metropolitan Area - Storms & Floods November 1984 Newspaper Articles - Report | Licence Specified by Agency
+  fdp-alexandra-canal-catchment-flood-study-draft-report | Alexandra Canal Catchment Flood Study (Draft) - Report | Licence Specified by Agency
+  fdp-sydney-hydrological-aspects-of-storms-november-1984-report | Sydney Storms November 1984 - Hydrological Aspects - Report | Licence Specified by Agency
+  fdp-woolloomooloo-flood-study-draft-report | Woolloomooloo Flood Study - Final Draft Report | Licence Specified by Agency
+  fdp-centennial-park-frms-report | Centennial Park FRMS - Report | Licence Specified by Agency
+  fdp-blackwattle-bay-catchment-frms-report | Blackwattle Bay Catchment FRMS - Report | Licence Specified by Agency
+
+### Sydney (data.gov.au) — 24 packages
+  nsw-fdp-city-area-catchment-flood-study-report | City Area Catchment - Flood Study - Report | Creative Commons Attribution 3.0 Australia
+  nsw-fdp-city-area-catchment-floodplain-risk-management-plan-draft-report | City Area Catchment Floodplain Risk Management Plan (Draft) - Report | Creative Commons Attribution 3.0 Australia
+  nsw-fdp-darling-harbour-catchment-flood-study-report | Darling Harbour Catchment Flood Study - Report | Creative Commons Attribution 3.0 Australia
+  nsw-fdp-darling-harbour-catchment-frms-report | Darling Harbour Catchment FRMS - Report | Creative Commons Attribution 3.0 Australia
+  nsw-fdp-johnstons-creek-catchment-frmp-report | Johnstons Creek Catchment FRMP - Report | Creative Commons Attribution 3.0 Australia
+  nsw-fdp-centennial-park-flood-study-report | Centennial Park Flood Study - Report | Creative Commons Attribution 3.0 Australia
+  nsw-fdp-blackwattle-bay-catchment-flood-study-report | Blackwattle Bay Catchment Flood Study - Report | Creative Commons Attribution 3.0 Australia
+  nsw-fdp-darling-harbour-catchment-frmp-report | Darling Harbour Catchment FRMP - Report | Creative Commons Attribution 3.0 Australia
+  nsw-fdp-rushcutters-bay-catchment-frmp-report | Rushcutters Bay Catchment FRMP - Report | Creative Commons Attribution 3.0 Australia
+  nsw-fdp-centennial-park-frmp-report | Centennial Park FRMP - Report | Creative Commons Attribution 3.0 Australia
+  nsw-fdp-blackwattle-bay-catchment-floodplain-risk-management-plan-report | Blackwattle Bay Catchment Floodplain Risk Management Plan - Report | Creative Commons Attribution 3.0 Australia
+  nsw-fdp-johnstons-creek-catchment-flood-study-report | Johnstons Creek Catchment Flood Study - Report | Creative Commons Attribution 3.0 Australia
+  nsw-fdp-green-square-catchment-floodplain-risk-management-plan-report | Green Square Catchment Floodplain Risk Management Plan | Creative Commons Attribution 3.0 Australia
+  nsw-fdp-alexandra-canal-catchment-flood-study-report | Alexandra Canal Catchment Flood Study - Report | Creative Commons Attribution 3.0 Australia
+  nsw-fdp-alexandra-canal-floodplain-risk-management-plan-report | Alexandra Canal Floodplain Risk Management Plan - Report | Creative Commons Attribution 3.0 Australia
+  nsw-fdp-woolloomooloo-catchment-frmp-report | Woolloomooloo Catchment FRMP - Report | Creative Commons Attribution 3.0 Australia
+  nsw-fdp-alexandra-canal-floodplain-risk-management-study-report | Alexandra Canal Floodplain Risk Management Study - Report | Creative Commons Attribution 3.0 Australia
+  nsw-fdp-green-square-west-kensington-sheas-creek-victoria-branch-flood-study-report | Green Square & West Kensington (Sheas Creek - Victoria Branch) - Flood Study - Report | Creative Commons Attribution 3.0 Australia
+  nsw-fdp-centennial-park-frms-report | Centennial Park FRMS - Report | lsba
+  nsw-fdp-alexandra-canal-catchment-flood-study-draft-report | Alexandra Canal Catchment Flood Study (Draft) - Report | lsba
+  nsw-fdp-sydney-metropolitan-area-storms-floods-november-1984-newspaper-articles-report | Sydney Metropolitan Area - Storms & Floods November 1984 Newspaper Articles - Report | lsba
+  nsw-fdp-sydney-hydrological-aspects-of-storms-november-1984-report | Sydney Storms November 1984 - Hydrological Aspects - Report | lsba
+  nsw-fdp-woolloomooloo-flood-study-draft-report | Woolloomooloo Flood Study - Final Draft Report | lsba
+  nsw-fdp-blackwattle-bay-catchment-frms-report | Blackwattle Bay Catchment FRMS - Report | lsba
+
+### Northern Beaches (data.nsw probe) — 54 packages
+  fdp-results-summary | Results Summary | Licence Specified by Agency
+  fdp-manly-lagoon-floodplain-risk-management-study-and-plan | Manly Lagoon Flood Study | Licence Specified by Agency
+  fdp-narrabeen-lagoon-flood-study-report-2013 | Narrabeen Lagoon Flood Study Report | Creative Commons Attribution
+  fdp-mccarrs-creek-mona-vale-and-bayview-1-and-pmf | McCarrs Creek, Mona Vale and Bayview 1% and PMF | Licence Specified by Agency
+  fdp-mccarrs-monavale-bayview-fs-2019 | McCarrs Creek, Mona Vale and Bayview Flood Study Report 2019 | Licence Specified by Agency
+  fdp-narrabeen-lagoon-frms | Narrabeen Lagoon FRMS Report 2019 | Licence Specified by Agency
+  fdp-narrabeen-1-aep | Narrabeen 1% AEP and PMF | Licence Specified by Agency
+  fdp-avalon-to-palm-beach-1-aep-and-pmf | Avalon to Palm Beach 1% AEP and PMF | Licence Specified by Agency
+  fdp-avalon-to-palm-beach-frmsp-2017 | Avalon to Palm Beach FRMSP 2017 | Licence Specified by Agency
+  fdp-ingleside-elanora-and-warriewood-offs-main-report | Ingleside, Elanora and Warriewood OFFS (2019) | Creative Commons Attribution
+  fdp-south-creek-flood-study-may-2006-report | South Creek Flood Study | Creative Commons Attribution
+  fdp-ryan-place-overland-flood-study-report | Ryan Place Overland Flood Study | Creative Commons Attribution
+  fdp-great-mackerel-beach-floodplain-risk-management-study-plan-report | Great Mackerel Beach Floodplain Risk Management Study & Plan | Creative Commons Attribution
+  fdp-mccarrs-creek-mona-vale-and-bayview-flood-study-report | McCarrs Creek, Mona Vale and Bayview Flood Study Report | Creative Commons Attribution
+  fdp-avalon-to-palm-beach-frmsp-report | Avalon to Palm Beach FRMSP - Report | Creative Commons Attribution
+  fdp-dee-why-cbd-flood-study-update-report | Dee Why CBD Flood Study Update | Creative Commons Attribution
+  fdp-mona-vale-bayview-frmsp | Mona Vale / Bayview Floodplain Risk Management Study and Plan | Creative Commons Attribution
+  fdp-south-creek-floodplain-risk-management-plan-report | South Creek Floodplain Risk Management Plan report | Creative Commons Attribution
+  fdp-dee-why-south-catchment-frms | Dee Why South Catchment FRMS - | Creative Commons Attribution
+  fdp-dee-why-south-catchment-flood-study-report | Dee Why South Catchment Flood Study | Creative Commons Attribution
+  fdp-manly-lagoon-flood-study-final-report2013 | Manly Lagoon Flood Study | Creative Commons Attribution
+  fdp-ingleside-eleanora-warriewood-offs-climate-change | Ingleside, Eleanora, Warriewood OFFS Climate Change | Licence Specified by Agency
+  fdp-manly-to-seaforth-data-description | Manly to Seaforth Data Description | Licence Specified by Agency
+  fdp-manly-to-seaforth-fs-gis-data | Manly to Seaforth FS GIS Data | Licence Specified by Agency
+  fdp-mccarrs-creek-mona-vale-and-bayview-fs-gis-results | McCarrs Creek, Mona Vale and Bayview FS GIS Results | Licence Specified by Agency
+  fdp-newport-flood-study-gis | Newport Flood Study GIS | Licence Specified by Agency
+  fdp-newport-flood-study-report | Newport Flood Study Report | Licence Specified by Agency
+  fdp-greendale-creek-flood-study-gis-layers | Greendale Creek Flood Study GIS Layers | Licence Specified by Agency
+  fdp-greendale-creek-flood-study-handover | Handover list of data | Licence Specified by Agency
+  fdp-greendale-creek-fs-extents | Greendale Creek Flood Study Extents | Creative Commons Attribution
+  fdp-dee-why-south-catchment-floodplain-risk-management-plan-draft-report | Dee Why South Catchment Floodplain Risk Management Plan (Draft) - Report | Licence Specified by Agency
+  fdp-bangaroo-street-north-balgowlah-flood-investigation-draft-report | Bangaroo Street, North Balgowlah - Flood Investigation Draft - Report | Licence Specified by Agency
+  fdp-careel-creek-floodplain-risk-management-plan-spatial-flood-layers-post-processed | Careel Creek Floodplain Risk Management Plan - Spatial Flood Layers (Post-Processed) | Licence Specified by Agency
+  fdp-careel-creek-floodplain-risk-management-plan-report-figures-wor | Careel Creek Floodplain Risk Management Plan - Report Figures (.WOR) | Licence Specified by Agency
+  fdp-careel-creek-floodplain-risk-management-plan-community-consultation-questionnaire-responses | Careel Creek Floodplain Risk Management Plan - Community Consultation (Questionnaire Responses) | Licence Specified by Agency
+  fdp-careel-creek-floodplain-risk-management-plan-hydrological-model-inputs-xp-rafts | Careel Creek Floodplain Risk Management Plan - Hydrological Model Inputs (XP-RAFTS) | Licence Specified by Agency
+  fdp-mccarrs-creek-mona-vale-and-bayview-flood-study-2017-report | McCarrs Creek, Mona Vale and Bayview Flood Study, 2017 - Report | Licence Specified by Agency
+  fdp-careel-creek-floodplain-risk-management-plan-gis-layers-mapinfo | Careel Creek Floodplain Risk Management Plan - GIS Layers (MapInfo) | Licence Specified by Agency
+  fdp-careel-creek-floodplain-risk-management-plan-hydraulic-model-mouse | Careel Creek Floodplain Risk Management Plan - Hydraulic Model (MOUSE) | Licence Specified by Agency
+  fdp-careel-creek-floodplain-risk-management-plan-hydraulic-model-mike-11 | Careel Creek Floodplain Risk Management Plan - Hydraulic Model (MIKE-11) | Licence Specified by Agency
+  fdp-manly-to-seaforth-fs-model-results | Manly to Seaforth FS Model Results | Licence Specified by Agency
+  fdp-data-handover-explanation | Ingleside, Eleanora, Warriewood OFFS Data description | Licence Specified by Agency
+  fdp-bangaroo-street-north-balgowlah-flood-investigation-report | Bangaroo Street, North Balgowlah - Flood Investigation - Report | Licence Specified by Agency
+  fdp-south-creek-bank-management-plan-report | South Creek - Bank Management Plan - Report | Licence Specified by Agency
+  fdp-manly-lagoon-rehabilitation-works-sediment-removal-from-sites-3-5-see-report | Manly Lagoon Rehabilitation Works - Sediment Removal from Sites 3 & 5 Statement of Environmental Effects - Report | Licence Specified by Agency
+  fdp-careel-creek-drainage-catchment-flood-study-report | Careel Creek Drainage Catchment Flood Study - Report | Licence Specified by Agency
+  fdp-dee-why-curl-curl-lagoons-floodplain-risk-management-plan-vol-3-draft-report | Dee Why and Curl Curl Lagoons - Floodplain Risk Management Plan (Vol 3 Draft) - Report | Licence Specified by Agency
+  fdp-frenchs-creek-flood-study-property-survey-report | Frenchs Creek - Flood Study Property Survey Report | Licence Specified by Agency
+  fdp-frenchs-creek-flood-study-report | Frenchs Creek Flood Study - Report | Licence Specified by Agency
+  fdp-newport-beach-frms-figures | Newport Beach FRMS - Figures | Licence Specified by Agency
+  fdp-dee-why-central-business-district-flood-study-report | Dee Why Central Business District Flood Study - Report | Licence Specified by Agency
+  fdp-newport-beach-frms-maps | Newport Beach FRMS - Maps | Licence Specified by Agency
+  fdp-newport-beach-frms-report | Newport Beach FRMS - Report | Licence Specified by Agency
+  fdp-newport-beach-frms-appendices | Newport Beach FRMS - Appendices | Licence Specified by Agency
+
+### Sutherland (data.nsw probe) — 28 packages
+  fdp-gwawley-bay-catchment-flood-study-report | Gwawley Bay Catchment Flood Study | Creative Commons Attribution
+  fdp-bundeena-creek-flood-study-2014-report | Bundeena Creek Flood Study 2014 | Creative Commons Attribution
+  fdp-woolooware-bay-flood-study-reports | Woolooware Bay Flood Study Reports | Creative Commons Attribution
+  fdp-revised-oyster-creek-flood-study-report | Revised Oyster Creek Flood Study - Report | Creative Commons Attribution
+  fdp-kurnell-flood-study-report-and-figures | Kurnell Township Flood Study | Creative Commons Attribution
+  fdp-oyster-creek-floodplain-risk-management-plan-report | Oyster Creek Floodplain Risk Management Plan - Report | Licence Specified by Agency
+  fdp-oyster-creek-flood-study-draft-gis-layers | Oyster Creek Flood Study (Draft) - GIS Layers | Licence Specified by Agency
+  fdp-oyster-creek-flood-study-draft-hydraulic-model-input | Oyster Creek Flood Study (Draft) - Hydraulic Model Input | Licence Specified by Agency
+  fdp-oyster-creek-flood-study-draft-hydraulic-model-output | Oyster Creek Flood Study (Draft) - Hydraulic Model Output | Licence Specified by Agency
+  fdp-oyster-creek-flood-study-draft-hydrologic-model-output | Oyster Creek Flood Study (Draft) - Hydrologic Model Output | Licence Specified by Agency
+  fdp-oyster-creek-floodplain-risk-management-plan-figures | Oyster Creek Floodplain Risk Management Plan - Figures | Licence Specified by Agency
+  fdp-oyster-creek-floodplain-risk-management-study-figures | Oyster Creek Floodplain Risk Management Study - Figures | Licence Specified by Agency
+  fdp-oyster-creek-flood-study-draft-report | Oyster Creek Flood Study (Draft) - Report | Licence Specified by Agency
+  fdp-oyster-creek-floodplain-risk-management-study-report | Oyster Creek Floodplain Risk Management Study - Report | Licence Specified by Agency
+  fdp-oyster-creek-flood-study-draft-hydrologic-model-input | Oyster Creek Flood Study (Draft) - Hydrologic Model Input | Licence Specified by Agency
+  fdp-woolooware-bay-floodplain-risk-management-study-plan-hydraulic-model | Woolooware Bay Floodplain Risk Management Study & Plan - Hydraulic Model | Licence Specified by Agency
+  fdp-woolooware-bay-floodplain-risk-management-study-plan-hydrologic-model | Woolooware Bay Floodplain Risk Management Study & Plan - Hydrologic Model | Creative Commons Attribution
+  fdp-woolooware-bay-floodplain-risk-management-study-plan-hydraulic-model-results-for-report-figures | Woolooware Bay Floodplain Risk Management Study & Plan - Hydraulic Model Results for Report Figures | Licence Specified by Agency
+  fdp-woolooware-bay-floodplain-risk-management-study-and-plan-report | Woolooware Bay Floodplain Risk Management Study & Plan - Report | Creative Commons Attribution
+  fdp-gwawley-bay-catchment-floodplain-risk-management-study-and-plan-draft-report | Gwawley Bay Catchment Floodplain Risk Management Study and Plan (Draft) - Report | Licence Specified by Agency
+  fdp-woolooware-bay-floodplain-risk-management-study-plan-hydraulic-model-results-processed | Woolooware Bay Floodplain Risk Management Study & Plan - Hydraulic Model Results Processed | Licence Specified by Agency
+  fdp-revised-oyster-creek-flood-study-hydrologic-model-output | Revised Oyster Creek Flood Study - Hydrologic Model Output | Licence Specified by Agency
+  fdp-revised-oyster-creek-flood-study-gis | Revised Oyster Creek Flood Study - GIS | Licence Specified by Agency
+  fdp-revised-oyster-creek-flood-study-hydrologic-model-input | Revised Oyster Creek Flood Study - Hydrologic Model Input | Licence Specified by Agency
+  fdp-revised-oyster-creek-flood-study-hydraulic-model-output | Revised Oyster Creek Flood Study - Hydraulic Model Output | Licence Specified by Agency
+  fdp-revised-oyster-creek-flood-study-figures | Revised Oyster Creek Flood Study - Figures | Licence Specified by Agency
+  fdp-bundeena-creek-floodplain-risk-management-study-plan-2019-report | Bundeena Creek Floodplain Risk Management Study & Plan 2019 | Creative Commons Attribution
+  fdp-revised-oyster-creek-flood-study-hydraulic-model-input | Revised Oyster Creek Flood Study - Hydraulic Model Input | Licence Specified by Agency
+
+### Hornsby (data.nsw probe) — 5 packages
+  hornsby-local-government-area-remnant-trees-2008-vis_id-4472 | Hornsby Local Government Area Remnant Trees, 2008. VIS_ID 4472 | Creative Commons Attribution
+  hornsby-local-government-area-threatened-ecological-communities-2008-vis_id-4470 | Hornsby Local Government Area Threatened Ecological Communities, 2008. VIS_ID 4470 | Creative Commons Attribution
+  hornsby-local-government-area-vegetation-map-update-2017-vis_id-5065 | Hornsby Local Government Area Vegetation Map Update, 2017. VIS_ID 5065 | Creative Commons Attribution
+  hornsby-local-government-area-vegetation-communities-2008-vis_id-4471 | Hornsby Local Government Area Vegetation Communities, 2008. VIS_ID 4471 | Creative Commons Attribution
+  hawkesburywatch-estuary-health-dashboard | HawkesburyWatch Estuary Health Dashboard | Creative Commons Attribution
+
+### Cumberland (data.nsw probe) — 10 packages
+  fdp-auburn-flood-planning-maps-pdf | Auburn - Flood Planning Maps | Licence Specified by Agency
+  fdp-holroyd-lga-wide-overland-flood-study-hydraulic-model-outputs-tuflow | Holroyd City LGA Overland Flood Study - Hydraulic Model Outputs (TUFLOW) | Licence Specified by Agency
+  fdp-holroyd-lga-wide-overland-flood-study-hydraulic-model-inputs-tuflow | Holroyd City LGA Overland Flood Study - Hydraulic Model Inputs (TUFLOW) | Licence Specified by Agency
+  fdp-holroyd-lga-wide-overland-flood-study-hydrological-model-drains | Holroyd City LGA Overland Flood Study - Hydrological Model (DRAINS) | Licence Specified by Agency
+  fdp-holroyd-lga-wide-overland-flood-study-spatial-flood-layers | Holroyd City LGA Overland Flood Study - Spatial Flood Layers | Licence Specified by Agency
+  fdp-holroyd-lga-wide-overland-flood-study-report | Holroyd City LGA Overland Flood Study - Report | Licence Specified by Agency
+  fdp-duck-river-catchment-floodplain-risk-management-plan-report | Duck River Catchment Floodplain Risk Management Plan - Report | Licence Specified by Agency
+  fdp-duck-river-catchment-floodplain-risk-management-study-report | Duck River Catchment Floodplain Risk Management Study - Report | Licence Specified by Agency
+  fdp-duck-river-catchment-floodplain-risk-management-plan-draft-report | Duck River Catchment Floodplain Risk Management Plan (Draft) - Report | Licence Specified by Agency
+  fdp-duck-river-catchment-floodplain-risk-management-study-draft-report | Duck River Catchment Flood Plain Risk Management Study (Draft) - Report | Licence Specified by Agency
+
+### Northern Beaches (data.nsw probe2) — 0 packages
+
+
+### Northern Beaches (dga probe) — 0 packages
+
+
+### Randwick (data.nsw probe) — 40 packages
+  fdp-maroubra-bay-report | Maroubra Bay Floodplain Risk Management Study and Plan | Creative Commons Attribution
+  fdp-kensington-to-centennial-park-frmsp-report | Kensington to Centennial Park FRMSP - Report | Creative Commons Attribution
+  fdp-green-square-west-kensington-floodplain-risk-management-study-report | Green Square, West Kensington Floodplain Risk Management Study | Creative Commons Attribution
+  fdp-coogee-bay-floodplain-risk-management-study-plan | Coogee Bay Floodplain Risk Management Study & Plan | Creative Commons Attribution
+  fdp-kensington-to-centennial-park-frmsp-hydraulic-model-outputs-tuflow | Kensington to Centennial Park FRMSP - Hydraulic Model Outputs (TUFLOW) | Licence Specified by Agency
+  fdp-kensington-to-centennial-park-frmsp-property-tagging-database | Kensington to Centennial Park FRMSP - Property Tagging Database | Licence Specified by Agency
+  fdp-kensington-to-centennial-park-frmsp-spatial-flood-layers | Kensington to Centennial Park FRMSP - Processed Results | Licence Specified by Agency
+  fdp-kensington-to-centennial-park-frmsp-dataset-handover-description | Kensington to Centennial Park FRMSP - Dataset Handover Description | Licence Specified by Agency
+  fdp-kensington-to-centennial-park-frmsp-hydraulic-model-inputs-tuflow | Kensington to Centennial Park FRMSP - Hydraulic Model Inputs (TUFLOW) | Licence Specified by Agency
+  fdp-kensington-to-centennial-park-frmsp-floor-level-survey | Kensington to Centennial Park FRMSP - Floor Level Survey | Licence Specified by Agency
+  fdp-pdf_report | Lurline Bay, Matraville, Malabar & Yarra Bay Flood Study - Reports | Creative Commons Attribution
+  fdp-birds-gully-and-bunnerong-road-flood-study-gis | Birds Gully and Bunnerong Road Flood Study - GIS | Licence Specified by Agency
+  fdp-birds-gully-and-bunnerong-road-flood-study-waterride | Birds Gully and Bunnerong Road Flood Study - Waterride | Licence Specified by Agency
+  fdp-birds-gully-and-bunnerong-road-flood-study-data-handover-description | Birds Gully and Bunnerong Road Flood Study - Data Handover Description | Licence Specified by Agency
+  fdp-birds-gully-and-bunnerong-road-flood-study-report | Birds Gully and Bunnerong Road Flood Study - Report | Licence Specified by Agency
+  fdp-birds-gully-and-bunnerong-road-flood-study-hydrological-model-drains | Birds Gully and Bunnerong Road Flood Study - Hydrological Model (DRAINS) | Licence Specified by Agency
+  fdp-birds-gully-and-bunnerong-road-flood-study-hydraulic-model-inputs-tuflow | Birds Gully and Bunnerong Road Flood Study - Hydraulic Model Inputs (TUFLOW) | Licence Specified by Agency
+  fdp-birds-gully-and-bunnerong-road-flood-study-post-processed | Birds Gully and Bunnerong Road Flood Study - Post-Processed | Licence Specified by Agency
+  fdp-birds-gully-and-bunnerong-road-flood-study-hydraulic-model-outputs-tuflow | Birds Gully and Bunnerong Road Flood Study - Hydraulic Model Outputs (TUFLOW) | Licence Specified by Agency
+  fdp-coogee-bay-floodplain-risk-management-study-and-plan-hydraulic-model-input | Coogee Bay Floodplain Risk Management Study and Plan - Hydraulic Model Input | Licence Specified by Agency
+  fdp-maroubra-bay-flood-study-draft-report | Maroubra Bay Flood Study (Draft) - Report | Licence Specified by Agency
+  fdp-coogee-bay-floodplain-risk-management-study-and-plan-council-data | Coogee Bay Floodplain Risk Management Study and Plan - Council Data | Licence Specified by Agency
+  fdp-coogee-bay-floodplain-risk-management-study-and-plan-community-consultation | Coogee Bay Floodplain Risk Management Study and Plan - Community Consultation | Licence Specified by Agency
+  fdp-coogee-bay-floodplain-risk-management-study-and-plan-floor-level-survey | Coogee Bay Floodplain Risk Management Study and Plan - Floor Level Survey | Licence Specified by Agency
+  fdp-coogee-bay-floodplain-risk-management-study-and-plan-property-tagging | Coogee Bay Floodplain Risk Management Study and Plan - Property Tagging | Licence Specified by Agency
+  fdp-coogee-bay-floodplain-risk-management-study-and-plan-damages | Coogee Bay Floodplain Risk Management Study and Plan - Damages | Licence Specified by Agency
+  fdp-coogee-bay-floodplain-risk-management-study-and-plan-options | Coogee Bay Floodplain Risk Management Study and Plan - Options | Licence Specified by Agency
+  fdp-coogee-bay-floodplain-risk-management-study-and-plan-hydraulic-model-output | Coogee Bay Floodplain Risk Management Study and Plan - Hydraulic Model Output | Licence Specified by Agency
+  fdp-coogee-bay-floodplain-risk-management-study-and-plan-emergency-management | Coogee Bay Floodplain Risk Management Study and Plan - Emergency Management | Licence Specified by Agency
+  fdp-kensington-centennial-park-flood-study-draft-report | Kensington - Centennial Park Flood Study (Draft) - Report | Licence Specified by Agency
+  fdp-coogee-bay-fs-draft-report | Coogee Bay Flood Study Draft for public Exhibition - Report | Licence Specified by Agency
+  fdp-maroubra-bay-floodplain-risk-management-study-and-plan-figures | Maroubra Bay Floodplain Risk Management Study and Plan - Figures | Licence Specified by Agency
+  fdp-maroubra-bay-floodplain-risk-management-study-and-plan-appendix-d | Maroubra Bay Floodplain Risk Management Study and Plan - Appendix D | Licence Specified by Agency
+  fdp-maroubra-bay-floodplain-risk-management-study-and-plan-appendix-b | Maroubra Bay Floodplain Risk Management Study and Plan - Appendix B | Licence Specified by Agency
+  fdp-maroubra-bay-floodplain-risk-management-study-and-plan-property-tagging-report | Maroubra Bay Floodplain Risk Management Study and Plan - Property Tagging Report | Licence Specified by Agency
+  fdp-maroubra-bay-floodplain-risk-management-study-and-plan-hydrologic-model-output | Maroubra Bay Floodplain Risk Management Study and Plan - Hydrologic Model Output | Licence Specified by Agency
+  fdp-maroubra-bay-floodplain-risk-management-study-and-plan-hydrologic-model-input | Maroubra Bay Floodplain Risk Management Study and Plan - Hydrologic Model Input | Licence Specified by Agency
+  fdp-maroubra-bay-floodplain-risk-management-study-and-plan-hydraulic-model-output-options | Maroubra Bay Floodplain Risk Management Study and Plan - Hydraulic Model Output - Options | Licence Specified by Agency
+  fdp-maroubra-bay-floodplain-risk-management-study-and-plan-hydraulic-model-output | Maroubra Bay Floodplain Risk Management Study and Plan - Hydraulic Model Output | Licence Specified by Agency
+  fdp-maroubra-bay-floodplain-risk-management-study-and-plan-hydraulic-model-input | Maroubra Bay Floodplain Risk Management Study and Plan - Hydraulic Model Input | Licence Specified by Agency
+
+### Inner West (data.nsw probe) — 21 packages
+  fdp-dobroyd-and-hawthorn-canal-frmsp-processed-model-files | Dobroyd and Hawthorn Canal FRMSP - Processed Model Files | Creative Commons Attribution
+  fdp-cooks-river-floodplain-risk-management-study-and-plan-frmsp-report | Cooks River Floodplain Risk Management Study and Plan - Report | Creative Commons Attribution
+  fdp-dobroyd-and-hawthorne-canal-frmsp-report | Dobroyd and Hawthorne Canal FRMSP - Report | Creative Commons Attribution
+  fdp-alexandra-canal-flood-study-report | Alexandra Canal Flood Study - Report | Creative Commons Attribution
+  fdp-hawthorne-canal-flood-study-report | Hawthorne Canal Flood Study - Report | Creative Commons Attribution
+  fdp-marrickville-valley-frmp-report | Marrickville Valley Floodplain Risk Management Plan - Report | Creative Commons Attribution
+  fdp-marrickville-valley-floodplain-risk-management-study-report | Marrickville Valley Floodplain Risk Management Study - Report | Creative Commons Attribution
+  fdp-leichhardt-flood-study-draft-report | Leichhardt Flood Study (Draft) - Report | Creative Commons Attribution
+  fdp-cooks-river-floodplain-risk-management-study-and-plan-appendices-frmsp | Cooks River Floodplain Risk Management Study and Plan - Appendices | Licence Specified by Agency
+  fdp-hawthorne-canal-flood-study-survey | Hawthorne Canal Flood Study - Survey | Licence Specified by Agency
+  fdp-hawthorne-canal-flood-study-photos | Hawthorne Canal Flood Study - Photos | Licence Specified by Agency
+  fdp-hawthorne-canal-flood-study-old-reports | Hawthorne Canal Flood Study - Old Reports | Licence Specified by Agency
+  fdp-hawthorne-canal-flood-study-hydrological-model-outputs-drains | Hawthorne Canal Flood Study - Hydrological Model Outputs (DRAINS) | Licence Specified by Agency
+  fdp-hawthorne-canal-flood-study-hydrological-model-inputs-drains | Hawthorne Canal Flood Study - Hydrological Model Inputs (DRAINS) | Licence Specified by Agency
+  fdp-hawthorne-canal-flood-study-hydraulic-model-inputs-tuflow | Hawthorne Canal Flood Study - Hydraulic Model Inputs (TUFLOW) | Licence Specified by Agency
+  fdp-hawthorne-canal-flood-study-spatial-flood-layers-post-processed | Hawthorne Canal Flood Study - Spatial Flood Layers (Post-Processed) | Licence Specified by Agency
+  fdp-eastern-channel-east-subcatchment-management-plan-appendix | Eastern Channel East Subcatchment Management Plan - Appendix | Licence Specified by Agency
+  fdp-leichhardt-floodplain-risk-management-study-report | Leichhardt Floodplain Risk Management Study - Report | Creative Commons Attribution
+  fdp-leichhardt-frmsp-flood-study-addendum-report | Leichhardt Floodplain Risk Management Study and Plan: Flood Study Addendum - Report | Creative Commons Attribution
+  fdp-leichhardt-floodplain-risk-management-plan-report | Leichhardt Floodplain Risk Management Plan - Report | Creative Commons Attribution
+  fdp-eastern-channel-east-subcatchment-management-plan-report | Eastern Channel East Subcatchment Management Plan - Report | Licence Specified by Agency
+

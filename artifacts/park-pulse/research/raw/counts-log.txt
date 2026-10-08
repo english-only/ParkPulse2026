@@ -1,0 +1,104 @@
+City of Sydney|Swimming pools|layers=1|features=6
+City of Sydney|Parking permits areas|layers=1|features=24
+City of Sydney|Dog off-leash parks|layers=1|features=51
+City of Sydney|Mobility parking|layers=1|features=365
+City of Sydney|Recreation centres|layers=1|features=6
+City of Sydney|Dog off-leash park areas|layers=1|features=164
+City of Sydney|Walking count sites|layers=1|features=120
+City of Sydney|Ticket parking rates|layers=1|features=13
+City of Sydney|National public toilets|layers=1|features=525
+City of Sydney|Drinking fountains (water bubblers)|layers=1|features=273
+City of Sydney|Council car parks|layers=1|features=2
+City of Sydney|Library locations|layers=1|features=11
+City of Sydney|Walking count sites summary|layers=1|features=120
+City of Sydney|Free 15 minute parking|layers=1|features=12
+City of Sydney|Public transport stations, stops, wharves|layers=1|features=64
+City of Sydney|Walking count surveys|layers=0|features=0
+City of Sydney|Sports and recreation facilities|layers=1|features=70
+City of Sydney|Bicycle count sites|layers=1|features=110
+City of Sydney|Playgrounds|layers=1|features=162
+City of Sydney|Bicycle parking|layers=1|features=1761
+City of Sydney|Bus shelters|layers=1|features=40
+City of Sydney|Bicycle count locations relationship_auth|layers=0|features=0
+City of Sydney|Bicycle count surveys|layers=0|features=0
+City of Sydney|Parks|layers=1|features=418
+City of Sydney|Seats|layers=1|features=890
+City of Sydney|Greenhouse gas emissions by modes of transport|layers=0|features=0
+City of Sydney|Kilometres travelled by mode of transport|layers=0|features=0
+City of Sydney|A day in the life of a park|layers=13|features=93
+City of Sydney|Walking count sites relationship_auth|layers=0|features=0
+City of Sydney|Walking counts to sites relationship|layers=1|features=5287
+City of Sydney|Contractor Works Accessible City view website|layers=1|features=16
+City of Sydney|Join Features to Library locations view|layers=1|features=11
+City of Sydney|Walking_counts_sites_join_walking_summary_data|layers=1|features=120
+City of Sydney|Bik share parking|layers=1|features=370
+City of Sydney|Library details|layers=0|features=0
+City of Sydney|Crown Land|layers=1|features=45
+City of Sydney|Accessible car parking spaces_respondant|layers=1|features=0
+City of Sydney|Bike amenities auth|layers=0|features=0
+City of Sydney|Coach parking_auth|layers=0|features=0
+City of Sydney|Library locations walking time_auth|layers=0|features=0
+City of Parramatta|Crown and Community Land Categories|layers=3|features=1121
+City of Parramatta|BikePlan_Watercourses|layers=1|features=81
+City of Parramatta|PARKS_ASSETS_WEB_PUBLISH_Rec|layers=6|features=2068
+City of Parramatta|Public Toilets|layers=1|features=62
+City of Parramatta|Parks for GeoHub|layers=1|features=367
+City of Parramatta|Drinking Fountains|layers=1|features=132
+City of Parramatta|Playground Equipment|layers=1|features=144
+City of Parramatta|XG Skate Park|layers=1|features=3
+City of Parramatta|Hard Court Sport Surfaces|layers=1|features=52
+City of Parramatta|BBQs|layers=1|features=42
+City of Parramatta|Sporting Fields|layers=1|features=90
+City of Parramatta|Fitness Equipment|layers=1|features=41
+City of Parramatta|Tennis Courts|layers=1|features=12
+City of Parramatta|Water Playground Equipment|layers=1|features=3
+City of Parramatta|Skate and BMX|layers=1|features=3
+City of Parramatta|Newington Special Event Parking Scheme|layers=1|features=8
+City of Parramatta|Picnic Areas|layers=1|features=29
+City of Parramatta|OpenSpaceTrees|layers=1|features=66351
+City of Parramatta|BikePlan_LGABoundary|layers=1|features=1
+City of Parramatta|BikePlan_OpenSpace|layers=1|features=366
+City of Parramatta|OpenSpace PLR Trees Data|layers=1|features=66195
+City of Parramatta|Crown Roads Parramatta|layers=2|features=229
+City of Parramatta|Melrose_Park_WQ_ViewOnly|layers=1|features=54649
+City of Parramatta|Silverwater Park_WFL1|layers=6|features=16790
+City of Parramatta|PLR_LightRail_Line_Edit|layers=1|features=6
+City of Parramatta|Parramatta_Wards_Proposed_interactive|layers=1|features=8
+City of Parramatta|existing_bike_network|layers=1|features=68
+City of Parramatta|parking_restrictions|layers=1|features=57
+City of Parramatta|Existing_bike_network_202408|layers=1|features=992
+City of Parramatta|RESIDENT PARKING SCHEME|layers=1|features=20
+City of Parramatta|Nature_trail|layers=1|features=5
+City of Parramatta|ParkingMeters view|layers=1|features=226
+Northern Beaches|Parking Permit Schemes|layers=1|features=14
+Northern Beaches|Toilets|layers=2|features=179
+Northern Beaches|Parking Permit Schemes_layer|layers=1|features=14
+Northern Beaches|Beaches_Walks|layers=1|features=117
+Northern Beaches|CoastWalk|layers=2|features=250
+Northern Beaches|CoastWalkNew|layers=4|features=501
+Northern Beaches|MTBTrail|layers=11|features=2855
+Northern Beaches|CoastWalk Elevations|layers=1|features=21
+Hornsby|HSC Care and Control|layers=1|features=1267
+Hornsby|HKBFMC_FireTrails_Register2014|layers=1|features=887
+Hornsby|Walking_Tracks_Managed_20190325|layers=1|features=232
+Hornsby|MTB_Tracks_Hornsby_20190325|layers=1|features=61
+Hornsby|Walking_Tracks_Circuits_20190325|layers=1|features=10
+Hornsby|CRR_Assets_20230109|layers=1|features=365
+Hornsby|CRR Assets_PUBLIC|layers=1|features=359
+Hornsby|Library_POINTS_20211201|layers=1|features=129
+Hornsby|Library_CAD_20211201_FIN|layers=1|features=129
+Hornsby|Crown Reserves_20231024|layers=1|features=1418
+Hornsby|Park Facilities Mowing Area_WFL1|layers=2|features=519
+Inner West|Active Inner West|layers=2|features=359
+Inner West|Join Features to Active Inner West view|layers=1|features=352
+Woollahra|Resident Parking Scheme Address Check|layers=1|features=15809
+Woollahra|Your Say Crown Parks Map|layers=8|features=205
+Woollahra|Car Parks|layers=1|features=13
+Woollahra|Parks Online Map|layers=8|features=294
+Woollahra|Tennis Courts|layers=1|features=3
+Woollahra|Lyne Park Playground Concept Submissions|layers=1|features=55
+Woollahra|Resident Parking Scheme Areas|layers=1|features=32273
+Woollahra|WMC Open Space and Reserves|layers=1|features=113
+Liverpool|Parking|layers=3|features=153
+
+Done. 102 services. Saved raw/service-counts.json

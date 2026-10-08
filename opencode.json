@@ -1,0 +1,10 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "mcp": {
+    "freebuff": {
+      "command": "npx",
+      "args": ["-y", "@freebuff/mcp-server"],
+      "enabled": true
+    }
+  }
+}

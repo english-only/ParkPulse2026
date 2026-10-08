@@ -11,7 +11,9 @@ version = "1.0.0"
 
 [[services]]
 name = "web"
-paths = [ "/" ]
+# The web service must only claim the SPA's own routes. Claiming "/" also
+# captures /api/*, which would otherwise be served index.html with a 200.
+paths = [ "/", "/data/*", "/assets/*", "/explore", "/about" ]
 localPort = 24288
 
 [services.development]
@@ -21,6 +23,12 @@ run = "pnpm --filter @workspace/park-pulse run dev"
 build = [ "pnpm", "--filter", "@workspace/park-pulse", "run", "build" ]
 publicDir = "artifacts/park-pulse/dist/public"
 serve = "static"
+
+[[services.production.rewrites]]
+# API routes are matched before the SPA fallback so a client fetch of /api/*
+# reaches the API service rather than receiving index.html.
+from = "/api/*"
+to = "http://localhost:8080/api/:splat"
 
 [[services.production.rewrites]]
 from = "/*"

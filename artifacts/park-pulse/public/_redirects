@@ -1,1 +1,5 @@
-/* /index.html 200
+# Single-page app fallback. API routes must be matched *before* the catch-all,
+# otherwise a request to /api/* is served index.html with a 200 and the client
+# fails to parse HTML as JSON.
+/api/*  /api/:splat  200
+/*      /index.html 200

@@ -1,0 +1,10 @@
+City of Sydney|cNVyNtjGVZybOQWZ|featureServices=221
+City of Parramatta|NrOjMi9LSYL3MUze|featureServices=153
+Northern Beaches|LRvZf9YQitIniyDH|featureServices=85
+Hornsby|VKqP0BP08pVXloHq|featureServices=89
+Inner West|dp2UIID5MUpTUFVA|featureServices=21
+Woollahra|zjbesynggtrdwb3p|featureServices=35
+Liverpool|Ys4U0NCXGgyTtRWx|featureServices=29
+
+Total feature services across 7 orgs: 633
+Saved raw/council-feature-services.json

@@ -1,0 +1,1906 @@
+[
+ {
+  "org": "City of Sydney",
+  "title": "Swimming pools",
+  "id": "1be3eaa7fbf449649c3bb06821fa3f7e",
+  "url": "https://services1.arcgis.com/cNVyNtjGVZybOQWZ/arcgis/rest/services/SwimmingPools/FeatureServer",
+  "layers": [
+   {
+    "id": 0,
+    "name": "Swimming Pools",
+    "geometryType": "esriGeometryPoint",
+    "count": 6
+   }
+  ],
+  "totalFeatures": 6,
+  "layerCount": 1
+ },
+ {
+  "org": "City of Sydney",
+  "title": "Parking permits areas",
+  "id": "891bd630483847329c56548aadf97ef3",
+  "url": "https://services1.arcgis.com/cNVyNtjGVZybOQWZ/arcgis/rest/services/ParkingPermits/FeatureServer",
+  "layers": [
+   {
+    "id": 0,
+    "name": "Parking permit areas",
+    "geometryType": "esriGeometryPolygon",
+    "count": 24
+   }
+  ],
+  "totalFeatures": 24,
+  "layerCount": 1
+ },
+ {
+  "org": "City of Sydney",
+  "title": "Dog off-leash parks",
+  "id": "20b8bb752d7943d98b9704ed66d539fa",
+  "url": "https://services1.arcgis.com/cNVyNtjGVZybOQWZ/arcgis/rest/services/Dog_off_leash_parks/FeatureServer",
+  "layers": [
+   {
+    "id": 0,
+    "name": "DogOffLeashParks",
+    "geometryType": "esriGeometryPoint",
+    "count": 51
+   }
+  ],
+  "totalFeatures": 51,
+  "layerCount": 1
+ },
+ {
+  "org": "City of Sydney",
+  "title": "Mobility parking",
+  "id": "2671fdce3f354b3e8f02236ca12271cb",
+  "url": "https://services1.arcgis.com/cNVyNtjGVZybOQWZ/arcgis/rest/services/Mobility_parking/FeatureServer",
+  "layers": [
+   {
+    "id": 1,
+    "name": "Mobility parking",
+    "geometryType": "esriGeometryPoint",
+    "count": 365
+   }
+  ],
+  "totalFeatures": 365,
+  "layerCount": 1
+ },
+ {
+  "org": "City of Sydney",
+  "title": "Recreation centres",
+  "id": "026b3b134b5c488db62ac5e2d6e8e764",
+  "url": "https://services1.arcgis.com/cNVyNtjGVZybOQWZ/arcgis/rest/services/RecreationCentres/FeatureServer",
+  "layers": [
+   {
+    "id": 0,
+    "name": "Recreation Centres",
+    "geometryType": "esriGeometryPoint",
+    "count": 6
+   }
+  ],
+  "totalFeatures": 6,
+  "layerCount": 1
+ },
+ {
+  "org": "City of Sydney",
+  "title": "Dog off-leash park areas",
+  "id": "1988ada4a5fd4fd3b123988e619ec92b",
+  "url": "https://services1.arcgis.com/cNVyNtjGVZybOQWZ/arcgis/rest/services/Dog_off_leash_park_areas/FeatureServer",
+  "layers": [
+   {
+    "id": 0,
+    "name": "Dog off-leash park areas",
+    "geometryType": "esriGeometryPolygon",
+    "count": 164
+   }
+  ],
+  "totalFeatures": 164,
+  "layerCount": 1
+ },
+ {
+  "org": "City of Sydney",
+  "title": "Walking count sites",
+  "id": "318c979731e54cb187349d034e1defad",
+  "url": "https://services1.arcgis.com/cNVyNtjGVZybOQWZ/arcgis/rest/services/WalkingCountSites/FeatureServer",
+  "layers": [
+   {
+    "id": 0,
+    "name": "Walking count sites",
+    "geometryType": "esriGeometryPoint",
+    "count": 120
+   }
+  ],
+  "totalFeatures": 120,
+  "layerCount": 1
+ },
+ {
+  "org": "City of Sydney",
+  "title": "Ticket parking rates",
+  "id": "d7905c7b638e4e2ba352e7013be1fc1e",
+  "url": "https://services1.arcgis.com/cNVyNtjGVZybOQWZ/arcgis/rest/services/Ticket_parking_rates/FeatureServer",
+  "layers": [
+   {
+    "id": 0,
+    "name": "Ticket parking rates",
+    "geometryType": "esriGeometryPolygon",
+    "count": 13
+   }
+  ],
+  "totalFeatures": 13,
+  "layerCount": 1
+ },
+ {
+  "org": "City of Sydney",
+  "title": "National public toilets",
+  "id": "8b0855f034ef4106967e4b0463184190",
+  "url": "https://services1.arcgis.com/cNVyNtjGVZybOQWZ/arcgis/rest/services/National_public_toilets/FeatureServer",
+  "layers": [
+   {
+    "id": 0,
+    "name": "National_public_toilets",
+    "geometryType": "esriGeometryPoint",
+    "count": 525
+   }
+  ],
+  "totalFeatures": 525,
+  "layerCount": 1
+ },
+ {
+  "org": "City of Sydney",
+  "title": "Drinking fountains (water bubblers)",
+  "id": "166d56fa6d644397add849d6190fc388",
+  "url": "https://services1.arcgis.com/cNVyNtjGVZybOQWZ/arcgis/rest/services/Drinking_fountains/FeatureServer",
+  "layers": [
+   {
+    "id": 0,
+    "name": "Drinking fountains (water bubblers)",
+    "geometryType": "esriGeometryPoint",
+    "count": 273
+   }
+  ],
+  "totalFeatures": 273,
+  "layerCount": 1
+ },
+ {
+  "org": "City of Sydney",
+  "title": "Council car parks",
+  "id": "350f8a0765694860a289766408c6a81e",
+  "url": "https://services1.arcgis.com/cNVyNtjGVZybOQWZ/arcgis/rest/services/Council_car_parks/FeatureServer",
+  "layers": [
+   {
+    "id": 0,
+    "name": "Council car parks",
+    "geometryType": "esriGeometryPoint",
+    "count": 2
+   }
+  ],
+  "totalFeatures": 2,
+  "layerCount": 1
+ },
+ {
+  "org": "City of Sydney",
+  "title": "Library locations",
+  "id": "e22b20f1bcee44bbb4ed76ac060c6609",
+  "url": "https://services1.arcgis.com/cNVyNtjGVZybOQWZ/arcgis/rest/services/Libraries/FeatureServer",
+  "layers": [
+   {
+    "id": 0,
+    "name": "Library locations",
+    "geometryType": "esriGeometryPoint",
+    "count": 11
+   }
+  ],
+  "totalFeatures": 11,
+  "layerCount": 1
+ },
+ {
+  "org": "City of Sydney",
+  "title": "Walking count sites summary",
+  "id": "392e9fa3f62b471caec8c60c9fecb326",
+  "url": "https://services1.arcgis.com/cNVyNtjGVZybOQWZ/arcgis/rest/services/Walking_count_sites_summary/FeatureServer",
+  "layers": [
+   {
+    "id": 0,
+    "name": "Walking count sites summary",
+    "geometryType": "esriGeometryPoint",
+    "count": 120
+   }
+  ],
+  "totalFeatures": 120,
+  "layerCount": 1
+ },
+ {
+  "org": "City of Sydney",
+  "title": "Free 15 minute parking",
+  "id": "13727f63da884e1b8210c04496c08471",
+  "url": "https://services1.arcgis.com/cNVyNtjGVZybOQWZ/arcgis/rest/services/Free_15_minute_parking/FeatureServer",
+  "layers": [
+   {
+    "id": 0,
+    "name": "Free 15-minute parking",
+    "geometryType": "esriGeometryPolygon",
+    "count": 12
+   }
+  ],
+  "totalFeatures": 12,
+  "layerCount": 1
+ },
+ {
+  "org": "City of Sydney",
+  "title": "Public transport stations, stops, wharves",
+  "id": "1d9f62232b174d6abe8f1b932dfa6404",
+  "url": "https://services1.arcgis.com/cNVyNtjGVZybOQWZ/arcgis/rest/services/StationsStopsWharves/FeatureServer",
+  "layers": [
+   {
+    "id": 0,
+    "name": "Stations, stops and wharves",
+    "geometryType": "esriGeometryPoint",
+    "count": 64
+   }
+  ],
+  "totalFeatures": 64,
+  "layerCount": 1
+ },
+ {
+  "org": "City of Sydney",
+  "title": "Walking count surveys",
+  "id": "8300b036131d4c98b760cba20207e7fc",
+  "url": "https://services1.arcgis.com/cNVyNtjGVZybOQWZ/arcgis/rest/services/Walking_count_surveys/FeatureServer",
+  "layers": [],
+  "totalFeatures": 0,
+  "layerCount": 0
+ },
+ {
+  "org": "City of Sydney",
+  "title": "Sports and recreation facilities",
+  "id": "2ba0944eb45449d4982cda303e1a1589",
+  "url": "https://services1.arcgis.com/cNVyNtjGVZybOQWZ/arcgis/rest/services/Sport/FeatureServer",
+  "layers": [
+   {
+    "id": 0,
+    "name": "Sport",
+    "geometryType": "esriGeometryPoint",
+    "count": 70
+   }
+  ],
+  "totalFeatures": 70,
+  "layerCount": 1
+ },
+ {
+  "org": "City of Sydney",
+  "title": "Bicycle count sites",
+  "id": "f192364cc40f45e3959717b8cbaf8c6c",
+  "url": "https://services1.arcgis.com/cNVyNtjGVZybOQWZ/arcgis/rest/services/Twice_Yearly_Bicycle_Count_Locations/FeatureServer",
+  "layers": [
+   {
+    "id": 0,
+    "name": "Bicycle count sites",
+    "geometryType": "esriGeometryPoint",
+    "count": 110
+   }
+  ],
+  "totalFeatures": 110,
+  "layerCount": 1
+ },
+ {
+  "org": "City of Sydney",
+  "title": "Playgrounds",
+  "id": "4c9bb08348874b2e8d0998c460dbcded",
+  "url": "https://services1.arcgis.com/cNVyNtjGVZybOQWZ/arcgis/rest/services/Playgrounds/FeatureServer",
+  "layers": [
+   {
+    "id": 0,
+    "name": "Playgrounds",
+    "geometryType": "esriGeometryPoint",
+    "count": 162
+   }
+  ],
+  "totalFeatures": 162,
+  "layerCount": 1
+ },
+ {
+  "org": "City of Sydney",
+  "title": "Bicycle parking",
+  "id": "6971b82d163346c1a24ae71ea4bfe72c",
+  "url": "https://services1.arcgis.com/cNVyNtjGVZybOQWZ/arcgis/rest/services/Bicycle_parking/FeatureServer",
+  "layers": [
+   {
+    "id": 0,
+    "name": "Bicycle parking",
+    "geometryType": "esriGeometryPoint",
+    "count": 1761
+   }
+  ],
+  "totalFeatures": 1761,
+  "layerCount": 1
+ },
+ {
+  "org": "City of Sydney",
+  "title": "Bus shelters",
+  "id": "3f216ec15ad0498091b335afee5b6537",
+  "url": "https://services1.arcgis.com/cNVyNtjGVZybOQWZ/arcgis/rest/services/Bus_shelters/FeatureServer",
+  "layers": [
+   {
+    "id": 0,
+    "name": "Bus shelters",
+    "geometryType": "esriGeometryPoint",
+    "count": 40
+   }
+  ],
+  "totalFeatures": 40,
+  "layerCount": 1
+ },
+ {
+  "org": "City of Sydney",
+  "title": "Bicycle count locations relationship_auth",
+  "id": "58a0a19e373a4a9eb09cfa02f323cea8",
+  "url": "https://utility.arcgis.com/usrsvcs/servers/58a0a19e373a4a9eb09cfa02f323cea8/rest/services/Twice_Yearly_Bicycle_Count_Locations_Relationship/FeatureServer",
+  "layers": [],
+  "totalFeatures": 0,
+  "layerCount": 0
+ },
+ {
+  "org": "City of Sydney",
+  "title": "Bicycle count surveys",
+  "id": "5e3b0001a1a4402486d1fb76bb8b290c",
+  "url": "https://services1.arcgis.com/cNVyNtjGVZybOQWZ/arcgis/rest/services/Twice_Yearly_Bicycle_Count_Data/FeatureServer",
+  "layers": [],
+  "totalFeatures": 0,
+  "layerCount": 0
+ },
+ {
+  "org": "City of Sydney",
+  "title": "Parks",
+  "id": "b38a28bd916e4df7871043656d6d36d6",
+  "url": "https://services1.arcgis.com/cNVyNtjGVZybOQWZ/arcgis/rest/services/Parks/FeatureServer",
+  "layers": [
+   {
+    "id": 0,
+    "name": "Parks",
+    "geometryType": "esriGeometryPolygon",
+    "count": 418
+   }
+  ],
+  "totalFeatures": 418,
+  "layerCount": 1
+ },
+ {
+  "org": "City of Sydney",
+  "title": "Seats",
+  "id": "25fe6ed6b4644ddc8216566f82f8887b",
+  "url": "https://services1.arcgis.com/cNVyNtjGVZybOQWZ/arcgis/rest/services/Seats/FeatureServer",
+  "layers": [
+   {
+    "id": 0,
+    "name": "Seats",
+    "geometryType": "esriGeometryPoint",
+    "count": 890
+   }
+  ],
+  "totalFeatures": 890,
+  "layerCount": 1
+ },
+ {
+  "org": "City of Sydney",
+  "title": "Greenhouse gas emissions by modes of transport",
+  "id": "a11fb16a6fb6409b9bddac5817fcb3c3",
+  "url": "https://services1.arcgis.com/cNVyNtjGVZybOQWZ/arcgis/rest/services/Greenhouse_gas_emissions_by_modes_of_transport/FeatureServer",
+  "layers": [],
+  "totalFeatures": 0,
+  "layerCount": 0
+ },
+ {
+  "org": "City of Sydney",
+  "title": "Kilometres travelled by mode of transport",
+  "id": "15a0c44ca50b4c2bbdaa6ff9d58bf5a1",
+  "url": "https://services1.arcgis.com/cNVyNtjGVZybOQWZ/arcgis/rest/services/Kilometres_travelled_by_mode_of_transport/FeatureServer",
+  "layers": [],
+  "totalFeatures": 0,
+  "layerCount": 0
+ },
+ {
+  "org": "City of Sydney",
+  "title": "A day in the life of a park",
+  "id": "c8a76d03ca9e417d83fbca466d85bafb",
+  "url": "https://services1.arcgis.com/cNVyNtjGVZybOQWZ/arcgis/rest/services/A_day_in_the_life_of_a_park/FeatureServer",
+  "layers": [
+   {
+    "id": 0,
+    "name": "Early morning",
+    "geometryType": "esriGeometryPoint",
+    "count": 7
+   },
+   {
+    "id": 1,
+    "name": "Midday",
+    "geometryType": "esriGeometryPoint",
+    "count": 8
+   },
+   {
+    "id": 2,
+    "name": "Afternoon",
+    "geometryType": "esriGeometryPoint",
+    "count": 4
+   },
+   {
+    "id": 3,
+    "name": "Evening",
+    "geometryType": "esriGeometryPoint",
+    "count": 3
+   },
+   {
+    "id": 5,
+    "name": "Other activities",
+    "geometryType": "esriGeometryPoint",
+    "count": 22
+   },
+   {
+    "id": 6,
+    "name": "Other activities",
+    "geometryType": "esriGeometryPoint",
+    "count": 22
+   },
+   {
+    "id": 7,
+    "name": "Other activities",
+    "geometryType": "esriGeometryPoint",
+    "count": 22
+   },
+   {
+    "id": 8,
+    "name": "St Peters Station",
+    "geometryType": "esriGeometryPoint",
+    "count": 1
+   },
+   {
+    "id": 10,
+    "name": "SydneyPark",
+    "geometryType": "esriGeometryPolygon",
+    "count": 1
+   },
+   {
+    "id": 11,
+    "name": "SydneyPark",
+    "geometryType": "esriGeometryPolygon",
+    "count": 1
+   },
+   {
+    "id": 12,
+    "name": "SydneyPark",
+    "geometryType": "esriGeometryPolygon",
+    "count": 1
+   },
+   {
+    "id": 13,
+    "name": "SydneyPark",
+    "geometryType": "esriGeometryPolygon",
+    "count": 1
+   }
+  ],
+  "totalFeatures": 93,
+  "layerCount": 13
+ },
+ {
+  "org": "City of Sydney",
+  "title": "Walking count sites relationship_auth",
+  "id": "f089682ba08c4c028c6321a256d48501",
+  "url": "https://utility.arcgis.com/usrsvcs/servers/f089682ba08c4c028c6321a256d48501/rest/services/Join_Features_to_Walking_count_sites/FeatureServer",
+  "layers": [],
+  "totalFeatures": 0,
+  "layerCount": 0
+ },
+ {
+  "org": "City of Sydney",
+  "title": "Walking counts to sites relationship",
+  "id": "e00f34a615f845caa183292f08352e87",
+  "url": "https://services1.arcgis.com/cNVyNtjGVZybOQWZ/arcgis/rest/services/Join_Features_to_Walking_count_sites/FeatureServer",
+  "layers": [
+   {
+    "id": 0,
+    "name": "Join_Features_to_Walking_count_sites",
+    "geometryType": "esriGeometryPoint",
+    "count": 5287
+   }
+  ],
+  "totalFeatures": 5287,
+  "layerCount": 1
+ },
+ {
+  "org": "City of Sydney",
+  "title": "Contractor Works Accessible City view website",
+  "id": "317f4a00c27c40c9ab64eb5d1038dab3",
+  "url": "https://services1.arcgis.com/cNVyNtjGVZybOQWZ/arcgis/rest/services/Contractor_Works_Accessible_City_view_website/FeatureServer",
+  "layers": [
+   {
+    "id": 0,
+    "name": "Contractor Works",
+    "geometryType": "esriGeometryPoint",
+    "count": 16
+   }
+  ],
+  "totalFeatures": 16,
+  "layerCount": 1
+ },
+ {
+  "org": "City of Sydney",
+  "title": "Join Features to Library locations view",
+  "id": "101b66a136fa406c9ce7db812d1101e9",
+  "url": "https://services1.arcgis.com/cNVyNtjGVZybOQWZ/arcgis/rest/services/Join_Features_to_Library_locations_view/FeatureServer",
+  "layers": [
+   {
+    "id": 0,
+    "name": "Join_Features_to_Library_locations_view",
+    "geometryType": "esriGeometryPoint",
+    "count": 11
+   }
+  ],
+  "totalFeatures": 11,
+  "layerCount": 1
+ },
+ {
+  "org": "City of Sydney",
+  "title": "Walking_counts_sites_join_walking_summary_data",
+  "id": "9a2146e99cb14454b2d8da4bd5e56a6e",
+  "url": "https://services1.arcgis.com/cNVyNtjGVZybOQWZ/arcgis/rest/services/Walking_counts_sites_join_walking_summary_data/FeatureServer",
+  "layers": [
+   {
+    "id": 0,
+    "name": "Walking_counts_sites_join_walking_summary_data",
+    "geometryType": "esriGeometryPoint",
+    "count": 120
+   }
+  ],
+  "totalFeatures": 120,
+  "layerCount": 1
+ },
+ {
+  "org": "City of Sydney",
+  "title": "Bik share parking",
+  "id": "7f454c902673420cb1e3f1d532cd09de",
+  "url": "https://services1.arcgis.com/cNVyNtjGVZybOQWZ/arcgis/rest/services/Bike_share_parking/FeatureServer",
+  "layers": [
+   {
+    "id": 0,
+    "name": "Bike share parking",
+    "geometryType": "esriGeometryPoint",
+    "count": 370
+   }
+  ],
+  "totalFeatures": 370,
+  "layerCount": 1
+ },
+ {
+  "org": "City of Sydney",
+  "title": "Library details",
+  "id": "123b48733a4145e6a7e4802de770e581",
+  "url": "https://services1.arcgis.com/cNVyNtjGVZybOQWZ/arcgis/rest/services/Library_details/FeatureServer",
+  "layers": [],
+  "totalFeatures": 0,
+  "layerCount": 0
+ },
+ {
+  "org": "City of Sydney",
+  "title": "Crown Land",
+  "id": "1c19b1e5c62147febcdbd85fb980dbae",
+  "url": "https://services1.arcgis.com/cNVyNtjGVZybOQWZ/arcgis/rest/services/Crown_Land/FeatureServer",
+  "layers": [
+   {
+    "id": 0,
+    "name": "Crown Land",
+    "geometryType": "esriGeometryPoint",
+    "count": 45
+   }
+  ],
+  "totalFeatures": 45,
+  "layerCount": 1
+ },
+ {
+  "org": "City of Sydney",
+  "title": "Accessible car parking spaces_respondant",
+  "id": "cb8923843c214143a993aa601ff697f8",
+  "url": "https://services1.arcgis.com/cNVyNtjGVZybOQWZ/arcgis/rest/services/Accessible_car_parking_spaces_respondant/FeatureServer",
+  "layers": [
+   {
+    "id": 0,
+    "name": "Accessible_car_parking_spaces_13052020",
+    "geometryType": "esriGeometryPoint",
+    "count": null
+   }
+  ],
+  "totalFeatures": 0,
+  "layerCount": 1
+ },
+ {
+  "org": "City of Sydney",
+  "title": "Bike amenities auth",
+  "id": "b9ae5a4337084994be03d2eef1918eee",
+  "url": "https://utility.arcgis.com/usrsvcs/servers/b9ae5a4337084994be03d2eef1918eee/rest/services/Bike_Amenities/FeatureServer",
+  "layers": [],
+  "totalFeatures": 0,
+  "layerCount": 0
+ },
+ {
+  "org": "City of Sydney",
+  "title": "Coach parking_auth",
+  "id": "8d7d79799dbc40bda0544f43df86c004",
+  "url": "https://utility.arcgis.com/usrsvcs/servers/8d7d79799dbc40bda0544f43df86c004/rest/services/Coach_parking/FeatureServer",
+  "layers": [],
+  "totalFeatures": 0,
+  "layerCount": 0
+ },
+ {
+  "org": "City of Sydney",
+  "title": "Library locations walking time_auth",
+  "id": "15feb70586274207afecabcc1e444adf",
+  "url": "https://utility.arcgis.com/usrsvcs/servers/15feb70586274207afecabcc1e444adf/rest/services/LibraryWalkingTime/FeatureServer",
+  "layers": [],
+  "totalFeatures": 0,
+  "layerCount": 0
+ },
+ {
+  "org": "City of Parramatta",
+  "title": "Crown and Community Land Categories",
+  "id": "e1c777c61ab14bcfaed916fa7bb5a35e",
+  "url": "https://services6.arcgis.com/NrOjMi9LSYL3MUze/arcgis/rest/services/Crown_and_Community_Land_Categories/FeatureServer",
+  "layers": [
+   {
+    "id": 0,
+    "name": "Council_Managed_Crown_Reserves",
+    "geometryType": "esriGeometryPolygon",
+    "count": 66
+   },
+   {
+    "id": 1,
+    "name": "Proposed Community Land Categories",
+    "geometryType": "esriGeometryPolygon",
+    "count": 602
+   },
+   {
+    "id": 2,
+    "name": "Existing Community Land Categories",
+    "geometryType": "esriGeometryPolygon",
+    "count": 453
+   }
+  ],
+  "totalFeatures": 1121,
+  "layerCount": 3
+ },
+ {
+  "org": "City of Parramatta",
+  "title": "BikePlan_Watercourses",
+  "id": "aa2eb1fcbcd64cacab84d2cd5675ed3e",
+  "url": "https://services6.arcgis.com/NrOjMi9LSYL3MUze/arcgis/rest/services/BikePlan_Watercourses/FeatureServer",
+  "layers": [
+   {
+    "id": 0,
+    "name": "pccsde.GISADMIN.WATER_WATERCOURSE",
+    "geometryType": "esriGeometryPolygon",
+    "count": 81
+   }
+  ],
+  "totalFeatures": 81,
+  "layerCount": 1
+ },
+ {
+  "org": "City of Parramatta",
+  "title": "PARKS_ASSETS_WEB_PUBLISH_Rec",
+  "id": "098dd0fc35bc47328c0e6ee74b7cbe1b",
+  "url": "https://services6.arcgis.com/NrOjMi9LSYL3MUze/arcgis/rest/services/PARKS_ASSETS_WEB_PUBLISH_Rec_160aa92c13cf4c3b8a707cc0ce04b6d9/FeatureServer",
+  "layers": [
+   {
+    "id": 0,
+    "name": "Playgrounds",
+    "geometryType": "esriGeometryPoint",
+    "count": 145
+   },
+   {
+    "id": 1,
+    "name": "Picnic Areas",
+    "geometryType": "esriGeometryPoint",
+    "count": 31
+   },
+   {
+    "id": 2,
+    "name": "Buildings",
+    "geometryType": "esriGeometryPoint",
+    "count": 182
+   },
+   {
+    "id": 3,
+    "name": "Fitness Equipment",
+    "geometryType": "esriGeometryMultipoint",
+    "count": 21
+   },
+   {
+    "id": 4,
+    "name": "Sporting Fields",
+    "geometryType": "esriGeometryPolygon",
+    "count": 95
+   },
+   {
+    "id": 5,
+    "name": "Parks & Reserves",
+    "geometryType": "esriGeometryPolygon",
+    "count": 1594
+   }
+  ],
+  "totalFeatures": 2068,
+  "layerCount": 6
+ },
+ {
+  "org": "City of Parramatta",
+  "title": "Public Toilets",
+  "id": "873bfc5e731347adb79bd08132e25481",
+  "url": "https://services6.arcgis.com/NrOjMi9LSYL3MUze/arcgis/rest/services/Buildings/FeatureServer",
+  "layers": [
+   {
+    "id": 0,
+    "name": "PARK_ASSETS_CURRENT_BL_Buildings",
+    "geometryType": "esriGeometryPoint",
+    "count": 62
+   }
+  ],
+  "totalFeatures": 62,
+  "layerCount": 1
+ },
+ {
+  "org": "City of Parramatta",
+  "title": "Parks for GeoHub",
+  "id": "854123b5568b46debbf4691a68759b6f",
+  "url": "https://services6.arcgis.com/NrOjMi9LSYL3MUze/arcgis/rest/services/Parks_for_GeoHub/FeatureServer",
+  "layers": [
+   {
+    "id": 0,
+    "name": "PARKS_PUBLISHED_AGOL",
+    "geometryType": "esriGeometryPolygon",
+    "count": 367
+   }
+  ],
+  "totalFeatures": 367,
+  "layerCount": 1
+ },
+ {
+  "org": "City of Parramatta",
+  "title": "Drinking Fountains",
+  "id": "f4a52ff6af0445558bce99306963d9cf",
+  "url": "https://services6.arcgis.com/NrOjMi9LSYL3MUze/arcgis/rest/services/Drinking_Fountains/FeatureServer",
+  "layers": [
+   {
+    "id": 0,
+    "name": "PARK_ASSETS_CURRENT_DF_Drinking_Fountains",
+    "geometryType": "esriGeometryPoint",
+    "count": 132
+   }
+  ],
+  "totalFeatures": 132,
+  "layerCount": 1
+ },
+ {
+  "org": "City of Parramatta",
+  "title": "Playground Equipment",
+  "id": "26666f6019514e989ec4292571321b02",
+  "url": "https://services6.arcgis.com/NrOjMi9LSYL3MUze/arcgis/rest/services/Playground_Equipment/FeatureServer",
+  "layers": [
+   {
+    "id": 0,
+    "name": "PARK_ASSETS_CURRENT_PE_Playground_Equipment",
+    "geometryType": "esriGeometryPoint",
+    "count": 144
+   }
+  ],
+  "totalFeatures": 144,
+  "layerCount": 1
+ },
+ {
+  "org": "City of Parramatta",
+  "title": "XG Skate Park",
+  "id": "c0348a19c1634719ac7042f46a927655",
+  "url": "https://services6.arcgis.com/NrOjMi9LSYL3MUze/arcgis/rest/services/XG_Skate_Park/FeatureServer",
+  "layers": [
+   {
+    "id": 0,
+    "name": "PARK_ASSETS_CURRENT_XG_Skate_BMX_Park",
+    "geometryType": "esriGeometryPoint",
+    "count": 3
+   }
+  ],
+  "totalFeatures": 3,
+  "layerCount": 1
+ },
+ {
+  "org": "City of Parramatta",
+  "title": "Hard Court Sport Surfaces",
+  "id": "606546354d7b40b889aba2289eda1dc5",
+  "url": "https://services6.arcgis.com/NrOjMi9LSYL3MUze/arcgis/rest/services/PARK_ASSETS_CURRENT_HC_Sports_Surfaces_Hard_View/FeatureServer",
+  "layers": [
+   {
+    "id": 0,
+    "name": "PARK_ASSETS_CURRENT_HC_Sports_Surfaces_Hard",
+    "geometryType": "esriGeometryPolygon",
+    "count": 52
+   }
+  ],
+  "totalFeatures": 52,
+  "layerCount": 1
+ },
+ {
+  "org": "City of Parramatta",
+  "title": "BBQs",
+  "id": "8d74f786ed29484db69767f58cd8c94e",
+  "url": "https://services6.arcgis.com/NrOjMi9LSYL3MUze/arcgis/rest/services/BBQs/FeatureServer",
+  "layers": [
+   {
+    "id": 0,
+    "name": "PARK_ASSETS_CURRENT_BQ_BBQs",
+    "geometryType": "esriGeometryPoint",
+    "count": 42
+   }
+  ],
+  "totalFeatures": 42,
+  "layerCount": 1
+ },
+ {
+  "org": "City of Parramatta",
+  "title": "Sporting Fields",
+  "id": "038b77a703d845499f911f28e96338e4",
+  "url": "https://services6.arcgis.com/NrOjMi9LSYL3MUze/arcgis/rest/services/Sporting_Fields/FeatureServer",
+  "layers": [
+   {
+    "id": 0,
+    "name": "PARK_ASSETS_CURRENT_WEBSITE_Sporting_Fields",
+    "geometryType": "esriGeometryPolygon",
+    "count": 90
+   }
+  ],
+  "totalFeatures": 90,
+  "layerCount": 1
+ },
+ {
+  "org": "City of Parramatta",
+  "title": "Fitness Equipment",
+  "id": "daae28564c334ff2a6074281332e28b1",
+  "url": "https://services6.arcgis.com/NrOjMi9LSYL3MUze/arcgis/rest/services/Fitness_Equipment/FeatureServer",
+  "layers": [
+   {
+    "id": 0,
+    "name": "PARK_ASSETS_CURRENT_FE_Fitness_Equipment_Multi",
+    "geometryType": "esriGeometryPoint",
+    "count": 41
+   }
+  ],
+  "totalFeatures": 41,
+  "layerCount": 1
+ },
+ {
+  "org": "City of Parramatta",
+  "title": "Tennis Courts",
+  "id": "630560f197f7407da998675a4a0e15b9",
+  "url": "https://services6.arcgis.com/NrOjMi9LSYL3MUze/arcgis/rest/services/Tennis_Courts/FeatureServer",
+  "layers": [
+   {
+    "id": 0,
+    "name": "PARK_ASSETS_CURRENT_WEBSITE_Tennis_Courts",
+    "geometryType": "esriGeometryPolygon",
+    "count": 12
+   }
+  ],
+  "totalFeatures": 12,
+  "layerCount": 1
+ },
+ {
+  "org": "City of Parramatta",
+  "title": "Water Playground Equipment",
+  "id": "d51f71298f354dd597f049079f928b23",
+  "url": "https://services6.arcgis.com/NrOjMi9LSYL3MUze/arcgis/rest/services/Water_Playground_Equipment/FeatureServer",
+  "layers": [
+   {
+    "id": 0,
+    "name": "PARK_ASSETS_CURRENT_WE_Water_Playground_Equipment",
+    "geometryType": "esriGeometryPolygon",
+    "count": 3
+   }
+  ],
+  "totalFeatures": 3,
+  "layerCount": 1
+ },
+ {
+  "org": "City of Parramatta",
+  "title": "Skate and BMX",
+  "id": "4b855f9150a44ee48470ef1fd55a2a42",
+  "url": "https://services6.arcgis.com/NrOjMi9LSYL3MUze/arcgis/rest/services/Skate_and_BMX/FeatureServer",
+  "layers": [
+   {
+    "id": 0,
+    "name": "PARK_ASSETS_CURRENT_XG_Skate_BMX_Park",
+    "geometryType": "esriGeometryPoint",
+    "count": 3
+   }
+  ],
+  "totalFeatures": 3,
+  "layerCount": 1
+ },
+ {
+  "org": "City of Parramatta",
+  "title": "Newington Special Event Parking Scheme",
+  "id": "e4e76c9ce9b3463388d3f3f9eed047fb",
+  "url": "https://services6.arcgis.com/NrOjMi9LSYL3MUze/arcgis/rest/services/Newington_Special_Event_Parking_Scheme/FeatureServer",
+  "layers": [
+   {
+    "id": 0,
+    "name": "newington_seps",
+    "geometryType": "esriGeometryPolygon",
+    "count": 8
+   }
+  ],
+  "totalFeatures": 8,
+  "layerCount": 1
+ },
+ {
+  "org": "City of Parramatta",
+  "title": "Picnic Areas",
+  "id": "57433361e44f468bbb6ac85a5d10f4a2",
+  "url": "https://services6.arcgis.com/NrOjMi9LSYL3MUze/arcgis/rest/services/Picnic_Areas/FeatureServer",
+  "layers": [
+   {
+    "id": 0,
+    "name": "PARK_ASSETS_CURRENT_WEBSITE_Picnic_Areas",
+    "geometryType": "esriGeometryPoint",
+    "count": 29
+   }
+  ],
+  "totalFeatures": 29,
+  "layerCount": 1
+ },
+ {
+  "org": "City of Parramatta",
+  "title": "OpenSpaceTrees",
+  "id": "ad9f2ce62673414f9b587e4e20aacaea",
+  "url": "https://services6.arcgis.com/NrOjMi9LSYL3MUze/arcgis/rest/services/OpenSpaceTrees/FeatureServer",
+  "layers": [
+   {
+    "id": 0,
+    "name": "PCCSDE_MOBILE.GISADMIN.PLR_TreesData",
+    "geometryType": "esriGeometryPoint",
+    "count": 66351
+   }
+  ],
+  "totalFeatures": 66351,
+  "layerCount": 1
+ },
+ {
+  "org": "City of Parramatta",
+  "title": "BikePlan_LGABoundary",
+  "id": "330c772d40f741178776362d55b81c23",
+  "url": "https://services6.arcgis.com/NrOjMi9LSYL3MUze/arcgis/rest/services/BikePlan_LGABoundary/FeatureServer",
+  "layers": [
+   {
+    "id": 0,
+    "name": "pccsde.GISADMIN.BNDY_COP_LGA_BOUNDARY",
+    "geometryType": "esriGeometryPolygon",
+    "count": 1
+   }
+  ],
+  "totalFeatures": 1,
+  "layerCount": 1
+ },
+ {
+  "org": "City of Parramatta",
+  "title": "BikePlan_OpenSpace",
+  "id": "741ad76dfbd34426a97a1ff3a92c0c8e",
+  "url": "https://services6.arcgis.com/NrOjMi9LSYL3MUze/arcgis/rest/services/BikePlan_OpenSpace/FeatureServer",
+  "layers": [
+   {
+    "id": 0,
+    "name": "PCCSDE.OPENSPACE.PARKS_RESERVES",
+    "geometryType": "esriGeometryPolygon",
+    "count": 366
+   }
+  ],
+  "totalFeatures": 366,
+  "layerCount": 1
+ },
+ {
+  "org": "City of Parramatta",
+  "title": "OpenSpace PLR Trees Data",
+  "id": "f04183ba1d524d04aa20ee6655bb083c",
+  "url": "https://services6.arcgis.com/NrOjMi9LSYL3MUze/arcgis/rest/services/OpenSpace_PLR_Trees_Data/FeatureServer",
+  "layers": [
+   {
+    "id": 0,
+    "name": "PCCSDE_MOBILE.GISADMIN.PLR_TreesData",
+    "geometryType": "esriGeometryPoint",
+    "count": 66195
+   }
+  ],
+  "totalFeatures": 66195,
+  "layerCount": 1
+ },
+ {
+  "org": "City of Parramatta",
+  "title": "Crown Roads Parramatta",
+  "id": "787008be72dd46d89d83a2ccb1a849a4",
+  "url": "https://services6.arcgis.com/NrOjMi9LSYL3MUze/arcgis/rest/services/Crown_Roads_Parramatta_WFL1/FeatureServer",
+  "layers": [
+   {
+    "id": 0,
+    "name": "Crown Roads Parramatta",
+    "geometryType": "esriGeometryPolygon",
+    "count": 228
+   },
+   {
+    "id": 1,
+    "name": "COP LGA Boundary",
+    "geometryType": "esriGeometryPolygon",
+    "count": 1
+   }
+  ],
+  "totalFeatures": 229,
+  "layerCount": 2
+ },
+ {
+  "org": "City of Parramatta",
+  "title": "Melrose_Park_WQ_ViewOnly",
+  "id": "2bf91b86c902490b80aca336a57d50ba",
+  "url": "https://services6.arcgis.com/NrOjMi9LSYL3MUze/arcgis/rest/services/Melrose_Park_WQ_ViewOnly/FeatureServer",
+  "layers": [
+   {
+    "id": 0,
+    "name": "Water_Quality",
+    "geometryType": "esriGeometryPoint",
+    "count": 54649
+   }
+  ],
+  "totalFeatures": 54649,
+  "layerCount": 1
+ },
+ {
+  "org": "City of Parramatta",
+  "title": "Silverwater Park_WFL1",
+  "id": "028427993e4144179867e16fdd6051fb",
+  "url": "https://services6.arcgis.com/NrOjMi9LSYL3MUze/arcgis/rest/services/Silverwater_Park_WFL1/FeatureServer",
+  "layers": [
+   {
+    "id": 0,
+    "name": "Proposed_Light_Poles_and_Furniture_pts",
+    "geometryType": "esriGeometryPoint",
+    "count": 28
+   },
+   {
+    "id": 1,
+    "name": "Proposed_light_poles_and_furniture_PolyLines",
+    "geometryType": "esriGeometryPolyline",
+    "count": 16702
+   },
+   {
+    "id": 2,
+    "name": "Proposed_paths_Polygons",
+    "geometryType": "esriGeometryPolygon",
+    "count": 23
+   },
+   {
+    "id": 3,
+    "name": "Proposed_trees_and_garden_bed_Polygons",
+    "geometryType": "esriGeometryPolygon",
+    "count": 9
+   },
+   {
+    "id": 4,
+    "name": "Paths_to_be_removed_Polygons",
+    "geometryType": "esriGeometryPolygon",
+    "count": 2
+   },
+   {
+    "id": 5,
+    "name": "Existing_trees_Polygons",
+    "geometryType": "esriGeometryPolygon",
+    "count": 26
+   }
+  ],
+  "totalFeatures": 16790,
+  "layerCount": 6
+ },
+ {
+  "org": "City of Parramatta",
+  "title": "PLR_LightRail_Line_Edit",
+  "id": "f38cdfe70b6c43dba8982a6fc3ac0183",
+  "url": "https://services6.arcgis.com/NrOjMi9LSYL3MUze/arcgis/rest/services/PLR_LightRail_Line_Edit/FeatureServer",
+  "layers": [
+   {
+    "id": 0,
+    "name": "PLR_LightRail_Line_Edit",
+    "geometryType": "esriGeometryPolyline",
+    "count": 6
+   }
+  ],
+  "totalFeatures": 6,
+  "layerCount": 1
+ },
+ {
+  "org": "City of Parramatta",
+  "title": "Parramatta_Wards_Proposed_interactive",
+  "id": "a9eac6d4b9c34c43b36b3c36dfc3d397",
+  "url": "https://services6.arcgis.com/NrOjMi9LSYL3MUze/arcgis/rest/services/Parramatta_Wards_Proposed_interactive/FeatureServer",
+  "layers": [
+   {
+    "id": 0,
+    "name": "Parramatta_Wards_Proposed_interactive",
+    "geometryType": "esriGeometryPolygon",
+    "count": 8
+   }
+  ],
+  "totalFeatures": 8,
+  "layerCount": 1
+ },
+ {
+  "org": "City of Parramatta",
+  "title": "existing_bike_network",
+  "id": "366f09d5ba5248309834d6f460dda22f",
+  "url": "https://services6.arcgis.com/NrOjMi9LSYL3MUze/arcgis/rest/services/existing_bike_network/FeatureServer",
+  "layers": [
+   {
+    "id": 0,
+    "name": "existing_bike_network",
+    "geometryType": "esriGeometryPolyline",
+    "count": 68
+   }
+  ],
+  "totalFeatures": 68,
+  "layerCount": 1
+ },
+ {
+  "org": "City of Parramatta",
+  "title": "parking_restrictions",
+  "id": "4d09665395e2497badda5cba360b9b2d",
+  "url": "https://services6.arcgis.com/NrOjMi9LSYL3MUze/arcgis/rest/services/parking_restrictions/FeatureServer",
+  "layers": [
+   {
+    "id": 0,
+    "name": "parking_restrictions",
+    "geometryType": "esriGeometryPolyline",
+    "count": 57
+   }
+  ],
+  "totalFeatures": 57,
+  "layerCount": 1
+ },
+ {
+  "org": "City of Parramatta",
+  "title": "Existing_bike_network_202408",
+  "id": "5ee6f404fbb74f199b06e93b6c63b388",
+  "url": "https://services6.arcgis.com/NrOjMi9LSYL3MUze/arcgis/rest/services/Existing_bike_network_202408/FeatureServer",
+  "layers": [
+   {
+    "id": 1,
+    "name": "Existing_bike_network_202408",
+    "geometryType": "esriGeometryPolyline",
+    "count": 992
+   }
+  ],
+  "totalFeatures": 992,
+  "layerCount": 1
+ },
+ {
+  "org": "City of Parramatta",
+  "title": "RESIDENT PARKING SCHEME",
+  "id": "09a1b33c1f21493d903771795c6fae96",
+  "url": "https://services6.arcgis.com/NrOjMi9LSYL3MUze/arcgis/rest/services/PARKING_RESIDENT_PARKING_SCHEME_MAY2015/FeatureServer",
+  "layers": [
+   {
+    "id": 0,
+    "name": "PARKING_RESIDENT_PARKING_SCHEME_MAY2015",
+    "geometryType": "esriGeometryPolygon",
+    "count": 20
+   }
+  ],
+  "totalFeatures": 20,
+  "layerCount": 1
+ },
+ {
+  "org": "City of Parramatta",
+  "title": "Nature_trail",
+  "id": "ebf5c65cdba04c3f877a0da2129e1e89",
+  "url": "https://services6.arcgis.com/NrOjMi9LSYL3MUze/arcgis/rest/services/Nature_trail/FeatureServer",
+  "layers": [
+   {
+    "id": 0,
+    "name": "Nature_trail",
+    "geometryType": "esriGeometryPolyline",
+    "count": 5
+   }
+  ],
+  "totalFeatures": 5,
+  "layerCount": 1
+ },
+ {
+  "org": "City of Parramatta",
+  "title": "ParkingMeters view",
+  "id": "d1963448089541cbb5faa22f236a10ad",
+  "url": "https://services6.arcgis.com/NrOjMi9LSYL3MUze/arcgis/rest/services/ParkingMeters_view/FeatureServer",
+  "layers": [
+   {
+    "id": 0,
+    "name": "ParkingMeters",
+    "geometryType": "esriGeometryPoint",
+    "count": 226
+   }
+  ],
+  "totalFeatures": 226,
+  "layerCount": 1
+ },
+ {
+  "org": "Northern Beaches",
+  "title": "Parking Permit Schemes",
+  "id": "2a0a34adf4e84fe4a0e49d699cdc9516",
+  "url": "https://services2.arcgis.com/LRvZf9YQitIniyDH/arcgis/rest/services/Parking_Permit_Schemes/FeatureServer",
+  "layers": [
+   {
+    "id": 0,
+    "name": "SpatialData.GISDBA.M_Parking_Areas_region",
+    "geometryType": "esriGeometryPolygon",
+    "count": 14
+   }
+  ],
+  "totalFeatures": 14,
+  "layerCount": 1
+ },
+ {
+  "org": "Northern Beaches",
+  "title": "Toilets",
+  "id": "47ed912d5cba4d75847d5db72001d95c",
+  "url": "https://services2.arcgis.com/LRvZf9YQitIniyDH/arcgis/rest/services/Toilets/FeatureServer",
+  "layers": [
+   {
+    "id": 0,
+    "name": "AccessibleToiletsJune2019",
+    "geometryType": "esriGeometryPoint",
+    "count": 113
+   },
+   {
+    "id": 1,
+    "name": "PublicToiletsJune2019",
+    "geometryType": "esriGeometryPoint",
+    "count": 66
+   }
+  ],
+  "totalFeatures": 179,
+  "layerCount": 2
+ },
+ {
+  "org": "Northern Beaches",
+  "title": "Parking Permit Schemes_layer",
+  "id": "c08d3f3e76764066991c3186c2ad6413",
+  "url": "https://services2.arcgis.com/LRvZf9YQitIniyDH/arcgis/rest/services/Parking_Permit_Schemes/FeatureServer",
+  "layers": [
+   {
+    "id": 0,
+    "name": "SpatialData.GISDBA.M_Parking_Areas_region",
+    "geometryType": "esriGeometryPolygon",
+    "count": 14
+   }
+  ],
+  "totalFeatures": 14,
+  "layerCount": 1
+ },
+ {
+  "org": "Northern Beaches",
+  "title": "Beaches_Walks",
+  "id": "a4891ca967594c19864fe1115bbe911c",
+  "url": "https://services2.arcgis.com/LRvZf9YQitIniyDH/arcgis/rest/services/Beaches_Walks/FeatureServer",
+  "layers": [
+   {
+    "id": 0,
+    "name": "Beaches_Walks",
+    "geometryType": "esriGeometryPoint",
+    "count": 117
+   }
+  ],
+  "totalFeatures": 117,
+  "layerCount": 1
+ },
+ {
+  "org": "Northern Beaches",
+  "title": "CoastWalk",
+  "id": "d84821e0092945a9b3280869c71ffdd5",
+  "url": "https://services2.arcgis.com/LRvZf9YQitIniyDH/arcgis/rest/services/CoastWalk/FeatureServer",
+  "layers": [
+   {
+    "id": 0,
+    "name": "Walk_Points",
+    "geometryType": "esriGeometryPoint",
+    "count": 232
+   },
+   {
+    "id": 1,
+    "name": "Walk_Sections",
+    "geometryType": "esriGeometryPolyline",
+    "count": 18
+   }
+  ],
+  "totalFeatures": 250,
+  "layerCount": 2
+ },
+ {
+  "org": "Northern Beaches",
+  "title": "CoastWalkNew",
+  "id": "7600a6a199604ff197204cbf4985f023",
+  "url": "https://services2.arcgis.com/LRvZf9YQitIniyDH/arcgis/rest/services/CoastWalkNew/FeatureServer",
+  "layers": [
+   {
+    "id": 0,
+    "name": "Walk_Points",
+    "geometryType": "esriGeometryPoint",
+    "count": 77
+   },
+   {
+    "id": 1,
+    "name": "Walk_Sections",
+    "geometryType": "esriGeometryPolyline",
+    "count": 18
+   },
+   {
+    "id": 2,
+    "name": "Walk_Points_Tour",
+    "geometryType": "esriGeometryPoint",
+    "count": 77
+   },
+   {
+    "id": 3,
+    "name": "CoastWalk",
+    "geometryType": "esriGeometryPolyline",
+    "count": 329
+   }
+  ],
+  "totalFeatures": 501,
+  "layerCount": 4
+ },
+ {
+  "org": "Northern Beaches",
+  "title": "MTBTrail",
+  "id": "d4f90f5dce1e4b04afc0488de6bf6b32",
+  "url": "https://services2.arcgis.com/LRvZf9YQitIniyDH/arcgis/rest/services/MTBTrail/FeatureServer",
+  "layers": [
+   {
+    "id": 9,
+    "name": "WalkingTracks",
+    "geometryType": "esriGeometryPolyline",
+    "count": 71
+   },
+   {
+    "id": 8,
+    "name": "MountainBikingTrails",
+    "geometryType": "esriGeometryPolyline",
+    "count": 51
+   },
+   {
+    "id": 7,
+    "name": "ProposedMountainBikingTrails",
+    "geometryType": "esriGeometryPolyline",
+    "count": 0
+   },
+   {
+    "id": 6,
+    "name": "IllegalMountainBikingTrails",
+    "geometryType": "esriGeometryPolyline",
+    "count": 93
+   },
+   {
+    "id": 5,
+    "name": "OfficialWalkingTracks",
+    "geometryType": "esriGeometryPolyline",
+    "count": 736
+   },
+   {
+    "id": 4,
+    "name": "OfficialFireTrailsandAccessRoads",
+    "geometryType": "esriGeometryPolyline",
+    "count": 882
+   },
+   {
+    "id": 3,
+    "name": "HorseRidingTrails",
+    "geometryType": "esriGeometryPolyline",
+    "count": 1
+   },
+   {
+    "id": 13,
+    "name": "Comments",
+    "geometryType": "esriGeometryPoint",
+    "count": 0
+   },
+   {
+    "id": 12,
+    "name": "Events",
+    "geometryType": "esriGeometryPoint",
+    "count": 0
+   },
+   {
+    "id": 11,
+    "name": "Activities",
+    "geometryType": "esriGeometryPoint",
+    "count": 16
+   },
+   {
+    "id": 10,
+    "name": "Features",
+    "geometryType": "esriGeometryPoint",
+    "count": 1005
+   }
+  ],
+  "totalFeatures": 2855,
+  "layerCount": 11
+ },
+ {
+  "org": "Northern Beaches",
+  "title": "CoastWalk Elevations",
+  "id": "11ed19199462485d9a41227d4fe09074",
+  "url": "https://services2.arcgis.com/LRvZf9YQitIniyDH/arcgis/rest/services/CoastWalk_Elevations/FeatureServer",
+  "layers": [
+   {
+    "id": 0,
+    "name": "ElevationInput",
+    "geometryType": "esriGeometryPolyline",
+    "count": 21
+   }
+  ],
+  "totalFeatures": 21,
+  "layerCount": 1
+ },
+ {
+  "org": "Hornsby",
+  "title": "HSC Care and Control",
+  "id": "eb5b54fbd6c6404d8db70a349acfa721",
+  "url": "https://services6.arcgis.com/VKqP0BP08pVXloHq/arcgis/rest/services/HSC_Care_and_Control/FeatureServer",
+  "layers": [
+   {
+    "id": 4,
+    "name": "HSC Care and Control",
+    "geometryType": "esriGeometryPolygon",
+    "count": 1267
+   }
+  ],
+  "totalFeatures": 1267,
+  "layerCount": 1
+ },
+ {
+  "org": "Hornsby",
+  "title": "HKBFMC_FireTrails_Register2014",
+  "id": "bc7ad377320e4dc7b6993019fc26e139",
+  "url": "https://services6.arcgis.com/VKqP0BP08pVXloHq/arcgis/rest/services/HKBFMC_FireTrails_Register2014/FeatureServer",
+  "layers": [
+   {
+    "id": 1,
+    "name": "Fire_Trails_HKBFMC_REGISTER_201406",
+    "geometryType": "esriGeometryPolyline",
+    "count": 887
+   }
+  ],
+  "totalFeatures": 887,
+  "layerCount": 1
+ },
+ {
+  "org": "Hornsby",
+  "title": "Walking_Tracks_Managed_20190325",
+  "id": "cfbd9177b3c84d2489c8692c13fcd08a",
+  "url": "https://services6.arcgis.com/VKqP0BP08pVXloHq/arcgis/rest/services/Walking_Tracks_Managed_20190325/FeatureServer",
+  "layers": [
+   {
+    "id": 0,
+    "name": "Walking_Tracks_Managed_20190325",
+    "geometryType": "esriGeometryPolyline",
+    "count": 232
+   }
+  ],
+  "totalFeatures": 232,
+  "layerCount": 1
+ },
+ {
+  "org": "Hornsby",
+  "title": "MTB_Tracks_Hornsby_20190325",
+  "id": "b0f78a31d25b482b9a6eb7796b14abde",
+  "url": "https://services6.arcgis.com/VKqP0BP08pVXloHq/arcgis/rest/services/MTB_Tracks_Hornsby_20190325/FeatureServer",
+  "layers": [
+   {
+    "id": 2,
+    "name": "MTB_Tracks_Hornsby_20190325",
+    "geometryType": "esriGeometryPolyline",
+    "count": 61
+   }
+  ],
+  "totalFeatures": 61,
+  "layerCount": 1
+ },
+ {
+  "org": "Hornsby",
+  "title": "Walking_Tracks_Circuits_20190325",
+  "id": "21358a96308348c7954e5bb91b880705",
+  "url": "https://services6.arcgis.com/VKqP0BP08pVXloHq/arcgis/rest/services/Walking_Tracks_Circuits_20190325/FeatureServer",
+  "layers": [
+   {
+    "id": 2,
+    "name": "Walking_Tracks_Circuits_20190325",
+    "geometryType": "esriGeometryPolyline",
+    "count": 10
+   }
+  ],
+  "totalFeatures": 10,
+  "layerCount": 1
+ },
+ {
+  "org": "Hornsby",
+  "title": "CRR_Assets_20230109",
+  "id": "6bc9c012e9a14520bbf298d9c60a27c1",
+  "url": "https://services6.arcgis.com/VKqP0BP08pVXloHq/arcgis/rest/services/CRR_Assets_20230109/FeatureServer",
+  "layers": [
+   {
+    "id": 6,
+    "name": "CRR_Assets_20230109",
+    "geometryType": "esriGeometryPoint",
+    "count": 365
+   }
+  ],
+  "totalFeatures": 365,
+  "layerCount": 1
+ },
+ {
+  "org": "Hornsby",
+  "title": "CRR Assets_PUBLIC",
+  "id": "29a5cdc6a8a046279d7ce01077be4e78",
+  "url": "https://services6.arcgis.com/VKqP0BP08pVXloHq/arcgis/rest/services/CRR_Assets_PUBLIC/FeatureServer",
+  "layers": [
+   {
+    "id": 0,
+    "name": "CRR_Assets_20200513",
+    "geometryType": "esriGeometryPoint",
+    "count": 359
+   }
+  ],
+  "totalFeatures": 359,
+  "layerCount": 1
+ },
+ {
+  "org": "Hornsby",
+  "title": "Library_POINTS_20211201",
+  "id": "503c67a9aa8b4534b531b3a919e9c9be",
+  "url": "https://services6.arcgis.com/VKqP0BP08pVXloHq/arcgis/rest/services/Library_POINTS_20211201/FeatureServer",
+  "layers": [
+   {
+    "id": 20,
+    "name": "Library_POINTS_20211201",
+    "geometryType": "esriGeometryPoint",
+    "count": 129
+   }
+  ],
+  "totalFeatures": 129,
+  "layerCount": 1
+ },
+ {
+  "org": "Hornsby",
+  "title": "Library_CAD_20211201_FIN",
+  "id": "6696463984764e06bfc4c9abc5dc19c9",
+  "url": "https://services6.arcgis.com/VKqP0BP08pVXloHq/arcgis/rest/services/Library_CAD_20211201_FIN/FeatureServer",
+  "layers": [
+   {
+    "id": 19,
+    "name": "Library_CAD_20211201_FIN",
+    "geometryType": "esriGeometryPolygon",
+    "count": 129
+   }
+  ],
+  "totalFeatures": 129,
+  "layerCount": 1
+ },
+ {
+  "org": "Hornsby",
+  "title": "Crown Reserves_20231024",
+  "id": "1a6e04b82c8a4b19ae325a5f2e68a906",
+  "url": "https://services6.arcgis.com/VKqP0BP08pVXloHq/arcgis/rest/services/Crown_Reserves_20231024/FeatureServer",
+  "layers": [
+   {
+    "id": 23,
+    "name": "CrownReserves_Clip",
+    "geometryType": "esriGeometryPolygon",
+    "count": 1418
+   }
+  ],
+  "totalFeatures": 1418,
+  "layerCount": 1
+ },
+ {
+  "org": "Hornsby",
+  "title": "Park Facilities Mowing Area_WFL1",
+  "id": "32b296587409481f8a316855f11add17",
+  "url": "https://services6.arcgis.com/VKqP0BP08pVXloHq/arcgis/rest/services/Park_Facilities_Mowing_Area_WFL1/FeatureServer",
+  "layers": [
+   {
+    "id": 0,
+    "name": "Park_Facilities_20220516",
+    "geometryType": "esriGeometryPolygon",
+    "count": 315
+   },
+   {
+    "id": 1,
+    "name": "Park Mowing Area",
+    "geometryType": "esriGeometryPolygon",
+    "count": 204
+   }
+  ],
+  "totalFeatures": 519,
+  "layerCount": 2
+ },
+ {
+  "org": "Inner West",
+  "title": "Active Inner West",
+  "id": "a1252ada64ef4d6e813091cad387745b",
+  "url": "https://services-ap1.arcgis.com/dp2UIID5MUpTUFVA/arcgis/rest/services/Active_Inner_West/FeatureServer",
+  "layers": [
+   {
+    "id": 1,
+    "name": "Facility_Point",
+    "geometryType": "esriGeometryPoint",
+    "count": 352
+   },
+   {
+    "id": 2,
+    "name": "Facility_Lines",
+    "geometryType": "esriGeometryPolyline",
+    "count": 7
+   }
+  ],
+  "totalFeatures": 359,
+  "layerCount": 2
+ },
+ {
+  "org": "Inner West",
+  "title": "Join Features to Active Inner West view",
+  "id": "a7cf525529a24f5aaa3bd0cae37820a6",
+  "url": "https://services-ap1.arcgis.com/dp2UIID5MUpTUFVA/arcgis/rest/services/Join_Features_to_Active_Inner_West_view/FeatureServer",
+  "layers": [
+   {
+    "id": 0,
+    "name": "Join_Features_to_Active_Inner_West_view",
+    "geometryType": "esriGeometryPoint",
+    "count": 352
+   }
+  ],
+  "totalFeatures": 352,
+  "layerCount": 1
+ },
+ {
+  "org": "Woollahra",
+  "title": "Resident Parking Scheme Address Check",
+  "id": "23957971dea04657925941c6353c055d",
+  "url": "https://services3.arcgis.com/zjbesynggtrdwb3p/arcgis/rest/services/Resident_Parking_Scheme_Address_Check/FeatureServer",
+  "layers": [
+   {
+    "id": 0,
+    "name": "ResidentParkingSchemePropertyAddress20260629",
+    "geometryType": "esriGeometryPoint",
+    "count": 15809
+   }
+  ],
+  "totalFeatures": 15809,
+  "layerCount": 1
+ },
+ {
+  "org": "Woollahra",
+  "title": "Your Say Crown Parks Map",
+  "id": "05040bee76ae4a11b94cfb2b8a01bb6b",
+  "url": "https://services3.arcgis.com/zjbesynggtrdwb3p/arcgis/rest/services/Your_Say_Crown_Parks_Map/FeatureServer",
+  "layers": [
+   {
+    "id": 0,
+    "name": "Parks",
+    "geometryType": "esriGeometryMultipoint",
+    "count": 21
+   },
+   {
+    "id": 1,
+    "name": "Playgrounds",
+    "geometryType": "esriGeometryMultipoint",
+    "count": 24
+   },
+   {
+    "id": 2,
+    "name": "Fitness Stations",
+    "geometryType": "esriGeometryMultipoint",
+    "count": 7
+   },
+   {
+    "id": 3,
+    "name": "Cafes and Kiosks",
+    "geometryType": "esriGeometryMultipoint",
+    "count": 8
+   },
+   {
+    "id": 4,
+    "name": "Public Toilets",
+    "geometryType": "esriGeometryPoint",
+    "count": 24
+   },
+   {
+    "id": 5,
+    "name": "Drinking Fountain",
+    "geometryType": "esriGeometryPoint",
+    "count": 38
+   },
+   {
+    "id": 6,
+    "name": "Sportsfields",
+    "geometryType": "esriGeometryMultipoint",
+    "count": 18
+   },
+   {
+    "id": 7,
+    "name": "Picnic Tables",
+    "geometryType": "esriGeometryPoint",
+    "count": 65
+   }
+  ],
+  "totalFeatures": 205,
+  "layerCount": 8
+ },
+ {
+  "org": "Woollahra",
+  "title": "Car Parks",
+  "id": "fb29a0fd8bfe456f98dc4eaa2aed1906",
+  "url": "https://services3.arcgis.com/zjbesynggtrdwb3p/arcgis/rest/services/Car_Parks/FeatureServer",
+  "layers": [
+   {
+    "id": 0,
+    "name": "Car Parks",
+    "geometryType": "esriGeometryMultipoint",
+    "count": 13
+   }
+  ],
+  "totalFeatures": 13,
+  "layerCount": 1
+ },
+ {
+  "org": "Woollahra",
+  "title": "Parks Online Map",
+  "id": "19c56322b2e3450580de59da651d85a3",
+  "url": "https://services3.arcgis.com/zjbesynggtrdwb3p/arcgis/rest/services/Parks_Online_WebMap_WFL1/FeatureServer",
+  "layers": [
+   {
+    "id": 0,
+    "name": "Parks",
+    "geometryType": "esriGeometryMultipoint",
+    "count": 110
+   },
+   {
+    "id": 1,
+    "name": "Playgrounds",
+    "geometryType": "esriGeometryMultipoint",
+    "count": 24
+   },
+   {
+    "id": 2,
+    "name": "Fitness Stations",
+    "geometryType": "esriGeometryMultipoint",
+    "count": 7
+   },
+   {
+    "id": 3,
+    "name": "Cafes and Kiosks",
+    "geometryType": "esriGeometryMultipoint",
+    "count": 8
+   },
+   {
+    "id": 4,
+    "name": "Public Toilets",
+    "geometryType": "esriGeometryPoint",
+    "count": 24
+   },
+   {
+    "id": 5,
+    "name": "Drinking Fountain",
+    "geometryType": "esriGeometryPoint",
+    "count": 38
+   },
+   {
+    "id": 6,
+    "name": "Sportsfields",
+    "geometryType": "esriGeometryMultipoint",
+    "count": 18
+   },
+   {
+    "id": 7,
+    "name": "Picnic Tables",
+    "geometryType": "esriGeometryPoint",
+    "count": 65
+   }
+  ],
+  "totalFeatures": 294,
+  "layerCount": 8
+ },
+ {
+  "org": "Woollahra",
+  "title": "Tennis Courts",
+  "id": "230d06918a5b441fa7769f3536559647",
+  "url": "https://services3.arcgis.com/zjbesynggtrdwb3p/arcgis/rest/services/Tennis_Courts/FeatureServer",
+  "layers": [
+   {
+    "id": 0,
+    "name": "Tennis Courts",
+    "geometryType": "esriGeometryMultipoint",
+    "count": 3
+   }
+  ],
+  "totalFeatures": 3,
+  "layerCount": 1
+ },
+ {
+  "org": "Woollahra",
+  "title": "Lyne Park Playground Concept Submissions",
+  "id": "04dcbfab77d649879fe7794ef43c1c01",
+  "url": "https://services3.arcgis.com/zjbesynggtrdwb3p/arcgis/rest/services/Lyne_Park_Playground_Concept_Submissions/FeatureServer",
+  "layers": [
+   {
+    "id": 0,
+    "name": "LyneParkPlaygroundConceptSubmissions",
+    "geometryType": "esriGeometryPoint",
+    "count": 55
+   }
+  ],
+  "totalFeatures": 55,
+  "layerCount": 1
+ },
+ {
+  "org": "Woollahra",
+  "title": "Resident Parking Scheme Areas",
+  "id": "643882ce4e5c43f1948a8f791d7d379f",
+  "url": "https://services3.arcgis.com/zjbesynggtrdwb3p/arcgis/rest/services/Resident_Parking_Scheme_Areas/FeatureServer",
+  "layers": [
+   {
+    "id": 0,
+    "name": "Resident Parking Scheme Areas",
+    "geometryType": "esriGeometryPolygon",
+    "count": 32273
+   }
+  ],
+  "totalFeatures": 32273,
+  "layerCount": 1
+ },
+ {
+  "org": "Woollahra",
+  "title": "WMC Open Space and Reserves",
+  "id": "c9a6ec4eb4c4406cab8bd076c9b5d625",
+  "url": "https://services3.arcgis.com/zjbesynggtrdwb3p/arcgis/rest/services/WMC_Open_Space/FeatureServer",
+  "layers": [
+   {
+    "id": 0,
+    "name": "WMC Open Space and Reserves",
+    "geometryType": "esriGeometryPolygon",
+    "count": 113
+   }
+  ],
+  "totalFeatures": 113,
+  "layerCount": 1
+ },
+ {
+  "org": "Liverpool",
+  "title": "Parking",
+  "id": "beda1af9bed747329ba629a3f3281104",
+  "url": "https://services6.arcgis.com/Ys4U0NCXGgyTtRWx/arcgis/rest/services/Parking/FeatureServer",
+  "layers": [
+   {
+    "id": 0,
+    "name": "Parking metre",
+    "geometryType": "esriGeometryPoint",
+    "count": 131
+   },
+   {
+    "id": 1,
+    "name": "Parking",
+    "geometryType": "esriGeometryPoint",
+    "count": 21
+   },
+   {
+    "id": 2,
+    "name": "Liverpool CBD",
+    "geometryType": "esriGeometryPolygon",
+    "count": 1
+   }
+  ],
+  "totalFeatures": 153,
+  "layerCount": 3
+ }
+]
