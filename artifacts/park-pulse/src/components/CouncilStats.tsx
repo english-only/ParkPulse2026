@@ -1,0 +1,163 @@
+import { useMemo, useState } from "react";
+import {
+  computeSelectionStats,
+  type CouncilIndexEntry,
+  type SelectionPark,
+  type SelectionStats,
+} from "../utils/councils";
+
+/**
+ * Per-selection statistics for FR1.8.
+ *
+ * With no selection the panel shows network totals; with a selection it shows
+ * the summed area, coverage against the network total, and the parks /
+ * playgrounds / park area that survived the point-in-polygon scoping of
+ * FR1.6. While the council index is loading every value renders as a
+ * skeleton, and a failed load renders "—" (Explore raises the toast).
+ */
+export interface CouncilStatsProps {
+  selected: readonly CouncilIndexEntry[];
+  parksInSelection: readonly SelectionPark[];
+  /** Total across every council in the index; 0 while loading. */
+  totalAreaKm2: number;
+  /** How many councils exist in the index (network-wide row). */
+  councilTotal: number;
+  /** Network-wide park counts, used when nothing is selected. */
+  networkParks: number;
+  networkPlaygrounds: number;
+  networkParksAreaHa: number;
+  /** Live layer badge counts (trees, toilets, …). */
+  layerCounts: Record<string, number>;
+  loading: boolean;
+  failed: boolean;
+}
+
+function Skeleton() {
+  return <span className="pp-stat-skeleton" aria-hidden="true" />;
+}
+
+export default function CouncilStats({
+  selected,
+  parksInSelection,
+  totalAreaKm2,
+  councilTotal,
+  networkParks,
+  networkPlaygrounds,
+  networkParksAreaHa,
+  layerCounts,
+  loading,
+  failed,
+}: CouncilStatsProps) {
+  const [open, setOpen] = useState(true);
+
+  const stats: SelectionStats = useMemo(
+    () =>
+      computeSelectionStats({
+        selected,
+        parksInSelection,
+        totalAreaKm2,
+      }),
+    [selected, parksInSelection, totalAreaKm2],
+  );
+
+  const scoped = selected.length > 0;
+  const value = (node: React.ReactNode, title?: string) =>
+    loading ? (
+      <Skeleton />
+    ) : failed ? (
+      <span title={title ?? "Council index unavailable"} className="pp-stat-pending">
+        —
+      </span>
+    ) : (
+      node
+    );
+
+  const rows: Array<{ key: string; label: string; node: React.ReactNode; title?: string }> = [
+    {
+      key: "councils",
+      label: scoped ? "Councils selected" : "Councils",
+      node: <>{scoped ? stats.councilCount : `${councilTotal} (all)`}</>,
+    },
+    {
+      key: "area",
+      label: "Area",
+      node: <>{scoped ? stats.areaKm2.toLocaleString() : totalAreaKm2.toLocaleString()} km²</>,
+    },
+    {
+      key: "coverage",
+      label: "Coverage of network",
+      node: (
+        <>
+          {scoped
+            ? stats.coveragePct === null
+              ? "—"
+              : `${stats.coveragePct}%`
+            : "100%"}
+        </>
+      ),
+      title: stats.coveragePct === null ? "Network area unknown" : undefined,
+    },
+    {
+      key: "parks",
+      label: "Parks in selection",
+      node: <>{(scoped ? stats.parks : networkParks).toLocaleString()}</>,
+    },
+    {
+      key: "playgrounds",
+      label: "Playgrounds",
+      node: <>{(scoped ? stats.playgrounds : networkPlaygrounds).toLocaleString()}</>,
+    },
+    {
+      key: "parksArea",
+      label: "Parks area",
+      node: <>{(scoped ? stats.parksAreaHa : networkParksAreaHa).toLocaleString()} ha</>,
+    },
+  ];
+
+  const layers = Object.entries(layerCounts).filter(([, n]) => typeof n === "number" && n >= 0);
+
+  return (
+    <section className={`pp-council-stats${open ? " open" : ""}`} aria-label="Council statistics">
+      <button
+        type="button"
+        className="pp-council-stats-toggle"
+        aria-expanded={open}
+        onClick={() => setOpen(v => !v)}
+      >
+        <span>Stats{scoped ? ` · ${stats.councilCount} selected` : ""}</span>
+        <svg
+          className={`pp-council-chevron${open ? " rotated" : ""}`}
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          aria-hidden="true"
+        >
+          <polyline points="6 9 12 15 18 9" />
+        </svg>
+      </button>
+      {open && (
+        <div className="pp-council-stats-body">
+          <dl className="pp-council-stats-grid">
+            {rows.map(row => (
+              <div className="pp-council-stat" key={row.key}>
+                <dt>{row.label}</dt>
+                <dd title={row.title}>{value(row.node, row.title)}</dd>
+              </div>
+            ))}
+          </dl>
+          {layers.length > 0 && (
+            <div className="pp-council-layercounts" aria-label="Live layer counts">
+              {layers.map(([key, n]) => (
+                <span className="pp-council-layercount" key={key}>
+                  {key}
+                  <strong>{n.toLocaleString()}</strong>
+                </span>
+              ))}
+            </div>
+          )}
+        </div>
+      )}
+    </section>
+  );
+}

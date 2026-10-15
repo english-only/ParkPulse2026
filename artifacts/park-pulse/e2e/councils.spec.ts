@@ -1,0 +1,160 @@
+import AxeBuilder from "@axe-core/playwright";
+import { expect, test } from "@playwright/test";
+
+/**
+ * Browser-level checks for the multi-council governance UI (FR1).
+ *
+ * These drive the real selector with the keyboard, assert that results and
+ * the stats panel agree with each other after point-in-polygon scoping, and
+ * scan the new controls for accessibility violations.
+ */
+
+async function gotoExplore(page: import("@playwright/test").Page) {
+  await page.goto("/explore");
+  await expect(page.getByText(/locations$/).first()).toBeVisible({ timeout: 45_000 });
+}
+
+/** Parks-in-selection figure shown in the stats panel. */
+function statsParks(page: import("@playwright/test").Page) {
+  return page
+    .locator(".pp-council-stat")
+    .filter({ hasText: "Parks in selection" })
+    .locator("dd");
+}
+
+/** Number in the results header, e.g. "213 parks · 45 ha". */
+function headerCount(page: import("@playwright/test").Page) {
+  return page.locator(".pp-results-count");
+}
+
+test.describe("council governance", () => {
+  test("keyboard-only selection scopes results and updates the URL", async ({ page }) => {
+    await gotoExplore(page);
+
+    const trigger = page.getByRole("combobox", { name: "Select a council" });
+
+    // Entirely keyboard-driven: open with ArrowDown, type the PRD alias
+    // "sydney" (→ City of Sydney), commit with Enter.
+    await trigger.focus();
+    await page.keyboard.press("ArrowDown");
+    const search = page.getByPlaceholder("Filter councils…");
+    await expect(search).toBeFocused();
+    await search.fill("sydney");
+    await page.keyboard.press("Enter");
+
+    // Popup closes on single-mode selection and focus returns to the trigger.
+    await expect(trigger).toHaveText(/City of Sydney/);
+    await expect(trigger).toBeFocused();
+
+    // FR1.9 deep link.
+    await expect.poll(() => page.url()).toContain("councils=council-of-the-city-of-sydney");
+
+    // Boundary legend chip for the selection (FR1.7).
+    const chip = page.locator(".pp-council-chip");
+    await expect(chip).toHaveCount(1);
+    await expect(chip).toContainText("City of Sydney");
+
+    // FR1.6/1.8: the header count and the stats panel must agree once the
+    // boundary has been applied — both describe the same pip-scoped set.
+    await expect(headerCount(page)).toContainText("parks");
+    await expect
+      .poll(async () => {
+        // First token of "213 parks · 45 ha" — not every digit in the string.
+        const header = Number(
+          ((await headerCount(page).textContent()) ?? "").trim().split(/\s+/)[0].replace(/[^\d]/g, ""),
+        );
+        const stats = Number(((await statsParks(page).textContent()) ?? "").replace(/[^\d]/g, ""));
+        return header === stats && header > 0;
+      }, { timeout: 20_000 })
+      .toBe(true);
+
+    // The boundary is drawn on the map with the palette colour.
+    await expect
+      .poll(() => page.locator(".leaflet-overlay-pane path").count(), { timeout: 15_000 })
+      .toBeGreaterThan(0);
+
+    // Clearing the selection restores the network-wide list.
+    await page.getByRole("button", { name: "Remove City of Sydney from selection" }).click();
+    await expect(trigger).toHaveText(/All councils/);
+    await expect(page.locator(".pp-results-count")).toContainText("locations");
+    await expect.poll(() => page.url()).not.toContain("councils=");
+  });
+
+  test("multi-select paints two colour-coded boundaries with a legend chip each", async ({ page }) => {
+    await gotoExplore(page);
+
+    await page.getByRole("combobox", { name: "Select a council" }).click();
+    await page.getByRole("button", { name: "Multi" }).click();
+
+    const listbox = page.getByRole("listbox");
+    await expect(listbox).toBeVisible();
+    await page.getByRole("option", { name: /Blacktown City Council/ }).click();
+    await page.getByRole("option", { name: /City of Sydney/ }).click();
+
+    await expect(page.locator(".pp-council-chip")).toHaveCount(2);
+    await expect.poll(() => page.url()).toContain("mode=multi");
+
+    // FR1.5: distinct stable palette colours on the map.
+    await expect
+      .poll(() => page.locator(".leaflet-overlay-pane path").count(), { timeout: 15_000 })
+      .toBeGreaterThanOrEqual(2);
+    const strokeColors = await page.evaluate(() => {
+      const paths = Array.from(
+        document.querySelectorAll<SVGPathElement>(".leaflet-overlay-pane path"),
+      );
+      return [...new Set(paths.map(p => p.getAttribute("stroke")).filter(Boolean))];
+    });
+    expect(strokeColors.length).toBeGreaterThanOrEqual(2);
+
+    // Legend dots use the same palette as the map strokes.
+    const dotColors = await page.evaluate(() => {
+      const dots = Array.from(document.querySelectorAll<HTMLElement>(".pp-council-chip-dot"));
+      return [...new Set(dots.map(d => d.style.backgroundColor).filter(Boolean))];
+    });
+    expect(dotColors.length).toBe(2);
+
+    // Removing one chip drops it from the selection and the URL.
+    await page.getByRole("button", { name: "Remove City of Sydney from selection" }).click();
+    await expect(page.locator(".pp-council-chip")).toHaveCount(1);
+    await expect.poll(() => page.url()).not.toContain("council-of-the-city-of-sydney");
+  });
+
+  test("a council deep link restores the selection on mount", async ({ page }) => {
+    await page.goto("/explore?councils=lga-blacktown,liverpool-city-council&mode=multi");
+    await expect(page.locator(".pp-results-count")).toContainText("parks", { timeout: 45_000 });
+
+    // Unknown ids are dropped silently; the valid one still applies.
+    const trigger = page.getByRole("combobox", { name: "Select a council" });
+    await expect(trigger).toHaveText(/Liverpool City Council/);
+    await expect(page.locator(".pp-council-chip")).toHaveCount(1);
+  });
+
+  test("council controls introduce no serious or critical a11y violations", async ({ page }) => {
+    await gotoExplore(page);
+
+    await page.getByRole("combobox", { name: "Select a council" }).click();
+    await expect(page.getByRole("listbox")).toBeVisible();
+
+    const result = await new AxeBuilder({ page })
+      .withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa"])
+      .analyze();
+
+    const violations = result.violations
+      .filter(v => v.impact === "serious" || v.impact === "critical")
+      .map(v => `${v.id} (${v.impact}): ${v.help} → ${v.nodes.length} node(s)`);
+    expect(violations).toEqual([]);
+  });
+
+  test("stats panel reports area and coverage for the selection", async ({ page }) => {
+    await gotoExplore(page);
+
+    await page.getByRole("combobox", { name: "Select a council" }).click();
+    await page.getByRole("option", { name: /Randwick City Council/ }).click();
+
+    const stats = page.locator(".pp-council-stats");
+    await expect(stats).toContainText("Councils selected");
+    await expect(stats.locator(".pp-council-stat").filter({ hasText: /^Area/ })).toContainText("km²");
+    await expect(stats.locator(".pp-council-stat").filter({ hasText: "Coverage" })).toContainText("%");
+    await expect(statsParks(page)).not.toContainText("—");
+  });
+});

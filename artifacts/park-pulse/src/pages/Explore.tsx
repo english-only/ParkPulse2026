@@ -15,6 +15,17 @@ import {
   type MixedCollection,
 } from "../utils/geojson";
 import { fmtArea, fuzzyScore, searchParks, sizeLabel } from "../utils/search";
+import {
+  filterByCouncils,
+  parseCouncilsParam,
+  serializeCouncilsParam,
+  type CouncilGeometry,
+  type CouncilIndex,
+  type CouncilMode,
+} from "../utils/councils";
+import CouncilSelector from "../components/CouncilSelector";
+import CouncilStats from "../components/CouncilStats";
+import MultiCouncilPanel from "../components/MultiCouncilPanel";
 import { loadTreesForBounds, type TreeRecord, type TreeSourceInfo } from "../utils/treeData";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
@@ -354,12 +365,14 @@ interface Filters {
   playground: boolean; sports: boolean; iconic: boolean; neighbourhood: boolean;
   pocket: boolean; sportsfield: boolean; fountains: boolean; toilets: boolean;
   transport: boolean; trees: boolean; dogs: boolean; npws: boolean;
+  iwParks: boolean; iwTrees: boolean;
 }
 
 const defaultFilters: Filters = {
   playground: false, sports: false, iconic: false, neighbourhood: false,
   pocket: false, sportsfield: false, fountains: false, toilets: false,
   transport: false, trees: false, dogs: false, npws: false,
+  iwParks: false, iwTrees: false,
 };
 
 interface NpwsRaw { name: string; subtype: string; lat: number; lng: number }
@@ -484,6 +497,16 @@ export default function Explore() {
       return [];
     }
   });
+
+  // ── Multi-council governance (FR1) ─────────────────────────────────────
+  // Session-only by design (FR1.11): nothing here touches localStorage.
+  const [councilIndex,     setCouncilIndex]     = useState<CouncilIndex | null>(null);
+  const [councilStatus,    setCouncilStatus]    = useState<"loading" | "ready" | "error">("loading");
+  const [selectedCouncilIds, setSelectedCouncilIds] = useState<string[]>([]);
+  const [councilMode,      setCouncilMode]      = useState<CouncilMode>("single");
+  const [councilFeatures,  setCouncilFeatures]  = useState<Map<string, GeoJSON.Feature>>(() => new Map());
+  const [pendingBoundaries,setPendingBoundaries]= useState<string[]>([]);
+  const [failedBoundaries, setFailedBoundaries] = useState<string[]>([]);
 
   // Keep the module-level popup bridge and the local refs in step with the
   // committed values, in an effect rather than during render so a discarded
@@ -758,6 +781,111 @@ export default function Explore() {
     window.history.replaceState(null, "", `${window.location.pathname}${qs ? "?" + qs : ""}`);
   }, [search, sortBy]);
 
+  // ── Council index (FR1.9: deep link read happens once on load) ──────────
+  useEffect(() => {
+    let cancelled = false;
+    (async () => {
+      try {
+        const { data } = await fetchWithCache<CouncilIndex>(
+          `${BASE}data/boundaries/councils-index.json`,
+          "pp_council_index",
+        );
+        if (cancelled) return;
+        if (!data?.councils?.length) throw new Error("council index is empty");
+        setCouncilIndex(data);
+        setCouncilStatus("ready");
+        const valid = new Set(data.councils.map(c => c.lga_id));
+        const params = new URLSearchParams(window.location.search);
+        const { ids, mode } = parseCouncilsParam(
+          params.get("councils"),
+          params.get("mode"),
+          valid,
+        );
+        setSelectedCouncilIds(ids);
+        setCouncilMode(mode);
+      } catch (err) {
+        console.error("[explore] failed to load council index:", err);
+        if (!cancelled) {
+          setCouncilStatus("error");
+          toast("Could not load council index — council controls disabled", "error");
+        }
+      }
+    })();
+    return () => { cancelled = true; };
+  }, [toast]);
+
+  // ── URL sync: write ?councils= / ?mode= (FR1.9) ─────────────────────────
+  useEffect(() => {
+    // Before the index resolves the deep link, writing would wipe the params
+    // we are about to read — so hold off while loading.
+    if (councilStatus === "loading") return;
+    const params = new URLSearchParams(window.location.search);
+    if (selectedCouncilIds.length === 0) {
+      params.delete("councils");
+      params.delete("mode");
+    } else {
+      params.set("councils", selectedCouncilIds.join(","));
+      if (selectedCouncilIds.length > 1 || councilMode === "multi") params.set("mode", councilMode);
+      else params.delete("mode");
+    }
+    const qs = params.toString();
+    window.history.replaceState(null, "", `${window.location.pathname}${qs ? "?" + qs : ""}`);
+  }, [selectedCouncilIds, councilMode, councilStatus]);
+
+  // ── Boundary geometry per selection (lazy, cached) ───────────────────────
+  useEffect(() => {
+    if (councilStatus !== "ready" || selectedCouncilIds.length === 0 || !councilIndex) return;
+    const missing = selectedCouncilIds.filter(
+      id => !councilFeatures.has(id) && !failedBoundaries.includes(id),
+    );
+    if (missing.length === 0) return;
+
+    let cancelled = false;
+    setPendingBoundaries(prev => [...new Set([...prev, ...missing])]);
+
+    (async () => {
+      const results = await Promise.allSettled(
+        missing.map(async id => {
+          const entry = councilIndex.councils.find(c => c.lga_id === id);
+          // geometry_file is relative to public/data/ (e.g.
+          // "boundaries/councils/blacktown-city-council.geojson").
+          const file = entry?.geometry_file ?? `boundaries/councils/${id}.geojson`;
+          const { data } = await fetchWithCache<GeoJSON.Feature>(
+            `${BASE}data/${file}`,
+            `pp_council_${id}`,
+          );
+          return { id, data };
+        }),
+      );
+      if (cancelled) return;
+
+      const ok: Array<[string, GeoJSON.Feature]> = [];
+      const failed: string[] = [];
+      results.forEach((result, i) => {
+        if (result.status === "fulfilled") ok.push([result.value.id, result.value.data]);
+        else {
+          failed.push(missing[i]);
+          console.error(`[explore] boundary fetch failed for ${missing[i]}:`, result.reason);
+        }
+      });
+
+      if (ok.length) {
+        setCouncilFeatures(prev => {
+          const next = new Map(prev);
+          for (const [id, feature] of ok) next.set(id, feature);
+          return next;
+        });
+      }
+      if (failed.length) {
+        setFailedBoundaries(prev => [...new Set([...prev, ...failed])]);
+        toast("Boundary unavailable for selected council", "error");
+      }
+      setPendingBoundaries(prev => prev.filter(id => !missing.includes(id)));
+    })();
+
+    return () => { cancelled = true; };
+  }, [councilStatus, selectedCouncilIds, councilFeatures, failedBoundaries, councilIndex, toast]);
+
   // ── Deep-link: open park from ?park= / ?surprise=1 URL param ─────────────
   useEffect(() => {
     if (deepLinkHandledRef.current || allParks.length === 0) return;
@@ -883,7 +1011,9 @@ export default function Explore() {
   // Always-on, and 1,605 features — previously every one of them was added to
   // the DOM on load regardless of whether it was on screen.
   useCulledMarkerLayer<Record<string, unknown>>(mapInstance, {
-    enabled: true,
+    // FR1.6: the Blacktown overlay is Blacktown-only data, so it is shown
+    // only when nothing is selected or Blacktown itself is selected.
+    enabled: selectedCouncilIds.length === 0 || selectedCouncilIds.includes("blacktown-city-council"),
     url: `${BASE}data/blacktown.geojson`,
     cacheId: "pp_blacktown",
     label: "Blacktown parks",
@@ -969,6 +1099,78 @@ export default function Explore() {
       return marker;
     },
     onCount: (total) => setLayerCounts((prev) => ({ ...prev, toilets: total })),
+    onError: (label) => toast(`Could not load ${label}`, "error"),
+  });
+
+  // ── Inner West LGA layers (Sprint 2 POC — static GeoJSON, no DB) ──────────
+  // Parks: uses the standard LgaPark shape from @workspace/parks-sydney.
+  useCulledMarkerLayer<Record<string, unknown>>(mapInstance, {
+    enabled: filters.iwParks,
+    url: `${BASE}data/inner-west/parks.geojson`,
+    cacheId: "pp_iw_parks",
+    label: "Inner West parks",
+    build: (p, [lat, lng]) => {
+      const name = (p.Name as string) || (p.name as string) || "Park";
+      const color = p.Type === "Playground" ? "#DC267F" : "#8B1A6B";
+      const marker = L.marker([lat, lng], {
+        icon: getOverlayIcon(color, 18, "4px"),
+        title: name,
+      });
+      marker.bindPopup(() => buildSimplePopup(color, "Park · Inner West", name), { maxWidth: 240 });
+      return marker;
+    },
+    onCount: (total) => setLayerCounts((prev) => ({ ...prev, iwParks: total })),
+    onError: (label) => toast(`Could not load ${label}`, "error"),
+  });
+
+  // Trees: static GeoJSON — no sharding yet for LGA-level tree data.
+  useCulledMarkerLayer<Record<string, unknown>>(mapInstance, {
+    enabled: filters.iwTrees,
+    url: `${BASE}data/inner-west/trees.geojson`,
+    cacheId: "pp_iw_trees",
+    label: "Inner West trees",
+    build: (p, [lat, lng]) => {
+      const name = (p.CommonName as string) || (p.SpeciesName as string) || "Tree";
+      const marker = L.marker([lat, lng], {
+        icon: getOverlayIcon("#52B788", 12, "50%"),
+        title: name,
+      });
+      marker.bindPopup(() => {
+        const div = document.createElement("div");
+        div.className = "pp-popup";
+        const badge = document.createElement("span");
+        badge.className = "pp-popup-type";
+        badge.style.background = "#40916C";
+        badge.textContent = "🌳 Tree · Inner West";
+        div.appendChild(badge);
+        const heading = document.createElement("h3");
+        heading.textContent = name;
+        div.appendChild(heading);
+        const species = (p.SpeciesName as string) || "";
+        if (species && species !== name) {
+          const sp = document.createElement("p");
+          sp.style.fontSize = "11px";
+          sp.style.color = "var(--pp-text-muted)";
+          sp.textContent = species;
+          div.appendChild(sp);
+        }
+        const details: string[] = [];
+        if (p.TreeType) details.push(String(p.TreeType));
+        if (p.Tree_Age) details.push(String(p.Tree_Age));
+        if (typeof p.DBH_in_cm === "number") details.push(`${p.DBH_in_cm} cm trunk`);
+        if (typeof p.TreeHeight === "number") details.push(`${p.TreeHeight} m`);
+        if (details.length) {
+          const meta = document.createElement("p");
+          meta.style.fontSize = "11px";
+          meta.style.color = "var(--pp-text-muted)";
+          meta.textContent = details.join(" · ");
+          div.appendChild(meta);
+        }
+        return div;
+      }, { maxWidth: 240 });
+      return marker;
+    },
+    onCount: (total) => setLayerCounts((prev) => ({ ...prev, iwTrees: total })),
     onError: (label) => toast(`Could not load ${label}`, "error"),
   });
 
@@ -1107,6 +1309,27 @@ export default function Explore() {
   }, [filters.npws]);
 
   // ── Filter parks list (with fuzzy scoring) ────────────────────────────────
+  // ── FR1.6: scope results to the selected councils ─────────────────────────
+  const selectedGeometries = useMemo(() => {
+    const map = new Map<string, CouncilGeometry>();
+    for (const id of selectedCouncilIds) {
+      const feature = councilFeatures.get(id);
+      if (feature?.geometry) map.set(id, feature.geometry as CouncilGeometry);
+    }
+    return map;
+  }, [selectedCouncilIds, councilFeatures]);
+
+  /**
+   * Parks after point-in-polygon scoping (bbox pre-filter → ray-casting,
+   * holes honoured). While boundaries are still loading — or the index failed
+   * — the unscoped list is returned so the app degrades to its old behaviour
+   * instead of flashing an empty result set.
+   */
+  const scopedParks = useMemo(() => {
+    if (selectedCouncilIds.length === 0 || selectedGeometries.size === 0) return allParks;
+    return filterByCouncils(allParks, selectedGeometries);
+  }, [allParks, selectedCouncilIds, selectedGeometries]);
+
   useEffect(() => {
     const q = search.toLowerCase().trim();
     const parkKeys: (keyof Filters)[] = ["playground", "sports", "iconic", "neighbourhood", "pocket", "sportsfield"];
@@ -1123,22 +1346,22 @@ export default function Explore() {
     const areaPass = (park: Park) => !minArea || (park.area != null && park.area >= minArea);
 
     if (!q) {
-      setFiltered(allParks.filter(p => (!anyParkFilter || typeMatch(p)) && areaPass(p)));
+      setFiltered(scopedParks.filter(p => (!anyParkFilter || typeMatch(p)) && areaPass(p)));
       return;
     }
 
-    const scored = allParks
+    const scored = scopedParks
       .map(park => ({ park, score: fuzzyScore(park, q) }))
       .filter(x => x.score > 0 && (!anyParkFilter || typeMatch(x.park)) && areaPass(x.park))
       .sort((a, b) => b.score - a.score)
       .map(x => x.park);
 
     setFiltered(scored);
-  }, [allParks, search, filters, minArea]);
+  }, [scopedParks, search, filters, minArea]);
 
   // ── Geocode fallback ──────────────────────────────────────────────────────
   useEffect(() => {
-    if (!search.trim() || filtered.length > 0 || geocodeNearby !== null || allParks.length === 0) return;
+    if (!search.trim() || filtered.length > 0 || geocodeNearby !== null || scopedParks.length === 0) return;
     const controller = new AbortController();
     (async () => {
       try {
@@ -1153,7 +1376,7 @@ export default function Explore() {
           const lng = parseFloat(data[0].lon);
           const place = data[0].display_name.split(",")[0].trim();
           mapRef.current?.flyTo([lat, lng], 14, { duration: 1.2, easeLinearity: 0.25 });
-          const nearby = [...allParks]
+          const nearby = [...scopedParks]
             .sort((a, b) => haversineKm(lat, lng, a.lat, a.lng) - haversineKm(lat, lng, b.lat, b.lng))
             .slice(0, 50);
           setGeocodeNearby(nearby);
@@ -1166,7 +1389,7 @@ export default function Explore() {
       }
     })();
     return () => controller.abort();
-  }, [search, filtered.length, geocodeNearby, allParks, toast]);
+  }, [search, filtered.length, geocodeNearby, scopedParks, toast]);
 
   const closeParkModal = useCallback(() => setSelectedPark(null), []);
 
@@ -1233,13 +1456,13 @@ export default function Explore() {
   const suggestions = useMemo(() => {
     if (sortedDisplayParks.length > 0 || !search.trim() || geocodeNearby !== null) return [];
     const q = search.toLowerCase().trim();
-    return allParks
+    return scopedParks
       .map(p => ({ park: p, score: fuzzyScore(p, q) }))
       .filter(x => x.score > 0)
       .sort((a, b) => b.score - a.score)
       .slice(0, 3)
       .map(x => x.park);
-  }, [allParks, search, sortedDisplayParks.length, geocodeNearby]);
+  }, [scopedParks, search, sortedDisplayParks.length, geocodeNearby]);
 
   const nearbyNPWSFacilities = useMemo(() => {
     if (!selectedPark || npwsRawData.length === 0) return [];
@@ -1386,6 +1609,42 @@ export default function Explore() {
   // (and before the first load, showing parks alone).
   const blacktownCount = layerCounts.blacktown ?? 0;
   const totalCount = allParks.length + blacktownCount;
+
+  // ── Council selection derived values (FR1) ──────────────────────────────
+  const selectedCouncilEntries = useMemo(() => {
+    if (!councilIndex) return [];
+    return selectedCouncilIds
+      .map(id => councilIndex.councils.find(c => c.lga_id === id))
+      .filter((e): e is NonNullable<typeof e> => Boolean(e));
+  }, [councilIndex, selectedCouncilIds]);
+
+  const networkParksAreaHa = useMemo(
+    () => allParks.reduce((sum, p) => sum + (p.area ?? 0), 0) / 10000,
+    [allParks],
+  );
+
+  const selectedPending = useMemo(
+    () => selectedCouncilIds.filter(id => pendingBoundaries.includes(id)),
+    [selectedCouncilIds, pendingBoundaries],
+  );
+  const selectedFailed = useMemo(
+    () => selectedCouncilIds.filter(id => failedBoundaries.includes(id)),
+    [selectedCouncilIds, failedBoundaries],
+  );
+
+  /** Stats skeleton while the index — or the first boundary — is in flight. */
+  const councilStatsLoading =
+    councilStatus === "loading" ||
+    (selectedCouncilIds.length > 0 && selectedPending.length > 0 && selectedGeometries.size === 0);
+
+  /** Single entry point for every selection mutation (FR1.3 multi/single). */
+  const handleCouncilChange = useCallback((ids: string[]) => {
+    setSelectedCouncilIds(ids);
+    // Forget fetch outcomes for councils no longer selected, so re-selecting
+    // one retries instead of inheriting a stale "unavailable" flag.
+    setFailedBoundaries(prev => prev.filter(id => ids.includes(id)));
+    setPendingBoundaries(prev => prev.filter(id => ids.includes(id)));
+  }, []);
   const displayParks = sortedDisplayParks;
 
   // ── Filter items config ───────────────────────────────────────────────────
@@ -1393,6 +1652,7 @@ export default function Explore() {
     playground: "🛝", sports: "⚽", iconic: "⭐", neighbourhood: "🏘",
     pocket: "🌿", sportsfield: "🏟", dogs: "🐕", npws: "🍖",
     fountains: "⛲", toilets: "🚻", transport: "🚌", trees: "🌳",
+    iwParks: "🏞", iwTrees: "🌲",
   };
 
   const filterItems = [
@@ -1420,6 +1680,10 @@ export default function Explore() {
       icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/><path d="M8 21l-2 2M18 21l-2 2"/></svg> },
     { key: "trees" as const, label: "Trees",               countKey: "trees",
       icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M12 22v-7l-2-2"/><path d="M17 8v.8A6 6 0 0 1 13.8 20v0H10v0A6.5 6.5 0 0 1 7 8h0a5 5 0 0 1 10 0Z"/></svg> },
+    { key: "iwParks" as const, label: "Inner West Parks",  countKey: "iwParks",
+      icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg> },
+    { key: "iwTrees" as const, label: "Inner West Trees",  countKey: "iwTrees",
+      icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M12 2L5 12h3l-4 8h14l-4-8h3L12 2z"/></svg> },
   ];
 
   const quickPills = [
@@ -1554,6 +1818,38 @@ export default function Explore() {
             )}
           </div>
 
+          {/* Council governance (FR1) — selector, stats, boundaries legend */}
+          <CouncilSelector
+            entries={councilIndex?.councils ?? []}
+            status={councilStatus}
+            selectedIds={selectedCouncilIds}
+            mode={councilMode}
+            onModeChange={setCouncilMode}
+            onChange={handleCouncilChange}
+          />
+          <CouncilStats
+            selected={selectedCouncilEntries}
+            parksInSelection={scopedParks}
+            totalAreaKm2={councilIndex?.total_area_km2 ?? 0}
+            councilTotal={councilIndex?.total_councils ?? 0}
+            networkParks={allParks.length}
+            networkPlaygrounds={parkStats.playgrounds}
+            networkParksAreaHa={networkParksAreaHa}
+            layerCounts={layerCounts}
+            loading={councilStatsLoading}
+            failed={councilStatus === "error"}
+          />
+          <MultiCouncilPanel
+            map={mapInstance}
+            entries={councilIndex?.councils ?? []}
+            selectedIds={selectedCouncilIds}
+            features={councilFeatures}
+            pendingIds={selectedPending}
+            failedIds={selectedFailed}
+            onRemove={id => handleCouncilChange(selectedCouncilIds.filter(x => x !== id))}
+            onClear={() => handleCouncilChange([])}
+          />
+
           {/* Filters (collapsible) */}
           <div className={`pp-filters-container${filtersOpen ? " open" : ""}`}>
             <button
@@ -1633,7 +1929,7 @@ export default function Explore() {
                 <span className="pp-results-count">
                   {geocodePlace
                     ? `Near "${geocodePlace}"`
-                    : activeFilterCount > 0
+                    : activeFilterCount > 0 || selectedCouncilIds.length > 0
                       ? (() => {
                           const withArea = displayParks.filter(p => p.area);
                           const totalHa = withArea.reduce((s, p) => s + (p.area ?? 0), 0) / 10000;
@@ -2279,7 +2575,7 @@ export default function Explore() {
               setSelectedPark(null);
             }}
             onFindNearby={(lat, lng, name) => {
-              const nearby = [...allParks]
+              const nearby = [...scopedParks]
                 .map(p => ({ p, d: haversineKm(lat, lng, p.lat, p.lng) }))
                 .filter(x => x.d <= 1)
                 .sort((a, b) => a.d - b.d)
