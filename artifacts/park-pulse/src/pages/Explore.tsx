@@ -16,9 +16,12 @@ import {
 } from "../utils/geojson";
 import { fmtArea, fuzzyScore, searchParks, sizeLabel } from "../utils/search";
 import {
+  bboxOfGeometry,
   filterByCouncils,
   parseCouncilsParam,
+  pointInCouncil,
   serializeCouncilsParam,
+  type BBox,
   type CouncilGeometry,
   type CouncilIndex,
   type CouncilMode,
@@ -107,8 +110,8 @@ function getOverlayIcon(color: string, size: number, radius: string): L.DivIcon 
   return cachedIcon(`overlay:${color}:${size}:${radius}`, () => makeIcon(color, size, radius));
 }
 
-/** Popup with a coloured type badge and a single line of text. */
-function buildSimplePopup(color: string, badge: string, name: string): HTMLElement {
+/** Popup with a coloured type badge, a heading and an optional detail line. */
+function buildSimplePopup(color: string, badge: string, name: string, detail?: string): HTMLElement {
   const div = document.createElement("div");
   div.className = "pp-popup";
 
@@ -121,6 +124,14 @@ function buildSimplePopup(color: string, badge: string, name: string): HTMLEleme
   const heading = document.createElement("h3");
   heading.textContent = name;
   div.appendChild(heading);
+
+  if (detail) {
+    const line = document.createElement("p");
+    line.style.fontSize = "12px";
+    line.style.color = "var(--pp-text-muted)";
+    line.textContent = detail;
+    div.appendChild(line);
+  }
 
   return div;
 }
@@ -396,6 +407,24 @@ interface NpwsProperties {
   d_Branch?: string;
   Comments?: string;
 }
+
+/** Properties on public/data/transport/stops.geojson (FR4.1). */
+interface TransportStopProperties {
+  stop_id?: string;
+  stop_name?: string;
+  stop_lat?: number;
+  stop_lon?: number;
+  route_types?: string[];
+}
+
+/** Human labels for the five GTFS modes the converter normalises to (FR4.2). */
+const ROUTE_MODE_LABELS: Record<string, string> = {
+  bus: "Bus",
+  rail: "Rail",
+  ferry: "Ferry",
+  lightrail: "Light rail",
+  metro: "Metro",
+};
 
 /** Properties actually present on the shipped parks dataset. */
 interface ParksProperties {
@@ -1047,6 +1076,31 @@ export default function Explore() {
     else renderMarkersForBounds(filteredRef.current);
   }, [geocodeNearby, renderMarkersForBounds]);
 
+  // ── Selected council geometry (FR1.6) and transport scope (FR4.4) ────────
+  const selectedGeometries = useMemo(() => {
+    const map = new Map<string, CouncilGeometry>();
+    for (const id of selectedCouncilIds) {
+      const feature = councilFeatures.get(id);
+      if (feature?.geometry) map.set(id, feature.geometry as CouncilGeometry);
+    }
+    return map;
+  }, [selectedCouncilIds, councilFeatures]);
+
+  /**
+   * FR4.4 scope predicate: only stops inside a selected council render. Bounding
+   * boxes are pre-computed because the predicate runs once per visible marker.
+   * While boundaries are still loading the filter is undefined and the layer
+   * shows every stop — the same degradation FR1.6 applies to the parks list.
+   */
+  const transportFilter = useMemo(() => {
+    if (selectedGeometries.size === 0) return undefined;
+    const boxes = new Map<string, BBox>();
+    for (const [id, geometry] of selectedGeometries) boxes.set(id, bboxOfGeometry(geometry));
+    const geometries = [...selectedGeometries];
+    return (_props: TransportStopProperties, [lat, lng]: [number, number]) =>
+      geometries.some(([id, geometry]) => pointInCouncil(geometry, lng, lat, boxes.get(id)));
+  }, [selectedGeometries]);
+
   // ── Culled point overlays (fountains, transport, toilets) ──────────────────
   // These datasets hold between 273 and 3,127 points each. They used to be
   // added to the map in one shot, so ticking a filter created thousands of
@@ -1066,18 +1120,34 @@ export default function Explore() {
     onError: (label) => toast(`Could not load ${label}`, "error"),
   });
 
-  useCulledMarkerLayer<Record<string, unknown>>(mapInstance, {
+  // FR4.4: the converted stops.geojson (26,198 stations, route_types[] per
+  // stop) replaces the legacy 1,164-stop public-transports.json behind the
+  // same contract, scoped to the selected councils through the FR1.6 filter.
+  useCulledMarkerLayer<TransportStopProperties>(mapInstance, {
     enabled: filters.transport,
-    url: `${BASE}data/public-transports.json`,
-    cacheId: "pp_transport",
+    url: `${BASE}data/transport/stops.geojson`,
+    cacheId: "pp_transport_stops",
     label: "public transport",
+    refreshKey: `${selectedCouncilIds.join(",")}:${selectedGeometries.size}`,
+    filter: transportFilter,
     build: (p, [lat, lng]) => {
-      const name =
-        (p.name as string) ||
-        ((p.properties as Record<string, unknown> | undefined)?.stop_name as string) ||
-        "Transport Stop";
+      const name = p.stop_name || "Transport Stop";
+      const modes = (p.route_types ?? []).map((m) => ROUTE_MODE_LABELS[m] ?? m);
       const marker = L.marker([lat, lng], { icon: getOverlayIcon("#9B2335", 16, "3px"), title: name });
-      marker.bindPopup(() => buildSimplePopup("#9B2335", "Transport", name), { maxWidth: 200 });
+      marker.on("add", () => {
+        // Test hook: lets e2e verify FR4.4 (every rendered stop is inside the
+        // selected council) without reaching into Leaflet internals.
+        const el = marker.getElement();
+        if (el) {
+          el.dataset.ppStopId = p.stop_id ?? "";
+          el.dataset.ppLat = String(lat);
+          el.dataset.ppLng = String(lng);
+        }
+      });
+      marker.bindPopup(
+        () => buildSimplePopup("#9B2335", modes.length ? modes.join(" · ") : "Transport", name),
+        { maxWidth: 200 },
+      );
       return marker;
     },
     onCount: (total) => setLayerCounts((prev) => ({ ...prev, transport: total })),
@@ -1326,15 +1396,8 @@ export default function Explore() {
   }, [filters.npws]);
 
   // ── Filter parks list (with fuzzy scoring) ────────────────────────────────
-  // ── FR1.6: scope results to the selected councils ─────────────────────────
-  const selectedGeometries = useMemo(() => {
-    const map = new Map<string, CouncilGeometry>();
-    for (const id of selectedCouncilIds) {
-      const feature = councilFeatures.get(id);
-      if (feature?.geometry) map.set(id, feature.geometry as CouncilGeometry);
-    }
-    return map;
-  }, [selectedCouncilIds, councilFeatures]);
+  // FR1.6 geometry (selectedGeometries) is declared above the culled overlays
+  // so the FR4.4 transport scope can share the same map.
 
   /**
    * Parks after point-in-polygon scoping (bbox pre-filter → ray-casting,
@@ -1346,6 +1409,45 @@ export default function Explore() {
     if (selectedCouncilIds.length === 0 || selectedGeometries.size === 0) return allParks;
     return filterByCouncils(allParks, selectedGeometries);
   }, [allParks, selectedCouncilIds, selectedGeometries]);
+
+  // ── FR4.5 — transit stops in selection ───────────────────────────────────
+  // stops.geojson is 5.9 MB, so it is fetched only once someone can use it (a
+  // council is selected or the transport layer is on) and then held in the
+  // dataCache memory tier; until then the stat renders as "—".
+  const [transitPoints, setTransitPoints] = useState<{ lat: number; lng: number }[] | null>(null);
+  const [transitLoading, setTransitLoading] = useState(false);
+
+  useEffect(() => {
+    if (transitPoints !== null || transitLoading) return;
+    if (!filters.transport && selectedCouncilIds.length === 0) return;
+    setTransitLoading(true);
+    (async () => {
+      try {
+        const { data } = await fetchWithCache<FeatureCollection>(
+          `${BASE}data/transport/stops.geojson`,
+          "pp_stops_fc",
+        );
+        const pts: { lat: number; lng: number }[] = [];
+        for (const f of data.features ?? []) {
+          const ll = readLatLng(f);
+          if (ll) pts.push({ lat: ll.lat, lng: ll.lng });
+        }
+        setTransitPoints(pts);
+      } catch (err) {
+        console.error("[explore] failed to load transit stops:", err);
+        toast("Could not load transit stops", "error");
+      } finally {
+        setTransitLoading(false);
+      }
+    })();
+  }, [filters.transport, selectedCouncilIds, transitPoints, transitLoading, toast]);
+
+  /** Stops inside the selection (bbox pre-filter → ray-casting), null until loaded. */
+  const transitStopsInSelection = useMemo(() => {
+    if (transitPoints === null) return null;
+    if (selectedCouncilIds.length === 0 || selectedGeometries.size === 0) return transitPoints.length;
+    return filterByCouncils(transitPoints, selectedGeometries).length;
+  }, [transitPoints, selectedCouncilIds, selectedGeometries]);
 
   useEffect(() => {
     const q = search.toLowerCase().trim();
@@ -1847,6 +1949,8 @@ export default function Explore() {
           <CouncilStats
             selected={selectedCouncilEntries}
             parksInSelection={scopedParks}
+            transitStops={transitStopsInSelection}
+            transitLoading={transitLoading}
             totalAreaKm2={councilIndex?.total_area_km2 ?? 0}
             councilTotal={councilIndex?.total_councils ?? 0}
             networkParks={allParks.length}

@@ -12,12 +12,17 @@ import {
  * With no selection the panel shows network totals; with a selection it shows
  * the summed area, coverage against the network total, and the parks /
  * playgrounds / park area that survived the point-in-polygon scoping of
- * FR1.6. While the council index is loading every value renders as a
- * skeleton, and a failed load renders "—" (Explore raises the toast).
+ * FR1.6, and — FR4.5 — the transit stops inside the selection, computed from
+ * the converted stops.geojson. While stop data has not been fetched yet the
+ * transit row renders "—" with a tooltip rather than a fabricated zero.
  */
 export interface CouncilStatsProps {
   selected: readonly CouncilIndexEntry[];
   parksInSelection: readonly SelectionPark[];
+  /** Stops inside the selection (FR4.5); null until stops.geojson is loaded. */
+  transitStops: number | null;
+  /** True while stops.geojson is being fetched. */
+  transitLoading: boolean;
   /** Total across every council in the index; 0 while loading. */
   totalAreaKm2: number;
   /** How many councils exist in the index (network-wide row). */
@@ -39,6 +44,8 @@ function Skeleton() {
 export default function CouncilStats({
   selected,
   parksInSelection,
+  transitStops,
+  transitLoading,
   totalAreaKm2,
   councilTotal,
   networkParks,
@@ -111,6 +118,24 @@ export default function CouncilStats({
       key: "parksArea",
       label: "Parks area",
       node: <>{(scoped ? stats.parksAreaHa : networkParksAreaHa).toLocaleString()} ha</>,
+    },
+    {
+      key: "transit",
+      label: scoped ? "Transit stops in selection" : "Transit stops",
+      node:
+        transitStops !== null ? (
+          <>{transitStops.toLocaleString()}</>
+        ) : transitLoading ? (
+          <Skeleton />
+        ) : (
+          <span
+            title="Stop data loads when a council is selected or the transport layer is on"
+            className="pp-stat-pending"
+          >
+            —
+          </span>
+        ),
+      title: transitStops === null && !transitLoading ? "Stop data not loaded yet" : undefined,
     },
   ];
 

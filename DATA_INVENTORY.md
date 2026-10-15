@@ -151,7 +151,7 @@ All files contain TIFF raster layers with 30m pixel resolution, organized by LGA
 
 **Files:**
 1. `agency.txt` (58 KB) - Transport agencies
-2. `stops.txt` (17 MB) - Transit stop locations (11,642 stops)
+2. `stops.txt` (17 MB) - Transit stop locations (**171,214** records; see §5.1 note)
 3. `routes.txt` (12 MB) - Bus route definitions & route types
 4. `calendar.txt` (150 KB) - Service calendar (Monday-Sunday)
 5. `calendar_dates.txt` (825 KB) - Exception dates
@@ -164,7 +164,7 @@ All files contain TIFF raster layers with 30m pixel resolution, organized by LGA
 
 **Key Data Points:**
 - **Agency:** Transport for NSW (commercially-sponsored)
-- **Stops:** 11,644 GTFS stops across metropolitan Sydney
+- **Stops:** 171,214 GTFS stop records statewide (feed is NSW-wide, not Sydney-only); **26,198 stations** fall inside the 35 council boundaries after conversion
 - **Routes:** All bus routes + train lines + ferry routes
 - **Shapes:** 979 MB - full route geometries for spatial analysis
 - **Stop Times:** 420 MB - precise timing of each stop visit
@@ -172,11 +172,11 @@ All files contain TIFF raster layers with 30m pixel resolution, organized by LGA
 
 **Required Processing:**
 1. ✓ Extract stop locations (stops.txt) for mapping
-2. ⚠️ Convert stops to FeatureCollection GeoJSON
-3. ✓ Map route geometries (shapes.txt) to route lines
-4. ✓ Consolidate bus stops + train stops + ferry stops
+2. ✓ Convert stops to FeatureCollection GeoJSON — `scripts/gtfs-convert.mjs --stops` → `public/data/transport/stops.geojson` (26,198 features, deterministic; scope rule + TBD-4a in `Data/council-sources.md` §5)
+3. ⚠️ Map route geometries (shapes.txt) to route lines — `--routes --sample` verified offline; full 979 MB run is a connected-machine gate (FR4.2)
+4. ✓ Consolidate bus stops + train stops + ferry stops (`route_types[]` per stop)
 5. ⚠️ Generate routes.geojson layer for routing connectors
-- **Status:** ✓ Raw data ready - needs conversion and layering
+- **Status:** ✓ Stops converted and shipping in the app; routes layer sample-validated only
 
 ---
 
@@ -219,7 +219,7 @@ All files contain TIFF raster layers with 30m pixel resolution, organized by LGA
 - ✓ Greater Sydney LGA Set (partial)
 - ✓ Dog Off-Leash Zones
 - ✓ Alcohol-Free Zones
-- ✓ GTFS Stop Locations (11,642 stops)
+- ✓ GTFS Stop Locations (converted: 26,198 stations in-scope; source has 171,214 records)
 - ✓ GTFS Structure (agency, routes, shapes, trips, stop_times)
 - ✓ City of Sydney Trees (raw, needs format conversion)
 
