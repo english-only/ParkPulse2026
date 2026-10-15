@@ -110,8 +110,44 @@ describe("normalizeProperties (PRD §5.1 target schema)", () => {
       lga_name: "City of Parramatta Council",
       has_playground: true,
       area_m2: 12345.6,
+      tree: {
+        asset_id: null,
+        common_name: null,
+        species: null,
+        tree_type: null,
+        status: null,
+        age: null,
+        dbh_cm: null,
+        height_m: null,
+      },
     });
     expect("UNMAPPABLE_FIELD" in props).toBe(false);
+  });
+
+  it("maps tree-inventory attributes into the nested tree object", () => {
+    const props = normalizeProperties({
+      id: 3,
+      raw: {
+        TreeID_Archive: "T-9",
+        CommonName: "Sydney Red Gum",
+        SpeciesName: "Angophora costata",
+        Collection: "Open space",
+        Status: "Healthy",
+        DBH_in_cm: 42.5,
+      },
+      lgaId: "city-of-parramatta-council",
+      lgaName: "City of Parramatta Council",
+    });
+    expect(props.tree).toEqual({
+      asset_id: "T-9",
+      common_name: "Sydney Red Gum",
+      species: "Angophora costata",
+      tree_type: "Open space",
+      status: "Healthy",
+      age: null,
+      dbh_cm: 42.5,
+      height_m: null,
+    });
   });
 
   it("renders unmappable values as null, never as placeholders", () => {

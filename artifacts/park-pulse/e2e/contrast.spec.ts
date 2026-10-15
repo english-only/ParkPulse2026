@@ -67,6 +67,22 @@ async function background(page: import("@playwright/test").Page): Promise<Rgb> {
   });
 }
 
+/**
+ * `body` fades its background over 0.3 s (index.css `transition: background .3s`),
+ * so a fixed wait can read a half-faded backdrop and compute a ratio against a
+ * colour the page never actually shows. Wait until two consecutive samples of
+ * the body background are identical.
+ */
+async function settleBackground(page: import("@playwright/test").Page) {
+  let last = "";
+  for (let i = 0; i < 25; i++) {
+    const bg = await page.evaluate(() => getComputedStyle(document.body).backgroundColor);
+    if (bg === last) return;
+    last = bg;
+    await page.waitForTimeout(120);
+  }
+}
+
 /** Tokens that previously failed AA in dark mode, now corrected. */
 const REGRESSIONS: Array<{ token: string; minimum: number; label: string }> = [
   { token: "--pp-text-muted", minimum: 4.5, label: "muted body text" },
@@ -77,7 +93,7 @@ test.describe("colour contrast", () => {
     await page.goto("/explore");
     await expect(page.getByText(/locations$/).first()).toBeVisible({ timeout: 45_000 });
     await page.evaluate(() => document.documentElement.setAttribute("data-theme", "dark"));
-    await page.waitForTimeout(200);
+    await settleBackground(page);
 
     const backdrop = await background(page);
     for (const { token, minimum, label } of REGRESSIONS) {
@@ -94,7 +110,7 @@ test.describe("colour contrast", () => {
     await page.goto("/explore");
     await expect(page.getByText(/locations$/).first()).toBeVisible({ timeout: 45_000 });
     await page.evaluate(() => document.documentElement.setAttribute("data-theme", "light"));
-    await page.waitForTimeout(200);
+    await settleBackground(page);
 
     const backdrop = await background(page);
     for (const { token, minimum, label } of REGRESSIONS) {
@@ -111,7 +127,7 @@ test.describe("colour contrast", () => {
     await page.goto("/explore");
     await expect(page.getByText(/locations$/).first()).toBeVisible({ timeout: 45_000 });
     await page.evaluate(() => document.documentElement.setAttribute("data-theme", "dark"));
-    await page.waitForTimeout(200);
+    await settleBackground(page);
 
     const backdrop = await background(page);
 

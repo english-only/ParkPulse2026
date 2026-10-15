@@ -809,7 +809,9 @@ button.pp-type-breakdown-item.active{border-color:currentColor;background:var(--
 .pp-sort-btn{padding:.25rem .625rem;border-radius:var(--pp-radius-full);font-size:.75rem;font-weight:500;border:1.5px solid var(--pp-border);background:var(--pp-bg);color:var(--pp-text-secondary);cursor:pointer;transition:border-color var(--pp-transition),color var(--pp-transition),background var(--pp-transition);white-space:nowrap}
 .pp-sort-btn:hover{border-color:var(--pp-primary);color:var(--pp-primary)}
 .pp-sort-btn.active{border-color:var(--pp-primary);background:var(--pp-primary);color:#fff}
-.pp-sort-btn.disabled{opacity:.6}
+/* Dimming by opacity measured 3.04:1 on the dark sidebar; de-emphasise with
+   the muted token instead so the label stays AA at every theme. */
+.pp-sort-btn.disabled{color:var(--pp-text-muted)}
 
 /* ===== Cache indicator ===== */
 .pp-cache-indicator{display:flex;align-items:center;gap:.375rem;padding:.3rem 1.25rem;font-size:.72rem;color:var(--pp-text-muted);flex-shrink:0}
@@ -838,7 +840,7 @@ button.pp-park-suburb-pill.pp-suburb-clickable:hover{background:var(--pp-green-5
 
 /* ===== Viewport park counter ===== */
 .pp-viewport-count{position:absolute;top:.875rem;left:50%;transform:translateX(-50%);z-index:400;background:rgba(255,255,255,.88);backdrop-filter:blur(8px);border:1px solid var(--pp-border-light);border-radius:var(--pp-radius-full);padding:.25rem .8rem;font-size:.72rem;font-weight:600;color:var(--pp-text-secondary);pointer-events:none;white-space:nowrap;box-shadow:var(--pp-shadow-sm)}
-[data-theme="dark"] .pp-viewport-count,[data-theme="neon"] .pp-viewport-count{background:rgba(22,27,34,.88);color:var(--pp-text-muted);border-color:var(--pp-border)}
+[data-theme="dark"] .pp-viewport-count,[data-theme="neon"] .pp-viewport-count{background:rgba(22,27,34,.88);color:var(--pp-text);border-color:var(--pp-border)}
 .pp-park-distance{display:inline-flex;align-items:center;gap:.2rem;padding:2px 7px;background:var(--pp-green-100);color:var(--pp-primary-dark);border:1px solid var(--pp-green-200);border-radius:var(--pp-radius-full);font-size:.7rem;font-weight:600}
 .pp-card-hover-hint{font-size:.72rem;color:var(--pp-primary);font-weight:500;opacity:0;transform:translateX(-4px);transition:opacity var(--pp-transition),transform var(--pp-transition);margin-top:.25rem}
 .pp-park-card:hover .pp-card-hover-hint{opacity:1;transform:translateX(0)}
@@ -1129,6 +1131,12 @@ button.pp-park-suburb-pill.pp-suburb-clickable:hover{background:var(--pp-green-5
 .pp-council-mode{border:0;background:transparent;color:var(--pp-text-muted);font-size:.68rem;font-weight:600;padding:.1875rem .5625rem;border-radius:var(--pp-radius-full);cursor:pointer;transition:background var(--pp-transition),color var(--pp-transition)}
 .pp-council-mode.active{background:var(--pp-primary);color:#fff}
 .pp-council-mode:disabled{opacity:.5;cursor:not-allowed}
+/* Themes whose primary is a bright tint need dark text on the active chip:
+   white on #3fb950 measures 2.54:1 (WCAG AA needs 4.5:1). Mirrors the
+   per-theme overrides already used by .pp-sort-btn.active. */
+[data-theme="dark"] .pp-council-mode.active{color:#06210f}
+[data-theme="neon"] .pp-council-mode.active{color:#001a0d}
+[data-theme="satellite"] .pp-council-mode.active{color:#0f172a}
 .pp-council-trigger{display:flex;align-items:center;justify-content:space-between;gap:.5rem;width:100%;padding:.4375rem .625rem;background:var(--pp-surface);border:1px solid var(--pp-border);border-radius:var(--pp-radius-md);color:var(--pp-text);font-size:.8125rem;text-align:left;cursor:pointer;transition:border-color var(--pp-transition)}
 .pp-council-trigger:hover:not(:disabled){border-color:var(--pp-primary)}
 .pp-council-trigger:disabled{opacity:.6;cursor:not-allowed}

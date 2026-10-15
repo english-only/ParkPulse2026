@@ -307,7 +307,8 @@ function buildTreePopup(tree: TreeRecord, park: Park | null): HTMLElement {
   const badge = document.createElement("span");
   badge.className = "pp-popup-type";
   badge.style.background = "#40916C";
-  badge.textContent = "🌳 Tree";
+  // FR3.5: council-sourced trees name their council in the overlay popup.
+  badge.textContent = tree.councilName ? `🌳 Tree · ${tree.councilName}` : "🌳 Tree";
   div.appendChild(badge);
 
   const heading = document.createElement("h3");
@@ -1174,10 +1175,23 @@ export default function Explore() {
     onError: (label) => toast(`Could not load ${label}`, "error"),
   });
 
-  // ── Trees layer (sharded, canvas-rendered) ───────────────────────────────
+  // ── Trees layer (sharded, canvas-rendered; council-aware per FR3.3–3.4) ──
+  // The layer is rebuilt whenever the council selection changes so only the
+  // selected councils' shard sets are fetched.
+  const councilTreeKeyRef = useRef<string>("");
   useEffect(() => {
     const map = mapRef.current;
     if (!map) return;
+
+    const councilKey = selectedCouncilIds.join(",");
+    if (councilTreeKeyRef.current !== councilKey) {
+      // Selection changed: drop the old layer so loadTrees runs again.
+      if (treeLayerRef.current) {
+        if (map.hasLayer(treeLayerRef.current)) map.removeLayer(treeLayerRef.current);
+        treeLayerRef.current = null;
+      }
+      councilTreeKeyRef.current = councilKey;
+    }
 
     const loadTrees = async () => {
       if (treeLayerRef.current) return;
@@ -1187,12 +1201,15 @@ export default function Explore() {
       const renderer = treeRendererRef.current;
       const bounds = map.getBounds();
       try {
-        const { trees, info } = await loadTreesForBounds({
-          south: bounds.getSouth(),
-          west: bounds.getWest(),
-          north: bounds.getNorth(),
-          east: bounds.getEast(),
-        });
+        const { trees, info } = await loadTreesForBounds(
+          {
+            south: bounds.getSouth(),
+            west: bounds.getWest(),
+            north: bounds.getNorth(),
+            east: bounds.getEast(),
+          },
+          { councilIds: selectedCouncilIds },
+        );
         if (!trees.length) return;
         const layer = L.layerGroup();
         const index = treeIndexRef.current ?? new NearestIndex(allParksRef.current);
@@ -1236,7 +1253,7 @@ export default function Explore() {
       if (treeLayerRef.current && map.hasLayer(treeLayerRef.current)) map.removeLayer(treeLayerRef.current);
       setTreeZoomHint(false);
     }
-  }, [filters.trees]);
+  }, [filters.trees, selectedCouncilIds]);
   // ── Dog parks layer (cached + raw data for modal cross-ref) ───────────────
   useEffect(() => {
     const map = mapRef.current;

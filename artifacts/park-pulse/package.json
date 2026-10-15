@@ -86,6 +86,8 @@
     "zod": "catalog:"
   },
   "dependencies": {
+    "@workspace/parks-sydney": "workspace:*",
+    "@workspace/transport": "workspace:*",
     "leaflet": "^1.9.4",
     "leaflet.markercluster": "^1.5.3"
   }

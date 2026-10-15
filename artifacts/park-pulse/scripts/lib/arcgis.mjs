@@ -114,6 +114,7 @@ export function normalizeProperties({
   playgroundKeys = ["playground", "PLAYGROUND", "has_playground"],
   areaKeys = ["area_m2", "SHAPE_Area", "Shape__Area", "AREA"],
 }) {
+  const tree = normalizeTreeProperties(raw);
   const str = (keys) => {
     for (const k of keys) {
       const v = raw?.[k];
@@ -149,6 +150,39 @@ export function normalizeProperties({
     lga_name: lgaName,
     has_playground: hasPlayground,
     area_m2: num(areaKeys),
+    tree,
+  };
+}
+
+/**
+ * Tree-inventory attributes (PRD Phase 3). Kept in a nested object so the
+ * parks schema above stays exactly as §5.1 defines it; every unmappable
+ * attribute is `null`, never a placeholder.
+ */
+export function normalizeTreeProperties(raw) {
+  const str = (keys) => {
+    for (const k of keys) {
+      const v = raw?.[k];
+      if (typeof v === "string" && v.trim()) return v.trim();
+    }
+    return null;
+  };
+  const num = (keys) => {
+    for (const k of keys) {
+      const v = raw?.[k];
+      if (typeof v === "number" && Number.isFinite(v)) return v;
+    }
+    return null;
+  };
+  return {
+    asset_id: str(["asset_id", "TreeID_Archive", "TREE_ID", "Asset_ID"]),
+    common_name: str(["CommonName", "common_name", "COMMON_NAME", "Species_Common"]),
+    species: str(["SpeciesName", "species", "SPECIES", "Species_Botanical"]),
+    tree_type: str(["TreeType", "tree_type", "Collection", "Struc_val"]),
+    status: str(["Tree_Status", "status", "Status"]),
+    age: str(["Tree_Age", "age", "Age"]),
+    dbh_cm: num(["DBH_in_cm", "dbh_cm", "DBH", "Diameter"]),
+    height_m: num(["TreeHeight", "height_m", "Height"]),
   };
 }
 

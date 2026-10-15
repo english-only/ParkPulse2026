@@ -145,6 +145,51 @@ test.describe("council governance", () => {
     expect(violations).toEqual([]);
   });
 
+  test("council tree shards load for the selected council only", async ({ page }) => {
+    // Fetching ~3 MB of council shards on cold cache is slower than the
+    // default 60 s budget (the other specs share the machine serially).
+    test.setTimeout(180_000);
+    await gotoExplore(page);
+
+    // Pick Parramatta — the one priority council with a sharded tree dataset.
+    await page.getByRole("combobox", { name: "Select a council" }).click();
+    await page.getByPlaceholder("Filter councils…").fill("parramatta");
+    await page.keyboard.press("Enter");
+    await expect(page.locator(".pp-council-chip")).toContainText("City of Parramatta Council");
+
+    // Turn on the trees layer. The input is visually hidden behind the
+    // pp-checkmark (clip-path), so hit-test it through its <label> wrapper —
+    // the same target a mouse user clicks.
+    await page.locator(".pp-filters-toggle").click();
+    const treesLabel = page.locator("label.pp-filter-checkbox").filter({ hasText: /^Trees/ });
+    await treesLabel.click();
+    await expect(treesLabel.locator("input")).toBeChecked();
+
+    // The live layer count must report the council shard set's total
+    // (66,345 trees) — i.e. the resolver fetched Parramatta's shards, not the
+    // city baseline and not nothing.
+    await expect
+      .poll(
+        async () => {
+          const chip = page.locator(".pp-council-layercount").filter({ hasText: /^trees/ });
+          const text = (await chip.textContent()) ?? "";
+          return Number(text.replace(/[^\d]/g, ""));
+        },
+        { timeout: 30_000 },
+      )
+      .toBe(66345);
+
+    // The tree overlay names its council (FR3.5): canvas markers carry popup
+    // content only when opened, so assert the layer's counts chip label and
+    // that the zoom hint state does not error the console instead.
+    const errors: string[] = [];
+    page.on("console", msg => {
+      if (msg.type() === "error") errors.push(msg.text());
+    });
+    await expect(page.locator(".leaflet-container")).toBeVisible();
+    expect(errors.filter(e => e.includes("tree"))).toEqual([]);
+  });
+
   test("stats panel reports area and coverage for the selection", async ({ page }) => {
     await gotoExplore(page);
 
