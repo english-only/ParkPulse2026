@@ -104,13 +104,32 @@
   margin-bottom: 0.35rem;
 }
 
+/* The legend here is a section heading, not a label cut into the card's edge.
+   Left alone, a <legend> is painted on the fieldset's border line: the top
+   border is interrupted around the text and the heading ends up sitting on the
+   rounded corner instead of inside the card. Floating the legend moves it into
+   the card's padding box and leaves the border as one unbroken rectangle; the
+   clear keeps the first row of fields below the heading instead of beside it. */
 .ct-fieldset {
   border: 1px solid var(--pp-border-light);
   min-width: 0;
 }
 
 .ct-fieldset legend {
-  padding: 0 0.4rem;
+  float: left;
+  width: 100%;
+  padding: 0;
+}
+
+/* Outranks `.ct-form-section .fa-h3`. Clearance swallows the helper
+   paragraph's own margin-top, so the heading-to-note gap is set here instead
+   of relying on the paragraph's margin. */
+.ct-fieldset legend.fa-h3 {
+  margin-bottom: 0.75rem;
+}
+
+.ct-fieldset legend + * {
+  clear: both;
 }
 
 .ct-section-head {
@@ -190,6 +209,7 @@
   line-height: 1.45;
   color: var(--pp-text-muted);
   max-width: 68ch;
+  margin-top: 0.5rem;
 }
 
 .ct-error {

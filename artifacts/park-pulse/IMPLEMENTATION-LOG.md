@@ -27,6 +27,15 @@ deliberately still open. Nothing here is a claim of release readiness.
 - **Tests updated to the new contract** (not weakened): the theme test now
   asserts a two-option toggle instead of a six-item listbox; contrast tests use
   `night` / `warm`.
+- **Contribute: "Park or reserve details" hung on the card border.** The field
+  set's `<legend>` was left in its default border-label position, so the heading
+  sat on the rounded top edge of the card with the border interrupted around it,
+  and the helper note underneath nearly touched the text. The legend is now
+  floated into the card's padding box (`.ct-fieldset legend`), the border
+  renders as one unbroken rounded rectangle, and the heading keeps a 12px gap to
+  its note. Checked in a headless browser by sampling the rendered pixels: the
+  top border row is a continuous `rgb(36,49,42)` run and the heading row contains
+  only text, at 390, 768 and 1440px wide, for every category.
 
 ## Completed — data-restoration and Phase 3/4 pass (2026-10-19)
 
