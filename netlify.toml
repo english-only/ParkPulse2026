@@ -1,0 +1,27 @@
+# ParkPulse deploys as a static site. The app lives in the pnpm workspace at
+# artifacts/park-pulse and imports @workspace/parks-sydney and
+# @workspace/transport, so install and build both have to run from the
+# repository root where the workspace resolves.
+#
+# Leave Netlify's "base directory" empty. With the base at the repo root this
+# file is the one Netlify reads, and the site directory is only a path in the
+# build command and the publish target. A base of artifacts/park-pulse makes
+# Netlify install there, where a `workspace:*` dependency has nothing to
+# resolve against.
+
+[build]
+  command = "pnpm --filter @workspace/park-pulse build"
+  publish = "artifacts/park-pulse/dist/public"
+
+[build.environment]
+  # Vite 7 needs Node >= 20.19; 22 is the LTS line this build targets.
+  NODE_VERSION = "22"
+
+# The app is a client-side router: /explore, /atlas and the rest exist only in
+# the bundle, so a hard load or a shared link has to return index.html. Status
+# 200 is a rewrite, and Netlify's shadowing rule still serves real files first,
+# so /assets/*.js and /data/*.json are unaffected.
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
