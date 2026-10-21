@@ -13,7 +13,7 @@ deliberately still open. Nothing here is a claim of release readiness.
 | §8.1 exactly two themes | `useTheme` reduced to `warm` (Warm Field) and `night` (Night Field); legacy ids (`default`, `dark`, `sunset`, `neon`, `minimal`, `satellite`, `light`) migrate on read | Contrast suite runs both palettes; theme test asserts exactly two pressed-state buttons and persistence across reload |
 | §8.1 map basemap ≠ UI theme | Explore's tiles are driven by a `basemap` state (`streets` / `satellite`) with its own control, `?basemap=` param, legacy `?theme=satellite` support, and `html[data-basemap]` so Night Field never inverts imagery | Explore e2e suite (14 tests) |
 | §8.2 type, spacing, motion | 4px rhythm, 8/12/16/24/32/48 spacing, 8px control radius, solid primary action, reduced-motion overrides | `src/styles/field-atlas.css`; screenshots |
-| NAV-001…004 | New header: skip link, `aria-current`, three destinations, single Explore action, two-option theme switch, Escape-closing mobile disclosure with focus return. New footer: purpose, destinations, publishers, snapshot date, OSM attribution. | `home.spec.ts` shell tests; axe on `/about` both themes |
+| NAV-001…004 | Header and footer both render one destination list from `src/data/navigation.ts`: Explore, Amenities, Compare, Atlas, Insights, About. Skip link, `aria-current`, two-option theme switch, Escape-closing mobile disclosure with focus return. Footer adds purpose, publishers, snapshot date and OSM attribution. The duplicate header “Explore parks” action is gone. | `home.spec.ts` destination-parity and mobile-disclosure tests; axe on `/about` both themes |
 | HOM-001…005 | Hero, sourced snapshot band, three steps, four real Explore deep links, local-only recents, one closing CTA. Quick Explore grid, hard-coded featured parks, rotating facts, animated counters and remote Unsplash hero removed. | `home.spec.ts` (13 tests) |
 | ABOUT-001…003 | Coverage table from the registry, "what is not published" register, reading guide, accessibility statement, attribution, shortcuts in a `<details>` | `home.spec.ts` About tests; axe both themes |
 
@@ -52,7 +52,32 @@ deliberately still open. Nothing here is a claim of release readiness.
   body background transition to settle before measuring, so it no longer reads
   a half-faded palette.
 
+## Completed — navigation parity and hero plate (2026-10-21)
+
+| Gap | Fix | Evidence |
+|---|---|---|
+| **Header was a partial sitemap** | Three destinations sat in the header while Amenities, Compare and Atlas were reachable only from the footer, and a fourth header button duplicated the Explore link beside it. Both navigations now render `src/data/navigation.ts`; adding a route is a one-line edit. | `home.spec.ts` asserts header/footer destination-set equality; mobile disclosure carries the same six at 960px |
+| **Hero was not a map** | The old hero plotted 953 ring centroids from the City of Sydney layer plus a *gated* OSM sample. Centroids can fall outside their own park, and mixing a gated dataset into a hero was a provenance problem. Replaced by `build-hero-plate.mjs` → `hero-plate.json`: 418 real park outlines, projected once, simplified to 2.5 m, fitted at true aspect inside a square frame. | `heroPlate.test.ts` (10 tests), `home.spec.ts` plate tests: square within 1px, real ring count, zero circles, type-key filtering, scale bar > 60px |
+| **Scale bar was decorative** | The build now emits `metresPerUnit`; the plate derives the largest round distance under 30% of the frame and draws a labelled bar (2 km at desktop). | `heroPlate.test.ts` scale selection; plate e2e |
+| **Explore reachability test missed registry layers** | A published point layer can be reachable through the hand-written rail *or* the registry-driven generic chips. The invariant now checks both paths and that the two sets are disjoint — community contributions are the first registry-driven layer. | `exploreFilters.test.ts` (8 tests) |
+
+Verification on the committed tree: `typecheck` exit 0 · `test` 283/283 (17 files) · `build` exit 0 from a tree with the generated files deleted · Playwright 71/71. A fresh `build` regenerates `stats.json`, `catalog.json`, `hero-plate.json` and `contribution-index.json`, all ignored.
+
 ## Deliberately still open
+
+- **Workspace packages are declared but unused.** `@workspace/parks-sydney` and
+  `@workspace/transport` are app dependencies that no `src/` module imports. They
+  compile and cost nothing in the bundle, but the declaration implies a coupling
+  that does not exist yet; either wire the types into the council/transit code or
+  drop the dependencies.
+- **Explore has two category models.** Bespoke layers live in `LAYER_TOGGLES`;
+  registry-driven ones are derived as `GENERIC_LAYERS`. Both are reachable, but the
+  rail and the chipped list render differently and a visitor cannot tell why. A
+  single registry-derived category list is the obvious next simplification.
+- **The in-app preview panel could not capture frames** during this pass (it
+  reported “no frames”), so visual verification used Chromium directly against the
+  dev server. This is a tooling limitation, not an app defect, but it means the
+  embedded preview remains unverified.
 
 - **Featured place** (HOM-003) is omitted rather than faked. The hero plate is the
   City of Sydney park layer alone; drawing a “Greater Sydney” plate from it would
