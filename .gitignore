@@ -12,6 +12,14 @@ out-tsc
 # artifacts/park-pulse/scripts/shard-trees.mjs on every dev/build)
 artifacts/park-pulse/public/data/trees/
 
+# generated council/transport/canopy layers — rebuilt by build-councils.mjs,
+# shard-trees.mjs, gtfs-convert.mjs and canopy-extract.mjs; never committed
+# per repo policy (PRD §3.7-5)
+artifacts/park-pulse/public/data/boundaries/
+artifacts/park-pulse/public/data/transport/
+artifacts/park-pulse/public/data/councils-trees/
+artifacts/park-pulse/public/data/canopies/
+
 # dependencies
 node_modules
 
@@ -51,3 +59,33 @@ Thumbs.db
 # Replit
 .cache/
 .local/
+
+# Raw upstream downloads (1.3 GB of zips, GTFS feeds and tree exports). Reconstructed with
+# the scripts named in DATA_INVENTORY.md; provenance is committed there, bytes are not.
+/Data/
+
+# Local tunnelling config for previewing :4173 (and any tunnel credential that lands here)
+.cloudflared/
+
+# Scratch review output: screenshots and one-off browser probes. Curated evidence lives in
+# artifacts/park-pulse/docs/superpowers/ instead.
+artifacts/park-pulse/review/
+artifacts/park-pulse/scripts/.[a-z]*.mjs
+artifacts/redesign-screens/
+
+# Browser accessibility snapshots captured while debugging a flow. Never committed: they are
+# scratch output and can contain account or session text.
+/login-page.yml
+
+# Generated data artifacts, rebuilt by the app's dev/build scripts (build-stats,
+# build-catalog, build-hero-plate, build-contribution-index). Provenance is committed in
+# DATA_INVENTORY.md; the bytes are not the record.
+artifacts/park-pulse/public/data/stats.json
+artifacts/park-pulse/public/data/catalog.json
+artifacts/park-pulse/public/data/hero-plate.json
+artifacts/park-pulse/public/data/contribution-index.json
+
+# Stray build output written to the repo root by an extraction script run from the wrong
+# directory. The app's own data lives under artifacts/park-pulse/public/data/.
+/public/data/
+
