@@ -1,0 +1,110 @@
+/* ===== Park Pulse typography — self-hosted, role-based =====
+ *
+ * Two roles, two licensed families (see public/fonts/FONTS.md):
+ *   display — Fraunces, an optical-size serif for headlines and place names.
+ *   body    — Source Sans 3 for interface text, labels and data (tabular
+ *             figures), and it repoints --pp-font for the legacy pp-* layer.
+ *
+ * IBM Plex Mono was retired in v6: three families made every surface read like
+ * a developer console, and a monospace label is one of the loudest generated-
+ * page tells. The data role is now the text face with tabular numerals, which
+ * aligns columns just as well and removes ~15 KB of font payload.
+ *
+ * Only latin subsets are served; everything else falls back to the system
+ * stack below, so an unsupported glyph never blocks. font-display: swap
+ * keeps first paint fast, and the fallbacks are metric-adjacent faces to avoid
+ * layout shift when the webfont arrives.
+ */
+
+@font-face {
+  font-family: "Fraunces";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("/fonts/fraunces-600-latin.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+    U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193,
+    U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "Fraunces";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("/fonts/fraunces-700-latin.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+    U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193,
+    U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "Source Sans 3";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/fonts/sourcesans-400-latin.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+    U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193,
+    U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "Source Sans 3";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("/fonts/sourcesans-600-latin.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+    U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193,
+    U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "Source Sans 3";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("/fonts/sourcesans-700-latin.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+    U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193,
+    U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+:root {
+  /* Body role repoints the existing token — no token is renamed. */
+  --pp-font: "Source Sans 3", system-ui, -apple-system, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif;
+  --pp-font-display: "Fraunces", Georgia, "Times New Roman", serif;
+
+  /* Six sizes, each with one job (v6 spec §Type). Anything that needs a
+     seventh size is a hierarchy bug, not a type token. */
+  --fa-text-xs: 0.8125rem; /* 13px — the floor for anything meant to be read */
+  --fa-text-sm: 0.875rem;  /* 14px — metadata, table cells, chips */
+  --fa-text-md: 1rem;      /* 16px — body and controls */
+  --fa-text-lg: 1.1875rem; /* 19px — lede, section intros */
+  --fa-text-xl: clamp(1.375rem, 1.2rem + 0.7vw, 1.75rem); /* h2 */
+  --fa-text-display: clamp(2.25rem, 1.5rem + 2.7vw, 3.9rem); /* h1 only */
+  --fa-measure: 62ch;
+}
+
+/* Display role: headings and the editorial display class. */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.fa-display,
+.pp-modal-header h2 {
+  font-family: var(--pp-font-display);
+  letter-spacing: -0.015em;
+}
+
+/* Data role: counts and stats. The text face with tabular figures. */
+.fa-numeric,
+.fa-stat-value,
+.pp-explore-hero-stat dd,
+.fa-kbd,
+.pp-kbd,
+.pp-inline-code,
+.pp-council-stat dd {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1;
+}

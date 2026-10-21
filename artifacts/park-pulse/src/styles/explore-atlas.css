@@ -1,0 +1,896 @@
+/* ═══════════════════════════════════════════════════════════════════════════
+   Explore — the atlas workspace.
+
+   Composition (v6 spec): a short intro that states what the page holds, then a
+   two-pane workspace on desktop — a scrolling rail of search, categories and
+   results on the left, and a square map held in place on the right. Below
+   1000px the map comes first, full width, and the rail follows; nothing is
+   squeezed into a desktop layout a phone cannot use.
+
+   Leaflet needs a sized container, so the map's height comes from an explicit
+   aspect ratio on `.fa-map-canvas`, never from its content.
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.fa-explore-page {
+  --fa-map-gutter: 84px;
+}
+
+/* ── Intro band ──────────────────────────────────────────────────────────── */
+
+.fa-explore-intro {
+  background: var(--pp-bg-alt);
+  border-bottom: 1px solid var(--pp-border-light);
+  padding: 1.5rem 0 1.375rem;
+}
+
+.fa-explore-intro-inner {
+  /* Matches `.fa-explore-grid` so the title, the figures, the rail and the map
+     all hang off one vertical line. */
+  max-width: 1010px;
+  margin-inline: auto;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: end;
+  gap: 1.5rem 3rem;
+}
+
+.fa-explore-title {
+  margin: 0 0 0.75rem;
+  font-size: clamp(1.75rem, 1.2rem + 2vw, 2.75rem);
+  line-height: 1.08;
+  letter-spacing: -0.025em;
+  color: var(--pp-text);
+  max-width: 24ch;
+}
+
+.fa-explore-lede {
+  margin: 0;
+  max-width: 56ch;
+  font-size: var(--fa-text-md);
+  line-height: 1.6;
+  color: var(--pp-text-secondary);
+}
+
+.fa-explore-figures {
+  display: flex;
+  gap: 2rem;
+  margin: 0;
+}
+
+.fa-figure {
+  min-width: 5.5rem;
+}
+
+.fa-figure dt {
+  font-size: var(--fa-text-xs);
+  font-weight: 600;
+  color: var(--pp-text-muted);
+}
+
+.fa-figure dd {
+  margin: 0.125rem 0 0;
+  font-size: 1.75rem;
+  line-height: 1.1;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--pp-text);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ── Workspace ───────────────────────────────────────────────────────────── */
+
+.fa-explore-body {
+  /* Block padding only: `.fa-wrap` owns the page gutter and a shorthand here
+     would wipe it out. */
+  padding-block: 1.75rem 4rem;
+}
+
+.fa-explore-grid {
+  display: grid;
+  /* One shared measure for the workspace, centred in the page gutter: the rail
+     and the map read as a single instrument rather than two distant columns. */
+  grid-template-columns: minmax(300px, 380px) minmax(0, 1fr);
+  gap: 2.25rem;
+  /* Stretch, not start: the map column has to be as tall as the rail for the
+     sticky map to have anywhere to travel. With `start`, the frame's column
+     ended at the frame and the map scrolled away behind the results. */
+  align-items: stretch;
+  max-width: 1010px;
+  margin-inline: auto;
+}
+
+.fa-rail {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  min-width: 0;
+  scroll-margin-top: 5rem;
+}
+
+/* ── Search ──────────────────────────────────────────────────────────────── */
+
+.fa-search {
+  position: relative;
+  display: flex;
+  align-items: center;
+  background: var(--pp-surface);
+  border: 1px solid var(--pp-border);
+  border-radius: var(--pp-radius-lg);
+  padding: 0 0.625rem;
+  transition: border-color var(--duration-hover) var(--ease-out-quart);
+}
+
+.fa-search:focus-within {
+  border-color: var(--pp-primary);
+}
+
+.fa-search-icon {
+  width: 18px;
+  height: 18px;
+  flex: none;
+  color: var(--pp-text-muted);
+}
+
+.fa-search-input {
+  flex: 1;
+  min-width: 0;
+  min-height: 46px;
+  padding: 0 0.5rem;
+  border: 0;
+  background: transparent;
+  color: var(--pp-text);
+  font-family: var(--pp-font);
+  font-size: var(--fa-text-md);
+}
+
+.fa-search-input::placeholder {
+  color: var(--pp-text-muted);
+}
+
+.fa-search-input:focus {
+  outline: none;
+}
+
+.fa-search-clear {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: var(--pp-radius-full);
+  color: var(--pp-text-muted);
+}
+
+.fa-search-clear:hover {
+  color: var(--pp-text);
+  background: var(--pp-bg-alt);
+}
+
+.fa-search-clear svg {
+  width: 14px;
+  height: 14px;
+}
+
+.fa-search-menu {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: calc(100% + 4px);
+  z-index: 30;
+  background: var(--pp-surface);
+  border: 1px solid var(--pp-border);
+  border-radius: var(--pp-radius-md);
+  box-shadow: var(--pp-shadow-lg);
+  padding: 0.375rem;
+  max-height: 20rem;
+  overflow-y: auto;
+  animation: fa-menu-in var(--duration-popover) var(--ease-out-quart) both;
+}
+
+@keyframes fa-menu-in {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.fa-search-menu-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.25rem 0.5rem 0.375rem;
+  font-size: var(--fa-text-xs);
+  font-weight: 600;
+  color: var(--pp-text-muted);
+}
+
+.fa-search-menu-head button {
+  font-size: var(--fa-text-xs);
+  font-weight: 600;
+  color: var(--pp-primary);
+}
+
+.fa-search-option {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 0.125rem 0.5rem;
+  width: 100%;
+  padding: 0.5rem;
+  border-radius: var(--pp-radius-sm);
+  text-align: left;
+  font-size: var(--fa-text-sm);
+  color: var(--pp-text);
+}
+
+.fa-search-option:hover {
+  background: var(--pp-bg-alt);
+}
+
+.fa-search-option-label {
+  font-weight: 600;
+}
+
+.fa-search-option-kind {
+  font-size: var(--fa-text-xs);
+  color: var(--pp-text-muted);
+  align-self: center;
+}
+
+.fa-search-option-sub {
+  grid-column: 1 / -1;
+  font-size: var(--fa-text-xs);
+  color: var(--pp-text-muted);
+}
+
+/* ── Panels ──────────────────────────────────────────────────────────────── */
+
+.fa-panel-head {
+  padding: 0.75rem 0.875rem 0.5rem;
+}
+
+.fa-panel-body {
+  padding: 0 0.875rem 0.875rem;
+}
+
+.fa-panel-body--inline {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  padding-top: 0;
+}
+
+.fa-panel-note {
+  padding: 0 0.875rem 0.875rem;
+}
+
+.fa-panel-meta {
+  font-size: var(--fa-text-xs);
+  font-weight: 600;
+  color: var(--pp-text-muted);
+}
+
+.fa-panel-link {
+  font-size: var(--fa-text-xs);
+  font-weight: 600;
+  color: var(--pp-primary);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  text-decoration-thickness: 1px;
+  padding: 0.125rem;
+  border-radius: 4px;
+}
+
+.fa-panel-link:hover {
+  text-decoration-thickness: 2px;
+}
+
+.fa-panel-divider {
+  height: 1px;
+  background: var(--pp-border-light);
+  margin: 0 0.875rem 0.5rem;
+}
+
+/* Selects and inputs inside the council selector keep their own component
+   styles; the rail only tightens their spacing. */
+.fa-panel-body .pp-council-selector,
+.fa-panel-body [class*="pp-council"] {
+  margin: 0;
+}
+
+/* ── Results ─────────────────────────────────────────────────────────────── */
+
+.fa-results {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--pp-border);
+  border-radius: var(--pp-radius-lg);
+  background: var(--pp-surface);
+  overflow: hidden;
+}
+
+.fa-results-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.875rem 0.875rem 0.5rem;
+}
+
+.fa-results-head h2 {
+  margin: 0;
+  font-family: var(--pp-font);
+  font-size: var(--fa-text-sm);
+  font-weight: 700;
+  color: var(--pp-text);
+}
+
+.fa-results-count {
+  font-size: var(--fa-text-xs);
+  font-weight: 600;
+  color: var(--pp-text-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.fa-results-tools {
+  padding: 0 0.875rem 0.75rem;
+  gap: 0.25rem;
+}
+
+.fa-tool-btn {
+  min-height: 32px;
+  padding: 0 0.5rem;
+  border-radius: var(--pp-radius-md);
+  border: 1px solid var(--pp-border-light);
+  background: var(--pp-bg);
+  font-size: var(--fa-text-xs);
+  font-weight: 600;
+  color: var(--pp-text-secondary);
+  transition: background var(--duration-hover) var(--ease-out-quart),
+    border-color var(--duration-hover) var(--ease-out-quart),
+    color var(--duration-hover) var(--ease-out-quart);
+}
+
+.fa-tool-btn:hover {
+  border-color: var(--pp-primary);
+  color: var(--pp-primary);
+}
+
+.fa-tool-btn[aria-pressed="true"] {
+  background: color-mix(in srgb, var(--pp-primary) 14%, var(--pp-surface));
+  border-color: var(--pp-primary);
+  color: var(--pp-text);
+}
+
+.fa-active-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.375rem;
+  padding: 0 0.875rem 0.75rem;
+}
+
+.fa-active-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  min-height: 28px;
+  padding: 0 0.5rem;
+  border-radius: var(--pp-radius-full);
+  border: 1px solid var(--pp-border);
+  background: var(--pp-bg);
+  font-size: var(--fa-text-xs);
+  font-weight: 600;
+  color: var(--pp-text-secondary);
+}
+
+.fa-active-chip:hover {
+  border-color: var(--pp-primary);
+  color: var(--pp-text);
+}
+
+.fa-active-chip svg {
+  width: 11px;
+  height: 11px;
+  opacity: 0.7;
+}
+
+.fa-results-note {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0;
+  padding: 0.5rem 0.875rem;
+  border-top: 1px solid var(--pp-border-light);
+  background: var(--pp-bg-alt);
+  font-size: var(--fa-text-xs);
+  line-height: 1.5;
+  color: var(--pp-text-secondary);
+}
+
+.fa-results-recents {
+  padding: 0.5rem 0.875rem 0.75rem;
+  border-top: 1px solid var(--pp-border-light);
+}
+
+.fa-results-recents .fa-recents {
+  margin-top: 0.375rem;
+}
+
+.fa-results-recents .fa-recent {
+  min-height: 30px;
+  font-size: var(--fa-text-xs);
+  background: var(--pp-bg);
+}
+
+.fa-results-list {
+  border-top: 1px solid var(--pp-border-light);
+  max-height: none;
+}
+
+.fa-result {
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
+  padding: 0.8125rem 0.875rem;
+  border-top: 1px solid var(--pp-border-light);
+  background: var(--pp-surface);
+  transition: background var(--duration-hover) var(--ease-out-quart);
+  /* Long result lists: skip rendering off-screen cards. */
+  content-visibility: auto;
+  contain-intrinsic-size: auto 104px;
+}
+
+.fa-result:first-child {
+  border-top: 0;
+}
+
+.fa-result:hover,
+.fa-result:focus-within {
+  background: var(--pp-bg-alt);
+}
+
+/* The card the open record belongs to, so the list agrees with the map and the
+   dialog when one of them is selected. */
+.fa-result[data-selected="true"] {
+  background: var(--pp-bg-alt);
+  box-shadow: inset 2px 0 0 var(--pp-primary);
+}
+
+.fa-result[data-selected="true"] .fa-result-title {
+  color: var(--pp-primary-dark);
+}
+
+.fa-result-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.fa-result-heading {
+  margin: 0;
+  min-width: 0;
+}
+
+.fa-result-title {
+  font-family: var(--pp-font-display);
+  font-size: 1.0625rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  line-height: 1.25;
+  color: var(--pp-text);
+  text-align: left;
+}
+
+.fa-result-title:hover {
+  color: var(--pp-primary);
+}
+
+.fa-result-save {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  flex: none;
+  border-radius: var(--pp-radius-full);
+  color: var(--pp-text-muted);
+  transition: color var(--duration-hover) var(--ease-out-quart),
+    background var(--duration-hover) var(--ease-out-quart);
+}
+
+.fa-result-save:hover {
+  background: var(--pp-surface);
+  color: var(--pp-text);
+}
+
+.fa-result-save[aria-pressed="true"] {
+  color: var(--pp-primary);
+}
+
+.fa-result-save svg {
+  width: 17px;
+  height: 17px;
+}
+
+.fa-result-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.25rem 0.5rem;
+  font-size: var(--fa-text-xs);
+  color: var(--pp-text-muted);
+}
+
+.fa-result-type,
+.fa-result-suburb {
+  font-size: var(--fa-text-xs);
+  font-weight: 600;
+  color: var(--pp-text-secondary);
+  text-decoration: underline;
+  text-decoration-color: transparent;
+  text-underline-offset: 2px;
+}
+
+.fa-result-type:hover,
+.fa-result-suburb:hover {
+  color: var(--pp-primary);
+  text-decoration-color: currentColor;
+}
+
+.fa-result-distance,
+.fa-result-area {
+  font-variant-numeric: tabular-nums;
+}
+
+.fa-result-distance::before,
+.fa-result-area::before {
+  content: "·";
+  margin-right: 0.375rem;
+  color: var(--pp-border);
+}
+
+.fa-result-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.fa-result-facilities {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+}
+
+.fa-facility {
+  font-size: var(--fa-text-xs);
+  font-weight: 600;
+  color: var(--pp-text-muted);
+}
+
+.fa-result-skeletons {
+  display: grid;
+}
+
+.fa-result-skeleton {
+  height: 104px;
+  border-top: 1px solid var(--pp-border-light);
+  background: linear-gradient(
+    100deg,
+    var(--pp-bg) 30%,
+    var(--pp-bg-alt) 50%,
+    var(--pp-bg) 70%
+  );
+  background-size: 220% 100%;
+  animation: fa-shimmer 1.4s var(--ease-in-out) infinite;
+}
+
+.fa-result-skeleton:first-child {
+  border-top: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fa-result-skeleton {
+    animation: none;
+  }
+}
+
+.fa-load-more {
+  width: calc(100% - 1.75rem);
+  margin: 0.875rem;
+  gap: 0.5rem;
+}
+
+.fa-load-more .fa-panel-meta {
+  font-weight: 400;
+}
+
+.fa-did-you-mean {
+  padding: 0.75rem 0.875rem;
+  border-top: 1px solid var(--pp-border-light);
+  background: var(--pp-bg-alt);
+}
+
+.fa-did-you-mean .fa-toolbar {
+  margin-top: 0.375rem;
+}
+
+/* A results panel with no records still needs the empty state to breathe. */
+.fa-results .fa-state {
+  margin: 0.875rem;
+}
+
+/* ── Map ─────────────────────────────────────────────────────────────────── */
+
+.fa-map-col {
+  min-width: 0;
+}
+
+.fa-map-frame {
+  position: sticky;
+  top: var(--fa-map-gutter);
+  /* Square, but never taller than the viewport can show once it sticks. */
+  width: min(100%, max(420px, calc(100vh - 320px)), 640px);
+  /* Centred in its column so the space the map gives back on short viewports
+     reads as margin on both sides, not as a hole on the right. */
+  margin-inline: auto;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--pp-border);
+  border-radius: var(--pp-radius-lg);
+  background: var(--pp-surface);
+  overflow: hidden;
+}
+
+.fa-map-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.625rem 0.875rem;
+  border-bottom: 1px solid var(--pp-border-light);
+}
+
+.fa-map-head h2 {
+  margin: 0;
+  font-family: var(--pp-font);
+  font-size: var(--fa-text-sm);
+  font-weight: 700;
+  color: var(--pp-text);
+}
+
+.fa-map-sub {
+  margin: 0.125rem 0 0;
+  font-size: var(--fa-text-xs);
+  color: var(--pp-text-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.fa-map-canvas {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  background: var(--pp-map-frame);
+}
+
+.fa-map-canvas #park-map {
+  position: absolute;
+  inset: 0;
+}
+
+.fa-map-key {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.375rem 0.75rem;
+  padding: 0.5rem 0.875rem;
+  border-top: 1px solid var(--pp-border-light);
+}
+
+.fa-key-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  font-size: var(--fa-text-xs);
+  font-weight: 600;
+  color: var(--pp-text-secondary);
+}
+
+.fa-key-toggle {
+  min-height: 26px;
+  padding: 0 0.375rem;
+  border-radius: var(--pp-radius-full);
+  transition: background var(--duration-hover) var(--ease-out-quart);
+}
+
+.fa-key-toggle:hover {
+  background: var(--pp-bg-alt);
+  color: var(--pp-text);
+}
+
+.fa-key-close {
+  color: var(--pp-text-muted);
+  font-size: var(--fa-text-sm);
+  line-height: 1;
+}
+
+.fa-map-note {
+  margin: 0;
+  padding: 0 0.875rem 0.625rem;
+  font-size: var(--fa-text-xs);
+  line-height: 1.5;
+  color: var(--pp-text-muted);
+}
+
+/* ── Mobile: map first, then controls ────────────────────────────────────── */
+
+@media (max-width: 999px) {
+  .fa-explore-intro {
+    padding: 1.75rem 0 1.5rem;
+  }
+
+  .fa-explore-intro-inner {
+    grid-template-columns: 1fr;
+    align-items: start;
+    gap: 1.25rem;
+  }
+
+  .fa-explore-figures {
+    gap: 1.5rem;
+  }
+
+  .fa-figure dd {
+    font-size: 1.5rem;
+  }
+
+  .fa-explore-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  /* The map goes first and stays put while the rail scrolls beneath it, so
+     search, filters and results never hide the thing they are filtering. */
+  .fa-map-col {
+    order: -1;
+    width: 100%;
+    position: sticky;
+    top: 64px;
+    z-index: 6;
+    background: var(--pp-bg);
+    padding: 0.5rem 0 0.25rem;
+    margin-top: -0.5rem;
+  }
+
+  .fa-map-frame {
+    position: static;
+    width: min(100%, 560px);
+    margin: 0 auto;
+  }
+
+  .fa-map-canvas {
+    aspect-ratio: auto;
+    height: clamp(200px, 30vh, 280px);
+  }
+
+  .fa-map-note {
+    display: none;
+  }
+
+  .fa-rail {
+    width: 100%;
+  }
+
+  .fa-results-list {
+    max-height: none;
+  }
+}
+
+@media (max-width: 560px) {
+  .fa-explore-body {
+    padding-block-end: 3rem;
+  }
+
+  /* The count line matters more in the results heading than here, and hiding
+     it keeps the three map tools on a single row. */
+  .fa-map-sub {
+    display: none;
+  }
+
+  .fa-map-head .fa-tool-btn {
+    padding-inline: 0.5rem;
+  }
+
+  .fa-map-head {
+    flex-wrap: nowrap;
+  }
+
+  .fa-panel--totals .pp-council-stats-toggle {
+    font-size: var(--fa-text-sm);
+  }
+
+
+  .fa-map-frame {
+    border-radius: var(--pp-radius-md);
+  }
+
+  .fa-results-tools {
+    gap: 0.25rem;
+  }
+}
+
+/* ── Leaflet chrome in both themes ──────────────────────────────────────── */
+
+.fa-map-frame .leaflet-container {
+  background: var(--pp-map-frame);
+  font-family: var(--pp-font);
+}
+
+.fa-map-frame .leaflet-control-zoom a,
+.fa-map-frame .leaflet-control-attribution,
+.fa-map-frame .leaflet-bar a {
+  background: var(--pp-surface);
+  color: var(--pp-text);
+  border-color: var(--pp-border-light);
+}
+
+.fa-map-frame .leaflet-control-attribution {
+  background: color-mix(in srgb, var(--pp-surface) 88%, transparent);
+  color: var(--pp-text-muted);
+  font-size: 11px;
+}
+
+.fa-map-frame .leaflet-control-attribution a {
+  color: var(--pp-text-secondary);
+}
+
+.fa-map-frame .leaflet-popup-content-wrapper,
+.fa-map-frame .leaflet-popup-tip {
+  background: var(--pp-surface);
+  color: var(--pp-text);
+}
+
+/* Marker clusters carry the theme rather than markercluster's default blue. */
+.fa-map-frame .marker-cluster-small,
+.fa-map-frame .marker-cluster-medium,
+.fa-map-frame .marker-cluster-large {
+  background: color-mix(in srgb, var(--pp-primary) 22%, transparent);
+}
+
+.fa-map-frame .marker-cluster-small div,
+.fa-map-frame .marker-cluster-medium div,
+.fa-map-frame .marker-cluster-large div {
+  background: var(--pp-primary);
+  color: var(--pp-primary-fg);
+  font-family: var(--pp-font);
+  font-weight: 700;
+}
+
+/* ── Shortcuts dialog ────────────────────────────────────────────────────── */
+
+.pp-shortcuts-modal h2 {
+  font-size: var(--fa-text-lg);
+}
+
+.pp-shortcuts-modal {
+  border-radius: var(--pp-radius-lg);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fa-search-menu {
+    animation: none;
+  }
+}
+
+/* Generic registry layers can fail independently of the map; the note sits
+   with the chips so the failure is attached to the control that caused it. */
+.fa-panel-note--warn {
+  color: var(--pp-danger);
+  font-weight: 600;
+}

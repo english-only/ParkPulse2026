@@ -6,17 +6,54 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Park Pulse — Discover Sydney's Parks & Playgrounds</title>
     <meta name="description" content="Explore Sydney's parks, playgrounds, off-leash dog areas, drinking fountains and public toilets on an interactive map with GPS locate, fuzzy search and keyboard-first navigation." />
-    <meta name="theme-color" content="#1a4d2e" />
+    <!-- Warm Field canvas; useTheme updates this for Night Field so the
+         mobile browser / installed-app chrome follows the chosen theme. -->
+    <meta name="theme-color" content="#F6F7F1" />
+    <meta name="color-scheme" content="light dark" />
+    <script>
+      /* Resolve the theme before the first paint, so a Night Field visitor is
+         never shown a flash of the warm canvas while the module graph loads.
+         Mirrors initialTheme() in src/hooks/useTheme.ts — the storage key and
+         the legacy ids have to stay in step with that module. */
+      (function () {
+        var legacy = {
+          default: "warm", light: "warm", minimal: "warm", sunset: "warm", warm: "warm",
+          dark: "night", neon: "night", satellite: "night", night: "night",
+        };
+        var theme = null;
+        try {
+          theme = legacy[localStorage.getItem("parkpulse_theme")] || null;
+        } catch (error) {
+          theme = null;
+        }
+        if (!theme) {
+          theme =
+            window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches
+              ? "night"
+              : "warm";
+        }
+        var root = document.documentElement;
+        root.setAttribute("data-theme", theme);
+        root.style.colorScheme = theme;
+        var meta = document.querySelector('meta[name="theme-color"]');
+        if (meta) meta.content = theme === "night" ? "#000000" : "#F6F7F1";
+      })();
+    </script>
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <link rel="apple-touch-icon" href="/icons/icon-192.png" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="Park Pulse" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
     <meta property="og:title" content="Park Pulse — Discover Sydney's Parks & Playgrounds" />
-    <meta property="og:description" content="Interactive map of 2,000+ Sydney parks, playgrounds, dog parks, fountains and toilets. GPS locate, fuzzy search, keyboard-first." />
+    <meta property="og:description" content="Interactive map of City of Sydney park areas, off-leash areas, playgrounds, fountains, toilets and transport stops — each result names its publisher and coverage." />
     <meta property="og:type" content="website" />
     <meta name="twitter:card" content="summary" />
     <meta name="twitter:title" content="Park Pulse — Discover Sydney's Parks & Playgrounds" />
-    <meta name="twitter:description" content="Interactive map of 2,000+ Sydney parks, playgrounds, dog parks, fountains and toilets." />
+    <meta name="twitter:description" content="Interactive map of City of Sydney park areas, off-leash areas, fountains, toilets and transport stops, with the source behind every record." />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Type is self-hosted from /fonts (see public/fonts/FONTS.md): no font CDN, no FOUT-blocking request. -->
+    <link rel="preload" href="/fonts/sourcesans-400-latin.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="/fonts/fraunces-700-latin.woff2" as="font" type="font/woff2" crossorigin>
   </head>
   <body>
     <div id="root"></div>

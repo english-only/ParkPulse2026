@@ -2,182 +2,126 @@
 
 /* ===== Park Pulse Design System ===== */
 :root {
-  --pp-bg:            #F4FAF6;
-  --pp-bg-alt:        #E9F5EC;
-  --pp-surface:       #ffffff;
-  --pp-primary:       #2D6A4F;
-  --pp-primary-light: #40916C;
-  --pp-primary-dark:  #1B4332;
-  --pp-text:          #1A1D1C;
-  --pp-text-secondary:#3D4A45;
-  --pp-text-muted:    #3D4A45;
-  --pp-border:        #C8D8D0;
-  --pp-border-light:  #DDE8E2;
-  --pp-green-50:      #F4FAF6;
-  --pp-green-100:     #E9F5EC;
-  --pp-green-200:     #D8F3DC;
-  --pp-green-300:     #B7E4C7;
-  --pp-green-400:     #95D5B2;
-  --pp-green-500:     #74C69D;
-  --pp-green-800:     #2D6A4F;
-  --pp-green-900:     #1B4332;
-  --pp-green-950:     #0D2818;
-  --pp-shadow-sm:     0 1px 2px rgba(45,106,79,.06);
-  --pp-shadow-md:     0 4px 6px -1px rgba(45,106,79,.08),0 2px 4px -1px rgba(45,106,79,.04);
-  --pp-shadow-lg:     0 10px 15px -3px rgba(45,106,79,.1),0 4px 6px -2px rgba(45,106,79,.05);
-  --pp-shadow-xl:     0 20px 25px -5px rgba(45,106,79,.12),0 10px 10px -5px rgba(45,106,79,.06);
+  /* ── Warm Field ─────────────────────────────────────────────────────────
+     Warm paper surfaces with deep forest green. Every value below is a
+     hypothesis from PRD §8.1 and is checked by the contrast e2e suite. */
+  --pp-bg:            #F6F7F1;
+  --pp-bg-alt:        #ECF1E9;
+  --pp-surface:       #FFFFFF;
+  --pp-surface-raised:#ECF1E9;
+  --pp-primary:       #176B43;
+  --pp-primary-light: #1F8253;
+  --pp-primary-dark:  #0F4A2E;
+  --pp-primary-fg:    #FFFFFF;
+  --pp-text:          #19231D;
+  --pp-text-secondary:#33423A;
+  --pp-text-muted:    #45544A;
+  --pp-border:        #D2DDD2;
+  --pp-border-light:  #E2EAE1;
+  --pp-focus:         #176B43;
+  /* Feedback colours. The night palette needs a lighter red: #B42318 on
+     #111A16 measures 2.69:1, below the 4.5:1 AA floor. */
+  --pp-danger:        #B42318;
+  --pp-danger-fg:     #FFFFFF;
+  --pp-green-50:      #F6F7F1;
+  --pp-green-100:     #ECF1E9;
+  --pp-green-200:     #DDE9DE;
+  --pp-green-300:     #C6DAC8;
+  --pp-green-400:     #A9C8AE;
+  --pp-green-500:     #8AB693;
+  --pp-green-800:     #176B43;
+  --pp-green-900:     #0F4A2E;
+  --pp-green-950:     #082A18;
+  --pp-shadow-sm:     0 1px 2px rgba(23,58,38,.06);
+  --pp-shadow-md:     0 4px 6px -1px rgba(23,58,38,.08),0 2px 4px -1px rgba(23,58,38,.04);
+  --pp-shadow-lg:     0 10px 15px -3px rgba(23,58,38,.1),0 4px 6px -2px rgba(23,58,38,.05);
+  --pp-shadow-xl:     0 20px 25px -5px rgba(23,58,38,.12),0 10px 10px -5px rgba(23,58,38,.06);
   --pp-radius-sm:     4px;
   --pp-radius-md:     8px;
   --pp-radius-lg:     12px;
   --pp-radius-xl:     16px;
   --pp-radius-full:   9999px;
   --pp-font:          'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
-  --pp-transition:    250ms ease;
-  --pp-nav-bg:        rgba(255,255,255,.92);
+  --pp-transition:    180ms ease;
+  --pp-nav-bg:        rgba(246,247,241,.92);
   --pp-nav-border:    var(--pp-border-light);
-  --pp-stats-bg:      linear-gradient(135deg,#1B4332,#2D6A4F);
-  --pp-stats-text:    #B7E4C7;
-  --pp-footer-bg:     #0D2818;
-  --pp-footer-text:   #B7E4C7;
-  --pp-footer-muted:  #74C69D;
+  --pp-stats-bg:      #0F4A2E;
+  --pp-stats-text:    #D7E8DB;
+  --pp-footer-bg:     #0E2A1D;
+  --pp-footer-text:   #D6E4DA;
+  --pp-footer-muted:  #A7BFAF;
+  --pp-map-frame:     #E7EDE6;
 }
 
 /* ===== Dark Theme ===== */
-[data-theme="dark"] {
-  --pp-bg:            #0d1117;
-  --pp-bg-alt:        #161b22;
-  --pp-surface:       #161b22;
-  --pp-primary:       #3fb950;
-  --pp-primary-light: #56d364;
-  --pp-primary-dark:  #2ea043;
-  --pp-text:          #e6edf3;
-  --pp-text-secondary:#8b949e;
-  /* #6e7681 measured 4.12:1 on this theme's background, below the 4.5:1 WCAG
-     AA floor for body text. Lightened to 5.42:1 while staying clearly below
-     --pp-text-secondary in the hierarchy. */
-  --pp-text-muted:    #7d8b98;
-  --pp-border:        #30363d;
-  --pp-border-light:  #21262d;
-  --pp-green-50:      #0d2818;
-  --pp-green-100:     #0f2f1a;
-  --pp-green-200:     #1a4028;
-  --pp-green-300:     #245c3a;
-  --pp-green-400:     #2ea043;
-  --pp-green-500:     #3fb950;
-  --pp-shadow-sm:     0 1px 2px rgba(0,0,0,.4);
-  --pp-shadow-md:     0 4px 6px rgba(0,0,0,.4);
-  --pp-shadow-lg:     0 10px 15px rgba(0,0,0,.5);
-  --pp-shadow-xl:     0 20px 25px rgba(0,0,0,.6);
-  --pp-nav-bg:        rgba(22,27,34,.96);
-  --pp-nav-border:    #30363d;
-  --pp-stats-bg:      linear-gradient(135deg,#0d1117,#161b22);
-  --pp-stats-text:    #3fb950;
-  --pp-footer-bg:     #040a06;
-  --pp-footer-text:   #3fb950;
-  --pp-footer-muted:  #2ea043;
+[data-theme="night"] {
+  /* ── Night Field ────────────────────────────────────────────────────────
+     AMOLED-black canvas with a bright emerald action colour. Body and muted
+     text both clear AA against --pp-bg by a wide margin. */
+  --pp-bg:            #000000;
+  --pp-bg-alt:        #070B09;
+  --pp-surface:       #0C120E;
+  --pp-surface-raised:#101714;
+  --pp-primary:       #43D18A;
+  --pp-primary-light: #5CE0A0;
+  --pp-primary-dark:  #2FA06A;
+  --pp-primary-fg:    #06210F;
+  --pp-text:          #F2F5F3;
+  --pp-text-secondary:#CFDBD3;
+  --pp-text-muted:    #B4C2B9;
+  --pp-border:        #34443A;
+  --pp-border-light:  #24312A;
+  --pp-focus:         #9AF2BF;
+  --pp-danger:        #FF9D9D;
+  --pp-danger-fg:     #2A0D0A;
+  --pp-green-50:      #070B09;
+  --pp-green-100:     #0C120E;
+  --pp-green-200:     #101714;
+  --pp-green-300:     #24312A;
+  --pp-green-400:     #2FA06A;
+  --pp-green-500:     #43D18A;
+  --pp-green-800:     #43D18A;
+  --pp-green-900:     #9AF2BF;
+  --pp-green-950:     #000000;
+  --pp-shadow-sm:     0 1px 2px rgba(0,0,0,.5);
+  --pp-shadow-md:     0 4px 8px rgba(0,0,0,.5);
+  --pp-shadow-lg:     0 10px 18px rgba(0,0,0,.55);
+  --pp-shadow-xl:     0 20px 28px rgba(0,0,0,.6);
+  --pp-nav-bg:        rgba(0,0,0,.94);
+  --pp-nav-border:    #24312A;
+  --pp-stats-bg:      #0C120E;
+  --pp-stats-text:    #B4C2B9;
+  --pp-footer-bg:     #000000;
+  --pp-footer-text:   #B4C2B9;
+  --pp-footer-muted:  #8FA096;
+  --pp-map-frame:     #070B09;
 }
 
-/* ===== Sunset Theme ===== */
-[data-theme="sunset"] {
-  --pp-bg:            #FFF8F0;
-  --pp-bg-alt:        #FFF0E0;
-  --pp-surface:       #FFF0E0;
-  --pp-primary:       #C44B00;
-  --pp-primary-light: #E8763A;
-  --pp-primary-dark:  #8B3400;
-  --pp-text:          #2D1B00;
-  --pp-text-secondary:#5C3A1E;
-  --pp-text-muted:    #8B6040;
-  --pp-border:        #E8C8A0;
-  --pp-border-light:  #F0D8B8;
-  --pp-green-50:      #FFF8F0;
-  --pp-green-100:     #FFF0E0;
-  --pp-green-200:     #FFE0C0;
-  --pp-green-300:     #F5C899;
-  --pp-green-400:     #E8A070;
-  --pp-nav-bg:        rgba(255,248,240,.95);
-  --pp-nav-border:    #E8C8A0;
-  --pp-stats-bg:      linear-gradient(135deg,#C44B00,#E8763A);
-  --pp-stats-text:    #FFE0C0;
-  --pp-footer-bg:     #2D1000;
-  --pp-footer-text:   #FFD4A8;
-  --pp-footer-muted:  #E8A070;
-}
 
-/* ===== Neon Theme ===== */
-[data-theme="neon"] {
-  --pp-bg:            #050510;
-  --pp-bg-alt:        #0d0d1a;
-  --pp-surface:       #0d0d1a;
-  --pp-primary:       #00FF88;
-  --pp-primary-light: #00CC6A;
-  --pp-primary-dark:  #00994F;
-  --pp-text:          #E0E0FF;
-  --pp-text-secondary:#A0A0CC;
-  /* #6060AA measured 3.62:1 on this theme's background. */
-  --pp-text-muted:    #7d7dcc;
-  --pp-border:        #00FF8830;
-  --pp-border-light:  #00FF8820;
-  --pp-green-50:      #050510;
-  --pp-green-100:     #0a0a20;
-  --pp-green-200:     #002211;
-  --pp-green-300:     #004422;
-  --pp-green-400:     #006633;
-  --pp-shadow-sm:     0 0 5px rgba(0,255,136,.1);
-  --pp-shadow-md:     0 0 10px rgba(0,255,136,.15);
-  --pp-shadow-lg:     0 0 20px rgba(0,255,136,.2);
-  --pp-shadow-xl:     0 0 30px rgba(0,255,136,.25);
-  --pp-nav-bg:        rgba(5,5,16,.98);
-  --pp-nav-border:    #00FF88;
-  --pp-stats-bg:      linear-gradient(135deg,#050510,#0d0d1a);
-  --pp-stats-text:    #00FF88;
-  --pp-footer-bg:     #02020d;
-  --pp-footer-text:   #00FF88;
-  --pp-footer-muted:  #00CC6A;
-}
 
-/* ===== Minimal Theme ===== */
-[data-theme="minimal"] {
-  --pp-bg:            #FFFFFF;
-  --pp-bg-alt:        #FAFAFA;
-  --pp-surface:       #FAFAFA;
-  --pp-primary:       #000000;
-  --pp-primary-light: #333333;
-  --pp-primary-dark:  #000000;
-  --pp-text:          #111111;
-  --pp-text-secondary:#555555;
-  --pp-text-muted:    #888888;
-  --pp-border:        #E0E0E0;
-  --pp-border-light:  #F0F0F0;
-  --pp-green-50:      #FFFFFF;
-  --pp-green-100:     #FAFAFA;
-  --pp-green-200:     #F0F0F0;
-  --pp-green-300:     #E0E0E0;
-  --pp-green-400:     #CCCCCC;
-  --pp-shadow-sm:     none;
-  --pp-shadow-md:     0 1px 3px rgba(0,0,0,.08);
-  --pp-shadow-lg:     0 2px 8px rgba(0,0,0,.1);
-  --pp-shadow-xl:     0 4px 16px rgba(0,0,0,.12);
-  --pp-nav-bg:        #FFFFFF;
-  --pp-nav-border:    #E0E0E0;
-  --pp-stats-bg:      #111111;
-  --pp-stats-text:    #999999;
-  --pp-font:          system-ui,-apple-system,sans-serif;
-  --pp-footer-bg:     #111111;
-  --pp-footer-text:   #cccccc;
-  --pp-footer-muted:  #999999;
-}
 
-/* ===== Reset ===== */
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
-body{font-family:var(--pp-font);font-size:16px;line-height:1.6;color:var(--pp-text);background:var(--pp-bg);-webkit-font-smoothing:antialiased;transition:background .3s,color .3s}
-img{max-width:100%;height:auto;display:block}
-a{color:inherit;text-decoration:none}
-button{font-family:inherit;cursor:pointer;border:none;background:none}
-ul,ol{list-style:none}
-h1,h2,h3,h4,h5,h6{font-family:var(--pp-font);font-weight:700;line-height:1.2;color:var(--pp-text);letter-spacing:-.02em}
-h1{font-weight:800;letter-spacing:-.03em}
+
+
+
+/* ===== Reset =====
+   Every element-level rule lives in `@layer base`. Unlayered declarations beat
+   *all* layered ones regardless of specificity, so an unlayered
+   `*{margin:0;padding:0}` silently killed `.px-4`, `.space-y-*` and `.gap-*` on
+   every route built from Tailwind utilities (the Insights page had no padding
+   at all). Base-layer rules still beat preflight and are still overridden by
+   this file's unlayered components and by utilities, which is the intended
+   order. Keep new element selectors inside this block. */
+@layer base {
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:var(--pp-font);font-size:16px;line-height:1.6;color:var(--pp-text);background:var(--pp-bg);-webkit-font-smoothing:antialiased;transition:background .3s,color .3s}
+  img{max-width:100%;height:auto;display:block}
+  a{color:inherit;text-decoration:none}
+  button{font-family:inherit;cursor:pointer;border:none;background:none}
+  ul,ol{list-style:none}
+  h1,h2,h3,h4,h5,h6{font-family:var(--pp-font);font-weight:700;line-height:1.2;color:var(--pp-text);letter-spacing:-.02em}
+  h1{font-weight:800;letter-spacing:-.03em}
+}
 
 /* ===== Visually hidden utility (for accessible labels) ===== */
 .pp-visually-hidden{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap;border:0}
@@ -190,40 +134,14 @@ h1{font-weight:800;letter-spacing:-.03em}
   .pp-route-loader-pulse{animation:none;opacity:1}
 }
 
-/* ===== Neon theme special treatments ===== */
-[data-theme="neon"] h1,[data-theme="neon"] h2,[data-theme="neon"] h3 { text-shadow: 0 0 20px rgba(0,255,136,.3); }
-[data-theme="neon"] .pp-btn-primary { background: var(--pp-primary); color: #000; box-shadow: 0 0 10px var(--pp-primary); }
-[data-theme="neon"] .pp-btn-primary:hover { box-shadow: 0 0 25px var(--pp-primary); background: var(--pp-primary); }
-[data-theme="neon"] .pp-feature-card,.pp-source-card,[data-theme="neon"] .pp-park-card { border-color: var(--pp-border); }
-[data-theme="neon"] .pp-feature-card:hover,[data-theme="neon"] .pp-source-card:hover { box-shadow: 0 0 15px rgba(0,255,136,.3); }
-[data-theme="neon"] ::-webkit-scrollbar { width: 6px; }
-[data-theme="neon"] ::-webkit-scrollbar-track { background: #050510; }
-[data-theme="neon"] ::-webkit-scrollbar-thumb { background: #00FF88; border-radius: 3px; }
 /* Neon map: hue-rotate dark tile to vivid blue-green — makes it visually distinct from Night Mode */
-[data-theme="neon"] .leaflet-tile-pane { filter: hue-rotate(155deg) saturate(1.8) brightness(0.85); }
 /* The vector themes now share OpenStreetMap's tiles, so the dark/warm/quiet
    looks are produced by filtering the tile pane rather than by swapping
    providers. Marker and popup panes are excluded so colours stay accurate. */
-[data-theme="dark"] .leaflet-tile-pane { filter: invert(1) hue-rotate(180deg) brightness(0.92) contrast(0.9) saturate(0.6); }
-[data-theme="sunset"] .leaflet-tile-pane { filter: sepia(0.35) saturate(1.5) hue-rotate(-12deg) brightness(1.03); }
-[data-theme="minimal"] .leaflet-tile-pane { filter: grayscale(1) contrast(1.05) brightness(1.04); }
-[data-theme="dark"] .leaflet-marker-pane,
-[data-theme="sunset"] .leaflet-marker-pane,
-[data-theme="minimal"] .leaflet-marker-pane,
-[data-theme="dark"] .leaflet-popup-pane,
-[data-theme="sunset"] .leaflet-popup-pane,
-[data-theme="minimal"] .leaflet-popup-pane { filter: none; }
-[data-theme="neon"] .leaflet-marker-pane,[data-theme="neon"] .leaflet-popup-pane { filter: none; }
-
-/* ===== Minimal theme overrides ===== */
-[data-theme="minimal"] .pp-btn-primary { background: #000; color: #fff; border-color: #000; }
-[data-theme="minimal"] .pp-btn-primary::before { display: none; }
-[data-theme="dark"] .pp-btn-primary { background: var(--pp-primary-dark); color: #06210f; }
-[data-theme="sunset"] .pp-btn-primary { background: var(--pp-primary); color: #fff; }
-[data-theme="satellite"] .pp-btn-primary { background: var(--pp-primary); color: #0f172a; }
-[data-theme="minimal"] .pp-hero-badge { background: #f5f5f5; border-color: #ddd; color: #333; }
-[data-theme="minimal"] .pp-stats { background: #111; }
-[data-theme="minimal"] .pp-highlight { color: #333; }
+[data-theme="night"] .leaflet-tile-pane { filter: invert(1) hue-rotate(180deg) brightness(0.92) contrast(0.9) saturate(0.6); }
+/* Satellite imagery is chosen by basemap, not theme: never filter it. */
+html[data-basemap="satellite"] .leaflet-tile-pane { filter: none; }
+[data-theme="night"] .pp-btn-primary { background: var(--pp-primary-dark); color: #06210f; }
 
 /* ===== Leaflet & Popup ===== */
 .leaflet-container{font-family:var(--pp-font) !important}
@@ -248,9 +166,7 @@ h1{font-weight:800;letter-spacing:-.03em}
 /* ===== Buttons ===== */
 .pp-btn{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;padding:.75rem 1.5rem;font-size:1rem;font-weight:500;line-height:1;border-radius:var(--pp-radius-md);transition:background-color var(--pp-transition),border-color var(--pp-transition),color var(--pp-transition),box-shadow var(--pp-transition),transform var(--pp-transition),filter var(--pp-transition);cursor:pointer;text-decoration:none}
 .pp-btn svg{width:18px;height:18px}
-.pp-btn-primary{background:linear-gradient(135deg,var(--pp-primary),var(--pp-primary-dark));color:#fff;border:2px solid transparent;position:relative;overflow:hidden}
-.pp-btn-primary::before{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.2),transparent);transition:left .5s ease}
-.pp-btn-primary:hover::before{left:100%}
+.pp-btn-primary{background:var(--pp-primary);color:var(--pp-primary-fg);border:2px solid transparent;position:relative;overflow:hidden}
 .pp-btn-primary:hover{filter:brightness(1.08);transform:translateY(-2px);box-shadow:var(--pp-shadow-lg)}
 .pp-btn-secondary{background:var(--pp-surface);color:var(--pp-primary);border:2px solid var(--pp-green-300)}
 .pp-btn-secondary:hover{border-color:var(--pp-primary);background:var(--pp-green-50);transform:translateY(-2px);box-shadow:var(--pp-shadow-md)}
@@ -298,7 +214,6 @@ h1{font-weight:800;letter-spacing:-.03em}
 .pp-hero-badge{display:inline-flex;align-items:center;gap:.5rem;padding:.4rem 1rem;background:var(--pp-green-100);color:var(--pp-primary-dark);border-radius:var(--pp-radius-full);font-size:.8rem;font-weight:600;letter-spacing:.04em;text-transform:uppercase;margin-bottom:1.5rem;border:1px solid var(--pp-green-300)}
 .pp-hero-trust{display:flex;flex-wrap:wrap;gap:.5rem;margin:.75rem 0 1.25rem}
 .pp-hero-trust-badge{display:inline-flex;align-items:center;gap:.35rem;padding:.3rem .75rem;background:var(--pp-green-100);border:1px solid var(--pp-green-300);border-radius:var(--pp-radius-full);font-size:.78rem;color:var(--pp-primary-dark);font-weight:500}
-[data-theme="dark"] .pp-hero-trust-badge,[data-theme="neon"] .pp-hero-trust-badge{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.18);color:rgba(255,255,255,.85)}
 .pp-hero-badge svg{width:16px;height:16px}
 .pp-hero-title{font-size:clamp(2rem,4vw,3.25rem);font-weight:800;line-height:1.1;margin-bottom:1.25rem}
 .pp-highlight{color:var(--pp-primary)}
@@ -397,15 +312,15 @@ h1{font-weight:800;letter-spacing:-.03em}
 .pp-footer-data ul li a{font-size:.85rem;color:var(--pp-footer-muted);transition:color var(--pp-transition);text-decoration:none}
 .pp-footer-data ul li a:hover{color:var(--pp-footer-text);text-decoration:underline}
 .pp-footer-bottom{border-top:1px solid rgba(255,255,255,.1);padding-top:1.25rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.5rem}
-.pp-footer-bottom p{font-size:.8rem;color:var(--pp-footer-muted);opacity:.7}
-.pp-footer-back-top{font-size:.72rem;color:var(--pp-footer-muted);background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);border-radius:var(--pp-radius-full);padding:.2rem .65rem;cursor:pointer;transition:background var(--pp-transition),opacity var(--pp-transition);opacity:.7}
+.pp-footer-bottom p{font-size:.8rem;color:var(--pp-footer-muted)}
+.pp-footer-back-top{font-size:.72rem;color:var(--pp-footer-muted);background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);border-radius:var(--pp-radius-full);padding:.2rem .65rem;cursor:pointer;transition:background var(--pp-transition),opacity var(--pp-transition)}
 .pp-footer-back-top:hover{background:rgba(255,255,255,.15);opacity:1}
 
 /* Compact footer for Explore page (full-height layout) */
 .pp-footer--compact .pp-footer-content{grid-template-columns:1fr;gap:1rem;padding:1rem 0}
 .pp-footer--compact .pp-footer-brand p,.pp-footer--compact .pp-footer-links,.pp-footer--compact .pp-footer-data{display:none}
 .pp-footer--compact .pp-footer-bottom{border-top:none;padding-top:0;justify-content:center}
-.pp-footer--compact .pp-footer-bottom p{font-size:.7rem;opacity:.6}
+.pp-footer--compact .pp-footer-bottom p{font-size:.7rem}
 
 /* ===== About ===== */
 .pp-about-main{flex:1}
@@ -489,12 +404,18 @@ h1{font-weight:800;letter-spacing:-.03em}
 .pp-shortcut-about-row span{font-size:.85rem;color:var(--pp-text-secondary)}
 .pp-inline-code{background:var(--pp-bg-alt);border:1px solid var(--pp-border);border-radius:4px;padding:.1rem .35rem;font-family:monospace;font-size:.85em}
 
-/* ===== Explore layout ===== */
-.pp-explore-page{display:flex;flex-direction:column;height:100vh;overflow:hidden}
+/* ===== Explore layout — explorer app shell: slim hero → rail + map =====
+   Desktop sizing lives in the "Explorer app shell (desktop)" block at the
+   END of this file — it must override base sidebar/map rules defined below
+   (source order beats media queries at equal specificity). Mobile keeps the
+   stacked, page-scrolling layout. */
+.pp-explore-page{display:flex;flex-direction:column;min-height:100vh;height:auto;overflow:visible}
 .pp-explore-page .pp-header{flex-shrink:0}
-.pp-explore-main{flex:1;display:flex;min-height:0;overflow:hidden}
-.pp-sidebar{width:340px;min-width:240px;max-width:500px;display:flex;flex-direction:column;background:var(--pp-surface);border-right:1px solid var(--pp-border);overflow:hidden;flex-shrink:0;transition:width .3s ease,min-width .3s ease;position:relative;height:100%}
-.pp-sidebar.collapsed{width:0;min-width:0;overflow:hidden}
+.pp-explore-main{flex:1;display:flex;flex-direction:column;overflow:visible;min-height:0}
+.pp-explorer{display:block}
+.pp-explore-hero-copy{min-width:0;flex:1 1 30ch}
+.pp-sidebar{width:auto;min-width:0;max-width:none;display:flex;flex-direction:column;background:var(--pp-surface);border-right:none;border-bottom:1px solid var(--pp-border);overflow:visible;flex:none;position:relative;height:auto}
+.pp-sidebar.collapsed{display:none}
 .pp-sidebar-header{display:flex;align-items:center;justify-content:space-between;padding:.625rem 1.25rem .5rem;border-bottom:1px solid var(--pp-border-light);flex-shrink:0}
 .pp-sidebar-header h2{font-size:1.1rem;display:flex;align-items:center;gap:.5rem}
 .pp-active-badge{display:inline-flex;align-items:center;justify-content:center;min-width:44px;height:44px;padding:0 .5rem;background:var(--pp-primary);color:#fff;border-radius:var(--pp-radius-full);font-size:.7rem;font-weight:700}
@@ -546,7 +467,7 @@ h1{font-weight:800;letter-spacing:-.03em}
 .pp-filter-label svg{width:14px;height:14px;color:var(--pp-primary);flex-shrink:0}
 
 /* Results */
-.pp-results-container{flex:1 1 auto;display:flex;flex-direction:column;min-height:0;min-height:360px;background:var(--pp-surface);position:relative}
+.pp-results-container{flex:none;display:flex;flex-direction:column;min-height:0;background:transparent;position:relative}
 .pp-results-header{display:flex;align-items:center;justify-content:space-between;padding:.55rem 1rem .35rem;flex-shrink:0}
 .pp-results-header h3{font-size:.9rem;font-weight:600}
 .pp-results-count{font-size:.8rem;color:var(--pp-text-muted)}
@@ -566,7 +487,7 @@ h1{font-weight:800;letter-spacing:-.03em}
 .pp-scroll-top-btn svg{width:14px;height:14px}
 .pp-park-card-header{display:flex;align-items:flex-start;justify-content:space-between;gap:.5rem;margin-bottom:.375rem}
 .pp-park-card-header h4{font-size:.875rem;font-weight:600;line-height:1.3}
-.pp-park-type-badge{display:inline-block;padding:2px 7px;border-radius:var(--pp-radius-full);font-size:.7rem;font-weight:600;text-transform:uppercase;letter-spacing:.04em;white-space:nowrap;flex-shrink:0;background:var(--pp-green-100);color:var(--pp-primary-dark)}
+.pp-park-type-badge{display:inline-block;padding:2px 7px;border-radius:var(--pp-radius-full);font-size:.8125rem;font-weight:600;text-transform:uppercase;letter-spacing:.04em;white-space:nowrap;flex-shrink:0;background:var(--pp-green-100);color:var(--pp-primary-dark)}
 button.pp-park-type-badge.pp-type-badge-btn{cursor:pointer;transition:filter var(--pp-transition),transform var(--pp-transition)}
 button.pp-park-type-badge.pp-type-badge-btn:hover{filter:brightness(.9);transform:scale(1.04)}
 .pp-park-type-badge.iconic{background:#FFF3CD;color:#856404}
@@ -586,28 +507,17 @@ button.pp-park-type-badge.pp-type-badge-btn:hover{filter:brightness(.9);transfor
    109 failing badge instances); each pair below was computed to clear
    that floor against its own background. Variant rules outrank the
    general pair rule below by specificity, so order does not matter. */
-[data-theme="dark"] .pp-size-tiny,[data-theme="neon"] .pp-size-tiny{background:#2d333b;color:#d0d0d0}
-[data-theme="dark"] .pp-size-small,[data-theme="neon"] .pp-size-small{background:#143d5e;color:#b8dcf5}
-[data-theme="dark"] .pp-size-med,[data-theme="neon"] .pp-size-med{background:#0d3b1e;color:#9fe6b0}
-[data-theme="dark"] .pp-size-large,[data-theme="neon"] .pp-size-large{background:#4a2c0a;color:#ffd8a8}
-[data-theme="dark"] .pp-size-massive,[data-theme="neon"] .pp-size-massive{background:#4a1a1a;color:#ffb3b3}
-[data-theme="dark"] .pp-park-type-badge.iconic,[data-theme="neon"] .pp-park-type-badge.iconic{background:#4a3a0a;color:#ffe9a8}
-[data-theme="dark"] .pp-park-type-badge.sportsfield,[data-theme="dark"] .pp-park-type-badge.sports,[data-theme="neon"] .pp-park-type-badge.sportsfield,[data-theme="neon"] .pp-park-type-badge.sports{background:#3d2408;color:#ffd9b3}
-[data-theme="dark"] .pp-park-type-badge.neighbourhood,[data-theme="neon"] .pp-park-type-badge.neighbourhood{background:#0a2e2b;color:#a8e6e0}
-[data-theme="dark"] .pp-park-type-badge.pocket,[data-theme="neon"] .pp-park-type-badge.pocket{background:#241040;color:#d9c2f5}
-[data-theme="dark"] .pp-facility-badge-dog,[data-theme="neon"] .pp-facility-badge-dog{background:#0d2818;color:#86efac;border-color:#2ea043}
-/* Badges built from --pp-green-100 / --pp-primary-dark measure 4.32:1 on
-   the dark surfaces; the light primary token clears the floor. */
-[data-theme="dark"] .pp-park-type-badge,[data-theme="dark"] .pp-facility-badge,[data-theme="dark"] .pp-active-chip,
-[data-theme="neon"] .pp-park-type-badge,[data-theme="neon"] .pp-facility-badge,[data-theme="neon"] .pp-active-chip{color:var(--pp-primary-light)}
-/* .pp-active-badge uses --pp-primary background, not --pp-green-100; use dark ink */
-[data-theme="dark"] .pp-active-badge{color:#06210f}
-[data-theme="neon"] .pp-active-badge{color:#001a0d}
-[data-theme="dark"] .pp-sort-btn.active{color:#06210f}
-[data-theme="neon"] .pp-sort-btn.active{color:#001a0d}
+/* Park-type badges keep their light variant backgrounds in both themes, so
+   they keep dark ink. Facility badges and active chips sit on the dark
+   --pp-green-100 in Night Field and need the light ink instead — the two
+   families must not share one declaration. */
+[data-theme="night"] .pp-park-type-badge,
+[data-theme="night"] .pp-active-badge{color:#06210f}
+[data-theme="night"] .pp-facility-badge,
+[data-theme="night"] .pp-active-chip{color:var(--pp-primary-light)}
+[data-theme="night"] .pp-sort-btn.active{color:#06210f}
 /* .pp-type-breakdown-item.active and .pp-size-label-inline use --pp-green-100 bg */
-[data-theme="dark"] .pp-type-breakdown-item.active,[data-theme="dark"] .pp-size-label-inline{color:var(--pp-primary-light)}
-[data-theme="neon"] .pp-type-breakdown-item.active,[data-theme="neon"] .pp-size-label-inline{color:var(--pp-primary-light)}
+[data-theme="night"] .pp-type-breakdown-item.active,[data-theme="night"] .pp-size-label-inline{color:var(--pp-primary-light)}
 .pp-skeleton-card{height:72px;background:linear-gradient(90deg,var(--pp-border-light) 25%,var(--pp-bg-alt) 50%,var(--pp-border-light) 75%);background-size:200% 100%;animation:pp-shimmer 1.5s infinite;border-radius:var(--pp-radius-md);margin-bottom:.5rem}
 @keyframes pp-shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
 .pp-empty-state{display:flex;flex-direction:column;align-items:center;gap:.75rem;padding:2rem 1rem;color:var(--pp-text-muted);text-align:center}
@@ -644,7 +554,7 @@ button.pp-type-breakdown-item.active{border-color:currentColor;background:var(--
 @keyframes pp-slide-up{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
 
 /* Map */
-.pp-map-container{flex:1;position:relative;min-width:0}
+.pp-map-container{flex:none;position:relative;min-width:0;width:100%;height:60vh;min-height:340px}
 #park-map{width:100% !important;height:100% !important}
 .pp-sidebar-open-btn{position:absolute;top:1rem;left:1rem;z-index:400;width:40px;height:40px;border-radius:var(--pp-radius-md);background:var(--pp-surface);box-shadow:var(--pp-shadow-md);display:flex;align-items:center;justify-content:center;color:var(--pp-text);transition:background var(--pp-transition),color var(--pp-transition);border:1px solid var(--pp-border-light)}
 .pp-sidebar-open-btn:hover{background:var(--pp-bg);color:var(--pp-primary)}
@@ -656,23 +566,25 @@ button.pp-type-breakdown-item.active{border-color:currentColor;background:var(--
 .pp-recenter-btn:hover{background:var(--pp-bg);color:var(--pp-primary);border-color:var(--pp-primary)}
 .pp-recenter-btn svg{width:18px;height:18px}
 
-/* Modal — rendered through a Radix portal, so the overlay is fixed rather
-   than absolute and the content is centred by flex on the overlay layer. */
+/* Modal — rendered through a Radix portal, so the overlay and the content are
+   siblings. The overlay paints the scrim; the content centres itself, because
+   it is not a flex child of the overlay. */
 .pp-modal-overlay{position:fixed;inset:0;z-index:1100;background:rgba(0,0,0,.55);backdrop-filter:blur(4px);display:flex;align-items:center;justify-content:center;padding:1rem}
-.pp-modal-content{position:relative;z-index:1101;background:var(--pp-surface);border-radius:var(--pp-radius-xl);box-shadow:var(--pp-shadow-xl);width:100%;max-width:480px;max-height:90vh;overflow-y:auto;animation:pp-modal-in .25s ease}
+.pp-modal-content{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);z-index:1101;background:var(--pp-surface);border-radius:var(--pp-radius-xl);box-shadow:var(--pp-shadow-xl);width:calc(100% - 2rem);max-width:480px;max-height:min(90vh,calc(100% - 2rem));overflow-y:auto;animation:pp-modal-in .25s ease}
 .pp-modal-content:focus{outline:none}
 .pp-modal-subhead{font-size:.9rem;font-weight:600;margin-bottom:.625rem;display:flex;align-items:center;gap:.375rem}
-.pp-size-label-inline{font-size:.72rem;font-weight:600;margin-left:.25rem;padding:1px 5px;border-radius:3px;background:var(--pp-green-100);color:var(--pp-text-secondary)}
+.pp-size-label-inline{font-size:.8125rem;font-weight:600;margin-left:.25rem;padding:1px 5px;border-radius:3px;background:var(--pp-green-100);color:var(--pp-text-secondary)}
 .pp-facility-badge-dog{background:#f0fdf4;color:#166534;border-color:#86efac}
-@keyframes pp-modal-in{from{opacity:0;transform:scale(.95) translateY(8px)}to{opacity:1;transform:scale(1) translateY(0)}}
+/* The centring transform is part of every frame, so the entrance cannot undo it. */
+@keyframes pp-modal-in{from{opacity:0;transform:translate(-50%,-50%) scale(.96)}to{opacity:1;transform:translate(-50%,-50%) scale(1)}}
 .pp-modal-close{position:absolute;top:1rem;right:1rem;width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--pp-text-muted);background:var(--pp-bg-alt);transition:background var(--pp-transition),color var(--pp-transition)}
 .pp-modal-close:hover{background:var(--pp-border);color:var(--pp-text)}
 .pp-modal-close svg{width:16px;height:16px}
 .pp-modal-nav{display:flex;align-items:center;justify-content:space-between;padding:.5rem 1.5rem;border-bottom:1px solid var(--pp-border-light);background:var(--pp-bg-alt)}
-.pp-modal-nav-btn{display:inline-flex;align-items:center;gap:.3rem;padding:.3rem .7rem;border-radius:var(--pp-radius-full);background:none;border:1px solid var(--pp-border);font-size:.78rem;font-weight:500;color:var(--pp-text-secondary);cursor:pointer;transition:background var(--pp-transition),border-color var(--pp-transition),color var(--pp-transition)}
+.pp-modal-nav-btn{display:inline-flex;align-items:center;gap:.3rem;padding:.3rem .7rem;border-radius:var(--pp-radius-full);background:none;border:1px solid var(--pp-border);font-size:.8125rem;font-weight:500;color:var(--pp-text-secondary);cursor:pointer;transition:background var(--pp-transition),border-color var(--pp-transition),color var(--pp-transition)}
 .pp-modal-nav-btn:hover:not(:disabled){background:var(--pp-surface);border-color:var(--pp-primary);color:var(--pp-primary)}
 .pp-modal-nav-btn:disabled{opacity:.35;cursor:default}
-.pp-modal-nav-pos{font-size:.75rem;color:var(--pp-text-muted);font-variant-numeric:tabular-nums}
+.pp-modal-nav-pos{font-size:.8125rem;color:var(--pp-text-muted);font-variant-numeric:tabular-nums}
 .pp-modal-header{padding:1.5rem 1.5rem .75rem;border-bottom:1px solid var(--pp-border-light);padding-right:3rem}
 .pp-modal-header h2{font-size:1.2rem;line-height:1.3;margin-bottom:.5rem}
 .pp-modal-body{padding:1.25rem 1.5rem}
@@ -760,7 +672,7 @@ button.pp-type-breakdown-item.active{border-color:currentColor;background:var(--
   .pp-nav-links li:last-child a{border-bottom:none}
   .pp-header{position:relative}
   .pp-footer-content{grid-template-columns:1fr}
-  .pp-sidebar{width:100% !important;position:absolute;bottom:0;left:0;right:0;top:auto;max-height:65%;border-right:none;border-top:1px solid var(--pp-border);z-index:500}
+  .pp-sidebar{width:100% !important;position:relative;bottom:auto;top:auto;max-height:none;border-right:none;border-bottom:1px solid var(--pp-border);z-index:auto}
   .pp-sidebar.collapsed{display:none}
   .pp-toast-container{bottom:1rem;right:.75rem;left:.75rem}
   .pp-toast{max-width:100%}
@@ -794,8 +706,6 @@ button.pp-type-breakdown-item.active{border-color:currentColor;background:var(--
 .pp-ac-kind-park{background:var(--pp-green-100);color:var(--pp-primary-dark)}
 .pp-ac-kind-suburb{background:#eff6ff;color:#1d4ed8}
 .pp-ac-kind-type{background:#fef3c7;color:#92400e}
-[data-theme="dark"] .pp-ac-kind-suburb,[data-theme="neon"] .pp-ac-kind-suburb{background:rgba(59,130,246,.15);color:#93c5fd}
-[data-theme="dark"] .pp-ac-kind-type,[data-theme="neon"] .pp-ac-kind-type{background:rgba(251,191,36,.1);color:#fcd34d}
 .pp-ac-sub{font-size:.72rem;color:var(--pp-text-muted);white-space:nowrap;flex-shrink:0}
 .pp-history-header{display:flex;align-items:center;justify-content:space-between;padding:.375rem .75rem;border-bottom:1px solid var(--pp-border-light);font-size:.72rem;color:var(--pp-text-muted);text-transform:uppercase;letter-spacing:.05em;font-weight:600}
 .pp-history-header button{font-size:.72rem;color:var(--pp-text-muted);background:none;border:none;cursor:pointer;padding:0}
@@ -809,7 +719,9 @@ button.pp-type-breakdown-item.active{border-color:currentColor;background:var(--
 .pp-sort-btn{padding:.25rem .625rem;border-radius:var(--pp-radius-full);font-size:.75rem;font-weight:500;border:1.5px solid var(--pp-border);background:var(--pp-bg);color:var(--pp-text-secondary);cursor:pointer;transition:border-color var(--pp-transition),color var(--pp-transition),background var(--pp-transition);white-space:nowrap}
 .pp-sort-btn:hover{border-color:var(--pp-primary);color:var(--pp-primary)}
 .pp-sort-btn.active{border-color:var(--pp-primary);background:var(--pp-primary);color:#fff}
-.pp-sort-btn.disabled{opacity:.6}
+/* Dimming by opacity measured 3.04:1 on the dark sidebar; de-emphasise with
+   the muted token instead so the label stays AA at every theme. */
+.pp-sort-btn.disabled{color:var(--pp-text-muted)}
 
 /* ===== Cache indicator ===== */
 .pp-cache-indicator{display:flex;align-items:center;gap:.375rem;padding:.3rem 1.25rem;font-size:.72rem;color:var(--pp-text-muted);flex-shrink:0}
@@ -832,13 +744,12 @@ button.pp-type-breakdown-item.active{border-color:currentColor;background:var(--
 /* ===== Enhanced park cards ===== */
 .pp-park-card{position:relative;padding-top:1rem}
 .pp-park-card-meta{display:flex;flex-wrap:wrap;align-items:center;gap:.3rem;margin:.3rem 0 .25rem}
-.pp-park-suburb-pill{display:inline-flex;align-items:center;padding:2px 7px;background:var(--pp-bg-alt);color:var(--pp-text-secondary);border:1px solid var(--pp-border-light);border-radius:var(--pp-radius-full);font-size:.7rem;font-weight:500}
+.pp-park-suburb-pill{display:inline-flex;align-items:center;gap:.25rem;padding:2px 7px;background:var(--pp-bg-alt);color:var(--pp-text-secondary);border:1px solid var(--pp-border-light);border-radius:var(--pp-radius-full);font-size:.8125rem;font-weight:500}
 button.pp-park-suburb-pill.pp-suburb-clickable{cursor:pointer;transition:background var(--pp-transition),border-color var(--pp-transition),color var(--pp-transition)}
 button.pp-park-suburb-pill.pp-suburb-clickable:hover{background:var(--pp-green-50);border-color:var(--pp-primary);color:var(--pp-primary)}
 
 /* ===== Viewport park counter ===== */
 .pp-viewport-count{position:absolute;top:.875rem;left:50%;transform:translateX(-50%);z-index:400;background:rgba(255,255,255,.88);backdrop-filter:blur(8px);border:1px solid var(--pp-border-light);border-radius:var(--pp-radius-full);padding:.25rem .8rem;font-size:.72rem;font-weight:600;color:var(--pp-text-secondary);pointer-events:none;white-space:nowrap;box-shadow:var(--pp-shadow-sm)}
-[data-theme="dark"] .pp-viewport-count,[data-theme="neon"] .pp-viewport-count{background:rgba(22,27,34,.88);color:var(--pp-text-muted);border-color:var(--pp-border)}
 .pp-park-distance{display:inline-flex;align-items:center;gap:.2rem;padding:2px 7px;background:var(--pp-green-100);color:var(--pp-primary-dark);border:1px solid var(--pp-green-200);border-radius:var(--pp-radius-full);font-size:.7rem;font-weight:600}
 .pp-card-hover-hint{font-size:.72rem;color:var(--pp-primary);font-weight:500;opacity:0;transform:translateX(-4px);transition:opacity var(--pp-transition),transform var(--pp-transition);margin-top:.25rem}
 .pp-park-card:hover .pp-card-hover-hint{opacity:1;transform:translateX(0)}
@@ -896,22 +807,14 @@ button.pp-park-suburb-pill.pp-suburb-clickable:hover{background:var(--pp-green-5
 :root .pp-sidebar::-webkit-scrollbar-thumb:hover,.pp-filters-container::-webkit-scrollbar-thumb:hover,.pp-results-list::-webkit-scrollbar-thumb:hover{background:var(--pp-primary)}
 
 /* Dark theme scrollbar */
-[data-theme="dark"] .pp-filters-container::-webkit-scrollbar-thumb,
-[data-theme="dark"] .pp-results-list::-webkit-scrollbar-thumb{background:#30363d}
-[data-theme="dark"] .pp-filters-container::-webkit-scrollbar-thumb:hover,
-[data-theme="dark"] .pp-results-list::-webkit-scrollbar-thumb:hover{background:#3fb950}
+[data-theme="night"] .pp-filters-container::-webkit-scrollbar-thumb,
+[data-theme="night"] .pp-results-list::-webkit-scrollbar-thumb{background:#30363d}
+[data-theme="night"] .pp-filters-container::-webkit-scrollbar-thumb:hover,
+[data-theme="night"] .pp-results-list::-webkit-scrollbar-thumb:hover{background:#3fb950}
 
 /* Sunset theme scrollbar */
-[data-theme="sunset"] .pp-filters-container::-webkit-scrollbar-thumb,
-[data-theme="sunset"] .pp-results-list::-webkit-scrollbar-thumb{background:#E8C8A0}
-[data-theme="sunset"] .pp-filters-container::-webkit-scrollbar-thumb:hover,
-[data-theme="sunset"] .pp-results-list::-webkit-scrollbar-thumb:hover{background:#C44B00}
 
 /* Minimal theme scrollbar */
-[data-theme="minimal"] .pp-filters-container::-webkit-scrollbar-thumb,
-[data-theme="minimal"] .pp-results-list::-webkit-scrollbar-thumb{background:#ccc}
-[data-theme="minimal"] .pp-filters-container::-webkit-scrollbar-thumb:hover,
-[data-theme="minimal"] .pp-results-list::-webkit-scrollbar-thumb:hover{background:#888}
 
 /* ===== Map Legend ===== */
 .pp-map-legend{position:absolute;bottom:2.75rem;left:1rem;z-index:400;background:var(--pp-surface);border:1px solid var(--pp-border-light);border-radius:var(--pp-radius-md);padding:.5rem .75rem;box-shadow:var(--pp-shadow-md);min-width:120px;pointer-events:auto}
@@ -920,6 +823,21 @@ button.pp-park-suburb-pill.pp-suburb-clickable:hover{background:var(--pp-green-5
 .pp-map-legend.collapsed .pp-map-legend-title{margin-bottom:0;padding-bottom:0;border-bottom:none}
 .pp-map-legend-item{display:flex;align-items:center;gap:.4rem;padding:.175rem 0;font-size:.73rem;color:var(--pp-text-secondary)}
 .pp-map-legend-dot{width:11px;height:11px;border-radius:50%;border:2px solid white;box-shadow:0 1px 3px rgba(0,0,0,.25);flex-shrink:0}
+/* Two-column key: park types | filter-toggled map layers. */
+.pp-map-legend-cols{display:flex;gap:.35rem 1.1rem}
+.pp-map-legend-col{min-width:0}
+.pp-map-legend-group{font-size:.6rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--pp-text-muted);margin:.3rem 0 .25rem;padding-bottom:.15rem;border-bottom:1px solid var(--pp-border-light)}
+.pp-map-legend-col > .pp-map-legend-group:first-child{margin-top:0}
+.pp-map-legend-toggle{background:none;border:none;cursor:pointer;font-family:inherit;text-align:left;width:100%}
+.pp-map-legend-toggle:hover{color:var(--pp-primary)}
+.pp-map-legend-toggle:focus-visible{outline:2px solid var(--pp-primary);outline-offset:1px;border-radius:3px}
+/* Off layers: hollow dashed swatch + struck-through label — the state reads
+   without relying on colour alone, and text contrast stays untouched. */
+.pp-map-legend-toggle.off .pp-map-legend-dot{background:transparent !important;border:2px dashed var(--pp-text-muted);box-shadow:none}
+.pp-map-legend-toggle.off > span:last-child{text-decoration:line-through;text-decoration-thickness:1px}
+.pp-map-legend-dots{display:inline-flex;gap:2px;flex-shrink:0}
+.pp-map-legend-hint{font-style:normal;font-size:.62rem;color:var(--pp-text-muted);margin-left:.3rem}
+.pp-map-legend{max-width:calc(100% - 5.5rem)}
 
 /* ===== Walking time badge ===== */
 .pp-walk-time{color:var(--pp-text-muted);font-weight:400;margin-left:1px}
@@ -929,10 +847,10 @@ button.pp-park-suburb-pill.pp-suburb-clickable:hover{background:var(--pp-green-5
 
 /* ===== Modal OSM link ===== */
 .pp-modal-osm-link{padding:.5rem 1.5rem .75rem;display:flex;align-items:center;justify-content:center;gap:.5rem;flex-wrap:wrap}
-.pp-modal-osm-link a{font-size:.73rem;color:var(--pp-text-muted);text-decoration:none;transition:color var(--pp-transition)}
+.pp-modal-osm-link a{font-size:.8125rem;color:var(--pp-text-muted);text-decoration:none;transition:color var(--pp-transition)}
 .pp-modal-osm-link a:hover{color:var(--pp-primary);text-decoration:underline}
-.pp-modal-osm-link span{color:var(--pp-border);font-size:.73rem}
-.pp-modal-osm-suburb-btn{background:none;border:none;font-size:.73rem;color:var(--pp-text-muted);cursor:pointer;padding:0;text-decoration:none;transition:color var(--pp-transition)}
+.pp-modal-osm-link span{color:var(--pp-text-muted);font-size:.8125rem}
+.pp-modal-osm-suburb-btn{background:none;border:none;font-size:.8125rem;color:var(--pp-text-muted);cursor:pointer;padding:0;text-decoration:none;transition:color var(--pp-transition)}
 .pp-modal-osm-suburb-btn:hover{color:var(--pp-primary);text-decoration:underline}
 
 /* ===== Popup directions link ===== */
@@ -995,123 +913,26 @@ button.pp-park-suburb-pill.pp-suburb-clickable:hover{background:var(--pp-green-5
 @media (max-width:768px){
   .pp-mobile-fab{display:flex}
   .pp-sort-bar{padding:.375rem 1rem .25rem}
-  .pp-filters-container{max-height:50%}
+  .pp-filters-container{max-height:none}
   .pp-park-card{padding:.75rem .875rem}
 }
 
-/* ===== Satellite theme ===== */
-[data-theme="satellite"] {
-  --pp-bg:            #1a1f2e;
-  --pp-bg-alt:        #141824;
-  --pp-surface:       #1e2435;
-  --pp-primary:       #38bdf8;
-  --pp-primary-light: #7dd3fc;
-  --pp-primary-dark:  #0284c7;
-  --pp-text:          #e2e8f0;
-  --pp-text-secondary:#94a3b8;
-  --pp-text-muted:    #8b98a8;
-  --pp-border:        rgba(56,189,248,.18);
-  --pp-border-light:  rgba(56,189,248,.1);
-  --pp-green-50:      #1a1f2e;
-  --pp-green-100:     #1e2435;
-  --pp-green-200:     #233050;
-  --pp-green-300:     #2d4a6e;
-  --pp-green-400:     #3b6a9a;
-  --pp-shadow-sm:     0 1px 3px rgba(0,0,0,.4);
-  --pp-shadow-md:     0 4px 12px rgba(0,0,0,.5);
-  --pp-shadow-lg:     0 8px 24px rgba(0,0,0,.55);
-  --pp-shadow-xl:     0 16px 40px rgba(0,0,0,.6);
-  --pp-nav-bg:        rgba(20,24,36,.96);
-  --pp-nav-border:    rgba(56,189,248,.3);
-  --pp-stats-bg:      linear-gradient(135deg,#0f172a,#1e2435);
-  --pp-stats-text:    #38bdf8;
-  --pp-footer-bg:     #0f172a;
-  --pp-footer-text:   #94a3b8;
-  --pp-footer-muted:  #94a3b8;
-}
-/* Satellite tile pane: no CSS filter — real satellite imagery */
-[data-theme="satellite"] .leaflet-tile-pane { filter: none; }
-[data-theme="satellite"] .leaflet-marker-pane,
-[data-theme="satellite"] .leaflet-popup-pane { filter: none; }
-/* Legend + viewport pill: dark background for readability over aerial imagery */
-[data-theme="satellite"] .pp-map-legend {
-  background: rgba(15,23,42,.88);
-  border-color: rgba(56,189,248,.25);
-  color: #e2e8f0;
-}
-[data-theme="satellite"] .pp-map-legend-title { color: #94a3b8; }
-[data-theme="satellite"] .pp-map-legend-item { color: #cbd5e1; }
-[data-theme="satellite"] .pp-viewport-count {
-  background: rgba(15,23,42,.88);
-  color: #94a3b8;
-  border-color: rgba(56,189,248,.2);
-}
-/* Clusters: ensure readable on dark satellite map */
-[data-theme="satellite"] .marker-cluster-small,
-[data-theme="satellite"] .marker-cluster-medium,
-[data-theme="satellite"] .marker-cluster-large {
-  background-color: rgba(56,189,248,.25) !important;
-}
-[data-theme="satellite"] .marker-cluster-small div,
-[data-theme="satellite"] .marker-cluster-medium div,
-[data-theme="satellite"] .marker-cluster-large div {
-  background-color: rgba(56,189,248,.65) !important;
-  color: #fff !important;
-}
-[data-theme="dark"] .pp-btn-primary { background: var(--pp-primary-dark); color: #06210f; }
-[data-theme="dark"] .pp-popup .pp-popup-type,
-[data-theme="dark"] .pp-popup-btn,
-[data-theme="dark"] .pp-dyk-badge,
-[data-theme="dark"] .pp-dyk-next:hover,
-[data-theme="dark"] .pp-source-new-badge,
-[data-theme="dark"] .pp-about-back-top,
-[data-theme="dark"] .pp-scroll-top-btn,
-[data-theme="dark"] .pp-locate-btn:hover,
-[data-theme="dark"] .pp-card-pin-btn:hover,
-[data-theme="dark"] .pp-card-share-btn:hover,
-[data-theme="dark"] .pp-rank-badge,
-[data-theme="dark"] .pp-mobile-fab,
-[data-theme="dark"] .pp-popup-dir-link:hover,
-[data-theme="dark"] .pp-area-btn.active { color: #06210f; }
-[data-theme="neon"] .pp-btn-primary { background: var(--pp-primary); color: #001a0d; }
-[data-theme="neon"] .pp-popup .pp-popup-type,
-[data-theme="neon"] .pp-popup-btn,
-[data-theme="neon"] .pp-dyk-badge,
-[data-theme="neon"] .pp-dyk-next:hover,
-[data-theme="neon"] .pp-source-new-badge,
-[data-theme="neon"] .pp-about-back-top,
-[data-theme="neon"] .pp-scroll-top-btn,
-[data-theme="neon"] .pp-locate-btn:hover,
-[data-theme="neon"] .pp-card-pin-btn:hover,
-[data-theme="neon"] .pp-card-share-btn:hover,
-[data-theme="neon"] .pp-rank-badge,
-[data-theme="neon"] .pp-mobile-fab,
-[data-theme="neon"] .pp-popup-dir-link:hover,
-[data-theme="neon"] .pp-area-btn.active { color: #001a0d; }
-[data-theme="satellite"] .pp-btn-primary { background: var(--pp-primary); color: #0f172a; }
-[data-theme="satellite"] .pp-btn-primary::before { background: var(--pp-primary-light); }
-[data-theme="satellite"] .pp-park-type-badge,
-[data-theme="satellite"] .pp-facility-badge,
-[data-theme="satellite"] .pp-active-chip { color: var(--pp-primary-light); }
-[data-theme="satellite"] .pp-sort-btn.active { color: #0f172a; }
-[data-theme="satellite"] .pp-active-badge,
-[data-theme="satellite"] .pp-quick-pill.active,
-[data-theme="satellite"] .pp-popup .pp-popup-type,
-[data-theme="satellite"] .pp-popup-btn,
-[data-theme="satellite"] .pp-dyk-badge,
-[data-theme="satellite"] .pp-dyk-next:hover,
-[data-theme="satellite"] .pp-source-new-badge,
-[data-theme="satellite"] .pp-about-back-top,
-[data-theme="satellite"] .pp-scroll-top-btn,
-[data-theme="satellite"] .pp-locate-btn:hover,
-[data-theme="satellite"] .pp-card-pin-btn:hover,
-[data-theme="satellite"] .pp-card-share-btn:hover,
-[data-theme="satellite"] .pp-rank-badge,
-[data-theme="satellite"] .pp-mobile-fab,
-[data-theme="satellite"] .pp-popup-dir-link:hover,
-[data-theme="satellite"] .pp-area-btn.active,
-[data-theme="satellite"] .pp-type-breakdown-item.active { color: #0f172a; }
-[data-theme="satellite"] .pp-size-label-inline { color: var(--pp-primary-light); }
+
+[data-theme="night"] .pp-btn-primary { background: var(--pp-primary-dark); color: #06210f; }
+[data-theme="night"] .pp-popup .pp-popup-type,
+[data-theme="night"] .pp-popup-btn,
+[data-theme="night"] .pp-dyk-badge,
+[data-theme="night"] .pp-dyk-next:hover,
+[data-theme="night"] .pp-source-new-badge,
+[data-theme="night"] .pp-about-back-top,
+[data-theme="night"] .pp-scroll-top-btn,
+[data-theme="night"] .pp-locate-btn:hover,
+[data-theme="night"] .pp-card-pin-btn:hover,
+[data-theme="night"] .pp-card-share-btn:hover,
+[data-theme="night"] .pp-rank-badge,
+[data-theme="night"] .pp-mobile-fab,
+[data-theme="night"] .pp-popup-dir-link:hover,
+[data-theme="night"] .pp-area-btn.active { color: #06210f; }
 
 /* 404 */
 .pp-notfound-main{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:.75rem;padding:4rem 1.5rem}
@@ -1120,3 +941,223 @@ button.pp-park-suburb-pill.pp-suburb-clickable:hover{background:var(--pp-green-5
 .pp-notfound-text{max-width:34rem;color:var(--pp-text-secondary);font-size:.95rem;margin:0}
 .pp-notfound-actions{display:flex;gap:.625rem;flex-wrap:wrap;justify-content:center;margin-top:.75rem}
 .pp-notfound-actions .pp-btn{text-decoration:none}
+
+/* ===== Multi-council governance (FR1) ===== */
+.pp-council-selector{position:relative;padding:.625rem 1.25rem;border-bottom:1px solid var(--pp-border-light)}
+.pp-council-head{display:flex;align-items:center;justify-content:space-between;gap:.5rem;margin-bottom:.375rem}
+.pp-council-label{font-size:.8125rem;font-weight:600;text-transform:uppercase;letter-spacing:.05em;color:var(--pp-text-muted)}
+.pp-council-modes{display:flex;gap:.25rem;background:var(--pp-bg-alt);border:1px solid var(--pp-border-light);border-radius:var(--pp-radius-full);padding:.125rem}
+.pp-council-mode{border:0;background:transparent;color:var(--pp-text-muted);font-size:.8125rem;font-weight:600;padding:.1875rem .5625rem;border-radius:var(--pp-radius-full);cursor:pointer;transition:background var(--pp-transition),color var(--pp-transition)}
+.pp-council-mode.active{background:var(--pp-primary);color:#fff}
+.pp-council-mode:disabled{opacity:.5;cursor:not-allowed}
+/* Themes whose primary is a bright tint need dark text on the active chip:
+   white on #3fb950 measures 2.54:1 (WCAG AA needs 4.5:1). Mirrors the
+   per-theme overrides already used by .pp-sort-btn.active. */
+[data-theme="night"] .pp-council-mode.active{color:#06210f}
+.pp-council-trigger{display:flex;align-items:center;justify-content:space-between;gap:.5rem;width:100%;padding:.4375rem .625rem;background:var(--pp-surface);border:1px solid var(--pp-border);border-radius:var(--pp-radius-md);color:var(--pp-text);font-size:.8125rem;text-align:left;cursor:pointer;transition:border-color var(--pp-transition)}
+.pp-council-trigger:hover:not(:disabled){border-color:var(--pp-primary)}
+.pp-council-trigger:disabled{opacity:.6;cursor:not-allowed}
+.pp-council-trigger svg{width:14px;height:14px;flex-shrink:0;color:var(--pp-text-muted)}
+.pp-council-trigger-text{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.pp-council-pop{position:absolute;z-index:1200;left:1.25rem;right:1.25rem;margin-top:.25rem;background:var(--pp-surface);border:1px solid var(--pp-border);border-radius:var(--pp-radius-md);box-shadow:var(--pp-shadow-lg);overflow:hidden}
+.pp-council-search{width:calc(100% - 1rem);margin:.5rem;padding: .375rem .5rem;background:var(--pp-bg-alt);border:1px solid var(--pp-border-light);border-radius:var(--pp-radius-sm);color:var(--pp-text);font-size:.8125rem}
+.pp-council-search:focus{outline:2px solid var(--pp-primary);outline-offset:1px}
+.pp-council-list{list-style:none;margin:0;padding:0 .5rem;max-height:15rem;overflow-y:auto}
+.pp-council-option{display:flex;align-items:center;gap:.5rem;padding:.375rem .5rem;border-radius:var(--pp-radius-sm);cursor:pointer;font-size:.8125rem;color:var(--pp-text)}
+.pp-council-option.active{background:var(--pp-green-100);outline:2px solid var(--pp-primary);outline-offset:-2px}
+.pp-council-option.selected{font-weight:600}
+.pp-council-dot{width:.625rem;height:.625rem;border-radius:50%;flex-shrink:0}
+.pp-council-name{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.pp-council-badge{font-size:.6rem;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--pp-primary);background:var(--pp-green-200);border-radius:var(--pp-radius-full);padding:.0625rem .375rem;flex-shrink:0}
+.pp-council-check{width:13px;height:13px;flex-shrink:0;color:var(--pp-primary)}
+.pp-council-empty{padding:.75rem .5rem;font-size:.8125rem;color:var(--pp-text-muted)}
+.pp-council-pop-foot{display:flex;justify-content:space-between;align-items:center;gap:.5rem;padding:.375rem .75rem;border-top:1px solid var(--pp-border-light);font-size:.68rem;color:var(--pp-text-muted)}
+.pp-council-clear{border:0;background:transparent;color:var(--pp-primary);font-size:.68rem;font-weight:600;cursor:pointer;text-decoration:underline;padding:0}
+.pp-council-error{margin:.375rem 0 0;font-size:.7rem;color:#b42318;}
+[data-theme="night"] .pp-council-error{color:#ff9d9d}
+
+.pp-council-stats{border-bottom:1px solid var(--pp-border-light)}
+.pp-council-stats-toggle{display:flex;align-items:center;justify-content:space-between;width:100%;padding:.5rem 1.25rem;border:0;background:var(--pp-bg-alt);color:var(--pp-text-secondary);font-size:.8125rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;cursor:pointer}
+.pp-council-chevron{width:12px;height:12px;transition:transform var(--pp-transition)}
+.pp-council-chevron.rotated{transform:rotate(-180deg)}
+.pp-council-stats-body{padding:.625rem 1.25rem .75rem}
+.pp-council-stats-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:.5rem .375rem;margin:0}
+.pp-council-stat dt{font-size:.8125rem;color:var(--pp-text-muted);text-transform:uppercase;letter-spacing:.04em;margin:0 0 .125rem}
+.pp-council-stat dd{margin:0;font-size:.8125rem;font-weight:700;color:var(--pp-text)}
+.pp-stat-skeleton{display:inline-block;width:2.5rem;height:.75rem;border-radius:var(--pp-radius-sm);background:linear-gradient(90deg,var(--pp-bg-alt),var(--pp-green-200),var(--pp-bg-alt));background-size:200% 100%;animation:pp-skeleton 1.2s infinite}
+.pp-stat-pending{cursor:help;color:var(--pp-text-muted)}
+@keyframes pp-skeleton{0%{background-position:200% 0}100%{background-position:-200% 0}}
+.pp-council-layercounts{display:flex;flex-wrap:wrap;gap:.25rem .625rem;margin-top:.625rem;padding-top:.5rem;border-top:1px dashed var(--pp-border-light)}
+.pp-council-layercount{font-size:.8125rem;color:var(--pp-text-muted);text-transform:capitalize}
+.pp-council-layercount strong{margin-left:.25rem;color:var(--pp-text-secondary)}
+
+.pp-council-legend{padding:.625rem 1.25rem;border-bottom:1px solid var(--pp-border-light)}
+.pp-council-legend-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:.375rem}
+.pp-council-legend-head h3{margin:0;font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--pp-text-muted)}
+.pp-council-legend-clear{border:0;background:transparent;color:var(--pp-primary);font-size:.68rem;font-weight:600;cursor:pointer;text-decoration:underline;padding:0}
+.pp-council-chips{list-style:none;display:flex;flex-wrap:wrap;gap:.375rem;margin:0;padding:0}
+.pp-council-chip{display:inline-flex;align-items:center;gap:.375rem;padding:.1875rem .25rem .1875rem .5rem;border:1px solid var(--pp-border);border-radius:var(--pp-radius-full);background:var(--pp-surface);font-size:.72rem;color:var(--pp-text)}
+.pp-council-chip.unavailable{border-style:dashed;opacity:.85}
+.pp-council-chip-dot{width:.5rem;height:.5rem;border-radius:50%;flex-shrink:0}
+.pp-council-chip-name{max-width:11rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.pp-council-chip-flag{font-size:.6rem;color:#b42318;font-weight:600}
+[data-theme="night"] .pp-council-chip-flag{color:#ff9d9d}
+.pp-council-chip-remove{display:inline-flex;align-items:center;justify-content:center;width:1.125rem;height:1.125rem;border:0;border-radius:50%;background:transparent;color:var(--pp-text-muted);cursor:pointer;padding:0}
+.pp-council-chip-remove:hover{background:var(--pp-bg-alt);color:var(--pp-text)}
+.pp-council-chip-remove svg{width:9px;height:9px}
+.pp-council-legend-note{margin:.375rem 0 0;font-size:.68rem;color:var(--pp-text-muted)}
+.pp-council-legend-note.warn{color:#b42318}
+[data-theme="night"] .pp-council-legend-note.warn{color:#ff9d9d}
+
+/* ===== Explore hero + results grid (UI-first redesign) ===== */
+/* ── Explore intro band ───────────────────────────────────────────────────
+   Compact by design: it states what the product is and shows the live
+   network stats, then hands the viewport to the explorer below. */
+.pp-explore-hero{padding:1.35rem 0 1rem;background:linear-gradient(180deg,var(--pp-bg-alt),var(--pp-bg));border-bottom:1px solid var(--pp-border-light);flex:none}
+.pp-explore-hero-inner{max-width:1760px;margin:0 auto;padding:0 1.5rem;display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:.75rem 2rem}
+.pp-explore-hero-kicker{margin:0 0 .35rem;font-size:.72rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--pp-primary)}
+.pp-explore-hero h1{margin:0 0 .35rem;font-size:clamp(1.45rem,2.6vw,2.05rem);line-height:1.15;max-width:32ch}
+.pp-explore-hero-sub{margin:0;max-width:70ch;color:var(--pp-text-muted);font-size:.92rem;line-height:1.5}
+.pp-explore-hero-actions{display:flex;flex-wrap:wrap;gap:.5rem;min-width:0;max-width:100%;flex-shrink:1}
+.pp-explore-hero-actions .pp-btn{padding:.55rem 1rem;font-size:.85rem}
+.pp-explore-hero-stats{display:flex;flex-wrap:wrap;gap:.4rem;max-width:1760px;margin:.8rem auto 0;padding:0 1.5rem;list-style:none}
+.pp-explore-hero-stat{display:inline-flex;align-items:baseline;gap:.35rem;background:var(--pp-surface);border:1px solid var(--pp-border-light);border-radius:var(--pp-radius-full);padding:.28rem .7rem;line-height:1.3}
+.pp-explore-hero-stat dt{font-size:.68rem;font-weight:600;letter-spacing:.03em;text-transform:uppercase;color:var(--pp-text-muted);margin:0}
+.pp-explore-hero-stat dd{margin:0;font-size:.82rem;font-weight:700;color:var(--pp-text);font-variant-numeric:tabular-nums}
+@media (max-width:640px){
+  .pp-explore-hero{padding:1rem 0 .75rem}
+  .pp-explore-hero-inner{padding:0 1rem}
+  .pp-explore-hero-stats{padding:0 1rem}
+  .pp-map-container{height:56vh;min-height:300px}
+}
+/* Results: one column inside the rail, responsive auto-fill only when the
+   rail is collapsed off and the list reflows full width. */
+.pp-results-list{display:grid;grid-template-columns:1fr;gap:.5rem;align-content:start;overflow:visible;contain:none;min-height:0;flex:none;padding:.5rem .25rem}
+.pp-results-list .pp-park-card{margin-bottom:0}
+
+/* FR7.1 — hover-on/hover-off shading palettes for selected-council
+   boundaries. The `coverage-grad palettes/*.png` assets are absent (TBD-9),
+   so the hover-on palette is an SVG linearGradient injected into the
+   boundary renderer by MultiCouncilPanel (`ensureShadeDefs`); each path
+   points at its colour's gradient via `--pp-shade`. Hover-on deepens the
+   fill (0.45 → 0.12 top-to-bottom ramp at full fill-opacity) and thickens the
+   stroke; hover-off returns to the flat 0.12 fill Leaflet set on the element. */
+.leaflet-overlay-pane path.pp-council-shade {
+  transition: fill-opacity 180ms ease, stroke-width 180ms ease;
+}
+.leaflet-overlay-pane path.pp-council-shade:hover {
+  fill: var(--pp-shade, currentColor);
+  fill-opacity: 1;
+  stroke-width: 3;
+}
+
+/* ───────────────────────────────────────────────────────────────────────────
+   shadcn/ui token bridge — Phase 6 dashboard (non-Explore surface only).
+
+   PRD §3.1 locks pp-* markup inside Explore and reserves the vendored
+   src/components/ui library for surfaces outside it. Tailwind v4 only emits
+   `bg-background` / `text-foreground` utilities from @theme entries, and the
+   vendored components speak shadcn's semantic colour names, so this block
+   aliases those names onto the existing pp-* tokens. Because the aliases
+   read var(--pp-*), both data-theme palettes (warm, night) follow
+   automatically — one palette, no theme drift.
+   ─────────────────────────────────────────────────────────────────────────── */
+@theme inline {
+  --color-background: var(--pp-bg);
+  --color-foreground: var(--pp-text);
+  --color-card: var(--pp-surface);
+  --color-card-foreground: var(--pp-text);
+  --color-popover: var(--pp-surface);
+  --color-popover-foreground: var(--pp-text);
+  --color-primary: var(--pp-primary);
+  --color-primary-foreground: var(--pp-primary-fg);
+  --color-secondary: var(--pp-bg-alt);
+  --color-secondary-foreground: var(--pp-text);
+  --color-muted: var(--pp-bg-alt);
+  --color-muted-foreground: var(--pp-text-muted);
+  --color-accent: var(--pp-bg-alt);
+  --color-accent-foreground: var(--pp-primary-dark);
+  --color-destructive: var(--pp-danger);
+  --color-destructive-foreground: var(--pp-danger-fg);
+  --color-border: var(--pp-border);
+  --color-input: var(--pp-border);
+  --color-ring: var(--pp-primary);
+}
+
+/* ══ Explorer app shell (desktop) ════════════════════════════════════════
+   Deliberately LAST in this file: it overrides the base sidebar/map sizing
+   rules above at equal specificity. Desktop is a viewport-locked two-pane
+   workspace: slim intro band, then a scrolling controls/results rail on the
+   left and a full-height map on the right — map above the fold on load.
+   ≤900px keeps the stacked, document-scrolling layout defined earlier. */
+@media (min-width:901px){
+  .pp-explore-page{height:100vh;overflow:hidden}
+  .pp-explore-main{min-height:0}
+  .pp-explorer{flex:1 1 auto;min-height:0;display:grid;grid-template-columns:clamp(340px,30vw,420px) minmax(0,min(680px,68vh));justify-content:center;max-width:1760px;width:100%;margin:0 auto}
+  .pp-explorer.rail-collapsed{grid-template-columns:0 minmax(0,1fr)}
+  .pp-sidebar{height:100%;overflow-y:auto;overflow-x:hidden;overscroll-behavior:contain;border-right:1px solid var(--pp-border);border-bottom:none;padding-bottom:1rem}
+  .pp-map-container{height:100%;min-height:0;max-height:none}
+  /* The search box stays reachable while the rail scrolls past it. */
+  .pp-search-container{position:sticky;top:0;z-index:6;background:var(--pp-surface)}
+}
+/* Short laptop viewports: tighten the intro band so the map keeps height. */
+@media (min-width:901px) and (max-height:760px){
+  .pp-explore-hero{padding:.85rem 0 .6rem}
+  .pp-explore-hero-stats{margin-top:.5rem}
+  .pp-explore-hero-sub{font-size:.88rem}
+}
+/* ══ Field Atlas base ══════════════════════════════════════════════════════
+   Cross-cutting behaviour the redesign relies on: an explicit colour-scheme,
+   one visible focus treatment for every interactive element, and motion that
+   switches off when the operating system asks for it (PRD §19, §8.2). */
+:root { color-scheme: light; }
+[data-theme="night"] { color-scheme: dark; }
+
+:where(a, button, input, select, textarea, summary, [tabindex]):focus-visible {
+  outline: 2px solid var(--pp-focus);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: .001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .001ms !important;
+  }
+}
+
+/* ══ Motion tokens ═════════════════════════════════════════════════════════
+   Registry item `design-engineering-motion` from
+   https://github.com/AgentsORG/design-engineering (r/design-engineering-motion.json),
+   MIT © 2026 HKTITAN. Adapted rather than installed through the shadcn CLI:
+   the item is a `registry:theme`, and the CLI's theme install rewrites this
+   file's existing palette, so the nine token definitions were appended
+   verbatim instead. Kept in a plain `@theme static` block (not `@theme
+   inline`): `static` makes Tailwind emit every token to `:root` even when no
+   utility uses it yet, so hand-written rules may reference the properties
+   directly, while the `--ease-*` namespace still generates `ease-*` utilities.
+
+   Use these instead of inventing durations and curves:
+     transition: opacity var(--duration-hover) var(--ease-out-quart);
+   Rules from the registry's own docs: never `transition: all` — name the
+   properties; entrances use --ease-out-quart; exits run at 60% of their
+   entrance duration; never ease-in on a UI entrance; never scale an entrance
+   from 0 (start at 0.95). Overrides Tailwind's default --ease-in-out. */
+@theme static {
+  --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+  --ease-out-expo:  cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out:    cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-spring:    cubic-bezier(0.34, 1.56, 0.64, 1);
+  --duration-press:   120ms;
+  --duration-hover:   160ms;
+  --duration-popover: 200ms;
+  --duration-modal:   250ms;
+  --duration-page:    300ms;
+}
+
+/* Basemap switch — a map style, not a UI theme (PRD §8.1). */
+.pp-basemap-btn{position:absolute;top:6rem;right:1rem;z-index:400;width:40px;height:40px;border-radius:var(--pp-radius-md);background:var(--pp-surface);box-shadow:var(--pp-shadow-md);display:flex;align-items:center;justify-content:center;color:var(--pp-text-secondary);transition:background var(--pp-transition),color var(--pp-transition),border-color var(--pp-transition);border:1px solid var(--pp-border-light)}
+.pp-basemap-btn:hover{background:var(--pp-bg);color:var(--pp-primary);border-color:var(--pp-primary)}
+.pp-basemap-btn[aria-pressed="true"]{background:var(--pp-primary);color:var(--pp-primary-fg);border-color:var(--pp-primary)}
+.pp-basemap-btn svg{width:18px;height:18px}
