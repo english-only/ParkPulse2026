@@ -12,13 +12,18 @@ out-tsc
 # artifacts/park-pulse/scripts/shard-trees.mjs on every dev/build)
 artifacts/park-pulse/public/data/trees/
 
-# generated council/transport/canopy layers — rebuilt by build-councils.mjs,
-# shard-trees.mjs, gtfs-convert.mjs and canopy-extract.mjs; never committed
-# per repo policy (PRD §3.7-5)
-artifacts/park-pulse/public/data/boundaries/
-artifacts/park-pulse/public/data/transport/
-artifacts/park-pulse/public/data/councils-trees/
+# Canopy rasters stay out of git: the layer is licence-gated and its source is
+# 900 MB of LGA packages, so nothing here can regenerate it in a clone anyway.
 artifacts/park-pulse/public/data/canopies/
+
+# The council boundaries, transport stops and per-council tree shards ARE
+# tracked (~10 MB). They are derived, but they are the site's runtime data and
+# their raw sources are 1.3 GB of archives that cannot ship: without them a
+# fresh clone fails build-catalog's integrity gate and the Netlify build emits
+# a site with no council scope and no transit. This is the explicit gate that
+# PRD §3.7-5 requires. Rebuild them with build-councils.mjs and gtfs-convert.mjs
+# when the raw Data/ tree is present; the scripts only overwrite what they can
+# derive.
 
 # dependencies
 node_modules

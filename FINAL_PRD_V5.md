@@ -147,7 +147,7 @@ We'll know we're right when **a user can select ≥2 councils, see both boundari
 2. **Never add a dependency** without `search-first` (check what exists) + context7 doc lookup for its API.
 3. **Never interpolate dataset strings into HTML**; use DOM APIs/`textContent` (existing pattern).
 4. **Never fetch from the app code** anything outside `import.meta.env.BASE_URL`-prefixed local data (except the existing OSM/Esri tile and Nominatim endpoints).
-5. **Never commit** generated shards/geojsons, `dist/`, `test-results/`, or data > 100 KB into git without an explicit user gate.
+5. **Never commit** generated shards/geojsons, `dist/`, `test-results/`, or data > 100 KB into git without an explicit user gate. *(Gate opened 2026-10-21: the three derived runtime layers under `public/data/` — `boundaries/`, `transport/`, `councils-trees/`, ~10 MB together — are committed so a fresh clone and the Netlify build can serve the real site. Their 1.3 GB of raw archives stay untracked; see `.gitignore` and `DATA_INVENTORY.md`.)*
 6. **Never claim completion** without the `verification-loop` report attached (`verification-before-completion`).
 7. **Never change** `pp-*` theme variable names or existing component signatures without a `/plan` that names the blast radius.
 8. **Never bypass a failing gate** by weakening assertions, skipping tests, or adding suppressions.
