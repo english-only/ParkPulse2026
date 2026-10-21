@@ -4,8 +4,10 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "node ./scripts/shard-trees.mjs && vite --config vite.config.ts --host 0.0.0.0",
-    "build": "node ./scripts/shard-trees.mjs && vite build --config vite.config.ts",
+    "dev": "node ./scripts/shard-trees.mjs && node ./scripts/build-stats.mjs && node ./scripts/build-councils.mjs && node ./scripts/build-hero-plate.mjs && node ./scripts/build-contribution-index.mjs && node ./scripts/build-catalog.mjs && vite --config vite.config.ts --host 0.0.0.0",
+    "build": "node ./scripts/shard-trees.mjs && node ./scripts/build-stats.mjs && node ./scripts/build-councils.mjs && node ./scripts/build-hero-plate.mjs && node ./scripts/build-contribution-index.mjs && node ./scripts/build-catalog.mjs && vite build --config vite.config.ts",
+    "catalog": "node ./scripts/build-catalog.mjs",
+    "contributions:publish": "node ./scripts/publish-contributions.mjs",
     "serve": "vite preview --config vite.config.ts --host 0.0.0.0",
     "typecheck": "tsc -p tsconfig.json --noEmit",
     "test": "vitest run",
@@ -86,7 +88,11 @@
     "zod": "catalog:"
   },
   "dependencies": {
+    "@workspace/parks-sydney": "workspace:*",
+    "@workspace/transport": "workspace:*",
+    "geotiff": "3.0.5",
     "leaflet": "^1.9.4",
-    "leaflet.markercluster": "^1.5.3"
+    "leaflet.markercluster": "^1.5.3",
+    "proj4": "2.22.0"
   }
 }
