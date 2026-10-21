@@ -8,6 +8,11 @@
  * original geojson so the feature degrades rather than disappears.
  */
 import { fetchWithCache } from "./dataCache";
+import {
+  decodeShard,
+  type ShardManifest,
+  type TreeShardPayload,
+} from "./treeShardFormat";
 
 export interface Bounds {
   south: number;
@@ -27,70 +32,84 @@ export interface TreeRecord {
   age: string;
   dbhCm: number | null;
   height: number | null;
+  /** Display name of the council dataset this tree came from (null = city baseline). */
+  councilName: string | null;
 }
 
-interface DictColumn {
-  table: string[];
-  idx: number[];
-}
-
-interface TreeShardPayload {
-  n: number;
-  lng: number[];
-  lat: number[];
-  assetId: string[];
-  dbh: (number | null)[];
-  height: (number | null)[];
-  common: DictColumn;
-  species: DictColumn;
-  treeType: DictColumn;
-  treeStatus: DictColumn;
-  age: DictColumn;
-}
-
-interface ShardManifest {
+/** Registry emitted by `scripts/shard-trees.mjs --lga` (FR3.1). */
+export interface CouncilTreeRegistry {
   version: number;
-  total: number;
-  grid: {
-    size: number;
-    minLng: number;
-    maxLng: number;
-    minLat: number;
-    maxLat: number;
-  };
-  cells: { c: string; n: number; b: number }[];
+  councils: Array<{ lga_id: string; display_name: string; total: number; shards: number }>;
+}
+
+/** Which shard files to fetch: one entry per (council, cell). */
+export interface ShardRequest {
+  lgaId: string;
+  displayName: string;
+  cell: string;
+}
+
+/**
+ * Pure resolver: given the registry, the manifests that have been loaded for
+ * the requested councils, and a viewport, list every shard that must be
+ * fetched. Councils the user selected but whose data is not in the registry
+ * contribute nothing (their status is "missing" in council-manifest.json).
+ *
+ * Kept pure so `treeData.test.ts` can prove the multi/single/no-selection
+ * behaviour with fixtures and no network (FR3.3–3.4, FR3.7).
+ */
+export function resolveShardRequests(options: {
+  registry: CouncilTreeRegistry | null;
+  manifests: ReadonlyMap<string, ShardManifest>;
+  bounds: Bounds;
+  councilIds: readonly string[];
+}): ShardRequest[] {
+  const { registry, manifests, bounds, councilIds } = options;
+  if (!registry || councilIds.length === 0) return [];
+  const requests: ShardRequest[] = [];
+  for (const id of councilIds) {
+    const entry = registry.councils.find(c => c.lga_id === id);
+    const manifest = manifests.get(id);
+    if (!entry || !manifest) continue; // no tree dataset published for this council
+    for (const cell of cellsForBounds(manifest, bounds)) {
+      if (manifest.cells.some(c => c.c === cell)) {
+        requests.push({ lgaId: id, displayName: entry.display_name, cell });
+      }
+    }
+  }
+  return requests;
 }
 
 export interface TreeSourceInfo {
-  /** "sharded" when viewport shards are in use, "geojson" on fallback. */
-  mode: "sharded" | "geojson";
+  /** "sharded" city shards, "council" council shards, "geojson" fallback. */
+  mode: "sharded" | "council" | "geojson";
   /** Total trees available in the dataset, not just the loaded subset. */
   total: number;
   /** Trees actually loaded for the current viewport. */
   loaded: number;
+  /** Councils whose trees were loaded (display names), for the overlay badge. */
+  councils?: string[];
 }
 
 function cellKey(col: number, row: number): string {
   return `${col}_${row}`;
 }
 
-function decode(payload: TreeShardPayload): TreeRecord[] {
-  const out: TreeRecord[] = new Array(payload.n);
-  for (let i = 0; i < payload.n; i++) {
-    out[i] = {
-      lat: payload.lat[i],
-      lng: payload.lng[i],
-      assetId: payload.assetId[i],
-      commonName: payload.common.table[payload.common.idx[i]] ?? "",
-      speciesName: payload.species.table[payload.species.idx[i]] ?? "",
-      treeType: payload.treeType.table[payload.treeType.idx[i]] ?? "",
-      treeStatus: payload.treeStatus.table[payload.treeStatus.idx[i]] ?? "",
-      age: payload.age.table[payload.age.idx[i]] ?? "",
-      dbhCm: payload.dbh[i] ?? null,
-      height: payload.height[i] ?? null,
-    };
-  }
-  return out;
+/** Shape the shared codec produces → the app's TreeRecord. */
+function decode(payload: TreeShardPayload, councilName: string | null = null): TreeRecord[] {
+  return decodeShard(payload).map(r => ({
+    lat: r.lat,
+    lng: r.lng,
+    assetId: r.assetId,
+    commonName: r.commonName,
+    speciesName: r.speciesName,
+    treeType: r.treeType,
+    treeStatus: r.treeStatus,
+    age: r.age,
+    dbhCm: r.dbhCm,
+    height: r.height,
+    councilName,
+  }));
 }
 
 /**
@@ -121,6 +140,8 @@ function cellsForBounds(manifest: ShardManifest, bounds: Bounds, pad = 1): strin
 }
 
 let manifestPromise: Promise<ShardManifest | null> | null = null;
+let registryPromise: Promise<CouncilTreeRegistry | null> | null = null;
+const councilManifestPromises = new Map<string, Promise<ShardManifest | null>>();
 
 function loadManifest(): Promise<ShardManifest | null> {
   if (!manifestPromise) {
@@ -134,9 +155,38 @@ function loadManifest(): Promise<ShardManifest | null> {
   return manifestPromise;
 }
 
-/** Test seam: forget the cached manifest so a new manifest is picked up. */
+/** Registry of council shard sets; null when no council trees are sharded yet. */
+function loadCouncilRegistry(): Promise<CouncilTreeRegistry | null> {
+  if (!registryPromise) {
+    registryPromise = fetchWithCache<CouncilTreeRegistry>(
+      "data/councils-trees/index.json",
+      "pp_councils_trees_index",
+    )
+      .then(({ data }) => (data?.councils?.length ? data : null))
+      .catch(() => null);
+  }
+  return registryPromise;
+}
+
+function loadCouncilManifest(lgaId: string): Promise<ShardManifest | null> {
+  let pending = councilManifestPromises.get(lgaId);
+  if (!pending) {
+    pending = fetchWithCache<ShardManifest>(
+      `data/councils-trees/${lgaId}/manifest.json`,
+      `pp_council_trees_manifest_${lgaId}`,
+    )
+      .then(({ data }) => (data?.cells?.length ? data : null))
+      .catch(() => null);
+    councilManifestPromises.set(lgaId, pending);
+  }
+  return pending;
+}
+
+/** Test seam: forget the cached manifests/registry so new ones are picked up. */
 export function __resetTreeManifestCache(): void {
   manifestPromise = null;
+  registryPromise = null;
+  councilManifestPromises.clear();
 }
 
 async function loadFromGeoJson(): Promise<TreeSourceInfo> {
@@ -160,17 +210,81 @@ async function loadFromGeoJson(): Promise<TreeSourceInfo> {
       age: typeof p.Tree_Age === "string" ? p.Tree_Age : "",
       dbhCm: typeof p.DBH_in_cm === "number" ? p.DBH_in_cm : null,
       height: typeof p.TreeHeight === "number" ? p.TreeHeight : null,
+      councilName: null,
     });
   }
   return { mode: "geojson", total: trees.length, loaded: trees.length };
 }
 
 /**
+ * Council-scoped tree loading (FR3.3–3.4): with a selection, only the
+ * selected councils' shard sets are consulted; with no selection the city
+ * baseline behaves exactly as before (regression-free).
+ */
+async function loadCouncilTrees(
+  bounds: Bounds,
+  councilIds: readonly string[],
+): Promise<{ trees: TreeRecord[]; info: TreeSourceInfo }> {
+  const registry = await loadCouncilRegistry();
+  if (!registry) return { trees: [], info: { mode: "council", total: 0, loaded: 0, councils: [] } };
+
+  const wanted = registry.councils.filter(c => councilIds.includes(c.lga_id));
+  const manifests = new Map<string, ShardManifest>();
+  await Promise.all(
+    wanted.map(async c => {
+      const manifest = await loadCouncilManifest(c.lga_id);
+      if (manifest) manifests.set(c.lga_id, manifest);
+    }),
+  );
+
+  const requests = resolveShardRequests({ registry, manifests, bounds, councilIds });
+  const total = wanted.reduce((sum, c) => sum + c.total, 0);
+  if (!requests.length) {
+    return { trees: [], info: { mode: "council", total, loaded: 0, councils: wanted.map(c => c.display_name) } };
+  }
+
+  const payloads = await Promise.all(
+    requests.map(req =>
+      fetchWithCache<TreeShardPayload>(
+        `data/councils-trees/${req.lgaId}/${req.cell}.json`,
+        `pp_council_trees_${req.lgaId}_${req.cell}`,
+      ).then(({ data }) => ({ req, data })),
+    ),
+  );
+
+  const trees: TreeRecord[] = [];
+  for (const { req, data } of payloads) {
+    if (data?.n) trees.push(...decode(data, req.displayName));
+  }
+
+  return {
+    trees,
+    info: {
+      mode: "council",
+      total,
+      loaded: trees.length,
+      councils: wanted.map(c => c.display_name),
+    },
+  };
+}
+
+/**
  * Load the trees for a viewport. Resolves to an empty result (rather than
  * rejecting) when the viewport is outside the dataset, so the caller never
  * needs to special-case "no data here".
+ *
+ * Pass `councilIds` when a council selection is active to load only those
+ * councils' shard sets; without it the city baseline shards are used.
  */
-export async function loadTreesForBounds(bounds: Bounds): Promise<{ trees: TreeRecord[]; info: TreeSourceInfo }> {
+export async function loadTreesForBounds(
+  bounds: Bounds,
+  options?: { councilIds?: readonly string[] },
+): Promise<{ trees: TreeRecord[]; info: TreeSourceInfo }> {
+  const councilIds = options?.councilIds ?? [];
+  if (councilIds.length > 0) {
+    return loadCouncilTrees(bounds, councilIds);
+  }
+
   const manifest = await loadManifest();
   if (!manifest) {
     const info = await loadFromGeoJson();

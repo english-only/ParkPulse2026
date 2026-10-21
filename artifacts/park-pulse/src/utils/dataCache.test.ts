@@ -1,5 +1,6 @@
 import { describe, expect, it, vi } from "vitest";
 import {
+  __resetMemoryCache,
   cacheUsageBytes,
   clearAllCache,
   fetchWithCache,
@@ -188,6 +189,28 @@ describe("dataCache", () => {
       expect(fetchMock).toHaveBeenCalledTimes(1);
 
       vi.unstubAllGlobals();
+    });
+
+    it("serves an oversized payload from memory instead of re-fetching it", async () => {
+      // stops.geojson (FR4.1) is ~5.9 MB: over the localStorage cap, so without
+      // the memory tier every map move would re-download it.
+      __resetMemoryCache();
+      const body = { blob: "x".repeat(3 * 1024 * 1024) };
+      const fetchMock = vi.fn().mockResolvedValue({ ok: true, json: async () => body });
+      vi.stubGlobal("fetch", fetchMock);
+      try {
+        const first = await fetchWithCache<typeof body>("data/huge.json", "ns-huge");
+        expect(first.fromCache).toBe(false);
+        // Over the 2 MiB cap, so nothing landed in localStorage…
+        expect(localStorage.getItem("pp_cache_ns-huge")).toBeNull();
+        // …but the session still serves it without a second network hit.
+        const second = await fetchWithCache<typeof body>("data/huge.json", "ns-huge");
+        expect(second).toEqual({ data: body, fromCache: true });
+        expect(fetchMock).toHaveBeenCalledTimes(1);
+      } finally {
+        vi.unstubAllGlobals();
+        clearAllCache();
+      }
     });
 
     it("surfaces the HTTP status when the response is not ok", async () => {

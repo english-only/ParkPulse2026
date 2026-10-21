@@ -10,6 +10,23 @@ const CACHE_PREFIX = "pp_cache_";
 
 interface CacheEntry<T> { data: T; ts: number }
 
+/**
+ * Session-memory tier.
+ *
+ * localStorage refuses payloads over MAX_ENTRY_BYTES so a single dataset
+ * cannot evict the whole origin, but applying that rule to the 5.9 MB
+ * stops.geojson (FR4.1) would re-download it on every map move, because
+ * loadPointsInBounds runs on every moveend. Everything fetched is therefore
+ * also held in this module-level map for the same TTL; localStorage stays the
+ * cross-session tier and keeps its cap.
+ */
+const memoryCache = new Map<string, CacheEntry<unknown>>();
+
+/** Test hook: drop the in-memory tier (localStorage is untouched). */
+export function __resetMemoryCache(): void {
+  memoryCache.clear();
+}
+
 /** Reports why an entry could not be persisted. Surfaced in the UI. */
 export type CacheNotice =
   | { kind: "stored"; key: string; bytes: number }
@@ -150,6 +167,7 @@ export function setCached<T>(cacheId: string, data: T): void {
 
 export function clearAllCache(): void {
   for (const k of cacheKeys()) localStorage.removeItem(k);
+  memoryCache.clear();
 }
 
 export async function fetchWithCache<T>(
@@ -157,11 +175,20 @@ export async function fetchWithCache<T>(
   ns?: string,
 ): Promise<{ data: T; fromCache: boolean }> {
   const ck = cacheId(url, ns);
+  const mem = memoryCache.get(ck);
+  if (mem) {
+    if (Date.now() - mem.ts <= CACHE_TTL) return { data: mem.data as T, fromCache: true };
+    memoryCache.delete(ck);
+  }
   const cached = getCached<T>(ck);
-  if (cached !== null) return { data: cached, fromCache: true };
+  if (cached !== null) {
+    memoryCache.set(ck, { data: cached, ts: Date.now() });
+    return { data: cached, fromCache: true };
+  }
   const res = await fetch(url);
   if (!res.ok) throw new Error(`HTTP ${res.status} fetching ${url}`);
   const data = (await res.json()) as T;
+  memoryCache.set(ck, { data, ts: Date.now() });
   setCached(ck, data);
   return { data, fromCache: false };
 }
