@@ -174,7 +174,14 @@ html{scroll-behavior:smooth}
 body{font-family:var(--pp-font);font-size:16px;line-height:1.6;color:var(--pp-text);background:var(--pp-bg);-webkit-font-smoothing:antialiased;transition:background .3s,color .3s}
 img{max-width:100%;height:auto;display:block}
 a{color:inherit;text-decoration:none}
-button{font-family:inherit;cursor:pointer;border:none;background:none}
+/* In @layer base: this file's hand-written rules are unlayered, and
+   unlayered styles beat Tailwind's layered utilities regardless of
+   specificity — `button{background:none}` was silently killing `bg-primary`
+   on vendored shadcn buttons (axe: 1.11:1 contrast). Base-layer rules still
+   beat preflight, but utilities can now override them as intended. */
+@layer base {
+  button{font-family:inherit;cursor:pointer;border:none;background:none}
+}
 ul,ol{list-style:none}
 h1,h2,h3,h4,h5,h6{font-family:var(--pp-font);font-weight:700;line-height:1.2;color:var(--pp-text);letter-spacing:-.02em}
 h1{font-weight:800;letter-spacing:-.03em}
@@ -397,15 +404,15 @@ h1{font-weight:800;letter-spacing:-.03em}
 .pp-footer-data ul li a{font-size:.85rem;color:var(--pp-footer-muted);transition:color var(--pp-transition);text-decoration:none}
 .pp-footer-data ul li a:hover{color:var(--pp-footer-text);text-decoration:underline}
 .pp-footer-bottom{border-top:1px solid rgba(255,255,255,.1);padding-top:1.25rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.5rem}
-.pp-footer-bottom p{font-size:.8rem;color:var(--pp-footer-muted);opacity:.7}
-.pp-footer-back-top{font-size:.72rem;color:var(--pp-footer-muted);background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);border-radius:var(--pp-radius-full);padding:.2rem .65rem;cursor:pointer;transition:background var(--pp-transition),opacity var(--pp-transition);opacity:.7}
+.pp-footer-bottom p{font-size:.8rem;color:var(--pp-footer-muted)}
+.pp-footer-back-top{font-size:.72rem;color:var(--pp-footer-muted);background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);border-radius:var(--pp-radius-full);padding:.2rem .65rem;cursor:pointer;transition:background var(--pp-transition),opacity var(--pp-transition)}
 .pp-footer-back-top:hover{background:rgba(255,255,255,.15);opacity:1}
 
 /* Compact footer for Explore page (full-height layout) */
 .pp-footer--compact .pp-footer-content{grid-template-columns:1fr;gap:1rem;padding:1rem 0}
 .pp-footer--compact .pp-footer-brand p,.pp-footer--compact .pp-footer-links,.pp-footer--compact .pp-footer-data{display:none}
 .pp-footer--compact .pp-footer-bottom{border-top:none;padding-top:0;justify-content:center}
-.pp-footer--compact .pp-footer-bottom p{font-size:.7rem;opacity:.6}
+.pp-footer--compact .pp-footer-bottom p{font-size:.7rem}
 
 /* ===== About ===== */
 .pp-about-main{flex:1}
@@ -489,12 +496,18 @@ h1{font-weight:800;letter-spacing:-.03em}
 .pp-shortcut-about-row span{font-size:.85rem;color:var(--pp-text-secondary)}
 .pp-inline-code{background:var(--pp-bg-alt);border:1px solid var(--pp-border);border-radius:4px;padding:.1rem .35rem;font-family:monospace;font-size:.85em}
 
-/* ===== Explore layout ===== */
-.pp-explore-page{display:flex;flex-direction:column;height:100vh;overflow:hidden}
+/* ===== Explore layout — explorer app shell: slim hero → rail + map =====
+   Desktop sizing lives in the "Explorer app shell (desktop)" block at the
+   END of this file — it must override base sidebar/map rules defined below
+   (source order beats media queries at equal specificity). Mobile keeps the
+   stacked, page-scrolling layout. */
+.pp-explore-page{display:flex;flex-direction:column;min-height:100vh;height:auto;overflow:visible}
 .pp-explore-page .pp-header{flex-shrink:0}
-.pp-explore-main{flex:1;display:flex;min-height:0;overflow:hidden}
-.pp-sidebar{width:340px;min-width:240px;max-width:500px;display:flex;flex-direction:column;background:var(--pp-surface);border-right:1px solid var(--pp-border);overflow:hidden;flex-shrink:0;transition:width .3s ease,min-width .3s ease;position:relative;height:100%}
-.pp-sidebar.collapsed{width:0;min-width:0;overflow:hidden}
+.pp-explore-main{flex:1;display:flex;flex-direction:column;overflow:visible;min-height:0}
+.pp-explorer{display:block}
+.pp-explore-hero-copy{min-width:0;flex:1 1 30ch}
+.pp-sidebar{width:auto;min-width:0;max-width:none;display:flex;flex-direction:column;background:var(--pp-surface);border-right:none;border-bottom:1px solid var(--pp-border);overflow:visible;flex:none;position:relative;height:auto}
+.pp-sidebar.collapsed{display:none}
 .pp-sidebar-header{display:flex;align-items:center;justify-content:space-between;padding:.625rem 1.25rem .5rem;border-bottom:1px solid var(--pp-border-light);flex-shrink:0}
 .pp-sidebar-header h2{font-size:1.1rem;display:flex;align-items:center;gap:.5rem}
 .pp-active-badge{display:inline-flex;align-items:center;justify-content:center;min-width:44px;height:44px;padding:0 .5rem;background:var(--pp-primary);color:#fff;border-radius:var(--pp-radius-full);font-size:.7rem;font-weight:700}
@@ -546,7 +559,7 @@ h1{font-weight:800;letter-spacing:-.03em}
 .pp-filter-label svg{width:14px;height:14px;color:var(--pp-primary);flex-shrink:0}
 
 /* Results */
-.pp-results-container{flex:1 1 auto;display:flex;flex-direction:column;min-height:0;min-height:360px;background:var(--pp-surface);position:relative}
+.pp-results-container{flex:none;display:flex;flex-direction:column;min-height:0;background:transparent;position:relative}
 .pp-results-header{display:flex;align-items:center;justify-content:space-between;padding:.55rem 1rem .35rem;flex-shrink:0}
 .pp-results-header h3{font-size:.9rem;font-weight:600}
 .pp-results-count{font-size:.8rem;color:var(--pp-text-muted)}
@@ -644,7 +657,7 @@ button.pp-type-breakdown-item.active{border-color:currentColor;background:var(--
 @keyframes pp-slide-up{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
 
 /* Map */
-.pp-map-container{flex:1;position:relative;min-width:0}
+.pp-map-container{flex:none;position:relative;min-width:0;width:100%;height:60vh;min-height:340px}
 #park-map{width:100% !important;height:100% !important}
 .pp-sidebar-open-btn{position:absolute;top:1rem;left:1rem;z-index:400;width:40px;height:40px;border-radius:var(--pp-radius-md);background:var(--pp-surface);box-shadow:var(--pp-shadow-md);display:flex;align-items:center;justify-content:center;color:var(--pp-text);transition:background var(--pp-transition),color var(--pp-transition);border:1px solid var(--pp-border-light)}
 .pp-sidebar-open-btn:hover{background:var(--pp-bg);color:var(--pp-primary)}
@@ -760,7 +773,7 @@ button.pp-type-breakdown-item.active{border-color:currentColor;background:var(--
   .pp-nav-links li:last-child a{border-bottom:none}
   .pp-header{position:relative}
   .pp-footer-content{grid-template-columns:1fr}
-  .pp-sidebar{width:100% !important;position:absolute;bottom:0;left:0;right:0;top:auto;max-height:65%;border-right:none;border-top:1px solid var(--pp-border);z-index:500}
+  .pp-sidebar{width:100% !important;position:relative;bottom:auto;top:auto;max-height:none;border-right:none;border-bottom:1px solid var(--pp-border);z-index:auto}
   .pp-sidebar.collapsed{display:none}
   .pp-toast-container{bottom:1rem;right:.75rem;left:.75rem}
   .pp-toast{max-width:100%}
@@ -922,6 +935,21 @@ button.pp-park-suburb-pill.pp-suburb-clickable:hover{background:var(--pp-green-5
 .pp-map-legend.collapsed .pp-map-legend-title{margin-bottom:0;padding-bottom:0;border-bottom:none}
 .pp-map-legend-item{display:flex;align-items:center;gap:.4rem;padding:.175rem 0;font-size:.73rem;color:var(--pp-text-secondary)}
 .pp-map-legend-dot{width:11px;height:11px;border-radius:50%;border:2px solid white;box-shadow:0 1px 3px rgba(0,0,0,.25);flex-shrink:0}
+/* Two-column key: park types | filter-toggled map layers. */
+.pp-map-legend-cols{display:flex;gap:.35rem 1.1rem}
+.pp-map-legend-col{min-width:0}
+.pp-map-legend-group{font-size:.6rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--pp-text-muted);margin:.3rem 0 .25rem;padding-bottom:.15rem;border-bottom:1px solid var(--pp-border-light)}
+.pp-map-legend-col > .pp-map-legend-group:first-child{margin-top:0}
+.pp-map-legend-toggle{background:none;border:none;cursor:pointer;font-family:inherit;text-align:left;width:100%}
+.pp-map-legend-toggle:hover{color:var(--pp-primary)}
+.pp-map-legend-toggle:focus-visible{outline:2px solid var(--pp-primary);outline-offset:1px;border-radius:3px}
+/* Off layers: hollow dashed swatch + struck-through label — the state reads
+   without relying on colour alone, and text contrast stays untouched. */
+.pp-map-legend-toggle.off .pp-map-legend-dot{background:transparent !important;border:2px dashed var(--pp-text-muted);box-shadow:none}
+.pp-map-legend-toggle.off > span:last-child{text-decoration:line-through;text-decoration-thickness:1px}
+.pp-map-legend-dots{display:inline-flex;gap:2px;flex-shrink:0}
+.pp-map-legend-hint{font-style:normal;font-size:.62rem;color:var(--pp-text-muted);margin-left:.3rem}
+.pp-map-legend{max-width:calc(100% - 5.5rem)}
 
 /* ===== Walking time badge ===== */
 .pp-walk-time{color:var(--pp-text-muted);font-weight:400;margin-left:1px}
@@ -997,7 +1025,7 @@ button.pp-park-suburb-pill.pp-suburb-clickable:hover{background:var(--pp-green-5
 @media (max-width:768px){
   .pp-mobile-fab{display:flex}
   .pp-sort-bar{padding:.375rem 1rem .25rem}
-  .pp-filters-container{max-height:50%}
+  .pp-filters-container{max-height:none}
   .pp-park-card{padding:.75rem .875rem}
 }
 
@@ -1191,3 +1219,118 @@ button.pp-park-suburb-pill.pp-suburb-clickable:hover{background:var(--pp-green-5
 .pp-council-legend-note{margin:.375rem 0 0;font-size:.68rem;color:var(--pp-text-muted)}
 .pp-council-legend-note.warn{color:#b42318}
 [data-theme="dark"] .pp-council-legend-note.warn{color:#ff9d9d}
+
+/* ===== Explore hero + results grid (UI-first redesign) ===== */
+/* ── Explore intro band ───────────────────────────────────────────────────
+   Compact by design: it states what the product is and shows the live
+   network stats, then hands the viewport to the explorer below. */
+.pp-explore-hero{padding:1.35rem 0 1rem;background:linear-gradient(180deg,var(--pp-bg-alt),var(--pp-bg));border-bottom:1px solid var(--pp-border-light);flex:none}
+.pp-explore-hero-inner{max-width:1760px;margin:0 auto;padding:0 1.5rem;display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:.75rem 2rem}
+.pp-explore-hero-kicker{margin:0 0 .35rem;font-size:.72rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--pp-primary)}
+.pp-explore-hero h1{margin:0 0 .35rem;font-size:clamp(1.45rem,2.6vw,2.05rem);line-height:1.15;max-width:32ch}
+.pp-explore-hero-sub{margin:0;max-width:70ch;color:var(--pp-text-muted);font-size:.92rem;line-height:1.5}
+.pp-explore-hero-actions{display:flex;flex-wrap:wrap;gap:.5rem;min-width:0;max-width:100%;flex-shrink:1}
+.pp-explore-hero-actions .pp-btn{padding:.55rem 1rem;font-size:.85rem}
+.pp-explore-hero-stats{display:flex;flex-wrap:wrap;gap:.4rem;max-width:1760px;margin:.8rem auto 0;padding:0 1.5rem;list-style:none}
+.pp-explore-hero-stat{display:inline-flex;align-items:baseline;gap:.35rem;background:var(--pp-surface);border:1px solid var(--pp-border-light);border-radius:var(--pp-radius-full);padding:.28rem .7rem;line-height:1.3}
+.pp-explore-hero-stat dt{font-size:.68rem;font-weight:600;letter-spacing:.03em;text-transform:uppercase;color:var(--pp-text-muted);margin:0}
+.pp-explore-hero-stat dd{margin:0;font-size:.82rem;font-weight:700;color:var(--pp-text);font-variant-numeric:tabular-nums}
+@media (max-width:640px){
+  .pp-explore-hero{padding:1rem 0 .75rem}
+  .pp-explore-hero-inner{padding:0 1rem}
+  .pp-explore-hero-stats{padding:0 1rem}
+  .pp-map-container{height:56vh;min-height:300px}
+}
+/* Results: one column inside the rail, responsive auto-fill only when the
+   rail is collapsed off and the list reflows full width. */
+.pp-results-list{display:grid;grid-template-columns:1fr;gap:.5rem;align-content:start;overflow:visible;contain:none;min-height:0;flex:none;padding:.5rem .25rem}
+.pp-results-list .pp-park-card{margin-bottom:0}
+
+/* FR7.1 — hover-on/hover-off shading palettes for selected-council
+   boundaries. The `coverage-grad palettes/*.png` assets are absent (TBD-9),
+   so the hover-on palette is an SVG linearGradient injected into the
+   boundary renderer by MultiCouncilPanel (`ensureShadeDefs`); each path
+   points at its colour's gradient via `--pp-shade`. Hover-on deepens the
+   fill (0.45 → 0.12 top-to-bottom ramp at full fill-opacity) and thickens the
+   stroke; hover-off returns to the flat 0.12 fill Leaflet set on the element. */
+.leaflet-overlay-pane path.pp-council-shade {
+  transition: fill-opacity 180ms ease, stroke-width 180ms ease;
+}
+.leaflet-overlay-pane path.pp-council-shade:hover {
+  fill: var(--pp-shade, currentColor);
+  fill-opacity: 1;
+  stroke-width: 3;
+}
+
+/* ───────────────────────────────────────────────────────────────────────────
+   shadcn/ui token bridge — Phase 6 dashboard (non-Explore surface only).
+
+   PRD §3.1 locks pp-* markup inside Explore and reserves the vendored
+   src/components/ui library for surfaces outside it. Tailwind v4 only emits
+   `bg-background` / `text-foreground` utilities from @theme entries, and the
+   vendored components speak shadcn's semantic colour names, so this block
+   aliases those names onto the existing pp-* tokens. Because the aliases
+   read var(--pp-*), every data-theme (light, dark, sunset, neon, minimal,
+   satellite) follows automatically — one palette, no theme drift.
+   ─────────────────────────────────────────────────────────────────────────── */
+:root {
+  /* Inverse text on primary buttons — mirrors .pp-btn-primary per theme. */
+  --pp-primary-fg: #ffffff;
+}
+[data-theme="dark"] {
+  --pp-primary-fg: #06210f;
+}
+[data-theme="neon"] {
+  --pp-primary-fg: #000000;
+}
+[data-theme="minimal"] {
+  --pp-primary-fg: #ffffff;
+}
+[data-theme="satellite"] {
+  --pp-primary-fg: #0f172a;
+}
+
+@theme inline {
+  --color-background: var(--pp-bg);
+  --color-foreground: var(--pp-text);
+  --color-card: var(--pp-surface);
+  --color-card-foreground: var(--pp-text);
+  --color-popover: var(--pp-surface);
+  --color-popover-foreground: var(--pp-text);
+  --color-primary: var(--pp-primary);
+  --color-primary-foreground: var(--pp-primary-fg);
+  --color-secondary: var(--pp-bg-alt);
+  --color-secondary-foreground: var(--pp-text);
+  --color-muted: var(--pp-bg-alt);
+  --color-muted-foreground: var(--pp-text-muted);
+  --color-accent: var(--pp-bg-alt);
+  --color-accent-foreground: var(--pp-primary-dark);
+  --color-destructive: #b42318;
+  --color-destructive-foreground: #ffffff;
+  --color-border: var(--pp-border);
+  --color-input: var(--pp-border);
+  --color-ring: var(--pp-primary);
+}
+
+/* ══ Explorer app shell (desktop) ════════════════════════════════════════
+   Deliberately LAST in this file: it overrides the base sidebar/map sizing
+   rules above at equal specificity. Desktop is a viewport-locked two-pane
+   workspace: slim intro band, then a scrolling controls/results rail on the
+   left and a full-height map on the right — map above the fold on load.
+   ≤900px keeps the stacked, document-scrolling layout defined earlier. */
+@media (min-width:901px){
+  .pp-explore-page{height:100vh;overflow:hidden}
+  .pp-explore-main{min-height:0}
+  .pp-explorer{flex:1 1 auto;min-height:0;display:grid;grid-template-columns:clamp(340px,30vw,420px) minmax(0,1fr);max-width:1760px;width:100%;margin:0 auto}
+  .pp-explorer.rail-collapsed{grid-template-columns:0 minmax(0,1fr)}
+  .pp-sidebar{height:100%;overflow-y:auto;overflow-x:hidden;overscroll-behavior:contain;border-right:1px solid var(--pp-border);border-bottom:none;padding-bottom:1rem}
+  .pp-map-container{height:100%;min-height:0;max-height:none}
+  /* The search box stays reachable while the rail scrolls past it. */
+  .pp-search-container{position:sticky;top:0;z-index:6;background:var(--pp-surface)}
+}
+/* Short laptop viewports: tighten the intro band so the map keeps height. */
+@media (min-width:901px) and (max-height:760px){
+  .pp-explore-hero{padding:.85rem 0 .6rem}
+  .pp-explore-hero-stats{margin-top:.5rem}
+  .pp-explore-hero-sub{font-size:.88rem}
+}

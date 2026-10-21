@@ -97,8 +97,14 @@ test.describe("park modal", () => {
   test("is labelled by its heading for screen readers", async ({ page }) => {
     const dialog = page.getByRole("dialog");
     const name = await dialog.getAttribute("aria-labelledby");
-    expect(name).toBe("modal-title");
-    await expect(page.locator(`#${name}`)).toBeVisible();
+    expect(name, "aria-labelledby must be set").toBeTruthy();
+    // Attribute selector: Radix's generated ids contain characters that are
+    // illegal bare in a #css-id selector.
+    const target = page.locator(`[id="${name}"]`);
+    await expect(target).toBeVisible();
+    // The referenced element is the dialog's own heading — Radix binds the
+    // Title it renders, so the accessible name equals the heading text.
+    await expect(dialog).toHaveAccessibleName((await target.textContent()) ?? "");
   });
 
   test("closes on Escape and returns focus to the trigger", async ({ page }) => {
@@ -113,7 +119,7 @@ test.describe("park modal", () => {
     // Regression guard: the Radix overlay is a sibling of the dialog content, so
     // an overlay z-index above the content swallowed every click inside the
     // modal and closed it instead of activating the button underneath.
-    const title = page.locator("h2#modal-title");
+    const title = page.getByRole("dialog").getByRole("heading", { level: 2 });
     const first = await title.textContent();
 
     await page.getByRole("button", { name: "Next park" }).click();
@@ -122,7 +128,7 @@ test.describe("park modal", () => {
   });
 
   test("navigates between parks and back", async ({ page }) => {
-    const title = page.locator("h2#modal-title");
+    const title = page.getByRole("dialog").getByRole("heading", { level: 2 });
     const first = await title.textContent();
 
     await page.getByRole("button", { name: "Next park" }).click();
@@ -151,5 +157,90 @@ test.describe("routing", () => {
     await page.goto("/explore");
     await page.reload();
     await expect(page.getByText(/locations$/).first()).toBeVisible({ timeout: 45_000 });
+  });
+});test.describe("layout (UI-first redesign)", () => {
+  test("the explorer puts the controls rail left and the map right, above the fold", async ({ page }) => {
+    await gotoExplore(page);
+
+    const rects = await page.evaluate(() => {
+      const get = (sel: string) => {
+        const el = document.querySelector(sel);
+        if (!el) return null;
+        const r = el.getBoundingClientRect();
+        return { top: Math.round(r.top), left: Math.round(r.left), right: Math.round(r.right), bottom: Math.round(r.bottom), width: Math.round(r.width), height: Math.round(r.height) };
+      };
+      const rail = document.querySelector(".pp-sidebar");
+      return {
+        footers: document.querySelectorAll(".pp-footer").length,
+        hero: get(".pp-explore-hero"),
+        explorer: get(".pp-explorer"),
+        aside: get(".pp-sidebar"),
+        map: get(".pp-map-container"),
+        railScrolls: rail
+          ? rail.scrollHeight > rail.clientHeight && getComputedStyle(rail).overflowY === "auto"
+          : false,
+        docScrolls: document.documentElement.scrollHeight > window.innerHeight,
+        vw: window.innerWidth,
+        vh: window.innerHeight,
+      };
+    });
+
+    // The compact footer "chin" is gone from Explore entirely.
+    expect(rects.footers).toBe(0);
+    expect(rects.hero).not.toBeNull();
+    expect(rects.explorer).not.toBeNull();
+    expect(rects.aside).not.toBeNull();
+    expect(rects.map).not.toBeNull();
+
+    // Slim intro band on top; the explorer fills the rest of the viewport.
+    expect(rects.explorer!.top).toBeGreaterThanOrEqual(rects.hero!.bottom - 1);
+    expect(Math.abs(rects.aside!.top - rects.map!.top)).toBeLessThanOrEqual(1);
+
+    // Controls rail on the LEFT, map the wider right-hand pane.
+    expect(rects.aside!.right).toBeLessThanOrEqual(rects.map!.left + 1);
+    expect(rects.map!.left).toBeGreaterThan(0);
+    expect(rects.map!.width).toBeGreaterThan(rects.aside!.width);
+
+    // The map is fully visible above the fold on load; the shell itself
+    // does not page-scroll — the rail scrolls its own overflow instead.
+    expect(rects.map!.bottom).toBeLessThanOrEqual(rects.vh + 1);
+    expect(rects.map!.height).toBeGreaterThanOrEqual(300);
+    expect(rects.docScrolls).toBe(false);
+    expect(rects.railScrolls).toBe(true);
+
+    // Hero stat tiles render from live data (value or an honest "—").
+    const tiles = page.locator(".pp-explore-hero-stat");
+    expect(await tiles.count()).toBeGreaterThanOrEqual(8);
+    await expect(tiles.filter({ hasText: "Parks" }).first().locator("dd")).not.toContainText("—");
+  });
+
+  test("all shipped data layers are on by default; transport and missing data are opt-in", async ({ page }) => {
+    await gotoExplore(page);
+
+    // The filter panel starts collapsed — expand it so the layer toggles
+    // render, the same first click a user makes.
+    await page.locator(".pp-filters-toggle").click();
+
+    const toggles = await page.evaluate(() => {
+      const boxes = Array.from(document.querySelectorAll<HTMLInputElement>(".pp-filter-checkbox input"));
+      return Object.fromEntries(boxes.map(b => [b.closest("label")?.textContent?.trim() ?? "?", b.checked]));
+    });
+
+    // Must see every dataset that actually ships in public/data.
+    for (const shipped of [/Trees/i, /Toilets/i, /Fountain/i, /Dog/i, /NPWS/i]) {
+      const entry = Object.entries(toggles).find(([k]) => shipped.test(k));
+      expect(entry?.[1], `${shipped} layer should be on by default`).toBe(true);
+    }
+    // Transport is the one opt-in layer; Inner West ships no data files
+    // (public/data/inner-west/ is empty), so it must not default on either.
+    for (const optIn of [/transport/i, /inner west|\biw/i]) {
+      const entry = Object.entries(toggles).find(([k]) => optIn.test(k));
+      if (entry) expect(entry[1], `${optIn} layer should be opt-in`).toBe(false);
+    }
+    // Park-type chips are restrictions, not layers — off = all types shown.
+    for (const chip of [/playground/i, /sports/i, /iconic/i, /neighbourhood/i, /pocket/i]) {
+      const entry = Object.entries(toggles).find(([k]) => chip.test(k));
+      if (entry) expect(entry[1], `${chip} chip should not restrict by default`).toBe(false);
+    }
   });
 });

@@ -1,6 +1,7 @@
 import { useMemo, useState } from "react";
 import {
   computeSelectionStats,
+  type CanopySummary,
   type CouncilIndexEntry,
   type SelectionPark,
   type SelectionStats,
@@ -14,7 +15,10 @@ import {
  * playgrounds / park area that survived the point-in-polygon scoping of
  * FR1.6, and — FR4.5 — the transit stops inside the selection, computed from
  * the converted stops.geojson. While stop data has not been fetched yet the
- * transit row renders "—" with a tooltip rather than a fabricated zero.
+ * transit row renders "—" with a tooltip rather than a fabricated zero, and
+ * — FR5.4 — the canopy row shows the measured percentage (area-weighted for
+ * multi-council scopes) or "—" + "pending data" when the LGA was never
+ * measured, again never a fabricated 0.
  */
 export interface CouncilStatsProps {
   selected: readonly CouncilIndexEntry[];
@@ -23,6 +27,8 @@ export interface CouncilStatsProps {
   transitStops: number | null;
   /** True while stops.geojson is being fetched. */
   transitLoading: boolean;
+  /** Canopy summary for the scope (FR5.4); `percent: null` → "—" + pending. */
+  canopy: CanopySummary;
   /** Total across every council in the index; 0 while loading. */
   totalAreaKm2: number;
   /** How many councils exist in the index (network-wide row). */
@@ -46,6 +52,7 @@ export default function CouncilStats({
   parksInSelection,
   transitStops,
   transitLoading,
+  canopy,
   totalAreaKm2,
   councilTotal,
   networkParks,
@@ -118,6 +125,22 @@ export default function CouncilStats({
       key: "parksArea",
       label: "Parks area",
       node: <>{(scoped ? stats.parksAreaHa : networkParksAreaHa).toLocaleString()} ha</>,
+    },
+    {
+      key: "canopy",
+      label: scoped ? "Canopy (selection)" : "Canopy",
+      node:
+        canopy.percent !== null ? (
+          <>{canopy.percent}%</>
+        ) : (
+          <span className="pp-stat-pending">—</span>
+        ),
+      title:
+        canopy.percent === null
+          ? "Canopy data pending"
+          : canopy.pending > 0
+            ? `Area-weighted mean of ${canopy.total - canopy.pending} of ${canopy.total} councils; ${canopy.pending} pending data`
+            : undefined,
     },
     {
       key: "transit",

@@ -23,6 +23,12 @@ export interface CouncilIndexEntry {
   centroid: [number, number];
   /** Path relative to `public/data/`, e.g. `boundaries/councils/blacktown-city-council.geojson`. */
   geometry_file: string;
+  /**
+   * PRD Phase 5 (FR5.2): integer 0–100 written by `canopy-extract.mjs` via a
+   * rebuild of the index, or `null` when this LGA has not been measured.
+   * `null` must render as "—" + "pending data", never as 0 (FR5.4).
+   */
+  canopy_percent?: number | null;
 }
 
 export interface CouncilIndex {
@@ -299,6 +305,48 @@ export function computeSelectionStats(options: {
     parks: parksInSelection.length,
     playgrounds,
     parksAreaHa: round1(areaM2 / 10000),
+  };
+}
+
+export interface CanopySummary {
+  /** Area-weighted mean over the councils that were measured; null when none were. */
+  percent: number | null;
+  /** Councils with no measured value yet (rendered "pending data"). */
+  pending: number;
+  /** How many councils the summary covers (its denominator). */
+  total: number;
+}
+
+/**
+ * FR5.4: canopy is only ever shown when it was actually measured.
+ *
+ * - The mean is weighted by `area_km2`, because averaging a 40 % Hornsby with
+ *   a 15 % Burwood as "27.5 %" would misstate both, and a multi-council
+ *   selection spans very differently sized LGAs.
+ * - Nothing measured → `null` (panel renders "—" + "pending data"); a 0 is
+ *   never invented (FR5.4 / §3.7-1).
+ * - A selection that mixes measured and unmeasured councils reports the mean
+ *   of the measured ones plus the pending count, which the tooltip discloses.
+ */
+export function computeCanopySummary(
+  entries: readonly CouncilIndexEntry[],
+): CanopySummary {
+  let weighted = 0;
+  let knownArea = 0;
+  let pending = 0;
+  for (const entry of entries) {
+    const pct = entry.canopy_percent;
+    if (typeof pct === "number" && Number.isFinite(pct)) {
+      weighted += pct * entry.area_km2;
+      knownArea += entry.area_km2;
+    } else {
+      pending++;
+    }
+  }
+  return {
+    percent: knownArea > 0 ? Math.round(weighted / knownArea) : null,
+    pending,
+    total: entries.length,
   };
 }
 

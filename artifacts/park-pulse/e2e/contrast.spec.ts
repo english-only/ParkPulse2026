@@ -1,3 +1,4 @@
+import AxeBuilder from "@axe-core/playwright";
 import { expect, test } from "@playwright/test";
 
 /**
@@ -120,6 +121,31 @@ test.describe("colour contrast", () => {
         ratio(colour, backdrop),
         `${label} (${token} = ${raw}) needs ${minimum}:1 in light theme`,
       ).toBeGreaterThanOrEqual(minimum);
+    }
+  });
+
+  test("dashboard body text meets AA in both themes (FR7.4)", async ({ page }) => {
+    // The dashboard is the second surface FR7.4 names: vendored shadcn
+    // controls plus the pp-* page shell. Rather than hand-picking selectors,
+    // run axe's colour-contrast rule over the whole page in each data-theme —
+    // that is exactly the check a manual audit would do, but repeatable.
+    await page.goto("/dashboard");
+    await expect(page.getByRole("heading", { name: "Council insights", level: 1 })).toBeVisible();
+    await expect(page.getByRole("status").filter({ hasText: /Loading suburbs/ })).toHaveCount(0, {
+      timeout: 15_000,
+    });
+
+    for (const theme of ["dark", "light"] as const) {
+      await page.evaluate(t => document.documentElement.setAttribute("data-theme", t), theme);
+      await settleBackground(page);
+
+      const result = await new AxeBuilder({ page })
+        .withRules(["color-contrast"])
+        .analyze();
+      const violations = result.violations.map(
+        v => `${v.id} (${theme}): ${v.help} → ${v.nodes.length} node(s)`,
+      );
+      expect(violations, `${theme} theme contrast violations`).toEqual([]);
     }
   });
 

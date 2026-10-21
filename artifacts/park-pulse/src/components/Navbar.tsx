@@ -56,6 +56,11 @@ export default function Navbar() {
               </Link>
             </li>
             <li>
+              <Link href="/dashboard" className={location === "/dashboard" ? "active" : ""} onClick={() => setMenuOpen(false)}>
+                Insights
+              </Link>
+            </li>
+            <li>
               <Link href="/about" className={location === "/about" ? "active" : ""} onClick={() => setMenuOpen(false)}>
                 About
               </Link>

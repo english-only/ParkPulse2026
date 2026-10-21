@@ -12,11 +12,13 @@ out-tsc
 # artifacts/park-pulse/scripts/shard-trees.mjs on every dev/build)
 artifacts/park-pulse/public/data/trees/
 
-# generated council/transport layers — rebuilt by build-councils.mjs,
-# shard-trees.mjs and gtfs-convert.mjs; never committed per repo policy
+# generated council/transport/canopy layers — rebuilt by build-councils.mjs,
+# shard-trees.mjs, gtfs-convert.mjs and canopy-extract.mjs; never committed
+# per repo policy (PRD §3.7-5)
 artifacts/park-pulse/public/data/boundaries/
 artifacts/park-pulse/public/data/transport/
 artifacts/park-pulse/public/data/councils-trees/
+artifacts/park-pulse/public/data/canopies/
 
 # dependencies
 node_modules

@@ -90,10 +90,15 @@
 
 ### 4. **Canopy Cover Data (4 files - 4 GB total)**
 
-All files contain TIFF raster layers with 30m pixel resolution, organized by LGA name.
+One GeoTIFF per LGA, organised by LGA directory name. **Verified 2026-10-16** by reading the tiles (see `Data/council-sources.md` §6):
+
+- **Resolution:** ~0.48 m binary mask (`{0, 1}`), *not* 30 m — each tile carries 10 overview levels, level 6 ≈ 31 m, level 5 ≈ 15.36 m.
+- **Projection:** GDA2020 / MGA zone 56 (EPSG:7856); tiles for far-west LGAs would use zones 55/54.
+- **Extent:** 33 tiles total (one per council of our 35 except Central Coast and Unincorporated).
+- **Converted:** ✓ `node artifacts/park-pulse/scripts/canopy-extract.mjs --all` → `public/data/canopies/{lga_id}.geojson` + `index.json`, scalar merged into `councils-index.json` (`canopy_percent` 33/35). GDAL is absent in this environment (TBD-6), so the FR5.1 documented fallback (GeoTIFF.js + proj4) is the shipped, tested path.
 
 #### 4.1 canopy-lgas-a-e-gda2020.zip (222 MB)
-- **LGAs Included:** Bayside, Blacktown, Blue Mountains, Burwood, Camden, Campbelltown, Canada Bay, Canterbury-Bankstown, Cumberland
+- **LGAs Included (9, verified):** Bayside, Blacktown, Blue Mountains, Burwood, Camden, Campbelltown, Canada Bay, Canterbury-Bankstown, Cumberland
 - **Files:**
   - `Bayside/BAYSIDE_2024_Canopy.tif` (8.3 MB)
   - `Blacktown/BLACKTOWN_2024_Canopy.tif` (38 MB)
@@ -106,38 +111,34 @@ All files contain TIFF raster layers with 30m pixel resolution, organized by LGA
   - `Cumberland/CUMBERLAND_2024_Canopy.tif` (13 MB)
   - Metadata PDFs included
 - **Purpose:** Calculate % canopy cover per LGA, assess green-blue infrastructure connectivity
-- **Status:** ⚠️ Needs conversion to GeoJSON raster layers per council (use GDAL/qgis)
+- **Status:** ✓ Converted per council by `scripts/canopy-extract.mjs` (fallback path — GDAL absent, TBD-6)
 - **Key Metrics:**
-  - Raster type: Continuous canopy cover (0-100%?)
-  - Projection: GDA2020 / MGA Zone 56, 55, 54
-  - Resolution: 30 m pixels
+  - Raster type: binary canopy mask, values {0, 1} (verified; a 0–100 continuous layer was the earlier guess)
+  - Projection: GDA2020 / MGA Zone 56 (EPSG:7856)
+  - Resolution: ~0.48 m with 10 overview levels (level 5 ≈ 15.36 m, level 6 ≈ 31 m)
   - Date: 2024
-  - Origin: NSW Government
+  - Origin: NSW Government (Planning Portal open data, CC BY-NC-ND 4.0)
+  - Results: per-LGA percentages in `Data/council-sources.md` §6 (provisional, TBD-11)
 
 #### 4.2 canopy-lgas-f-j-gda2020.zip (229 MB)
-- **LGAs Included:** Fairfield, Georges River, Hacking, Hornsby, Inner West Council, Ku-ring-gai, Lane Cove, Leichhardt, Liverpool
+- **LGAs Included (6, verified):** Fairfield, Georges River, Hawkesbury, Hornsby, Hunters Hill, Inner West
 - **Files:**
   - `Fairfield/Fairfield_2024_Canopy.tif`
   - `Georges River/Georges_River_2024_Canopy.tif`
-  - `Hacking/Hacking_2024_Canopy.tif` (Note: Not a LGA)
+  - `Hawkesbury/HAWKESBURY_2024_Canopy.tif` (233 MB — the largest tile)
   - `Hornsby/Hornsby_2024_Canopy.tif`
+  - `Hunters Hill/Hunters_Hill_2024_Canopy.tif`
   - `Inner West Council/Inner_West_Council_2024_Canopy.tif`
-  - `Ku-ring-gai/Ku-ring-gai_2024_Canopy.tif`
-  - `Lane Cove/Lane_Cove_2024_Canopy.tif`
-  - `Leichhardt/Leichhardt_2024_Canopy.tif`
-  - `Liverpool/Liverpool_2024_Canopy.tif`
   - Metadata PDFs included
-- **Status:** ⚠️ Needs conversion to GeoJSON raster layers per council
+- **Status:** ✓ Converted per council by `scripts/canopy-extract.mjs`
 
 #### 4.3 canopy-lgas-k-s-gda2020.zip (217 MB)
-- **LGAs Included:** Kogarah, Ku-ring-gai, Lane Cove, Leichhardt
-  - NOTE: Ku-ring-gai, Lane Cove, Leichhardt appear in both f-j and k-s
-  - NOTE: Includes Hacking shire instead of Ku-ring-gai again
-- **Status:** ⚠️ Duplicate councils detected - verify final list
+- **LGAs Included (13, verified):** Ku-ring-gai, Lane Cove, Liverpool, Mosman, Northern Beaches, North Sydney, Parramatta, Penrith, Randwick, Ryde, Strathfield, Sutherland Shire, Sydney
+- **Status:** ✓ Converted per council by `scripts/canopy-extract.mjs` (earlier “duplicate councils / Kogarah” note was wrong — the listing above is what the zip contains)
 
 #### 4.4 canopy-lgas-t-z-gda2020.zip (216 MB)
-- **LGAs Included:** Randwick, Rockdale, Sutherland Shire, Waverley, Woollahra, Whitehaven, Willoughby
-- **Status:** ⚠️ Needs conversion to GeoJSON raster layers per council
+- **LGAs Included (5, verified):** The Hills Shire, Waverley, Willoughby, Wollondilly, Woollahra
+- **Status:** ✓ Converted per council by `scripts/canopy-extract.mjs`
 
 ---
 

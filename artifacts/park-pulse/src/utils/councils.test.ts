@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 import {
   COUNCIL_PALETTE,
   bboxOfGeometry,
+  computeCanopySummary,
   computeSelectionStats,
   councilColor,
   filterByCouncils,
@@ -309,5 +310,50 @@ describe("deep links", () => {
 
   it("omits mode for a single-council single-mode selection", () => {
     expect(serializeCouncilsParam(["lga-3"], "single")).toBe("councils=lga-3");
+  });
+});
+
+describe("computeCanopySummary (FR5.4)", () => {
+  it("weights the mean by area across measured councils", () => {
+    const big = entry({ lga_id: "a", area_km2: 300, canopy_percent: 10 });
+    const small = entry({ lga_id: "b", area_km2: 100, canopy_percent: 30 });
+    // (10×300 + 30×100) / 400 = 15 — a naive mean would claim 20.
+    expect(computeCanopySummary([big, small])).toEqual({ percent: 15, pending: 0, total: 2 });
+  });
+
+  it("rounds the weighted mean to a whole percent", () => {
+    const a = entry({ lga_id: "a", area_km2: 1, canopy_percent: 10 });
+    const b = entry({ lga_id: "b", area_km2: 2, canopy_percent: 11 });
+    // 32/3 = 10.666… → 11
+    expect(computeCanopySummary([a, b]).percent).toBe(11);
+  });
+
+  it("never invents a 0 when nothing in scope was measured", () => {
+    const explicitNull = entry({ canopy_percent: null });
+    const absent = entry(); // index row without the field at all
+    expect(computeCanopySummary([explicitNull, absent])).toEqual({
+      percent: null,
+      pending: 2,
+      total: 2,
+    });
+    expect(computeCanopySummary([])).toEqual({ percent: null, pending: 0, total: 0 });
+  });
+
+  it("reports the measured mean plus the pending count when coverage is mixed", () => {
+    const measured = entry({ lga_id: "a", area_km2: 100, canopy_percent: 20 });
+    const pending = entry({ lga_id: "b", area_km2: 100, canopy_percent: null });
+    expect(computeCanopySummary([measured, pending])).toEqual({
+      percent: 20,
+      pending: 1,
+      total: 2,
+    });
+  });
+
+  it("treats non-finite values as pending rather than 0", () => {
+    expect(computeCanopySummary([entry({ canopy_percent: Number.NaN })])).toEqual({
+      percent: null,
+      pending: 1,
+      total: 1,
+    });
   });
 });

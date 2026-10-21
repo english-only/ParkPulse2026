@@ -1,0 +1,10 @@
+tunnel: park-pulse
+protocol: quic
+metrics: localhost:3001
+copy_headers: ["Access-Control-Allow-Origin", "Access-Control-Allow-Methods", "Access-Control-Allow-Headers"]
+originRequest:
+  originServerName: localhost
+  noTLS: true
+ingress:
+  - service: http://localhost:4173
+  - service: http_status:404

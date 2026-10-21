@@ -1,0 +1,40 @@
+- generic [ref=f1e1]:
+  - link "Skip to content" [ref=f1e2] [cursor=pointer]:
+    - /url: "#main-content"
+  - generic [ref=f1e4]:
+    - generic [ref=f1e6]:
+      - generic [ref=f1e7]:
+        - generic [ref=f1e8]:
+          - generic [ref=f1e9]: hub
+          - generic [ref=f1e11]: OmniRoute
+        - heading "Sign in" [level=1] [ref=f1e12]
+        - paragraph [ref=f1e13]: Enter your password to continue
+      - generic [ref=f1e14]:
+        - generic [ref=f1e15]:
+          - text: Password
+          - textbox "Enter your password to continue" [active] [ref=f1e18]
+          - paragraph [ref=f1e19]: "Default password: CHANGEME (unless INITIAL_PASSWORD was set)"
+        - button "Continue" [ref=f1e20] [cursor=pointer]
+      - link "Forgot password?" [ref=f1e22] [cursor=pointer]:
+        - /url: /forgot-password
+    - generic [ref=f1e25]:
+      - generic [ref=f1e26]:
+        - heading "Unified AI API Proxy" [level=2] [ref=f1e27]
+        - paragraph [ref=f1e28]: Route requests to multiple AI providers through a single endpoint. Load balancing, failover, and usage tracking built in.
+      - generic [ref=f1e29]:
+        - generic [ref=f1e30]:
+          - generic [ref=f1e31]: swap_horiz
+          - generic [ref=f1e33]:
+            - heading "Multi-Provider" [level=3] [ref=f1e34]
+            - paragraph [ref=f1e35]: OpenAI, Anthropic, Google, and more
+        - generic [ref=f1e36]:
+          - generic [ref=f1e37]: speed
+          - generic [ref=f1e39]:
+            - heading "Load Balancing" [level=3] [ref=f1e40]
+            - paragraph [ref=f1e41]: Distribute requests intelligently
+        - generic [ref=f1e42]:
+          - generic [ref=f1e43]: analytics
+          - generic [ref=f1e45]:
+            - heading "Usage Tracking" [level=3] [ref=f1e46]
+            - paragraph [ref=f1e47]: Monitor costs and tokens
+  - alert [ref=f1e48]

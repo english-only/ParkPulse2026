@@ -98,6 +98,13 @@ test.describe("council governance", () => {
     await expect
       .poll(() => page.locator(".leaflet-overlay-pane path").count(), { timeout: 15_000 })
       .toBeGreaterThanOrEqual(2);
+
+    // The multi-mode popup stays open by design after each pick; dismiss it
+    // (clicking the trigger toggles it closed, the same affordance a mouse
+    // user has) before reaching for the chip remove it would otherwise
+    // overlay.
+    await page.getByRole("combobox", { name: "Select a council" }).click();
+    await expect(page.getByRole("listbox")).toBeHidden();
     const strokeColors = await page.evaluate(() => {
       const paths = Array.from(
         document.querySelectorAll<SVGPathElement>(".leaflet-overlay-pane path"),
@@ -157,12 +164,14 @@ test.describe("council governance", () => {
     await page.keyboard.press("Enter");
     await expect(page.locator(".pp-council-chip")).toContainText("City of Parramatta Council");
 
-    // Turn on the trees layer. The input is visually hidden behind the
-    // pp-checkmark (clip-path), so hit-test it through its <label> wrapper —
-    // the same target a mouse user clicks.
+    // Turn on the trees layer (it ships on by default now — click only if
+    // off, so the resolver still refetches for the selected council). The
+    // input is visually hidden behind the pp-checkmark (clip-path), so
+    // hit-test it through its <label> wrapper — the same target a mouse user
+    // clicks.
     await page.locator(".pp-filters-toggle").click();
     const treesLabel = page.locator("label.pp-filter-checkbox").filter({ hasText: /^Trees/ });
-    await treesLabel.click();
+    if (!(await treesLabel.locator("input").isChecked())) await treesLabel.click();
     await expect(treesLabel.locator("input")).toBeChecked();
 
     // The live layer count must report the council shard set's total
@@ -201,5 +210,74 @@ test.describe("council governance", () => {
     await expect(stats.locator(".pp-council-stat").filter({ hasText: /^Area/ })).toContainText("km²");
     await expect(stats.locator(".pp-council-stat").filter({ hasText: "Coverage" })).toContainText("%");
     await expect(statsParks(page)).not.toContainText("—");
+  });
+
+  test("boundary shading applies the hover-on gradient and reverts on hover-off (FR7.1)", async ({ page }) => {
+    // The coverage-grad palette PNGs are absent (TBD-9), so the hover-on state
+    // is an SVG linearGradient injected into the boundary renderer. Hover-off
+    // is the flat fill Leaflet set on the path.
+    await gotoExplore(page);
+    await page.getByRole("combobox", { name: "Select a council" }).click();
+    await page.getByRole("option", { name: /Randwick City Council/ }).click();
+
+    const path = page.locator("path.pp-council-shade").first();
+    await expect(path).toBeVisible();
+
+    // The overlay layers now ship on by default, and their markers render
+    // above the overlay pane — one parked over the polygon's centre would
+    // swallow the hover. Switch the new default layers off for this test so
+    // the boundary is hoverable exactly as it was before the redesign; the
+    // FR7.1 contract under test is the boundary's own hover state.
+    await page.locator(".pp-filters-toggle").click();
+    for (const name of [/^Trees/, /^Toilets/, /Fountain/i, /Dog/i, /NPWS/i]) {
+      const label = page.locator("label.pp-filter-checkbox").filter({ hasText: name });
+      if (await label.count()) {
+        if (await label.locator("input").isChecked()) await label.click();
+        await expect(label.locator("input")).not.toBeChecked();
+      }
+    }
+    await page.locator(".pp-filters-toggle").click(); // collapse so it can't cover the map
+
+    // Hover-off baseline: the defs are present, the path points at its
+    // colour's gradient, and the flat fill opacity is FR1.4's 0.12.
+    await expect(page.locator("svg #pp-shade-defs linearGradient").first()).toHaveCount(1);
+    expect(await path.evaluate(el => el.style.getPropertyValue("--pp-shade"))).toMatch(
+      /^url\(#pp-shade-\d\)$/,
+    );
+    await expect(path).toHaveAttribute("fill-opacity", "0.12");
+
+    // Hover-on: a real mouse move into the polygon swaps in the gradient fill
+    // at full opacity and thickens the stroke. The map sits below the fold in
+    // the UI-first layout — bring the path on-screen first, otherwise the
+    // mouse move lands outside the viewport and nothing hovers.
+    await path.scrollIntoViewIfNeeded();
+    const box = await path.boundingBox();
+    expect(box).not.toBeNull();
+    // Markers render above the boundary pane, so a centre-of-bbox move can
+    // land on a park pin instead of the polygon. Sample the bbox for a point
+    // where the path itself is the hit target, then hover exactly there.
+    const spot = await path.evaluate((el) => {
+      const b = el.getBoundingClientRect();
+      for (let gy = 0.05; gy <= 0.95; gy += 0.05) {
+        for (let gx = 0.05; gx <= 0.95; gx += 0.05) {
+          const x = b.left + b.width * gx;
+          const y = b.top + b.height * gy;
+          if (el.contains(document.elementFromPoint(x, y))) return { x, y };
+        }
+      }
+      return null;
+    });
+    expect(spot, "no hit-testable point inside the council polygon").not.toBeNull();
+    await page.mouse.move(spot!.x, spot!.y);
+    await expect
+      .poll(() => path.evaluate(el => getComputedStyle(el).fillOpacity))
+      .toBe("1");
+    expect(await path.evaluate(el => getComputedStyle(el).fill)).toContain("url(");
+
+    // Hover-off: moving away restores the flat 0.12 fill.
+    await page.mouse.move(0, 0);
+    await expect
+      .poll(() => path.evaluate(el => getComputedStyle(el).fillOpacity))
+      .toBe("0.12");
   });
 });

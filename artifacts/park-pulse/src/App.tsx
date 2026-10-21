@@ -8,6 +8,7 @@ import { ToastProvider } from "@/context/ToastContext";
 const Home = lazy(() => import("@/pages/Home"));
 const Explore = lazy(() => import("@/pages/Explore"));
 const About = lazy(() => import("@/pages/About"));
+const Dashboard = lazy(() => import("@/pages/Dashboard"));
 const NotFound = lazy(() => import("@/pages/not-found"));
 
 /** Minimal route-transition placeholder. Lives in index.css (.pp-route-loader). */
@@ -25,6 +26,7 @@ function Router() {
       <Switch>
         <Route path="/" component={Home} />
         <Route path="/explore" component={Explore} />
+        <Route path="/dashboard" component={Dashboard} />
         <Route path="/about" component={About} />
         <Route component={NotFound} />
       </Switch>

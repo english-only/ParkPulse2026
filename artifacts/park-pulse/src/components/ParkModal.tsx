@@ -232,7 +232,6 @@ export default function ParkModal({
         <DialogPrimitive.Overlay className="pp-modal-overlay" />
         <DialogPrimitive.Content
           className="pp-modal-content"
-          aria-labelledby="modal-title"
           aria-describedby="modal-description"
           onKeyDown={handleKeyDown}
           onOpenAutoFocus={(e) => {
@@ -289,9 +288,10 @@ export default function ParkModal({
           )}
 
           <div className="pp-modal-header">
-            <DialogPrimitive.Title asChild>
-              <h2 id="modal-title">{park.name}</h2>
-            </DialogPrimitive.Title>
+            {/* Radix binds aria-labelledby to the id this Title renders —
+                forcing our own id here would orphan that binding (and trip
+                Radix's missing-DialogTitle warning). Default tag is h2. */}
+            <DialogPrimitive.Title>{park.name}</DialogPrimitive.Title>
             <DialogPrimitive.Description>
               <div className="pp-visually-hidden" id="modal-description">
                 {park.suburb && `${park.suburb}, NSW. `}

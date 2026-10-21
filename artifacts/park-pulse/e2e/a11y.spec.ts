@@ -39,6 +39,18 @@ test.describe("accessibility", () => {
     expect(violationsOf(await analyse(page))).toEqual([]);
   });
 
+  test("dashboard has no serious or critical violations", async ({ page }) => {
+    // PRD Phase 6 / FR7.4: the non-Explore surface (vendored shadcn controls,
+    // filter grid, stats table) must clear the same axe bar.
+    await page.goto("/dashboard");
+    await expect(page.getByRole("heading", { name: "Council insights", level: 1 })).toBeVisible();
+    await expect(page.getByRole("status").filter({ hasText: /Loading suburbs/ })).toHaveCount(0, {
+      timeout: 15_000,
+    });
+
+    expect(violationsOf(await analyse(page))).toEqual([]);
+  });
+
   test("every park marker popup is keyboard reachable", async ({ page }) => {
     await page.goto("/explore");
     await expect(page.getByText(/locations$/).first()).toBeVisible({ timeout: 45_000 });

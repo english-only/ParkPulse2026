@@ -1,6 +1,11 @@
 import { useEffect, useMemo } from "react";
 import L from "leaflet";
-import { councilColor, unionBBox, type CouncilIndexEntry } from "../utils/councils";
+import {
+  COUNCIL_PALETTE,
+  councilColor,
+  unionBBox,
+  type CouncilIndexEntry,
+} from "../utils/councils";
 
 /**
  * Boundary rendering + legend for FR1.4–1.5 and FR1.7.
@@ -24,6 +29,43 @@ export interface MultiCouncilPanelProps {
   failedIds: readonly string[];
   onRemove: (lgaId: string) => void;
   onClear: () => void;
+}
+
+/**
+ * FR7.1 — inject the hover-on shading palette into the boundary renderer's
+ * `<svg>`.
+ *
+ * The PRD's `coverage-grad palettes/hover-on.png` / `hover-off.png` assets are
+ * not in the repo (TBD-9), so the hover-on palette is rendered as one
+ * vertical SVG `linearGradient` per palette colour — the gradient mechanism
+ * SVG `fill` actually supports (CSS `linear-gradient()` is not valid paint for
+ * an SVG path). The gradient id is stable (`pp-shade-<palette index>`), so
+ * individual paths reference it through a CSS custom property and the
+ * `:hover` rule in index.css does the switching. Idempotent: the defs are
+ * injected once per renderer container and reused across selections.
+ */
+function ensureShadeDefs(svg: SVGSVGElement): void {
+  if (svg.querySelector("#pp-shade-defs")) return;
+  const NS = "http://www.w3.org/2000/svg";
+  const defs = document.createElementNS(NS, "defs");
+  defs.setAttribute("id", "pp-shade-defs");
+  COUNCIL_PALETTE.forEach((color, index) => {
+    const gradient = document.createElementNS(NS, "linearGradient");
+    gradient.setAttribute("id", `pp-shade-${index}`);
+    gradient.setAttribute("x1", "0");
+    gradient.setAttribute("y1", "0");
+    gradient.setAttribute("x2", "0");
+    gradient.setAttribute("y2", "1");
+    for (const [offset, opacity] of [["0%", "0.45"], ["100%", "0.12"]] as const) {
+      const stop = document.createElementNS(NS, "stop");
+      stop.setAttribute("offset", offset);
+      stop.setAttribute("stop-color", color);
+      stop.setAttribute("stop-opacity", opacity);
+      gradient.appendChild(stop);
+    }
+    defs.appendChild(gradient);
+  });
+  svg.appendChild(defs);
 }
 
 export default function MultiCouncilPanel({
@@ -58,6 +100,7 @@ export default function MultiCouncilPanel({
     if (!map || selectedIds.length === 0) return;
     const group = L.layerGroup();
     let drawn = 0;
+    const drawnShapes: Array<{ lgaId: string; geojson: L.GeoJSON }> = [];
 
     for (const id of selectedIds) {
       const feature = features.get(id);
@@ -71,6 +114,8 @@ export default function MultiCouncilPanel({
           fillColor: color,
           fillOpacity: 0.12,
           renderer,
+          // FR7.1: hover-on/hover-off shading hook (see index.css).
+          className: "pp-council-shade",
         },
       });
       geojson.eachLayer(child => {
@@ -81,10 +126,38 @@ export default function MultiCouncilPanel({
         }
       });
       geojson.addTo(group);
+      drawnShapes.push({ lgaId: id, geojson });
       drawn++;
     }
 
-    if (drawn > 0) group.addTo(map);
+    if (drawn > 0) {
+      group.addTo(map);
+
+      // FR7.1: point every boundary path at its colour's hover-on gradient.
+      // The defs live inside the same <svg> as the paths so the url(#…)
+      // paint-server reference resolves (cross-<svg> refs are flaky in
+      // older Safari). Path elements only exist after addTo(), which is why
+      // this runs here rather than in the draw loop above.
+      const firstPath = drawnShapes
+        .flatMap(({ geojson }) => geojson.getLayers())
+        .find((l): l is L.Path => l instanceof L.Path);
+      const el = firstPath?.getElement();
+      const svg = el instanceof SVGElement ? el.ownerSVGElement : null;
+      if (svg) {
+        ensureShadeDefs(svg);
+        for (const { lgaId, geojson } of drawnShapes) {
+          const paletteIndex = (COUNCIL_PALETTE as readonly string[]).indexOf(councilColor(lgaId));
+          if (paletteIndex < 0) continue;
+          geojson.eachLayer(child => {
+            if (!(child instanceof L.Path)) return;
+            const el = child.getElement();
+            if (el instanceof SVGElement) {
+              el.style.setProperty("--pp-shade", `url(#pp-shade-${paletteIndex})`);
+            }
+          });
+        }
+      }
+    }
     return () => {
       map.removeLayer(group);
     };

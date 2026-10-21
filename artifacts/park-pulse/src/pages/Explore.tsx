@@ -2,7 +2,6 @@ import { useEffect, useRef, useState, useCallback, useMemo } from "react";
 import { useCulledMarkerLayer } from "../hooks/useCulledMarkerLayer";
 import Navbar from "../components/Navbar";
 import ParkModal from "../components/ParkModal";
-import Footer from "../components/Footer";
 import type { Park } from "../types/park";
 import { useTheme, THEMES, type Theme } from "../hooks/useTheme";
 import { useToast } from "../context/ToastContext";
@@ -17,6 +16,7 @@ import {
 import { fmtArea, fuzzyScore, searchParks, sizeLabel } from "../utils/search";
 import {
   bboxOfGeometry,
+  computeCanopySummary,
   filterByCouncils,
   parseCouncilsParam,
   pointInCouncil,
@@ -380,12 +380,26 @@ interface Filters {
   iwParks: boolean; iwTrees: boolean;
 }
 
+/**
+ * Every data layer ships ENABLED so a first-time visitor sees the whole
+ * dataset without hunting for toggles; transport is the one opt-in layer
+ * (per user request). Park-type chips stay off because they *restrict* the
+ * park list when active — off = "all types visible".
+ */
 const defaultFilters: Filters = {
   playground: false, sports: false, iconic: false, neighbourhood: false,
-  pocket: false, sportsfield: false, fountains: false, toilets: false,
-  transport: false, trees: false, dogs: false, npws: false,
+  pocket: false, sportsfield: false,
+  fountains: true, toilets: true,
+  transport: false, trees: true, dogs: true, npws: true,
+  // Inner West datasets were never shipped (public/data/inner-west/ is
+  // empty) — honest default off rather than a guaranteed 404 + toast.
   iwParks: false, iwTrees: false,
 };
+
+/** Park-type chips: the filters that NARROW the results list when active. */
+const PARK_TYPE_KEYS: (keyof Filters)[] = [
+  "playground", "sports", "iconic", "neighbourhood", "pocket", "sportsfield",
+];
 
 interface NpwsRaw { name: string; subtype: string; lat: number; lng: number }
 interface DogRaw  { name: string; lat: number; lng: number }
@@ -456,6 +470,10 @@ export default function Explore() {
   const locationCircleRef  = useRef<L.Circle | null>(null);
   const treeRendererRef    = useRef<L.Canvas | null>(null);
   const treeIndexRef       = useRef<NearestIndex<Park> | null>(null);
+  // Park markers cluster below z16 — 2,000+ pins at city zoom was an
+  // unreadable blob; the cluster group owns them so Leaflet can aggregate.
+  const parkClusterRef     = useRef<L.MarkerClusterGroup | null>(null);
+  const railRef            = useRef<HTMLElement | null>(null);
   const allParksRef        = useRef<Park[]>([]);
   const deepLinkHandledRef = useRef(false);
 
@@ -706,11 +724,15 @@ export default function Explore() {
 
     const visible = parksToRender.filter((park) => bounds.contains([park.lat, park.lng]));
     const visibleIds = new Set(visible.map((p) => p.id));
+    // Markers live inside the cluster group when one exists so dense areas
+    // aggregate; the group itself is already on the map.
+    const cluster = parkClusterRef.current;
 
     // Remove markers that scrolled out of range.
     for (const [id, marker] of markersByIdRef.current) {
       if (!visibleIds.has(id)) {
-        marker.remove();
+        if (cluster) cluster.removeLayer(marker);
+        else marker.remove();
         markersByIdRef.current.delete(id);
       }
     }
@@ -725,7 +747,8 @@ export default function Explore() {
         title: park.name,
       });
       marker.bindPopup(() => buildParkPopup(park), { maxWidth: 280 });
-      marker.addTo(map);
+      if (cluster) cluster.addLayer(marker);
+      else map.addLayer(marker);
       markersByIdRef.current.set(park.id, marker);
     }
 
@@ -960,6 +983,18 @@ export default function Explore() {
 
     L.control.zoom({ position: "bottomright" }).addTo(map);
     L.control.scale({ position: "bottomleft", imperial: false, metric: true }).addTo(map);
+
+    // Clustering for the park pin layer: aggregate below z16, spiderfy after.
+    // showCoverageOnHover off — the popup on click is the useful affordance.
+    const parkCluster = L.markerClusterGroup({
+      maxClusterRadius: 45,
+      disableClusteringAtZoom: 16,
+      chunkedLoading: true,
+      spiderfyOnMaxZoom: true,
+      showCoverageOnHover: false,
+    });
+    map.addLayer(parkCluster);
+    parkClusterRef.current = parkCluster;
 
     map.on("moveend zoomend", () => {
       const zoom = map.getZoom();
@@ -1451,8 +1486,7 @@ export default function Explore() {
 
   useEffect(() => {
     const q = search.toLowerCase().trim();
-    const parkKeys: (keyof Filters)[] = ["playground", "sports", "iconic", "neighbourhood", "pocket", "sportsfield"];
-    const anyParkFilter = parkKeys.some(k => filters[k]);
+    const anyParkFilter = PARK_TYPE_KEYS.some(k => filters[k]);
 
     const typeMatch = (park: Park) =>
       (filters.playground && park.hasPlayground) ||
@@ -1503,6 +1537,9 @@ export default function Explore() {
           toast(`Showing parks near "${place}"`, "info");
         }
       } catch (err) {
+        // The effect's cleanup aborts this fetch whenever the query moves on
+        // (typing, clearing) — that is cancellation, not a failure.
+        if ((err as { name?: string })?.name === "AbortError") return;
         console.error("[explore] failed to load geocoding:", err);
         toast("Could not load geocoding", "error");
       }
@@ -1608,7 +1645,18 @@ export default function Explore() {
     mapRef.current.flyTo([park.lat, park.lng], 17, { duration: 1.2, easeLinearity: 0.25 });
     // Wait for the fly-to animation to settle before revealing the marker.
     setTimeout(() => {
-      markersByIdRef.current.get(park.id)?.openPopup();
+      const marker = markersByIdRef.current.get(park.id);
+      const map = mapRef.current;
+      if (!marker || !map) return;
+      const cluster = parkClusterRef.current;
+      // Clustering is off from z16; if the fly-to was interrupted the marker
+      // may still be wrapped, and zoomToShowLayer unwraps + reveals it.
+      const revealed = map.getZoom() >= 16 && map.getBounds().contains([park.lat, park.lng]);
+      if (cluster && !revealed) {
+        cluster.zoomToShowLayer(marker, () => marker.openPopup());
+      } else {
+        marker.openPopup();
+      }
     }, 1300);
   }, []);
 
@@ -1722,7 +1770,11 @@ export default function Explore() {
     });
   }, [allParks, toast]);
 
-  const activeFilterCount = Object.values(filters).filter(Boolean).length + (search ? 1 : 0) + (showFavOnly ? 1 : 0);
+  // Only restrictions on the *results list* count here: park-type chips,
+  // search, favourites. Overlay layers (trees/toilets/dogs/…) add map data
+  // without narrowing parks and ship on by default, so counting them made a
+  // permanent "7" badge and flipped the header into its restricted variant.
+  const activeFilterCount = PARK_TYPE_KEYS.filter(k => filters[k]).length + (search ? 1 : 0) + (showFavOnly ? 1 : 0);
   // The Blacktown layer reported its real feature count once loaded; the
   // previous hard-coded 1605 made the header lie whenever the dataset changed
   // (and before the first load, showing parks alone).
@@ -1737,8 +1789,28 @@ export default function Explore() {
       .filter((e): e is NonNullable<typeof e> => Boolean(e));
   }, [councilIndex, selectedCouncilIds]);
 
+  // FR5.4: canopy for the current scope — the selection when one exists,
+  // otherwise every council in the index (network-wide). `percent: null`
+  // means no council in scope has been measured yet and the panel must show
+  // "—" rather than a fabricated 0.
+  const canopySummary = useMemo(
+    () =>
+      computeCanopySummary(
+        selectedCouncilEntries.length > 0
+          ? selectedCouncilEntries
+          : (councilIndex?.councils ?? []),
+      ),
+    [selectedCouncilEntries, councilIndex],
+  );
+
   const networkParksAreaHa = useMemo(
     () => allParks.reduce((sum, p) => sum + (p.area ?? 0), 0) / 10000,
+    [allParks],
+  );
+
+  /** Playground total for the hero tiles (parks dataset only). */
+  const playgroundCount = useMemo(
+    () => allParks.filter(p => p.hasPlayground).length,
     [allParks],
   );
 
@@ -1819,6 +1891,24 @@ export default function Explore() {
 
   const favCount = [...allParks].filter(p => favoriteIds.has(p.id)).length;
 
+  // Honest hero total: add each dataset that ships as its own feature set.
+  // Park-type counts (playground, iconic, …) are subsets of `parks`, and
+  // transport ships off by default — neither is added, so nothing double-counts.
+  const additiveLayers = [
+    layerCounts.parks,
+    layerCounts.blacktown,
+    layerCounts.trees,
+    layerCounts.toilets,
+    layerCounts.fountains,
+    layerCounts.dogs,
+    layerCounts.npws,
+    layerCounts.iwParks,
+    layerCounts.iwTrees,
+  ].filter((n): n is number => n != null);
+  const heroFeatureTotal = additiveLayers.length > 0
+    ? additiveLayers.reduce((a, b) => a + b, 0).toLocaleString()
+    : null;
+
   // ── JSX ───────────────────────────────────────────────────────────────────
   return (
     <div className="pp-explore-page">
@@ -1826,15 +1916,77 @@ export default function Explore() {
       <Navbar />
       <main id="main-content" className="pp-explore-main">
 
-        {/* ── Sidebar ── */}
+        {/* ── Hero: the page leads with the data; the map complements it ── */}
+        <section className="pp-explore-hero" aria-labelledby="explore-hero-title">
+          <div className="pp-explore-hero-inner">
+            <div className="pp-explore-hero-copy">
+            <p className="pp-explore-hero-kicker">
+              Greater Sydney open data · parks, canopy & facilities from council
+              and NSW sources
+            </p>
+            <h1 id="explore-hero-title">
+              {heroFeatureTotal
+                ? `${heroFeatureTotal} mapped locations`
+                : "Parks, trees & facilities"}{" "}
+              — all on one map
+            </h1>
+            <p className="pp-explore-hero-sub">
+              Search, filter and compare every dataset we ship — then see it all
+              together on the map below. No toggles to hunt for: everything is
+              on by default.
+            </p>
+            </div>
+            <div className="pp-explore-hero-actions">
+              <button
+                type="button"
+                className="pp-btn pp-btn-primary"
+                onClick={() => surpriseMeRef.current()}
+              >
+                🎲 Surprise me
+              </button>
+              <button type="button" className="pp-btn" onClick={handleLocate}>
+                📍 Locate me
+              </button>
+              <a className="pp-btn" href="#explore-map">
+                🗺 See the map
+              </a>
+            </div>
+            </div>
+            {/* Live network-wide figures — `—` while a layer is still loading,
+                never a fabricated 0. */}
+            <dl className="pp-explore-hero-stats">
+              {(
+                [
+                  ["Parks", allParks.length > 0 ? allParks.length.toLocaleString() : "—"],
+                  ["Playgrounds", playgroundCount > 0 ? playgroundCount.toLocaleString() : "—"],
+                  ["Trees", layerCounts.trees != null ? layerCounts.trees.toLocaleString() : "—"],
+                  ["Toilets", layerCounts.toilets != null ? layerCounts.toilets.toLocaleString() : "—"],
+                  ["NPWS facilities", npwsRawData.length > 0 ? npwsRawData.length.toLocaleString() : "—"],
+                  ["Dog parks", layerCounts.dogs != null ? layerCounts.dogs.toLocaleString() : "—"],
+                  ["Fountains", layerCounts.fountains != null ? layerCounts.fountains.toLocaleString() : "—"],
+                  ["Canopy", canopySummary.percent != null ? `${canopySummary.percent}%` : "—"],
+                  ["Councils", councilIndex ? councilIndex.total_councils : "—"],
+                  ["Network area", (councilIndex?.total_area_km2 ?? 0) > 0 ? `${(councilIndex?.total_area_km2 ?? 0).toLocaleString(undefined, { maximumFractionDigits: 0 })} km²` : "—"],
+                ] as const
+              ).map(([label, value]) => (
+                <div key={label} className="pp-explore-hero-stat">
+                  <dt>{label}</dt>
+                  <dd>{value}</dd>
+                </div>
+              ))}
+            </dl>
+        </section>
+
+        {/* ── Explorer: left controls/results rail, right map ── */}
+        <div className={`pp-explorer${sidebarCollapsed ? " rail-collapsed" : ""}`}>
         <aside className={`pp-sidebar${sidebarCollapsed ? " collapsed" : ""}`}>
 
-          {/* Header */}
+          {/* Header — the hero owns the page's <h1>; this is a section */}
           <div className="pp-sidebar-header">
-            <h1>
+            <h2>
               Find Parks{" "}
               {activeFilterCount > 0 && <span className="pp-active-badge">{activeFilterCount}</span>}
-            </h1>
+            </h2>
             <button
               className="pp-sidebar-toggle"
               aria-label="Collapse sidebar"
@@ -1951,6 +2103,7 @@ export default function Explore() {
             parksInSelection={scopedParks}
             transitStops={transitStopsInSelection}
             transitLoading={transitLoading}
+            canopy={canopySummary}
             totalAreaKm2={councilIndex?.total_area_km2 ?? 0}
             councilTotal={councilIndex?.total_councils ?? 0}
             networkParks={allParks.length}
@@ -2580,8 +2733,8 @@ export default function Explore() {
           </div>
         </aside>
 
-        {/* ── Map ── */}
-        <div className="pp-map-container">
+        {/* ── Map: the complement, full-width below the controls/results ── */}
+        <div className="pp-map-container" id="explore-map">
           {sidebarCollapsed && (
             <button
               className="pp-sidebar-open-btn"
@@ -2627,21 +2780,62 @@ export default function Explore() {
                 <polyline points="6 9 12 15 18 9"/>
               </svg>
             </button>
-            {!legendCollapsed && [
-              { color: "#E76F51", label: "Playground" },
-              { color: "#FFD166", label: "Iconic" },
-              { color: "#F4A261", label: "Sports" },
-              { color: "#83C5BE", label: "Neighbourhood" },
-              { color: "#9B59B6", label: "Pocket" },
-              { color: "#2D6A4F", label: "Park" },
-            ].map(({ color, label }) => (
-              <div key={label} className="pp-map-legend-item">
-                <div className="pp-map-legend-dot" style={{ background: color }} />
-                <span>{label}</span>
+            {!legendCollapsed && (
+              <div className="pp-map-legend-cols">
+                <div className="pp-map-legend-col">
+                  <div className="pp-map-legend-group">Park types</div>
+                  {[
+                    { color: "#E76F51", label: "Playground" },
+                    { color: "#FFD166", label: "Iconic" },
+                    { color: "#F4A261", label: "Sports" },
+                    { color: "#83C5BE", label: "Neighbourhood" },
+                    { color: "#9B59B6", label: "Pocket" },
+                    { color: "#2D6A4F", label: "Park" },
+                    { color: "#8B1A6B", label: "Council parks" },
+                  ].map(({ color, label }) => (
+                    <div key={label} className="pp-map-legend-item">
+                      <div className="pp-map-legend-dot" style={{ background: color }} />
+                      <span>{label}</span>
+                    </div>
+                  ))}
+                </div>
+                <div className="pp-map-legend-col">
+                  <div className="pp-map-legend-group">Map layers</div>
+                  {[
+                    { key: "dogs", label: "Dog parks", colors: ["#AACC00"], hint: "" },
+                    { key: "toilets", label: "Toilets", colors: ["#6D597A"], hint: "" },
+                    { key: "fountains", label: "Fountains", colors: ["#0077B6"], hint: "" },
+                    { key: "npws", label: "NPWS facilities", colors: ["#FF6B35", "#5B8C5A", "#6B8CBA"], hint: "" },
+                    { key: "trees", label: "Trees", colors: ["#2D6A4F"], hint: "z≥16" },
+                    { key: "transport", label: "Transport stops", colors: ["#9B2335"], hint: "" },
+                    { key: "iwParks", label: "Inner West parks", colors: ["#DC267F"], hint: "" },
+                    { key: "iwTrees", label: "Inner West trees", colors: ["#52B788"], hint: "" },
+                  ].map(({ key, label, colors, hint }) => (
+                    <button
+                      key={key}
+                      type="button"
+                      className={`pp-map-legend-item pp-map-legend-toggle${filters[key as keyof Filters] ? "" : " off"}`}
+                      aria-pressed={filters[key as keyof Filters]}
+                      title={`${filters[key as keyof Filters] ? "Hide" : "Show"} ${label.toLowerCase()} on the map`}
+                      onClick={() => toggleFilter(key as keyof Filters)}
+                    >
+                      <span className="pp-map-legend-dots">
+                        {colors.map(c => (
+                          <span key={c} className="pp-map-legend-dot" style={{ background: c }} />
+                        ))}
+                      </span>
+                      <span>
+                        {label}
+                        {hint && <em className="pp-map-legend-hint"> {hint}</em>}
+                      </span>
+                    </button>
+                  ))}
+                </div>
               </div>
-            ))}
+            )}
           </div>
           <div id="park-map" ref={mapContainerRef} />
+        </div>
         </div>
 
         {/* Mobile FAB — opens sidebar on small screens */}
@@ -2658,7 +2852,6 @@ export default function Explore() {
           </button>
         )}
 
-      <Footer compact />
       </main>
 
       {/* Modal */}

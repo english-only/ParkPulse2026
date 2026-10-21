@@ -20,6 +20,7 @@
 import { readFile, writeFile, mkdir, rm } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { mergeCanopyIntoIndex } from "./lib/canopy.mjs";
 
 const scriptsDir = path.dirname(fileURLToPath(import.meta.url));
 const artifactDir = path.resolve(scriptsDir, "..");
@@ -313,11 +314,26 @@ async function main() {
     total_area_km2: Math.round(totalArea * 100) / 100,
     councils: index,
   };
+
+  // PRD Phase 5 (FR5.2): fold the scalar canopy values written by
+  // `canopy-extract.mjs` into the index — rebuilt here, never hand-edited.
+  // Councils without a measured value carry an explicit `null` so the UI
+  // renders "—" instead of a fabricated 0 (FR5.4).
+  let canopyIndex = null;
+  try {
+    canopyIndex = JSON.parse(await readFile(path.join(artifactDir, "public", "data", "canopies", "index.json"), "utf8"));
+  } catch {
+    // no canopy run yet — every council stays null (TBD-6/TBD-11 gate)
+  }
+  mergeCanopyIntoIndex(out, canopyIndex);
+  const canopyMeasured = out.councils.filter(c => c.canopy_percent !== null).length;
+
   const indexJson = JSON.stringify(out);
   await writeFile(path.join(outDir, "councils-index.json"), indexJson);
 
   console.log(`✅ ${index.length} councils → ${path.relative(repoRoot, outDir)}`);
   console.log(`   index: ${(indexJson.length / 1024).toFixed(1)} KB, geometry: ${(totalBytes / 1024).toFixed(0)} KB total, area: ${out.total_area_km2} km²`);
+  console.log(`   canopy_percent: ${canopyMeasured}/${out.councils.length} councils measured`);
 }
 
 main().catch((err) => {

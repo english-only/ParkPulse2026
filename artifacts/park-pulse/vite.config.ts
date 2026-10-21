@@ -58,7 +58,13 @@ export default defineConfig({
           if (id.includes("leaflet") || id.includes("markercluster")) {
             return "leaflet";
           }
-          if (id.includes("/react/") || id.includes("/react-dom/") || id.includes("scheduler")) {
+          // Match only the runtime packages themselves. A plain
+          // `id.includes("/react-dom/")` also matches *other* packages whose
+          // directory is named react-dom (e.g. @floating-ui/react-dom), which
+          // pulls them into react-vendor while Radix in `vendor` imports them
+          // back — a circular chunk that crashes React on load with
+          // "Cannot set properties of undefined (setting 'Children')".
+          if (/[\\/]node_modules[\\/](react|react-dom|scheduler)[\\/]/.test(id)) {
             return "react-vendor";
           }
           return "vendor";

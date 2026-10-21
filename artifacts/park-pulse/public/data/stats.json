@@ -1,0 +1,70 @@
+{
+  "generatedAt": "2026-10-19",
+  "dataLastUpdated": "2026-05-02",
+  "parks": {
+    "total": 418,
+    "playgrounds": 95,
+    "areaHa": 204,
+    "byType": {
+      "Pocket": 297,
+      "Neighbourhood": 48,
+      "Sportsfield": 17,
+      "Iconic": 24,
+      "Civic": 32
+    }
+  },
+  "blacktown": {
+    "total": 1605
+  },
+  "dogs": {
+    "total": 51
+  },
+  "fountains": {
+    "total": 273
+  },
+  "toilets": {
+    "total": 3127
+  },
+  "npws": {
+    "total": 1795,
+    "topSubtypes": [
+      [
+        "Picnic Table",
+        568
+      ],
+      [
+        "Seat",
+        435
+      ],
+      [
+        "BBQ/Fireplace",
+        283
+      ]
+    ]
+  },
+  "trees": {
+    "total": 48999
+  },
+  "transport": {
+    "stops": 26198
+  },
+  "councils": {
+    "total": 35,
+    "areaKm2": 12396.09,
+    "canopyAvgPercent": 22.2,
+    "measured": 33
+  },
+  "locations": 2023,
+  "facts": [
+    "Sydney Park is the largest park in the dataset at 39.0 ha.",
+    "23% of mapped City of Sydney parks (95 of 418) have a playground.",
+    "51 designated off-leash dog areas are mapped across the network.",
+    "The dataset includes 3,127 public toilets from the National Public Toilet Map.",
+    "273 drinking fountains are mapped from City of Sydney open data.",
+    "48,999 street trees are mapped across the City of Sydney extract.",
+    "1,795 National Parks facilities are mapped — the most common is picnic table (568).",
+    "26,198 public transport stops (bus, rail, ferry, metro, light rail) can be overlaid on the map.",
+    "Council boundaries cover 12,396 km² across 35 Greater Sydney councils.",
+    "Average tree canopy across the 33 measured councils is 22.2%."
+  ]
+}
