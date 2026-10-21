@@ -1,3 +1,4 @@
+import AxeBuilder from "@axe-core/playwright";
 import { expect, test } from "@playwright/test";
 
 /**
@@ -67,17 +68,43 @@ async function background(page: import("@playwright/test").Page): Promise<Rgb> {
   });
 }
 
-/** Tokens that previously failed AA in dark mode, now corrected. */
+/**
+ * `body` fades its background over 0.3 s (index.css `transition: background .3s`)
+ * and each route body fades in, so a fixed wait can read a half-faded backdrop
+ * and compute a ratio against a colour the page never actually shows. Wait for
+ * the finite animations to finish, then until two consecutive samples of the
+ * body background are identical.
+ */
+async function settleBackground(page: import("@playwright/test").Page) {
+  await page.evaluate(() =>
+    Promise.all(
+      document
+        .getAnimations()
+        .filter((animation) => animation.effect?.getTiming().iterations !== Infinity)
+        .map((animation) => animation.finished.catch(() => undefined)),
+    ),
+  );
+
+  let last = "";
+  for (let i = 0; i < 25; i++) {
+    const bg = await page.evaluate(() => getComputedStyle(document.body).backgroundColor);
+    if (bg === last) return;
+    last = bg;
+    await page.waitForTimeout(120);
+  }
+}
+
+/** Tokens that previously failed AA on the dark palette, now corrected. */
 const REGRESSIONS: Array<{ token: string; minimum: number; label: string }> = [
   { token: "--pp-text-muted", minimum: 4.5, label: "muted body text" },
 ];
 
 test.describe("colour contrast", () => {
-  test("dark theme tokens meet WCAG AA against the page background", async ({ page }) => {
+  test("Night Field tokens meet WCAG AA against the page background", async ({ page }) => {
     await page.goto("/explore");
-    await expect(page.getByText(/locations$/).first()).toBeVisible({ timeout: 45_000 });
-    await page.evaluate(() => document.documentElement.setAttribute("data-theme", "dark"));
-    await page.waitForTimeout(200);
+    await expect(page.getByText(/park records$/).first()).toBeVisible({ timeout: 45_000 });
+    await page.evaluate(() => document.documentElement.setAttribute("data-theme", "night"));
+    await settleBackground(page);
 
     const backdrop = await background(page);
     for (const { token, minimum, label } of REGRESSIONS) {
@@ -90,11 +117,11 @@ test.describe("colour contrast", () => {
     }
   });
 
-  test("body text meets AA in the light theme too", async ({ page }) => {
+  test("body text meets AA in Warm Field too", async ({ page }) => {
     await page.goto("/explore");
-    await expect(page.getByText(/locations$/).first()).toBeVisible({ timeout: 45_000 });
-    await page.evaluate(() => document.documentElement.setAttribute("data-theme", "light"));
-    await page.waitForTimeout(200);
+    await expect(page.getByText(/park records$/).first()).toBeVisible({ timeout: 45_000 });
+    await page.evaluate(() => document.documentElement.setAttribute("data-theme", "warm"));
+    await settleBackground(page);
 
     const backdrop = await background(page);
     for (const { token, minimum, label } of REGRESSIONS) {
@@ -102,16 +129,41 @@ test.describe("colour contrast", () => {
       const colour = resolve(raw, backdrop);
       expect(
         ratio(colour, backdrop),
-        `${label} (${token} = ${raw}) needs ${minimum}:1 in light theme`,
+        `${label} (${token} = ${raw}) needs ${minimum}:1 in Warm Field`,
       ).toBeGreaterThanOrEqual(minimum);
+    }
+  });
+
+  test("dashboard body text meets AA in both themes (FR7.4)", async ({ page }) => {
+    // The dashboard is the second surface FR7.4 names: vendored shadcn
+    // controls plus the pp-* page shell. Rather than hand-picking selectors,
+    // run axe's colour-contrast rule over the whole page in each data-theme —
+    // that is exactly the check a manual audit would do, but repeatable.
+    await page.goto("/dashboard");
+    await expect(page.getByRole("heading", { name: "Council insights", level: 1 })).toBeVisible();
+    await expect(page.getByRole("status").filter({ hasText: /Loading suburbs/ })).toHaveCount(0, {
+      timeout: 15_000,
+    });
+
+    for (const theme of ["night", "warm"] as const) {
+      await page.evaluate(t => document.documentElement.setAttribute("data-theme", t), theme);
+      await settleBackground(page);
+
+      const result = await new AxeBuilder({ page })
+        .withRules(["color-contrast"])
+        .analyze();
+      const violations = result.violations.map(
+        v => `${v.id} (${theme}): ${v.help} → ${v.nodes.length} node(s)`,
+      );
+      expect(violations, `${theme} theme contrast violations`).toEqual([]);
     }
   });
 
   test("badge classes meet WCAG AA in dark theme", async ({ page }) => {
     await page.goto("/explore");
-    await expect(page.getByText(/locations$/).first()).toBeVisible({ timeout: 45_000 });
-    await page.evaluate(() => document.documentElement.setAttribute("data-theme", "dark"));
-    await page.waitForTimeout(200);
+    await expect(page.getByText(/park records$/).first()).toBeVisible({ timeout: 45_000 });
+    await page.evaluate(() => document.documentElement.setAttribute("data-theme", "night"));
+    await settleBackground(page);
 
     const backdrop = await background(page);
 
@@ -129,16 +181,12 @@ test.describe("colour contrast", () => {
     };
 
     const badgeSelectors = [
-      { selector: ".pp-size-tiny", label: "size-tiny badge" },
-      { selector: ".pp-size-small", label: "size-small badge" },
-      { selector: ".pp-size-med", label: "size-med badge" },
-      { selector: ".pp-size-large", label: "size-large badge" },
-      { selector: ".pp-size-massive", label: "size-massive badge" },
-      { selector: ".pp-park-type-badge", label: "park-type-badge" },
-      { selector: ".pp-facility-badge-dog", label: "facility-badge-dog" },
-      { selector: ".pp-sort-btn.active", label: "sort-btn active" },
-      { selector: ".pp-active-badge", label: "active-badge" },
-      { selector: ".pp-quick-pill.active", label: "quick-pill active" },
+      { selector: ".fa-result-type", label: "result type label" },
+      { selector: ".fa-result-suburb", label: "result suburb" },
+      { selector: ".fa-facility", label: "facility tag" },
+      { selector: '.fa-sort-btn[aria-pressed="true"]', label: "sort-btn active" },
+      { selector: '.fa-chip[aria-pressed="true"] .fa-chip-label', label: "chip label active" },
+      { selector: ".fa-key-item", label: "map key item" },
     ];
 
     for (const { selector, label } of badgeSelectors) {
