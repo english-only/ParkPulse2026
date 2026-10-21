@@ -13,6 +13,17 @@ export interface CulledLayerConfig<TProps> {
   label: string;
   /** Builds the marker for one point. */
   build: (props: TProps, latlng: [number, number]) => L.Marker;
+  /**
+   * Optional scope predicate (FR4.4): points failing it are never built. Keep
+   * its identity stable — changing it re-runs the cull on the next render.
+   */
+  filter?: (props: TProps, latlng: [number, number]) => boolean;
+  /**
+   * Change this value to force a re-cull (e.g. the council selection changed).
+   * Gives callers whose predicate derives from state a cheap scalar to depend
+   * on instead of a new function identity every render.
+   */
+  refreshKey?: string;
   /** Reported once after the first successful load. */
   onCount?: (total: number) => void;
   onError?: (label: string) => void;
@@ -39,15 +50,24 @@ export function useCulledMarkerLayer<TProps>(
   map: L.Map | null,
   config: CulledLayerConfig<TProps>,
 ): void {
-  const { enabled, url, cacheId, label, build, onCount, onError } = config;
+  const { enabled, url, cacheId, label, build, filter, refreshKey, onCount, onError } = config;
   const layerRef = useRef<L.LayerGroup | null>(null);
   const countedRef = useRef(false);
+  // The map this hook is currently attached to. A fetch that resolves after
+  // the map was torn down (React StrictMode double-mounts in development, and
+  // any remount in production) must not add layers to the dead instance —
+  // Leaflet then throws `Cannot read properties of undefined (reading
+  // 'appendChild')` from `_initIcon` because the panes are gone.
+  const liveMapRef = useRef(map);
+  liveMapRef.current = map;
   // Kept in refs so the moveend listener does not need to be torn down and
   // re-registered whenever a callback identity changes.
   const buildRef = useRef(build);
+  const filterRef = useRef(filter);
   const onCountRef = useRef(onCount);
   const onErrorRef = useRef(onError);
   buildRef.current = build;
+  filterRef.current = filter;
   onCountRef.current = onCount;
   onErrorRef.current = onError;
 
@@ -55,14 +75,20 @@ export function useCulledMarkerLayer<TProps>(
     if (!map || !enabled) return;
     try {
       const { points, total } = await loadPointsInBounds<TProps>(url, cacheId, currentBounds(map));
+      if (liveMapRef.current !== map) return;
 
       const layer = L.layerGroup();
       for (const point of points) {
         const ll = readLatLng(point as never);
         if (!ll) continue;
-        const marker = buildRef.current((point.properties ?? {}) as TProps, [ll.lat, ll.lng]);
-        layer.addLayer(marker);
+        const props = (point.properties ?? {}) as TProps;
+        const latlng: [number, number] = [ll.lat, ll.lng];
+        if (filterRef.current && !filterRef.current(props, latlng)) continue;
+        layer.addLayer(buildRef.current(props, latlng));
       }
+
+      // The layer was built while the map was live; re-check before attaching.
+      if (liveMapRef.current !== map) return;
 
       // Swap the rebuilt layer in for the old one.
       if (layerRef.current && map.hasLayer(layerRef.current)) map.removeLayer(layerRef.current);
@@ -77,7 +103,7 @@ export function useCulledMarkerLayer<TProps>(
       console.error(`[explore] failed to load ${label}:`, err);
       onErrorRef.current?.(label);
     }
-  }, [map, enabled, url, cacheId, label]);
+  }, [map, enabled, url, cacheId, label, refreshKey]);
 
   // Rebuild when the layer is switched on or its source changes.
   useEffect(() => {

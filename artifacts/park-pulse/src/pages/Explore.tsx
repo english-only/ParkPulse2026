@@ -2,9 +2,10 @@ import { useEffect, useRef, useState, useCallback, useMemo } from "react";
 import { useCulledMarkerLayer } from "../hooks/useCulledMarkerLayer";
 import Navbar from "../components/Navbar";
 import ParkModal from "../components/ParkModal";
-import Footer from "../components/Footer";
 import type { Park } from "../types/park";
-import { useTheme, THEMES, type Theme } from "../hooks/useTheme";
+import { useTheme, migrateTheme } from "../hooks/useTheme";
+import { LAYERS, countFor, getLayer } from "../data/layers";
+import { useDataSnapshot } from "../data/snapshot";
 import { useToast } from "../context/ToastContext";
 import { fetchWithCache, clearAllCache, onCacheNotice } from "../utils/dataCache";
 import { haversineKm, calcCentroid, NearestIndex } from "../utils/geo";
@@ -15,6 +16,30 @@ import {
   type MixedCollection,
 } from "../utils/geojson";
 import { fmtArea, fuzzyScore, searchParks, sizeLabel } from "../utils/search";
+import {
+  bboxOfGeometry,
+  filterByCouncils,
+  parseCouncilsParam,
+  pointInCouncil,
+  serializeCouncilsParam,
+  type BBox,
+  type CouncilGeometry,
+  type CouncilIndex,
+  type CouncilMode,
+} from "../utils/councils";
+import {
+  LAYER_TOGGLES,
+  PARK_TYPE_KEYS,
+  TYPE_FILTERS,
+  UNSHIPPED_LAYERS,
+  defaultFilters,
+  filterLabel,
+  type Filters,
+  type LayerKey,
+} from "../data/exploreFilters";
+import CouncilSelector from "../components/CouncilSelector";
+import CouncilStats from "../components/CouncilStats";
+import MultiCouncilPanel from "../components/MultiCouncilPanel";
 import { loadTreesForBounds, type TreeRecord, type TreeSourceInfo } from "../utils/treeData";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
@@ -24,6 +49,18 @@ import "leaflet.markercluster/dist/MarkerCluster.Default.css";
 
 const BASE = import.meta.env.BASE_URL;
 const TREE_ZOOM_THRESHOLD = 16;
+
+/**
+ * Layers the registry adds to the map without a bespoke loader.
+ *
+ * A dataset with `explore: "generic"` is drawn from its artifact as circle
+ * markers with a DOM-built popup. This is what makes "add a point dataset" a
+ * registry edit rather than an Explore edit; bespoke layers keep their own
+ * loaders for fields and clustering that generic rendering cannot express.
+ */
+const GENERIC_LAYERS = LAYERS.filter(
+  (layer) => layer.status === "published" && layer.explore === "generic" && layer.artifact,
+);
 
 /**
  * Basemap tiles.
@@ -38,14 +75,28 @@ const TREE_ZOOM_THRESHOLD = 16;
  */
 const OSM_TILES = "https://tile.openstreetmap.org/{z}/{x}/{y}.png";
 
-const TILE_URLS: Record<string, string> = {
-  default:   OSM_TILES,
-  dark:      OSM_TILES,
-  sunset:    OSM_TILES,
-  neon:      OSM_TILES,
-  minimal:   OSM_TILES,
+/**
+ * Basemaps are a map concern, separate from the two UI themes (PRD §8.1):
+ * switching between Warm Field and Night Field must not change the provider,
+ * and choosing satellite imagery must not repaint the interface.
+ */
+const TILE_URLS = {
+  streets:   OSM_TILES,
   satellite: "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
-};
+} as const;
+
+type Basemap = keyof typeof TILE_URLS;
+const BASEMAP_STORAGE_KEY = "parkpulse_basemap";
+
+function readStoredBasemap(): Basemap {
+  try {
+    const stored = localStorage.getItem(BASEMAP_STORAGE_KEY);
+    if (stored === "streets" || stored === "satellite") return stored;
+  } catch {
+    // Private mode: fall through to the default basemap.
+  }
+  return "streets";
+}
 
 const TILE_ATTR_DEFAULT  = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
 const TILE_ATTR_SAT      = 'Tiles &copy; Esri &mdash; Source: Esri, Maxar, USGS';
@@ -59,6 +110,11 @@ function parkMarkerColor(park: Park): string {
   if (park.type === "Pocket") return "#9B59B6";
   return "#2D6A4F";
 }
+
+/** Off-leash marker glyph. Drawn, not an emoji, so it renders the same on
+ *  every platform and inherits the marker's ink colour. */
+const PAW_GLYPH =
+  '<svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor" aria-hidden="true"><circle cx="7" cy="7.5" r="2.2"/><circle cx="12" cy="6" r="2.3"/><circle cx="17" cy="7.5" r="2.2"/><path d="M12 10c3.4 0 6 2.4 6 5.2 0 2.1-1.7 3.3-3.9 3.3-1 0-1.5-.4-2.1-.4s-1.1.4-2.1.4C7.7 18.5 6 17.3 6 15.2 6 12.4 8.6 10 12 10Z"/></svg>';
 
 function makeIcon(color: string, size = 24, radius = "50%", inner = "") {
   return L.divIcon({
@@ -96,8 +152,8 @@ function getOverlayIcon(color: string, size: number, radius: string): L.DivIcon 
   return cachedIcon(`overlay:${color}:${size}:${radius}`, () => makeIcon(color, size, radius));
 }
 
-/** Popup with a coloured type badge and a single line of text. */
-function buildSimplePopup(color: string, badge: string, name: string): HTMLElement {
+/** Popup with a coloured type badge, a heading and an optional detail line. */
+function buildSimplePopup(color: string, badge: string, name: string, detail?: string): HTMLElement {
   const div = document.createElement("div");
   div.className = "pp-popup";
 
@@ -110,6 +166,14 @@ function buildSimplePopup(color: string, badge: string, name: string): HTMLEleme
   const heading = document.createElement("h3");
   heading.textContent = name;
   div.appendChild(heading);
+
+  if (detail) {
+    const line = document.createElement("p");
+    line.style.fontSize = "12px";
+    line.style.color = "var(--pp-text-muted)";
+    line.textContent = detail;
+    div.appendChild(line);
+  }
 
   return div;
 }
@@ -296,7 +360,8 @@ function buildTreePopup(tree: TreeRecord, park: Park | null): HTMLElement {
   const badge = document.createElement("span");
   badge.className = "pp-popup-type";
   badge.style.background = "#40916C";
-  badge.textContent = "🌳 Tree";
+  // FR3.5: council-sourced trees name their council in the overlay popup.
+  badge.textContent = tree.councilName ? `🌳 Tree · ${tree.councilName}` : "🌳 Tree";
   div.appendChild(badge);
 
   const heading = document.createElement("h3");
@@ -350,17 +415,9 @@ function buildTreePopup(tree: TreeRecord, park: Park | null): HTMLElement {
 }
 
 // ── Types ─────────────────────────────────────────────────────────────────────
-interface Filters {
-  playground: boolean; sports: boolean; iconic: boolean; neighbourhood: boolean;
-  pocket: boolean; sportsfield: boolean; fountains: boolean; toilets: boolean;
-  transport: boolean; trees: boolean; dogs: boolean; npws: boolean;
-}
-
-const defaultFilters: Filters = {
-  playground: false, sports: false, iconic: false, neighbourhood: false,
-  pocket: false, sportsfield: false, fountains: false, toilets: false,
-  transport: false, trees: false, dogs: false, npws: false,
-};
+// Filters, their defaults, the park-type refinements and the label/colour for
+// every category live in one module so the rail, the map key and the result
+// chips cannot drift apart.
 
 interface NpwsRaw { name: string; subtype: string; lat: number; lng: number }
 interface DogRaw  { name: string; lat: number; lng: number }
@@ -383,6 +440,24 @@ interface NpwsProperties {
   Comments?: string;
 }
 
+/** Properties on public/data/transport/stops.geojson (FR4.1). */
+interface TransportStopProperties {
+  stop_id?: string;
+  stop_name?: string;
+  stop_lat?: number;
+  stop_lon?: number;
+  route_types?: string[];
+}
+
+/** Human labels for the five GTFS modes the converter normalises to (FR4.2). */
+const ROUTE_MODE_LABELS: Record<string, string> = {
+  bus: "Bus",
+  rail: "Rail",
+  ferry: "Ferry",
+  lightrail: "Light rail",
+  metro: "Metro",
+};
+
 /** Properties actually present on the shipped parks dataset. */
 interface ParksProperties {
   OBJECTID?: number;
@@ -395,7 +470,10 @@ interface ParksProperties {
 
 // ── Component ────────────────────────────────────────────────────────────────
 export default function Explore() {
-  const { theme, setTheme } = useTheme();
+  const { setTheme, toggleTheme } = useTheme();
+  const [basemap, setBasemap] = useState<Basemap>(readStoredBasemap);
+  // Read once for the map's first tile layer without re-running map init.
+  const initialBasemapRef = useRef<Basemap>(basemap);
   const { toast } = useToast();
 
   // ── Map refs ─────────────────────────────────────────────────────────────
@@ -413,6 +491,10 @@ export default function Explore() {
   const locationCircleRef  = useRef<L.Circle | null>(null);
   const treeRendererRef    = useRef<L.Canvas | null>(null);
   const treeIndexRef       = useRef<NearestIndex<Park> | null>(null);
+  // Park markers cluster below z16 — 2,000+ pins at city zoom was an
+  // unreadable blob; the cluster group owns them so Leaflet can aggregate.
+  const parkClusterRef     = useRef<L.MarkerClusterGroup | null>(null);
+  const railRef            = useRef<HTMLElement | null>(null);
   const allParksRef        = useRef<Park[]>([]);
   const deepLinkHandledRef = useRef(false);
 
@@ -434,7 +516,6 @@ export default function Explore() {
   const [search,          setSearch]          = useState("");
   const [filters,         setFilters]         = useState<Filters>(defaultFilters);
   const [selectedPark,    setSelectedPark]    = useState<Park | null>(null);
-  const [sidebarCollapsed,setSidebarCollapsed]= useState(false);
   const [treeZoomHint,    setTreeZoomHint]    = useState(false);
   const [loading,         setLoading]         = useState(true);
   const [geocodeNearby,   setGeocodeNearby]   = useState<Park[] | null>(null);
@@ -453,19 +534,22 @@ export default function Explore() {
   const [showHistory,     setShowHistory]     = useState(false);
   const [searchFocused,   setSearchFocused]   = useState(false);
   const [minArea,         setMinArea]         = useState(0);
-  const [compactView,     setCompactView]     = useState(false);
-  const [legendCollapsed, setLegendCollapsed] = useState(false);
+  const snapshot = useDataSnapshot();
   const [layerCounts,     setLayerCounts]     = useState<Record<string,number>>({});
+  const [genericEnabled,  setGenericEnabled]  = useState<Record<string, boolean>>(
+    () => Object.fromEntries(GENERIC_LAYERS.filter((layer) => layer.defaultVisible).map((layer) => [layer.id, true])),
+  );
+  const [genericCounts,   setGenericCounts]   = useState<Record<string, number>>({});
+  const [genericError,    setGenericError]    = useState<string | null>(null);
+  const genericGroupRef = useRef<L.LayerGroup | null>(null);
   const [visibleCount,    setVisibleCount]    = useState(100);
   const [fromCache,       setFromCache]       = useState(false);
   const [npwsRawData,     setNpwsRawData]     = useState<NpwsRaw[]>([]);
   const [dogRawData,      setDogRawData]      = useState<DogRaw[]>([]);
-  const [filtersOpen,     setFiltersOpen]     = useState(false);
   const [visibleMapCount, setVisibleMapCount] = useState(0);
   // The map instance is held in state as well as a ref so hooks that depend on
   // it re-run once Leaflet has actually created it.
   const [mapInstance, setMapInstance] = useState<L.Map | null>(null);
-  const [treeSourceInfo, setTreeSourceInfo] = useState<TreeSourceInfo | null>(null);
   const [cacheWarning, setCacheWarning] = useState<string | null>(null);
   const [favoriteIds,     setFavoriteIds]     = useState<Set<number>>(() => {
     try { return new Set<number>(JSON.parse(localStorage.getItem("parkpulse_favs") || "[]")); }
@@ -484,6 +568,16 @@ export default function Explore() {
       return [];
     }
   });
+
+  // ── Multi-council governance (FR1) ─────────────────────────────────────
+  // Session-only by design (FR1.11): nothing here touches localStorage.
+  const [councilIndex,     setCouncilIndex]     = useState<CouncilIndex | null>(null);
+  const [councilStatus,    setCouncilStatus]    = useState<"loading" | "ready" | "error">("loading");
+  const [selectedCouncilIds, setSelectedCouncilIds] = useState<string[]>([]);
+  const [councilMode,      setCouncilMode]      = useState<CouncilMode>("single");
+  const [councilFeatures,  setCouncilFeatures]  = useState<Map<string, GeoJSON.Feature>>(() => new Map());
+  const [pendingBoundaries,setPendingBoundaries]= useState<string[]>([]);
+  const [failedBoundaries, setFailedBoundaries] = useState<string[]>([]);
 
   // Keep the module-level popup bridge and the local refs in step with the
   // committed values, in an effect rather than during render so a discarded
@@ -536,7 +630,7 @@ export default function Explore() {
       const isInput = tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT";
       if (e.key === "/" && !isInput) {
         e.preventDefault();
-        setSidebarCollapsed(false);
+        document.getElementById("explore-controls")?.scrollIntoView({ block: "start" });
         setTimeout(() => searchInputRef.current?.focus(), 50);
       } else if (e.key === "?" && !isInput) {
         e.preventDefault();
@@ -546,7 +640,6 @@ export default function Explore() {
         surpriseMeRef.current();
       } else if ((e.key === "c" || e.key === "C") && !isInput) {
         e.preventDefault();
-        setCompactView(v => !v);
       } else if ((e.key === "f" || e.key === "F") && !isInput) {
         e.preventDefault();
         const map = mapRef.current;
@@ -557,8 +650,7 @@ export default function Explore() {
         map.fitBounds(bounds, { padding: [48, 48], maxZoom: 16, animate: true });
       } else if ((e.key === "t" || e.key === "T") && !isInput) {
         e.preventDefault();
-        const currentIdx = THEMES.findIndex(t => t.id === document.documentElement.getAttribute("data-theme"));
-        setTheme(THEMES[(currentIdx + 1) % THEMES.length].id);
+        toggleTheme();
       } else if (e.key === "1" && !isInput) {
         e.preventDefault(); setSortBy("default");
       } else if (e.key === "2" && !isInput) {
@@ -612,13 +704,13 @@ export default function Explore() {
     };
     window.addEventListener("keydown", handler);
     return () => window.removeEventListener("keydown", handler);
-  }, [setTheme, theme]);
+  }, [toggleTheme]);
 
   // ── Keyboard: arrow nav between result cards ──────────────────────────────
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
       if (!resultsListRef.current) return;
-      const cards = Array.from(resultsListRef.current.querySelectorAll<HTMLElement>(".pp-park-card-title"));
+      const cards = Array.from(resultsListRef.current.querySelectorAll<HTMLElement>(".fa-result-title"));
       if (!cards.length) return;
       const active = document.activeElement as HTMLElement;
       const idx = cards.indexOf(active);
@@ -648,16 +740,24 @@ export default function Explore() {
   const renderMarkersForBounds = useCallback((parksToRender: Park[]) => {
     const map = mapRef.current;
     if (!map) return;
+    // A resize/pan handler from a torn-down map must not touch the live one's
+    // cluster group; the ref is reassigned on remount.
+    const clusterAtCall = parkClusterRef.current;
+    if (clusterAtCall && !map.hasLayer(clusterAtCall)) return;
     const bounds = map.getBounds().pad(0.5);
     const tightBounds = map.getBounds();
 
     const visible = parksToRender.filter((park) => bounds.contains([park.lat, park.lng]));
     const visibleIds = new Set(visible.map((p) => p.id));
+    // Markers live inside the cluster group when one exists so dense areas
+    // aggregate; the group itself is already on the map.
+    const cluster = parkClusterRef.current;
 
     // Remove markers that scrolled out of range.
     for (const [id, marker] of markersByIdRef.current) {
       if (!visibleIds.has(id)) {
-        marker.remove();
+        if (cluster) cluster.removeLayer(marker);
+        else marker.remove();
         markersByIdRef.current.delete(id);
       }
     }
@@ -672,7 +772,8 @@ export default function Explore() {
         title: park.name,
       });
       marker.bindPopup(() => buildParkPopup(park), { maxWidth: 280 });
-      marker.addTo(map);
+      if (cluster) cluster.addLayer(marker);
+      else map.addLayer(marker);
       markersByIdRef.current.set(park.id, marker);
     }
 
@@ -711,14 +812,6 @@ export default function Explore() {
   // Reset visible count on search/filter/sort change
   useEffect(() => { setVisibleCount(100); }, [search, filters, sortBy, geocodeNearby]);
 
-  // ── Results list scroll-to-top visibility ────────────────────────────────
-  useEffect(() => {
-    const el = resultsListRef.current;
-    if (!el) return;
-    const handler = () => setShowScrollTop(el.scrollTop > 320);
-    el.addEventListener("scroll", handler, { passive: true });
-    return () => el.removeEventListener("scroll", handler);
-  }, []);
 
   // ── Infinite scroll sentinel ──────────────────────────────────────────────
   useEffect(() => {
@@ -737,6 +830,10 @@ export default function Explore() {
     const filter = params.get("filter");
     if (filter && filter in defaultFilters) {
       setFilters(prev => ({ ...prev, [filter as keyof Filters]: true }));
+    } else if (filter && GENERIC_LAYERS.some((layer) => layer.id === filter)) {
+      // A registry-driven layer can be deep-linked with the same ?filter= key
+      // the atlas and amenities directory use.
+      setGenericEnabled((previous) => ({ ...previous, [filter]: true }));
     }
     if (params.get("locate") === "1") {
       setTimeout(() => handleLocate(), 1500);
@@ -745,8 +842,14 @@ export default function Explore() {
     if (q) { setSearchInput(q); setSearch(q); }
     const sort = params.get("sort");
     if (sort === "name" || sort === "nearest" || sort === "size") setSortBy(sort);
+    // ?basemap= is the current key. Older links used ?theme=satellite while
+    // satellite imagery was still modelled as a UI theme.
+    const basemapParam = params.get("basemap");
+    if (basemapParam === "streets" || basemapParam === "satellite") setBasemap(basemapParam);
     const themeParam = params.get("theme");
-    if (themeParam && THEMES.some(t => t.id === themeParam)) setTheme(themeParam as Theme);
+    if (themeParam === "satellite") setBasemap("satellite");
+    const migratedTheme = migrateTheme(themeParam);
+    if (migratedTheme) setTheme(migratedTheme);
   }, []);
 
   // ── URL sync: update ?q= and ?sort= as state changes ─────────────────────
@@ -757,6 +860,111 @@ export default function Explore() {
     const qs = params.toString();
     window.history.replaceState(null, "", `${window.location.pathname}${qs ? "?" + qs : ""}`);
   }, [search, sortBy]);
+
+  // ── Council index (FR1.9: deep link read happens once on load) ──────────
+  useEffect(() => {
+    let cancelled = false;
+    (async () => {
+      try {
+        const { data } = await fetchWithCache<CouncilIndex>(
+          `${BASE}data/boundaries/councils-index.json`,
+          "pp_council_index",
+        );
+        if (cancelled) return;
+        if (!data?.councils?.length) throw new Error("council index is empty");
+        setCouncilIndex(data);
+        setCouncilStatus("ready");
+        const valid = new Set(data.councils.map(c => c.lga_id));
+        const params = new URLSearchParams(window.location.search);
+        const { ids, mode } = parseCouncilsParam(
+          params.get("councils"),
+          params.get("mode"),
+          valid,
+        );
+        setSelectedCouncilIds(ids);
+        setCouncilMode(mode);
+      } catch (err) {
+        console.error("[explore] failed to load council index:", err);
+        if (!cancelled) {
+          setCouncilStatus("error");
+          toast("Could not load council index — council controls disabled", "error");
+        }
+      }
+    })();
+    return () => { cancelled = true; };
+  }, [toast]);
+
+  // ── URL sync: write ?councils= / ?mode= (FR1.9) ─────────────────────────
+  useEffect(() => {
+    // Before the index resolves the deep link, writing would wipe the params
+    // we are about to read — so hold off while loading.
+    if (councilStatus === "loading") return;
+    const params = new URLSearchParams(window.location.search);
+    if (selectedCouncilIds.length === 0) {
+      params.delete("councils");
+      params.delete("mode");
+    } else {
+      params.set("councils", selectedCouncilIds.join(","));
+      if (selectedCouncilIds.length > 1 || councilMode === "multi") params.set("mode", councilMode);
+      else params.delete("mode");
+    }
+    const qs = params.toString();
+    window.history.replaceState(null, "", `${window.location.pathname}${qs ? "?" + qs : ""}`);
+  }, [selectedCouncilIds, councilMode, councilStatus]);
+
+  // ── Boundary geometry per selection (lazy, cached) ───────────────────────
+  useEffect(() => {
+    if (councilStatus !== "ready" || selectedCouncilIds.length === 0 || !councilIndex) return;
+    const missing = selectedCouncilIds.filter(
+      id => !councilFeatures.has(id) && !failedBoundaries.includes(id),
+    );
+    if (missing.length === 0) return;
+
+    let cancelled = false;
+    setPendingBoundaries(prev => [...new Set([...prev, ...missing])]);
+
+    (async () => {
+      const results = await Promise.allSettled(
+        missing.map(async id => {
+          const entry = councilIndex.councils.find(c => c.lga_id === id);
+          // geometry_file is relative to public/data/ (e.g.
+          // "boundaries/councils/blacktown-city-council.geojson").
+          const file = entry?.geometry_file ?? `boundaries/councils/${id}.geojson`;
+          const { data } = await fetchWithCache<GeoJSON.Feature>(
+            `${BASE}data/${file}`,
+            `pp_council_${id}`,
+          );
+          return { id, data };
+        }),
+      );
+      if (cancelled) return;
+
+      const ok: Array<[string, GeoJSON.Feature]> = [];
+      const failed: string[] = [];
+      results.forEach((result, i) => {
+        if (result.status === "fulfilled") ok.push([result.value.id, result.value.data]);
+        else {
+          failed.push(missing[i]);
+          console.error(`[explore] boundary fetch failed for ${missing[i]}:`, result.reason);
+        }
+      });
+
+      if (ok.length) {
+        setCouncilFeatures(prev => {
+          const next = new Map(prev);
+          for (const [id, feature] of ok) next.set(id, feature);
+          return next;
+        });
+      }
+      if (failed.length) {
+        setFailedBoundaries(prev => [...new Set([...prev, ...failed])]);
+        toast("Boundary unavailable for selected council", "error");
+      }
+      setPendingBoundaries(prev => prev.filter(id => !missing.includes(id)));
+    })();
+
+    return () => { cancelled = true; };
+  }, [councilStatus, selectedCouncilIds, councilFeatures, failedBoundaries, councilIndex, toast]);
 
   // ── Deep-link: open park from ?park= / ?surprise=1 URL param ─────────────
   useEffect(() => {
@@ -793,15 +1001,32 @@ export default function Explore() {
       preferCanvas: true,
     });
 
-    const initialTheme = document.documentElement.getAttribute("data-theme") || "default";
-    const isSat = initialTheme === "satellite";
-    tileLayerRef.current = L.tileLayer(TILE_URLS[initialTheme] || TILE_URLS.default, {
+    const initialBasemap = initialBasemapRef.current;
+    const isSat = initialBasemap === "satellite";
+    tileLayerRef.current = L.tileLayer(TILE_URLS[initialBasemap], {
       attribution: isSat ? TILE_ATTR_SAT : TILE_ATTR_DEFAULT,
       maxZoom: 19,
     }).addTo(map);
 
     L.control.zoom({ position: "bottomright" }).addTo(map);
     L.control.scale({ position: "bottomleft", imperial: false, metric: true }).addTo(map);
+
+    // Clustering for the park pin layer: aggregate below z16, spiderfy after.
+    // showCoverageOnHover off — the popup on click is the useful affordance.
+    const parkCluster = L.markerClusterGroup({
+      maxClusterRadius: 45,
+      disableClusteringAtZoom: 16,
+      chunkedLoading: true,
+      spiderfyOnMaxZoom: true,
+      showCoverageOnHover: false,
+    });
+    map.addLayer(parkCluster);
+    parkClusterRef.current = parkCluster;
+
+    // Registry-driven point datasets get one group of their own, so switching
+    // one off never touches the bespoke layers' markers.
+    const genericGroup = L.layerGroup().addTo(map);
+    genericGroupRef.current = genericGroup;
 
     map.on("moveend zoomend", () => {
       const zoom = map.getZoom();
@@ -823,11 +1048,87 @@ export default function Explore() {
     return () => { map.remove(); mapRef.current = null; };
   }, [renderMarkersForBounds]);
 
-  // ── Swap tile URL on theme change ─────────────────────────────────────────
+  // ── Generic registry layers ───────────────────────────────────────────────
   useEffect(() => {
+    const map = mapInstance;
+    const group = genericGroupRef.current;
+    if (!map || !group) return;
+
+    group.clearLayers();
+    const enabled = GENERIC_LAYERS.filter((layer) => genericEnabled[layer.id]);
+    if (enabled.length === 0) {
+      setGenericError(null);
+      return;
+    }
+
+    let cancelled = false;
+    setGenericError(null);
+
+    (async () => {
+      for (const layer of enabled) {
+        try {
+          const { data } = await fetchWithCache<MixedCollection>(
+            `${BASE}${layer.artifact}`,
+            `pp_generic_${layer.id}`,
+          );
+          if (cancelled) return;
+          let count = 0;
+          for (const feature of data.features ?? []) {
+            const point = readFeatureCentroid(feature);
+            if (!point) continue;
+            count += 1;
+            const marker = L.circleMarker([point.lat, point.lng], {
+              radius: 6,
+              color: "#ffffff",
+              weight: 2,
+              fillColor: layer.mapColor ?? "#8B5CF6",
+              fillOpacity: 0.92,
+            });
+            const props = (feature.properties ?? {}) as Record<string, unknown>;
+            // DOM nodes, not an HTML string: a contributed name is untrusted
+            // input and must never be parsed as markup.
+            const popup = document.createElement("div");
+            popup.className = "pp-popup";
+            const heading = document.createElement("h3");
+            heading.textContent = typeof props.name === "string" ? props.name : layer.label;
+            const meta = document.createElement("p");
+            meta.textContent = `${layer.label}${typeof props.suburb === "string" ? ` · ${props.suburb}` : ""}`;
+            popup.append(heading, meta);
+            const credit = document.createElement("p");
+            credit.className = "pp-popup-credit";
+            const provenance = props.provenance as { contributor?: unknown } | undefined;
+            credit.textContent = `Community record${typeof provenance?.contributor === "string" ? ` · ${provenance.contributor}` : ""}`;
+            popup.append(credit);
+            marker.bindPopup(popup);
+            group.addLayer(marker);
+          }
+          setGenericCounts((previous) => ({ ...previous, [layer.id]: count }));
+        } catch {
+          if (cancelled) return;
+          setGenericCounts((previous) => ({ ...previous, [layer.id]: 0 }));
+          setGenericError(`The ${layer.label.toLowerCase()} dataset could not be loaded.`);
+        }
+      }
+    })();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [mapInstance, genericEnabled]);
+
+  // ── Swap tile URL on basemap change ───────────────────────────────────────
+  useEffect(() => {
+    // Drives the `html[data-basemap="satellite"]` rule that keeps Night Field
+    // from colour-inverting real satellite imagery.
+    document.documentElement.dataset.basemap = basemap;
+    try {
+      localStorage.setItem(BASEMAP_STORAGE_KEY, basemap);
+    } catch {
+      // Persisting the choice is a convenience, not a requirement.
+    }
     if (!tileLayerRef.current) return;
-    const isSat = theme === "satellite";
-    tileLayerRef.current.setUrl(TILE_URLS[theme] || TILE_URLS.default);
+    const isSat = basemap === "satellite";
+    tileLayerRef.current.setUrl(TILE_URLS[basemap]);
     const map = mapRef.current;
     if (map) {
       const attrCtrl = map.attributionControl;
@@ -837,7 +1138,7 @@ export default function Explore() {
         attrCtrl.addAttribution(isSat ? TILE_ATTR_SAT : TILE_ATTR_DEFAULT);
       }
     }
-  }, [theme]);
+  }, [basemap]);
 
   // ── Load parks (cached) ───────────────────────────────────────────────────
   useEffect(() => {
@@ -883,7 +1184,9 @@ export default function Explore() {
   // Always-on, and 1,605 features — previously every one of them was added to
   // the DOM on load regardless of whether it was on screen.
   useCulledMarkerLayer<Record<string, unknown>>(mapInstance, {
-    enabled: true,
+    // FR1.6: the Blacktown overlay is Blacktown-only data, so it is shown
+    // only when nothing is selected or Blacktown itself is selected.
+    enabled: selectedCouncilIds.length === 0 || selectedCouncilIds.includes("blacktown-city-council"),
     url: `${BASE}data/blacktown.geojson`,
     cacheId: "pp_blacktown",
     label: "Blacktown parks",
@@ -916,6 +1219,31 @@ export default function Explore() {
     else renderMarkersForBounds(filteredRef.current);
   }, [geocodeNearby, renderMarkersForBounds]);
 
+  // ── Selected council geometry (FR1.6) and transport scope (FR4.4) ────────
+  const selectedGeometries = useMemo(() => {
+    const map = new Map<string, CouncilGeometry>();
+    for (const id of selectedCouncilIds) {
+      const feature = councilFeatures.get(id);
+      if (feature?.geometry) map.set(id, feature.geometry as CouncilGeometry);
+    }
+    return map;
+  }, [selectedCouncilIds, councilFeatures]);
+
+  /**
+   * FR4.4 scope predicate: only stops inside a selected council render. Bounding
+   * boxes are pre-computed because the predicate runs once per visible marker.
+   * While boundaries are still loading the filter is undefined and the layer
+   * shows every stop — the same degradation FR1.6 applies to the parks list.
+   */
+  const transportFilter = useMemo(() => {
+    if (selectedGeometries.size === 0) return undefined;
+    const boxes = new Map<string, BBox>();
+    for (const [id, geometry] of selectedGeometries) boxes.set(id, bboxOfGeometry(geometry));
+    const geometries = [...selectedGeometries];
+    return (_props: TransportStopProperties, [lat, lng]: [number, number]) =>
+      geometries.some(([id, geometry]) => pointInCouncil(geometry, lng, lat, boxes.get(id)));
+  }, [selectedGeometries]);
+
   // ── Culled point overlays (fountains, transport, toilets) ──────────────────
   // These datasets hold between 273 and 3,127 points each. They used to be
   // added to the map in one shot, so ticking a filter created thousands of
@@ -935,18 +1263,34 @@ export default function Explore() {
     onError: (label) => toast(`Could not load ${label}`, "error"),
   });
 
-  useCulledMarkerLayer<Record<string, unknown>>(mapInstance, {
+  // FR4.4: the converted stops.geojson (26,198 stations, route_types[] per
+  // stop) replaces the legacy 1,164-stop public-transports.json behind the
+  // same contract, scoped to the selected councils through the FR1.6 filter.
+  useCulledMarkerLayer<TransportStopProperties>(mapInstance, {
     enabled: filters.transport,
-    url: `${BASE}data/public-transports.json`,
-    cacheId: "pp_transport",
+    url: `${BASE}data/transport/stops.geojson`,
+    cacheId: "pp_transport_stops",
     label: "public transport",
+    refreshKey: `${selectedCouncilIds.join(",")}:${selectedGeometries.size}`,
+    filter: transportFilter,
     build: (p, [lat, lng]) => {
-      const name =
-        (p.name as string) ||
-        ((p.properties as Record<string, unknown> | undefined)?.stop_name as string) ||
-        "Transport Stop";
+      const name = p.stop_name || "Transport Stop";
+      const modes = (p.route_types ?? []).map((m) => ROUTE_MODE_LABELS[m] ?? m);
       const marker = L.marker([lat, lng], { icon: getOverlayIcon("#9B2335", 16, "3px"), title: name });
-      marker.bindPopup(() => buildSimplePopup("#9B2335", "Transport", name), { maxWidth: 200 });
+      marker.on("add", () => {
+        // Test hook: lets e2e verify FR4.4 (every rendered stop is inside the
+        // selected council) without reaching into Leaflet internals.
+        const el = marker.getElement();
+        if (el) {
+          el.dataset.ppStopId = p.stop_id ?? "";
+          el.dataset.ppLat = String(lat);
+          el.dataset.ppLng = String(lng);
+        }
+      });
+      marker.bindPopup(
+        () => buildSimplePopup("#9B2335", modes.length ? modes.join(" · ") : "Transport", name),
+        { maxWidth: 200 },
+      );
       return marker;
     },
     onCount: (total) => setLayerCounts((prev) => ({ ...prev, transport: total })),
@@ -972,10 +1316,95 @@ export default function Explore() {
     onError: (label) => toast(`Could not load ${label}`, "error"),
   });
 
-  // ── Trees layer (sharded, canvas-rendered) ───────────────────────────────
+  // ── Inner West LGA layers (Sprint 2 POC — static GeoJSON, no DB) ──────────
+  // Parks: uses the standard LgaPark shape from @workspace/parks-sydney.
+  useCulledMarkerLayer<Record<string, unknown>>(mapInstance, {
+    enabled: filters.iwParks,
+    url: `${BASE}data/inner-west/parks.geojson`,
+    cacheId: "pp_iw_parks",
+    label: "Inner West parks",
+    build: (p, [lat, lng]) => {
+      const name = (p.Name as string) || (p.name as string) || "Park";
+      const color = p.Type === "Playground" ? "#DC267F" : "#8B1A6B";
+      const marker = L.marker([lat, lng], {
+        icon: getOverlayIcon(color, 18, "4px"),
+        title: name,
+      });
+      marker.bindPopup(() => buildSimplePopup(color, "Park · Inner West", name), { maxWidth: 240 });
+      return marker;
+    },
+    onCount: (total) => setLayerCounts((prev) => ({ ...prev, iwParks: total })),
+    onError: (label) => toast(`Could not load ${label}`, "error"),
+  });
+
+  // Trees: static GeoJSON — no sharding yet for LGA-level tree data.
+  useCulledMarkerLayer<Record<string, unknown>>(mapInstance, {
+    enabled: filters.iwTrees,
+    url: `${BASE}data/inner-west/trees.geojson`,
+    cacheId: "pp_iw_trees",
+    label: "Inner West trees",
+    build: (p, [lat, lng]) => {
+      const name = (p.CommonName as string) || (p.SpeciesName as string) || "Tree";
+      const marker = L.marker([lat, lng], {
+        icon: getOverlayIcon("#52B788", 12, "50%"),
+        title: name,
+      });
+      marker.bindPopup(() => {
+        const div = document.createElement("div");
+        div.className = "pp-popup";
+        const badge = document.createElement("span");
+        badge.className = "pp-popup-type";
+        badge.style.background = "#40916C";
+        badge.textContent = "🌳 Tree · Inner West";
+        div.appendChild(badge);
+        const heading = document.createElement("h3");
+        heading.textContent = name;
+        div.appendChild(heading);
+        const species = (p.SpeciesName as string) || "";
+        if (species && species !== name) {
+          const sp = document.createElement("p");
+          sp.style.fontSize = "11px";
+          sp.style.color = "var(--pp-text-muted)";
+          sp.textContent = species;
+          div.appendChild(sp);
+        }
+        const details: string[] = [];
+        if (p.TreeType) details.push(String(p.TreeType));
+        if (p.Tree_Age) details.push(String(p.Tree_Age));
+        if (typeof p.DBH_in_cm === "number") details.push(`${p.DBH_in_cm} cm trunk`);
+        if (typeof p.TreeHeight === "number") details.push(`${p.TreeHeight} m`);
+        if (details.length) {
+          const meta = document.createElement("p");
+          meta.style.fontSize = "11px";
+          meta.style.color = "var(--pp-text-muted)";
+          meta.textContent = details.join(" · ");
+          div.appendChild(meta);
+        }
+        return div;
+      }, { maxWidth: 240 });
+      return marker;
+    },
+    onCount: (total) => setLayerCounts((prev) => ({ ...prev, iwTrees: total })),
+    onError: (label) => toast(`Could not load ${label}`, "error"),
+  });
+
+  // ── Trees layer (sharded, canvas-rendered; council-aware per FR3.3–3.4) ──
+  // The layer is rebuilt whenever the council selection changes so only the
+  // selected councils' shard sets are fetched.
+  const councilTreeKeyRef = useRef<string>("");
   useEffect(() => {
     const map = mapRef.current;
     if (!map) return;
+
+    const councilKey = selectedCouncilIds.join(",");
+    if (councilTreeKeyRef.current !== councilKey) {
+      // Selection changed: drop the old layer so loadTrees runs again.
+      if (treeLayerRef.current) {
+        if (map.hasLayer(treeLayerRef.current)) map.removeLayer(treeLayerRef.current);
+        treeLayerRef.current = null;
+      }
+      councilTreeKeyRef.current = councilKey;
+    }
 
     const loadTrees = async () => {
       if (treeLayerRef.current) return;
@@ -985,12 +1414,17 @@ export default function Explore() {
       const renderer = treeRendererRef.current;
       const bounds = map.getBounds();
       try {
-        const { trees, info } = await loadTreesForBounds({
-          south: bounds.getSouth(),
-          west: bounds.getWest(),
-          north: bounds.getNorth(),
-          east: bounds.getEast(),
-        });
+        const { trees, info } = await loadTreesForBounds(
+          {
+            south: bounds.getSouth(),
+            west: bounds.getWest(),
+            north: bounds.getNorth(),
+            east: bounds.getEast(),
+          },
+          { councilIds: selectedCouncilIds },
+        );
+        // The fetch may outlive the map (StrictMode remount, route change).
+        if (mapRef.current !== map) return;
         if (!trees.length) return;
         const layer = L.layerGroup();
         const index = treeIndexRef.current ?? new NearestIndex(allParksRef.current);
@@ -1012,7 +1446,6 @@ export default function Explore() {
         }
         treeLayerRef.current = layer;
         setLayerCounts((prev) => ({ ...prev, trees: info.total }));
-        setTreeSourceInfo(info);
       } catch (err) {
         console.error("[explore] failed to load tree data:", err);
         toast("Could not load tree data", "error");
@@ -1021,6 +1454,7 @@ export default function Explore() {
 
     if (filters.trees) {
       void loadTrees().then(() => {
+        if (mapRef.current !== map) return;
         if (treeLayerRef.current) {
           if (map.getZoom() >= TREE_ZOOM_THRESHOLD) {
             if (!map.hasLayer(treeLayerRef.current)) map.addLayer(treeLayerRef.current);
@@ -1034,7 +1468,7 @@ export default function Explore() {
       if (treeLayerRef.current && map.hasLayer(treeLayerRef.current)) map.removeLayer(treeLayerRef.current);
       setTreeZoomHint(false);
     }
-  }, [filters.trees]);
+  }, [filters.trees, selectedCouncilIds]);
   // ── Dog parks layer (cached + raw data for modal cross-ref) ───────────────
   useEffect(() => {
     const map = mapRef.current;
@@ -1045,6 +1479,8 @@ export default function Explore() {
         const { data } = await fetchWithCache<FeatureCollection<DogProperties>>(
           `${BASE}data/Dog_off-leash_parks.geojson`, "pp_dogs",
         );
+        // Stale fetch: the map that requested it is gone.
+        if (mapRef.current !== map) return;
         const layer = L.layerGroup();
         const raw: DogRaw[] = [];
         (data.features || []).forEach((f) => {
@@ -1052,7 +1488,10 @@ export default function Explore() {
           if (!at) return;
           const p = f.properties ?? {};
           raw.push({ name: p.ParkName ?? "Dog off-leash area", lat: at.lat, lng: at.lng });
-          const marker = L.marker([at.lat, at.lng], { icon: makeIcon("#AACC00", 26, "50%", "🐾"), title: p.ParkName });
+          const marker = L.marker([at.lat, at.lng], {
+            icon: makeIcon("#AACC00", 26, "50%", PAW_GLYPH),
+            title: p.ParkName,
+          });
           marker.bindPopup(() => buildDogPopup(p), { maxWidth: 280 });
           layer.addLayer(marker);
         });
@@ -1064,7 +1503,7 @@ export default function Explore() {
         toast("Could not load dog parks", "error");
       }
     };
-    if (filters.dogs) { loadDogs().then(() => { if (dogLayerRef.current && !map.hasLayer(dogLayerRef.current)) map.addLayer(dogLayerRef.current); }); }
+    if (filters.dogs) { loadDogs().then(() => { if (mapRef.current !== map) return; if (dogLayerRef.current && !map.hasLayer(dogLayerRef.current)) map.addLayer(dogLayerRef.current); }); }
     else if (dogLayerRef.current && map.hasLayer(dogLayerRef.current)) map.removeLayer(dogLayerRef.current);
   }, [filters.dogs]);
 
@@ -1078,6 +1517,7 @@ export default function Explore() {
         const { data } = await fetchWithCache<FeatureCollection<NpwsProperties>>(
           `${BASE}data/npws-facilities-greater-sydney.geojson`, "pp_npws",
         );
+        if (mapRef.current !== map) return;
         const cluster = L.markerClusterGroup({ maxClusterRadius: 50, disableClusteringAtZoom: 17, chunkedLoading: true });
         const raw: NpwsRaw[] = [];
         (data.features || []).forEach((f) => {
@@ -1102,15 +1542,67 @@ export default function Explore() {
         toast("Could not load NPWS facilities", "error");
       }
     };
-    if (filters.npws) { loadNPWS().then(() => { if (npwsLayerRef.current && !map.hasLayer(npwsLayerRef.current)) map.addLayer(npwsLayerRef.current); }); }
+    if (filters.npws) { loadNPWS().then(() => { if (mapRef.current !== map) return; if (npwsLayerRef.current && !map.hasLayer(npwsLayerRef.current)) map.addLayer(npwsLayerRef.current); }); }
     else if (npwsLayerRef.current && map.hasLayer(npwsLayerRef.current)) map.removeLayer(npwsLayerRef.current);
   }, [filters.npws]);
 
   // ── Filter parks list (with fuzzy scoring) ────────────────────────────────
+  // FR1.6 geometry (selectedGeometries) is declared above the culled overlays
+  // so the FR4.4 transport scope can share the same map.
+
+  /**
+   * Parks after point-in-polygon scoping (bbox pre-filter → ray-casting,
+   * holes honoured). While boundaries are still loading — or the index failed
+   * — the unscoped list is returned so the app degrades to its old behaviour
+   * instead of flashing an empty result set.
+   */
+  const scopedParks = useMemo(() => {
+    if (selectedCouncilIds.length === 0 || selectedGeometries.size === 0) return allParks;
+    return filterByCouncils(allParks, selectedGeometries);
+  }, [allParks, selectedCouncilIds, selectedGeometries]);
+
+  // ── FR4.5 — transit stops in selection ───────────────────────────────────
+  // stops.geojson is 5.9 MB, so it is fetched only once someone can use it (a
+  // council is selected or the transport layer is on) and then held in the
+  // dataCache memory tier; until then the stat renders as "—".
+  const [transitPoints, setTransitPoints] = useState<{ lat: number; lng: number }[] | null>(null);
+  const [transitLoading, setTransitLoading] = useState(false);
+
+  useEffect(() => {
+    if (transitPoints !== null || transitLoading) return;
+    if (!filters.transport && selectedCouncilIds.length === 0) return;
+    setTransitLoading(true);
+    (async () => {
+      try {
+        const { data } = await fetchWithCache<FeatureCollection>(
+          `${BASE}data/transport/stops.geojson`,
+          "pp_stops_fc",
+        );
+        const pts: { lat: number; lng: number }[] = [];
+        for (const f of data.features ?? []) {
+          const ll = readLatLng(f);
+          if (ll) pts.push({ lat: ll.lat, lng: ll.lng });
+        }
+        setTransitPoints(pts);
+      } catch (err) {
+        console.error("[explore] failed to load transit stops:", err);
+        toast("Could not load transit stops", "error");
+      } finally {
+        setTransitLoading(false);
+      }
+    })();
+  }, [filters.transport, selectedCouncilIds, transitPoints, transitLoading, toast]);
+
+  /** Stops inside the selection (bbox pre-filter → ray-casting), null until loaded. */
+  const transitStopsInSelection = useMemo(() => {
+    if (transitPoints === null) return null;
+    if (selectedCouncilIds.length === 0 || selectedGeometries.size === 0) return transitPoints.length;
+    return filterByCouncils(transitPoints, selectedGeometries).length;
+  }, [transitPoints, selectedCouncilIds, selectedGeometries]);
+
   useEffect(() => {
     const q = search.toLowerCase().trim();
-    const parkKeys: (keyof Filters)[] = ["playground", "sports", "iconic", "neighbourhood", "pocket", "sportsfield"];
-    const anyParkFilter = parkKeys.some(k => filters[k]);
+    const anyParkFilter = PARK_TYPE_KEYS.some(k => filters[k]);
 
     const typeMatch = (park: Park) =>
       (filters.playground && park.hasPlayground) ||
@@ -1123,22 +1615,22 @@ export default function Explore() {
     const areaPass = (park: Park) => !minArea || (park.area != null && park.area >= minArea);
 
     if (!q) {
-      setFiltered(allParks.filter(p => (!anyParkFilter || typeMatch(p)) && areaPass(p)));
+      setFiltered(scopedParks.filter(p => (!anyParkFilter || typeMatch(p)) && areaPass(p)));
       return;
     }
 
-    const scored = allParks
+    const scored = scopedParks
       .map(park => ({ park, score: fuzzyScore(park, q) }))
       .filter(x => x.score > 0 && (!anyParkFilter || typeMatch(x.park)) && areaPass(x.park))
       .sort((a, b) => b.score - a.score)
       .map(x => x.park);
 
     setFiltered(scored);
-  }, [allParks, search, filters, minArea]);
+  }, [scopedParks, search, filters, minArea]);
 
   // ── Geocode fallback ──────────────────────────────────────────────────────
   useEffect(() => {
-    if (!search.trim() || filtered.length > 0 || geocodeNearby !== null || allParks.length === 0) return;
+    if (!search.trim() || filtered.length > 0 || geocodeNearby !== null || scopedParks.length === 0) return;
     const controller = new AbortController();
     (async () => {
       try {
@@ -1153,7 +1645,7 @@ export default function Explore() {
           const lng = parseFloat(data[0].lon);
           const place = data[0].display_name.split(",")[0].trim();
           mapRef.current?.flyTo([lat, lng], 14, { duration: 1.2, easeLinearity: 0.25 });
-          const nearby = [...allParks]
+          const nearby = [...scopedParks]
             .sort((a, b) => haversineKm(lat, lng, a.lat, a.lng) - haversineKm(lat, lng, b.lat, b.lng))
             .slice(0, 50);
           setGeocodeNearby(nearby);
@@ -1161,12 +1653,15 @@ export default function Explore() {
           toast(`Showing parks near "${place}"`, "info");
         }
       } catch (err) {
+        // The effect's cleanup aborts this fetch whenever the query moves on
+        // (typing, clearing) — that is cancellation, not a failure.
+        if ((err as { name?: string })?.name === "AbortError") return;
         console.error("[explore] failed to load geocoding:", err);
         toast("Could not load geocoding", "error");
       }
     })();
     return () => controller.abort();
-  }, [search, filtered.length, geocodeNearby, allParks, toast]);
+  }, [search, filtered.length, geocodeNearby, scopedParks, toast]);
 
   const closeParkModal = useCallback(() => setSelectedPark(null), []);
 
@@ -1178,6 +1673,32 @@ export default function Explore() {
     sports:        allParks.filter(p => p.type === "Sportsfield" || p.type === "Sports").length,
     pocket:        allParks.filter(p => p.type === "Pocket").length,
   }), [allParks]);
+
+  // Seed each layer's record count from the generated snapshot, so a category
+  // states how many records it holds before the visitor switches it on. Once a
+  // layer loads it reports its own count and overwrites this seed. A layer
+  // with no generated count keeps "—" rather than a fabricated zero.
+  // Depend on the counts object, not on the hook's wrapper: `useDataSnapshot`
+  // returns a fresh `{ status, snapshot, reload }` each render, so depending on
+  // it would re-run this effect forever.
+  const snapshotCounts = snapshot.status === "ready" ? snapshot.snapshot.counts : null;
+  useEffect(() => {
+    if (!snapshotCounts) return;
+    setLayerCounts((prev) => {
+      let changed = false;
+      const next = { ...prev };
+      for (const toggle of LAYER_TOGGLES) {
+        if (next[toggle.key] !== undefined) continue;
+        const layer = getLayer(toggle.key);
+        const value = layer ? countFor(layer, snapshotCounts) : null;
+        if (value !== null) {
+          next[toggle.key] = value;
+          changed = true;
+        }
+      }
+      return changed ? next : prev;
+    });
+  }, [snapshotCounts]);
 
   // Keep layerCounts in sync with parkStats so filter badges show counts
   useEffect(() => {
@@ -1233,13 +1754,13 @@ export default function Explore() {
   const suggestions = useMemo(() => {
     if (sortedDisplayParks.length > 0 || !search.trim() || geocodeNearby !== null) return [];
     const q = search.toLowerCase().trim();
-    return allParks
+    return scopedParks
       .map(p => ({ park: p, score: fuzzyScore(p, q) }))
       .filter(x => x.score > 0)
       .sort((a, b) => b.score - a.score)
       .slice(0, 3)
       .map(x => x.park);
-  }, [allParks, search, sortedDisplayParks.length, geocodeNearby]);
+  }, [scopedParks, search, sortedDisplayParks.length, geocodeNearby]);
 
   const nearbyNPWSFacilities = useMemo(() => {
     if (!selectedPark || npwsRawData.length === 0) return [];
@@ -1266,7 +1787,18 @@ export default function Explore() {
     mapRef.current.flyTo([park.lat, park.lng], 17, { duration: 1.2, easeLinearity: 0.25 });
     // Wait for the fly-to animation to settle before revealing the marker.
     setTimeout(() => {
-      markersByIdRef.current.get(park.id)?.openPopup();
+      const marker = markersByIdRef.current.get(park.id);
+      const map = mapRef.current;
+      if (!marker || !map) return;
+      const cluster = parkClusterRef.current;
+      // Clustering is off from z16; if the fly-to was interrupted the marker
+      // may still be wrapped, and zoomToShowLayer unwraps + reveals it.
+      const revealed = map.getZoom() >= 16 && map.getBounds().contains([park.lat, park.lng]);
+      if (cluster && !revealed) {
+        cluster.zoomToShowLayer(marker, () => marker.openPopup());
+      } else {
+        marker.openPopup();
+      }
     }, 1300);
   }, []);
 
@@ -1304,6 +1836,9 @@ export default function Explore() {
 
   const clearAll = useCallback(() => {
     setSearchInput(""); setSearch(""); setFilters(defaultFilters);
+    // Registry-driven layers are not part of `Filters`; reset them too so the
+    // button means the same thing for every chip in this panel.
+    setGenericEnabled(Object.fromEntries(GENERIC_LAYERS.map((layer) => [layer.id, layer.defaultVisible])));
     setGeocodeNearby(null); setGeocodePlace("");
     setSortBy("default");
     setVisibleCount(100);
@@ -1312,7 +1847,6 @@ export default function Explore() {
     searchInputRef.current?.focus();
   }, []);
 
-  const [showScrollTop,   setShowScrollTop]   = useState(false);
   const [showShortcuts,   setShowShortcuts]   = useState(false);
   handleLocateRef.current = handleLocate;
   const selectParkRef = useRef<(park: Park) => void>(() => {});
@@ -1380,874 +1914,884 @@ export default function Explore() {
     });
   }, [allParks, toast]);
 
-  const activeFilterCount = Object.values(filters).filter(Boolean).length + (search ? 1 : 0) + (showFavOnly ? 1 : 0);
-  // The Blacktown layer reported its real feature count once loaded; the
-  // previous hard-coded 1605 made the header lie whenever the dataset changed
-  // (and before the first load, showing parks alone).
-  const blacktownCount = layerCounts.blacktown ?? 0;
-  const totalCount = allParks.length + blacktownCount;
+  // Only restrictions on the *results list* count here: park-type chips,
+  // search, favourites. Overlay layers (trees/toilets/dogs/…) add map data
+  // without narrowing parks, so counting them made a permanent "7" badge and
+  // flipped the header into its restricted variant.
+  const activeFilterCount = PARK_TYPE_KEYS.filter(k => filters[k]).length + (search ? 1 : 0) + (showFavOnly ? 1 : 0);
+
+  // ── Council selection derived values (FR1) ──────────────────────────────
+  const selectedCouncilEntries = useMemo(() => {
+    if (!councilIndex) return [];
+    return selectedCouncilIds
+      .map(id => councilIndex.councils.find(c => c.lga_id === id))
+      .filter((e): e is NonNullable<typeof e> => Boolean(e));
+  }, [councilIndex, selectedCouncilIds]);
+
+  const networkParksAreaHa = useMemo(
+    () => allParks.reduce((sum, p) => sum + (p.area ?? 0), 0) / 10000,
+    [allParks],
+  );
+
+  /** Playground total for the hero tiles (parks dataset only). */
+  const playgroundCount = useMemo(
+    () => allParks.filter(p => p.hasPlayground).length,
+    [allParks],
+  );
+
+  const selectedPending = useMemo(
+    () => selectedCouncilIds.filter(id => pendingBoundaries.includes(id)),
+    [selectedCouncilIds, pendingBoundaries],
+  );
+  const selectedFailed = useMemo(
+    () => selectedCouncilIds.filter(id => failedBoundaries.includes(id)),
+    [selectedCouncilIds, failedBoundaries],
+  );
+
+  /** Stats skeleton while the index — or the first boundary — is in flight. */
+  const councilStatsLoading =
+    councilStatus === "loading" ||
+    (selectedCouncilIds.length > 0 && selectedPending.length > 0 && selectedGeometries.size === 0);
+
+  /** Single entry point for every selection mutation (FR1.3 multi/single). */
+  const handleCouncilChange = useCallback((ids: string[]) => {
+    setSelectedCouncilIds(ids);
+    // Forget fetch outcomes for councils no longer selected, so re-selecting
+    // one retries instead of inheriting a stale "unavailable" flag.
+    setFailedBoundaries(prev => prev.filter(id => ids.includes(id)));
+    setPendingBoundaries(prev => prev.filter(id => ids.includes(id)));
+  }, []);
   const displayParks = sortedDisplayParks;
-
-  // ── Filter items config ───────────────────────────────────────────────────
-  const filterEmoji: Partial<Record<keyof Filters, string>> = {
-    playground: "🛝", sports: "⚽", iconic: "⭐", neighbourhood: "🏘",
-    pocket: "🌿", sportsfield: "🏟", dogs: "🐕", npws: "🍖",
-    fountains: "⛲", toilets: "🚻", transport: "🚌", trees: "🌳",
-  };
-
-  const filterItems = [
-    { key: "playground" as const, label: "Playgrounds",   countKey: "playground",
-      icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg> },
-    { key: "sports" as const, label: "Sports Parks",      countKey: "sports",
-      icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/><line x1="2" y1="12" x2="22" y2="12"/></svg> },
-    { key: "iconic" as const, label: "Iconic Parks",      countKey: "iconic",
-      icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg> },
-    { key: "neighbourhood" as const, label: "Neighbourhood", countKey: "neighbourhood_stat",
-      icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg> },
-    { key: "pocket" as const, label: "Pocket Parks",      countKey: "pocket_stat",
-      icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg> },
-    { key: "sportsfield" as const, label: "Sportsfields",  countKey: "sportsfield_stat",
-      icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="12" x2="21" y2="12"/><circle cx="12" cy="12" r="3"/></svg> },
-    { key: "dogs" as const, label: "Dog Parks",            countKey: "dogs",
-      icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="7.5" cy="6.5" r="2"/><circle cx="16.5" cy="6.5" r="2"/><circle cx="4.5" cy="11" r="2"/><circle cx="19.5" cy="11" r="2"/><path d="M12 22c-4.5 0-7.5-2.5-7.5-6 0-2.5 2-4 5-4h5c3 0 5 1.5 5 4 0 3.5-3 6-7.5 6z"/></svg> },
-    { key: "npws" as const, label: "NPWS Facilities",      countKey: "npws",
-      icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg> },
-    { key: "fountains" as const, label: "Drinking Fountains", countKey: "fountains",
-      icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M12 22V12"/><path d="M5 12C5 8 8 4 12 4s7 4 7 8"/><path d="M5 12H2a10 10 0 0 0 20 0h-3"/></svg> },
-    { key: "toilets" as const, label: "Public Toilets",    countKey: "toilets",
-      icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M7 7h10v8a4 4 0 0 1-4 4H11a4 4 0 0 1-4-4V7z"/><path d="M5 7V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v2"/></svg> },
-    { key: "transport" as const, label: "Public Transport", countKey: "transport",
-      icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/><path d="M8 21l-2 2M18 21l-2 2"/></svg> },
-    { key: "trees" as const, label: "Trees",               countKey: "trees",
-      icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M12 22v-7l-2-2"/><path d="M17 8v.8A6 6 0 0 1 13.8 20v0H10v0A6.5 6.5 0 0 1 7 8h0a5 5 0 0 1 10 0Z"/></svg> },
-  ];
-
-  const quickPills = [
-    { label: "🛝 Playgrounds", key: "playground" as keyof Filters },
-    { label: "🐕 Dog Parks",   key: "dogs"          as keyof Filters },
-    { label: "⭐ Iconic",       key: "iconic"       as keyof Filters },
-    { label: "🌿 Pocket",       key: "pocket"      as keyof Filters },
-    { label: "🏘 Neighbourhood",key: "neighbourhood" as keyof Filters },
-    { label: "⚽ Sports",       key: "sports"       as keyof Filters },
-    { label: "🍖 NPWS/BBQ",    key: "npws"       as keyof Filters },
-    { label: "⛲ Fountains",   key: "fountains"  as keyof Filters },
-    { label: "🚻 Toilets",     key: "toilets"    as keyof Filters },
-  ];
-
-  const favCount = [...allParks].filter(p => favoriteIds.has(p.id)).length;
 
   // ── JSX ───────────────────────────────────────────────────────────────────
   return (
-    <div className="pp-explore-page">
-      <a href="#main-content" className="pp-visually-hidden pp-skip-link">Skip to main content</a>
+    <div className="fa-shell fa-explore-page">
       <Navbar />
-      <main id="main-content" className="pp-explore-main">
+      <main id="main-content" className="fa-explore-main">
 
-        {/* ── Sidebar ── */}
-        <aside className={`pp-sidebar${sidebarCollapsed ? " collapsed" : ""}`}>
-
-          {/* Header */}
-          <div className="pp-sidebar-header">
-            <h1>
-              Find Parks{" "}
-              {activeFilterCount > 0 && <span className="pp-active-badge">{activeFilterCount}</span>}
-            </h1>
-            <button
-              className="pp-sidebar-toggle"
-              aria-label="Collapse sidebar"
-              onClick={() => { setSidebarCollapsed(true); setTimeout(() => mapRef.current?.invalidateSize(), 330); }}
-            >
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M15 18l-6-6 6-6"/></svg>
-            </button>
-          </div>
-
-          {/* Search */}
-          <div className="pp-search-container" style={{ position: "relative" }}>
-            <div className="pp-search-wrapper">
-              <svg className="pp-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/>
-              </svg>
-              <input
-                ref={searchInputRef}
-                type="text"
-                className="pp-search-input"
-                placeholder="Search parks, suburbs, types…"
-                value={searchInput}
-                onChange={e => { setSearchInput(e.target.value); setShowHistory(false); }}
-                onFocus={() => { setSearchFocused(true); if (!searchInput && searchHistory.length > 0) setShowHistory(true); }}
-                onBlur={() => { setTimeout(() => { setShowHistory(false); setSearchFocused(false); }, 160); }}
-                onKeyDown={e => {
-                  if (e.key === "Escape") { clearAll(); }
-                  else if (e.key === "ArrowDown") {
-                    e.preventDefault();
-                    const first = resultsListRef.current?.querySelector<HTMLElement>(".pp-park-card-title");
-                    first?.focus(); first?.scrollIntoView({ block: "nearest" });
-                  }
-                }}
-                aria-label="Search parks"
-                autoComplete="off"
-              />
-              {searchInput ? (
-                <button className="pp-clear-btn" onClick={clearAll} aria-label="Clear search">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                    <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
-                  </svg>
-                </button>
-              ) : (
-                <kbd className="pp-search-kbd" title="Press / to focus search">/</kbd>
-              )}
+        {/* ── Intro: the page's claim, and three verified figures ─────────── */}
+        <header className="fa-explore-intro">
+          <div className="fa-wrap fa-explore-intro-inner">
+            <div className="fa-explore-intro-copy">
+              <h1 className="fa-explore-title">
+                Parks, trees and facilities, mapped with their sources
+              </h1>
+              <p className="fa-explore-lede">
+                Start with City of Sydney park records and off-leash areas, then add
+                facilities, trees or transport. Every layer names its publisher and extent,
+                and every count is a record count — never a unique-place total.
+              </p>
             </div>
-            {showHistory && searchHistory.length > 0 && !searchInput && (
-              <div className="pp-history-dropdown" role="listbox" aria-label="Recent searches">
-                <div className="pp-history-header">
-                  <span>Recent</span>
-                  <button onClick={() => { setSearchHistory([]); localStorage.removeItem("parkpulse_history"); setShowHistory(false); }}>
-                    Clear
-                  </button>
+            <dl className="fa-explore-figures">
+              {(
+                [
+                  ["Parks", allParks.length > 0 ? allParks.length.toLocaleString() : "—"],
+                  ["Playgrounds", playgroundCount > 0 ? playgroundCount.toLocaleString() : "—"],
+                  ["Councils", councilIndex ? councilIndex.total_councils.toLocaleString() : "—"],
+                ] as const
+              ).map(([label, value]) => (
+                <div className="fa-figure" key={label}>
+                  <dt>{label}</dt>
+                  <dd>{value}</dd>
                 </div>
-                {searchHistory.map((h, i) => (
-                  <button
-                    key={i}
-                    className="pp-history-item"
-                    role="option"
-                    onMouseDown={() => { setSearchInput(h); setShowHistory(false); }}
-                  >
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ width: 12, height: 12, opacity: .5 }}>
-                      <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
-                    </svg>
-                    {h}
-                  </button>
-                ))}
-              </div>
-            )}
-            {!showHistory && autoCompleteSuggestions.length > 0 && (
-              <div className="pp-autocomplete-dropdown" role="listbox" aria-label="Suggestions">
-                {autoCompleteSuggestions.map((item, i) => (
-                  <button
-                    key={i}
-                    className="pp-autocomplete-item"
-                    role="option"
-                    onMouseDown={() => { setSearchInput(item.value); setSearchFocused(false); }}
-                  >
-                    {item.kind === "suburb" ? (
-                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="pp-ac-icon">
-                        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
-                        <polyline points="9 22 9 12 15 12 15 22"/>
-                      </svg>
-                    ) : item.kind === "type" ? (
-                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="pp-ac-icon">
-                        <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/>
-                      </svg>
-                    ) : (
-                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="pp-ac-icon">
-                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/>
-                      </svg>
-                    )}
-                    <span className="pp-ac-label">{item.label}</span>
-                    <span className={`pp-ac-kind pp-ac-kind-${item.kind}`}>
-                      {item.kind === "suburb" ? "Suburb" : item.kind === "type" ? "Type" : "Park"}
-                    </span>
-                    <span className="pp-ac-sub">{item.sub}</span>
-                  </button>
-                ))}
-              </div>
-            )}
+              ))}
+            </dl>
           </div>
+        </header>
 
-          {/* Filters (collapsible) */}
-          <div className={`pp-filters-container${filtersOpen ? " open" : ""}`}>
-            <button
-              className="pp-filters-toggle"
-              aria-expanded={filtersOpen}
-              onClick={() => setFiltersOpen(v => !v)}
-            >
-              <span className="pp-filters-toggle-left">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                  <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/>
+        <div className="fa-wrap fa-explore-body">
+          <div className="fa-explore-grid">
+
+            {/* ── Rail: search, scope, categories, results ────────────────── */}
+            <aside className="fa-rail" id="explore-controls" aria-label="Search, categories and results">
+
+              <div className="fa-search">
+                <svg className="fa-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+                  <circle cx="11" cy="11" r="8" />
+                  <path d="M21 21l-4.35-4.35" />
                 </svg>
-                Filters
-                {Object.values(filters).some(Boolean) && (
-                  <span className="pp-active-badge" style={{ fontSize: ".65rem" }}>
-                    {Object.values(filters).filter(Boolean).length}
-                  </span>
+                <input
+                  ref={searchInputRef}
+                  type="text"
+                  className="fa-search-input"
+                  placeholder="Search parks, suburbs, types…"
+                  value={searchInput}
+                  onChange={(e) => {
+                    setSearchInput(e.target.value);
+                    setShowHistory(false);
+                  }}
+                  onFocus={() => {
+                    setSearchFocused(true);
+                    if (!searchInput && searchHistory.length > 0) setShowHistory(true);
+                  }}
+                  onBlur={() => {
+                    setTimeout(() => {
+                      setShowHistory(false);
+                      setSearchFocused(false);
+                    }, 160);
+                  }}
+                  onKeyDown={(e) => {
+                    if (e.key === "Escape") {
+                      clearAll();
+                    } else if (e.key === "ArrowDown") {
+                      e.preventDefault();
+                      const first = resultsListRef.current?.querySelector<HTMLElement>(".fa-result-title");
+                      first?.focus();
+                      first?.scrollIntoView({ block: "nearest" });
+                    }
+                  }}
+                  aria-label="Search parks"
+                  autoComplete="off"
+                />
+                {searchInput ? (
+                  <button type="button" className="fa-search-clear" onClick={clearAll} aria-label="Clear search">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+                      <line x1="18" y1="6" x2="6" y2="18" />
+                      <line x1="6" y1="6" x2="18" y2="18" />
+                    </svg>
+                  </button>
+                ) : (
+                  <kbd className="fa-kbd" title="Press / to focus search">/</kbd>
                 )}
-              </span>
-              <svg
-                className={`pp-filters-chevron${filtersOpen ? " rotated" : ""}`}
-                viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"
-              >
-                <polyline points="6 9 12 15 18 9"/>
-              </svg>
-            </button>
-            {filtersOpen && (
-              <>
-                <div className="pp-filter-group">
-                  {filterItems.map(item => (
-                    <label key={item.key} className="pp-filter-checkbox">
-                      <input type="checkbox" checked={filters[item.key]} onChange={() => toggleFilter(item.key)} />
-                      <span className="pp-checkmark" />
-                      <span className="pp-filter-label">
-                        {item.icon}
-                        {item.label}
-                        {item.key === "trees" && filters.trees && treeZoomHint && (
-                          <small className="pp-zoom-hint">(zoom in)</small>
-                        )}
-                        {item.countKey && layerCounts[item.countKey] !== undefined && (
-                          <span className="pp-layer-count">{layerCounts[item.countKey].toLocaleString()}</span>
-                        )}
-                      </span>
-                    </label>
-                  ))}
+
+                {showHistory && searchHistory.length > 0 && !searchInput && (
+                  <div className="fa-search-menu" role="listbox" aria-label="Recent searches">
+                    <div className="fa-search-menu-head">
+                      <span>Recent</span>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setSearchHistory([]);
+                          localStorage.removeItem("parkpulse_history");
+                          setShowHistory(false);
+                        }}
+                      >
+                        Clear
+                      </button>
+                    </div>
+                    {searchHistory.map((historyItem, i) => (
+                      <button
+                        key={i}
+                        type="button"
+                        className="fa-search-option"
+                        role="option"
+                        aria-selected={false}
+                        onMouseDown={() => {
+                          setSearchInput(historyItem);
+                          setShowHistory(false);
+                        }}
+                      >
+                        {historyItem}
+                      </button>
+                    ))}
+                  </div>
+                )}
+
+                {!showHistory && autoCompleteSuggestions.length > 0 && (
+                  <div className="fa-search-menu" role="listbox" aria-label="Suggestions">
+                    {autoCompleteSuggestions.map((item, i) => (
+                      <button
+                        key={i}
+                        type="button"
+                        className="fa-search-option"
+                        role="option"
+                        aria-selected={false}
+                        onMouseDown={() => {
+                          setSearchInput(item.value);
+                          setSearchFocused(false);
+                        }}
+                      >
+                        <span className="fa-search-option-label">{item.label}</span>
+                        <span className="fa-search-option-kind">
+                          {item.kind === "suburb" ? "Suburb" : item.kind === "type" ? "Type" : "Park"}
+                        </span>
+                        <span className="fa-search-option-sub">{item.sub}</span>
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </div>
+
+              {/* Council scope — shared with Insights through ?councils= */}
+              <section className="fa-panel" aria-labelledby="fa-scope-heading">
+                <div className="fa-panel-head">
+                  <h2 id="fa-scope-heading">Council scope</h2>
+                  {selectedCouncilIds.length > 0 && (
+                    <button
+                      type="button"
+                      className="fa-panel-link"
+                      onClick={() => handleCouncilChange([])}
+                    >
+                      Network-wide
+                    </button>
+                  )}
                 </div>
-                {/* Min area filter */}
-                <div className="pp-area-filter">
-                  <span className="pp-area-filter-label">Min size</span>
-                  <div className="pp-area-filter-btns">
-                    {([
-                      { val: 0,     label: "Any" },
-                      { val: 500,   label: "500m²+" },
-                      { val: 2000,  label: "2,000m²+" },
-                      { val: 10000, label: "1ha+" },
-                      { val: 50000, label: "5ha+" },
-                    ] as const).map(({ val, label }) => (
+                <div className="fa-panel-body">
+                  <CouncilSelector
+                    entries={councilIndex?.councils ?? []}
+                    status={councilStatus}
+                    selectedIds={selectedCouncilIds}
+                    mode={councilMode}
+                    onModeChange={setCouncilMode}
+                    onChange={handleCouncilChange}
+                  />
+                </div>
+                {selectedCouncilIds.length > 0 && (
+                  <>
+                    <MultiCouncilPanel
+                      map={mapInstance}
+                      entries={councilIndex?.councils ?? []}
+                      selectedIds={selectedCouncilIds}
+                      features={councilFeatures}
+                      pendingIds={selectedPending}
+                      failedIds={selectedFailed}
+                      onRemove={(id) => handleCouncilChange(selectedCouncilIds.filter((x) => x !== id))}
+                      onClear={() => handleCouncilChange([])}
+                    />
+                    <div className="fa-panel-divider" role="presentation" />
+                  </>
+                )}
+              </section>
+
+              {/* Categories — every published point layer, with real counts */}
+              <section className="fa-panel" aria-labelledby="fa-categories-heading">
+                <div className="fa-panel-head">
+                  <h2 id="fa-categories-heading">Map layers</h2>
+                  <button type="button" className="fa-panel-link" onClick={clearAll}>
+                    Reset
+                  </button>
+                </div>
+                <div className="fa-panel-body">
+                  <div className="fa-chip-grid">
+                    <button
+                      type="button"
+                      className="fa-chip"
+                      aria-pressed="true"
+                      disabled
+                      title="City of Sydney park areas are always shown"
+                    >
+                      <span className="fa-chip-swatch" style={{ background: "var(--pp-primary)" }} aria-hidden="true" />
+                      <span className="fa-chip-label">Parks</span>
+                      <span className="fa-chip-count">
+                        {allParks.length > 0 ? allParks.length.toLocaleString() : "—"}
+                      </span>
+                    </button>
+                    {LAYER_TOGGLES.map((toggle) => {
+                      const count = layerCounts[toggle.countKey ?? ""];
+                      return (
+                        <button
+                          key={toggle.key}
+                          type="button"
+                          className="fa-chip"
+                          data-layer={toggle.key}
+                          aria-pressed={filters[toggle.key]}
+                          onClick={() => toggleFilter(toggle.key)}
+                          title={`${filters[toggle.key] ? "Hide" : "Show"} ${toggle.label.toLowerCase()} on the map${toggle.hint ? ` (${toggle.hint})` : ""}`}
+                        >
+                          <span className="fa-chip-swatch" style={{ background: toggle.color }} aria-hidden="true" />
+                          <span className="fa-chip-label">{toggle.label}</span>
+                          <span className="fa-chip-count">
+                            {count !== undefined ? count.toLocaleString() : "—"}
+                          </span>
+                        </button>
+                      );
+                    })}
+                    {GENERIC_LAYERS.map((layer) => {
+                      const loaded = genericCounts[layer.id];
+                      const snapshotCount = layer.countKey ? layerCounts[layer.countKey] : undefined;
+                      const count = loaded ?? snapshotCount;
+                      return (
+                        <button
+                          key={layer.id}
+                          type="button"
+                          className="fa-chip"
+                          data-layer={layer.id}
+                          aria-pressed={Boolean(genericEnabled[layer.id])}
+                          onClick={() =>
+                            setGenericEnabled((previous) => ({ ...previous, [layer.id]: !previous[layer.id] }))
+                          }
+                          title={`${genericEnabled[layer.id] ? "Hide" : "Show"} ${layer.label.toLowerCase()} on the map`}
+                        >
+                          <span className="fa-chip-swatch" style={{ background: layer.mapColor ?? "#8B5CF6" }} aria-hidden="true" />
+                          <span className="fa-chip-label">{layer.label}</span>
+                          <span className="fa-chip-count">{count !== undefined ? count.toLocaleString() : "—"}</span>
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+                {genericError && (
+                  <p className="fa-panel-note fa-panel-note--warn" role="status">{genericError}</p>
+                )}
+                <p className="fa-panel-note">
+                  {filters.trees && treeZoomHint
+                    ? "Trees appear from zoom 16 — zoom in on the map to load them."
+                    : "Layer counts are records in each dataset, not unique places."}{" "}
+                  {UNSHIPPED_LAYERS.map((layer) => layer.label).join(" and ")} are registered but not
+                  shipped in this build.
+                </p>
+              </section>
+
+              {/* Park-type refinements + minimum area */}
+              <section className="fa-panel" aria-labelledby="fa-types-heading">
+                <div className="fa-panel-head">
+                  <h2 id="fa-types-heading">Park type</h2>
+                  <span className="fa-panel-meta">
+                    {activeFilterCount > 0 ? `${activeFilterCount} active` : "All types"}
+                  </span>
+                </div>
+                <div className="fa-panel-body">
+                  <div className="fa-chip-grid">
+                    {TYPE_FILTERS.map((type) => {
+                      const count = layerCounts[type.countKey];
+                      return (
+                        <button
+                          key={type.key}
+                          type="button"
+                          className="fa-chip"
+                          data-type-filter={type.key}
+                          aria-pressed={filters[type.key]}
+                          onClick={() => toggleFilter(type.key)}
+                        >
+                          <span className="fa-chip-swatch" style={{ background: type.color }} aria-hidden="true" />
+                          <span className="fa-chip-label">{type.label}</span>
+                          <span className="fa-chip-count">
+                            {count !== undefined ? count.toLocaleString() : "—"}
+                          </span>
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+                <div className="fa-panel-body fa-panel-body--inline">
+                  <span className="fa-panel-meta">Minimum area</span>
+                  <div className="fa-seg" role="group" aria-label="Minimum park area">
+                    {(
+                      [
+                        { val: 0, label: "Any" },
+                        { val: 500, label: "500m²" },
+                        { val: 2000, label: "2,000m²" },
+                        { val: 10000, label: "1ha" },
+                        { val: 50000, label: "5ha" },
+                      ] as const
+                    ).map(({ val, label }) => (
                       <button
                         key={val}
-                        className={`pp-area-btn${minArea === val ? " active" : ""}`}
+                        type="button"
+                        aria-pressed={minArea === val}
                         onClick={() => setMinArea(val)}
-                      >{label}</button>
+                      >
+                        {label}
+                      </button>
                     ))}
                   </div>
                 </div>
-                <button className="pp-btn pp-btn-outline pp-btn-small" style={{ marginTop: ".375rem" }} onClick={clearAll}>
-                  Clear All
-                </button>
-              </>
-            )}
-          </div>
+              </section>
 
-          {/* Results */}
-          <div className="pp-results-container">
-            <div className="pp-results-header">
-              <h3>Results</h3>
-              <div style={{ display: "flex", alignItems: "center", gap: ".375rem" }}>
-                <span className="pp-results-count">
-                  {geocodePlace
-                    ? `Near "${geocodePlace}"`
-                    : activeFilterCount > 0
-                      ? (() => {
-                          const withArea = displayParks.filter(p => p.area);
-                          const totalHa = withArea.reduce((s, p) => s + (p.area ?? 0), 0) / 10000;
-                          return `${displayParks.length.toLocaleString()} parks${withArea.length > 1 ? ` · ${totalHa.toFixed(0)} ha` : ""}`;
-                        })()
-                      : `${totalCount.toLocaleString()} locations`}
-                </span>
-                {showFavOnly && favoriteIds.size > 0 && (
-                  <button className="pp-export-btn" onClick={exportFavorites} title="Copy saved parks list to clipboard">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                      <rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
-                    </svg>
-                  </button>
-                )}
-                {(activeFilterCount > 0 || search || geocodeNearby) && (
-                  <button className="pp-fit-btn" onClick={copySearchLink} title="Copy link to this search">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                      <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
-                    </svg>
-                  </button>
-                )}
-                {displayParks.length > 0 && (
-                  <button className="pp-fit-btn" onClick={surpriseMe} title="Open a random park from results" style={{ borderRadius: "var(--pp-radius-sm)" }}>
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                      <rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8" cy="8" r="1.5" fill="currentColor"/><circle cx="16" cy="8" r="1.5" fill="currentColor"/><circle cx="8" cy="16" r="1.5" fill="currentColor"/><circle cx="16" cy="16" r="1.5" fill="currentColor"/><circle cx="12" cy="12" r="1.5" fill="currentColor"/>
-                    </svg>
-                  </button>
-                )}
-                <button
-                  className={`pp-fit-btn${compactView ? " active-btn" : ""}`}
-                  onClick={() => setCompactView(v => !v)}
-                  title={compactView ? "Switch to normal view" : "Switch to compact view"}
-                >
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                    <line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/>
-                    <line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/>
-                  </svg>
-                </button>
-                {(activeFilterCount > 0 || geocodeNearby) && displayParks.length > 1 && (
-                  <button className="pp-fit-btn" onClick={fitToResults} title="Fit map to results">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                      <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/>
-                    </svg>
-                  </button>
-                )}
-                <button
-                  className={`pp-fit-btn${showShortcuts ? " active-btn" : ""}`}
-                  onClick={() => setShowShortcuts(v => !v)}
-                  title="Keyboard shortcuts (?)"
-                  style={{ fontFamily: "serif", fontWeight: 700, fontSize: "1rem", lineHeight: 1 }}
-                >?</button>
-              </div>
-            </div>
-            {/* Active filter chips — quick-remove individual filters */}
-            {(Object.entries(filters).some(([, v]) => v) || minArea > 0) && (
-              <div className="pp-active-chips">
-                {(Object.entries(filters) as [keyof Filters, boolean][])
-                  .filter(([, v]) => v)
-                  .map(([key]) => {
-                    const item = filterItems.find(f => f.key === key);
-                    const emoji = filterEmoji[key];
-                    return (
+              {/* Results */}
+              <section className="fa-results" aria-labelledby="fa-results-heading">
+                <div className="fa-results-head">
+                  <h2 id="fa-results-heading">Results</h2>
+                  <span className="fa-results-count">
+                    {geocodePlace
+                      ? `Near "${geocodePlace}"`
+                      : activeFilterCount > 0 || selectedCouncilIds.length > 0
+                        ? (() => {
+                            const withArea = displayParks.filter((p) => p.area);
+                            const totalHa = withArea.reduce((s, p) => s + (p.area ?? 0), 0) / 10000;
+                            return `${displayParks.length.toLocaleString()} parks${
+                              withArea.length > 1 ? ` · ${totalHa.toFixed(0)} ha` : ""
+                            }`;
+                          })()
+                        : `${allParks.length.toLocaleString()} park records`}
+                  </span>
+                </div>
+
+                <div className="fa-toolbar fa-results-tools">
+                  <div className="fa-seg" role="group" aria-label="Sort order">
+                    {(
+                      [
+                        { key: "default", label: "Default" },
+                        { key: "name", label: "A–Z" },
+                        { key: "nearest", label: "Nearest" },
+                        { key: "size", label: "Largest" },
+                      ] as const
+                    ).map((option) => (
                       <button
-                        key={key}
-                        className="pp-active-chip"
-                        onClick={() => setFilters(prev => ({ ...prev, [key]: false }))}
-                        title={`Remove ${item?.label ?? key} filter`}
+                        key={option.key}
+                        type="button"
+                        className="fa-sort-btn"
+                        aria-pressed={sortBy === option.key}
+                        title={
+                          option.key === "nearest" && !userLocation
+                            ? "Find your location to sort by distance"
+                            : `Sort by ${option.label.toLowerCase()}`
+                        }
+                        onClick={() => {
+                          if (option.key === "nearest" && !userLocation) {
+                            handleLocate();
+                          } else {
+                            setSortBy(option.key);
+                          }
+                        }}
                       >
-                        {emoji && <span style={{ marginRight: ".1rem" }}>{emoji}</span>}
-                        {item?.label ?? key}
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                          <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+                        {option.label}
+                      </button>
+                    ))}
+                  </div>
+
+                  <button
+                    type="button"
+                    className="fa-tool-btn"
+                    aria-pressed={showFavOnly}
+                    onClick={() => setShowFavOnly((v) => !v)}
+                    title="Show saved parks only (D)"
+                  >
+                    Saved{favoriteIds.size > 0 ? ` ${favoriteIds.size}` : ""}
+                  </button>
+
+                  {displayParks.length > 1 && (
+                    <button type="button" className="fa-tool-btn" onClick={fitToResults} title="Fit the map to these results (F)">
+                      Fit map
+                    </button>
+                  )}
+                  {displayParks.length > 0 && (
+                    <button type="button" className="fa-tool-btn" onClick={surpriseMe} title="Open a random park from the results (S)">
+                      Surprise
+                    </button>
+                  )}
+                  <button
+                    type="button"
+                    className="fa-tool-btn"
+                    aria-pressed={showShortcuts}
+                    onClick={() => setShowShortcuts((v) => !v)}
+                    title="Keyboard shortcuts (?)"
+                  >
+                    Keys
+                  </button>
+                  {(activeFilterCount > 0 || search || geocodeNearby) && (
+                    <button type="button" className="fa-tool-btn" onClick={copySearchLink} title="Copy a link to this search">
+                      Copy link
+                    </button>
+                  )}
+                  {showFavOnly && favoriteIds.size > 0 && (
+                    <button type="button" className="fa-tool-btn" onClick={exportFavorites} title="Copy the saved list to the clipboard">
+                      Export saved
+                    </button>
+                  )}
+                </div>
+
+                {(Object.entries(filters).some(([, v]) => v) || minArea > 0) && (
+                  <div className="fa-active-chips">
+                    {(Object.entries(filters) as [keyof Filters, boolean][])
+                      .filter(([key, value]) => value && key !== "dogs")
+                      .map(([key]) => (
+                        <button
+                          key={key}
+                          type="button"
+                          className="fa-active-chip"
+                          onClick={() => setFilters((prev) => ({ ...prev, [key]: false }))}
+                          title={`Remove ${filterLabel(key)}`}
+                        >
+                          {filterLabel(key)}
+                          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" aria-hidden="true">
+                            <line x1="18" y1="6" x2="6" y2="18" />
+                            <line x1="6" y1="6" x2="18" y2="18" />
+                          </svg>
+                        </button>
+                      ))}
+                    {minArea > 0 && (
+                      <button type="button" className="fa-active-chip" onClick={() => setMinArea(0)} title="Remove area filter">
+                        ≥{fmtArea(minArea)}
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" aria-hidden="true">
+                          <line x1="18" y1="6" x2="6" y2="18" />
+                          <line x1="6" y1="6" x2="18" y2="18" />
                         </svg>
                       </button>
-                    );
-                  })}
-                {minArea > 0 && (
-                  <button className="pp-active-chip" onClick={() => setMinArea(0)} title="Remove area filter">
-                    ≥{fmtArea(minArea)}
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                      <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
-                    </svg>
-                  </button>
+                    )}
+                  </div>
                 )}
-              </div>
-            )}
 
-            {/* Type breakdown strip — visible when filtered results are non-empty */}
-            {!loading && (activeFilterCount > 0 || search || geocodeNearby) && displayParks.length > 3 && (() => {
-              const counts: Record<string, number> = {};
-              displayParks.forEach(p => { counts[p.type] = (counts[p.type] ?? 0) + 1; });
-              const sorted = Object.entries(counts).sort((a, b) => b[1] - a[1]).slice(0, 5);
-              const typeColors: Record<string, string> = {
-                Park: "var(--pp-primary)", Playground: "#f97316", Iconic: "#f59e0b",
-                Sportsfield: "#ef4444", Sports: "#ef4444", Neighbourhood: "#0d9488",
-                Pocket: "#8b5cf6", "Off-leash": "#84cc16",
-              };
-              const typeFilterMap: Partial<Record<string, keyof typeof filters>> = {
-                Playground: "playground", Iconic: "iconic",
-                Sportsfield: "sportsfield", Sports: "sportsfield",
-                Neighbourhood: "neighbourhood", Pocket: "pocket",
-              };
-              const suburbCounts: Record<string, number> = {};
-              displayParks.forEach(p => { if (p.suburb) suburbCounts[p.suburb] = (suburbCounts[p.suburb] ?? 0) + 1; });
-              const topSuburb = Object.entries(suburbCounts).sort((a, b) => b[1] - a[1])[0];
-              return (
-                <div className="pp-type-breakdown">
-                  {sorted.map(([type, count]) => {
-                    const fKey = typeFilterMap[type];
-                    return (
-                      <button
-                        key={type}
-                        className={`pp-type-breakdown-item${fKey && filters[fKey] ? " active" : ""}`}
-                        onClick={() => fKey && setFilters(prev => ({ ...prev, [fKey]: !prev[fKey] }))}
-                        title={fKey ? `Filter by ${type}` : undefined}
-                        style={{ cursor: fKey ? "pointer" : "default" }}
-                      >
-                        <span className="pp-type-breakdown-dot" style={{ background: typeColors[type] ?? "var(--pp-primary)" }} />
-                        {type} <span className="pp-type-breakdown-count">{count}</span>
-                      </button>
-                    );
-                  })}
-                  {topSuburb && topSuburb[1] > 1 && (
+                {cacheWarning && (
+                  <div className="fa-results-note" role="status">
+                    {cacheWarning}
+                    <button type="button" className="fa-panel-link" onClick={handleClearCache}>
+                      Clear cache
+                    </button>
+                  </div>
+                )}
+
+                {fromCache && (
+                  <p className="fa-results-note" role="status">
+                    Showing cached data. It will refresh when this page next loads online.
+                  </p>
+                )}
+
+                {geocodePlace && (
+                  <div className="fa-results-note">
+                    Results within reach of <strong>{geocodePlace}</strong>.
                     <button
-                      className="pp-type-breakdown-item"
-                      onClick={() => { setSearchInput(topSuburb[0]); setSearch(topSuburb[0]); setGeocodeNearby(null); setGeocodePlace(""); }}
-                      title={`Search parks in ${topSuburb[0]}`}
-                      style={{ marginLeft: "auto", color: "var(--pp-primary)" }}
+                      type="button"
+                      className="fa-panel-link"
+                      onClick={() => {
+                        setGeocodeNearby(null);
+                        setGeocodePlace("");
+                        setSearchInput("");
+                        setSearch("");
+                      }}
                     >
-                      📍 {topSuburb[0]} <span className="pp-type-breakdown-count">{topSuburb[1]}</span>
+                      Clear
                     </button>
+                  </div>
+                )}
+
+                {recentParks.length > 0 && (
+                  <div className="fa-results-recents">
+                    <span className="fa-panel-meta">Recently viewed</span>
+                    <div className="fa-recents">
+                      {recentParks.slice(0, 5).map((r) => {
+                        const park = allParks.find((p) => p.id === r.id);
+                        if (!park) return null;
+                        return (
+                          <button
+                            key={r.id}
+                            type="button"
+                            className="fa-recent"
+                            onClick={() => selectPark(park)}
+                            title={park.suburb || park.type}
+                          >
+                            {r.name}
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </div>
+                )}
+
+                <div className="fa-results-list" ref={resultsListRef}>
+                  {loading && (
+                    <div className="fa-result-skeletons" role="status" aria-live="polite">
+                      {Array.from({ length: 6 }).map((_, i) => (
+                        <div key={i} className="fa-result-skeleton" />
+                      ))}
+                      <span className="pp-visually-hidden">Loading park records</span>
+                    </div>
                   )}
-                </div>
-              );
-            })()}
 
-            {/* Park stats — visible only when idle; each is a filter shortcut */}
-            {!loading && !search && !geocodeNearby && !showFavOnly && !activeFilterCount && parkStats.playgrounds > 0 && (
-              <div className="pp-park-stats-bar">
-                {([
-                  { emoji: "🛝", count: parkStats.playgrounds,       filterKey: "playground"    as const, label: "playgrounds" },
-                  { emoji: "⭐", count: parkStats.iconic,            filterKey: "iconic"        as const, label: "iconic parks" },
-                  { emoji: "🐕", count: layerCounts.dogs ?? 0,      filterKey: "dogs"          as const, label: "dog parks" },
-                  { emoji: "🌿", count: parkStats.pocket,            filterKey: "pocket"        as const, label: "pocket parks" },
-                  { emoji: "🏘",  count: parkStats.neighbourhood,    filterKey: "neighbourhood" as const, label: "neighbourhood parks" },
-                  { emoji: "⚽", count: parkStats.sports,            filterKey: "sportsfield"   as const, label: "sportsfields" },
-                ] as const).map(({ emoji, count, filterKey, label }) => (
-                  <button
-                    key={filterKey}
-                    className="pp-stat-pill"
-                    title={`Filter to ${label}`}
-                    onClick={() => { setFilters(prev => ({ ...prev, [filterKey]: true })); setFiltersOpen(true); }}
-                  >
-                    {emoji} {count}
-                  </button>
-                ))}
-              </div>
-            )}
-
-            {/* Sort bar */}
-            <div className="pp-sort-bar" role="group" aria-label="Sort order">
-              <span className="pp-sort-label">Sort:</span>
-              {(["default", "name", "nearest", "size"] as const).map(s => (
-                <button
-                  key={s}
-                  className={`pp-sort-btn${sortBy === s ? " active" : ""}${s === "nearest" && !userLocation ? " disabled" : ""}`}
-                  onClick={() => { if (s === "nearest" && !userLocation) { handleLocate(); } else setSortBy(s); }}
-                  title={s === "nearest" && !userLocation ? "Click to enable location" : s === "size" ? "Largest parks first" : ""}
-                >
-                  {s === "default" ? "Default" : s === "name" ? "A–Z" : s === "nearest" ? "Nearest" : "Largest"}
-                </button>
-              ))}
-            </div>
-
-            {/* Cache indicator */}
-            {fromCache && (
-              <div className="pp-cache-indicator">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ width: 12, height: 12 }}>
-                  <polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-.49-4.49"/>
-                </svg>
-                Cached data
-                <button onClick={handleClearCache} title="Clear cache and reload fresh data" style={{ padding: ".25rem .5rem" }}>↺ refresh</button>
-              </div>
-            )}
-            {/* Cache warning */}
-            {cacheWarning && (
-              <div className="pp-cache-warning" role="alert" style={{ padding: ".5rem 1.25rem", fontSize: ".75rem", color: "var(--pp-text-muted)", background: "var(--pp-bg-alt)", borderBottom: "1px solid var(--pp-border-light)" }}>
-                {cacheWarning}
-              </div>
-            )}
-
-            {geocodePlace && (
-              <div className="pp-geocode-hint">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                  <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/>
-                </svg>
-                <span style={{ flex: 1 }}>Showing {displayParks.length} parks near <strong>{geocodePlace}</strong></span>
-                <button
-                  style={{ marginLeft: ".375rem", color: "var(--pp-text-muted)", lineHeight: 1, flexShrink: 0 }}
-                  title="Clear location filter"
-                  onClick={() => { setGeocodeNearby(null); setGeocodePlace(""); setSearchInput(""); setSearch(""); }}
-                >
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" style={{ width: 13, height: 13 }}>
-                    <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
-                  </svg>
-                </button>
-              </div>
-            )}
-
-            {/* Sort summary banners */}
-            {!loading && sortBy === "size" && displayParks.length > 0 && (() => {
-              const withArea = displayParks.filter(p => p.area);
-              const totalHa = withArea.reduce((sum, p) => sum + (p.area ?? 0), 0) / 10000;
-              const top = displayParks[0];
-              return (
-                <div className="pp-sort-banner">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                    <rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/>
-                  </svg>
-                  <span>
-                    Largest first · <strong>{top.name}</strong> leads at {top.area ? fmtArea(top.area) : "—"}
-                    {withArea.length > 1 && <> · {withArea.length}/{displayParks.length} have area data · combined {totalHa.toFixed(0)} ha</>}
-                  </span>
-                </div>
-              );
-            })()}
-            {!loading && sortBy === "name" && displayParks.length > 1 && (() => {
-              const first = displayParks[0].name;
-              const last  = displayParks[displayParks.length - 1].name;
-              return (
-                <div className="pp-sort-banner">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                    <line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="15" y2="12"/><line x1="3" y1="18" x2="9" y2="18"/>
-                  </svg>
-                  <span>
-                    A–Z · <strong>{first.slice(0, 20)}{first.length > 20 ? "…" : ""}</strong> → <strong>{last.slice(0, 20)}{last.length > 20 ? "…" : ""}</strong> · {displayParks.length} parks
-                  </span>
-                </div>
-              );
-            })()}
-            {!loading && sortBy === "nearest" && displayParks.length > 0 && userLocation && (() => {
-              const within1km = displayParks.filter(p =>
-                p.lat != null && haversineKm(userLocation.lat, userLocation.lng, p.lat!, p.lng!) < 1
-              ).length;
-              const nearest = displayParks[0];
-              const nearestDist = nearest.lat != null
-                ? haversineKm(userLocation.lat, userLocation.lng, nearest.lat, nearest.lng!)
-                : null;
-              return (
-                <div className="pp-sort-banner">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/>
-                  </svg>
-                  <span>
-                    Nearest first · <strong>{nearest.name}</strong>
-                    {nearestDist !== null && <> is {nearestDist < 1 ? `${Math.round(nearestDist * 1000)} m` : `${nearestDist.toFixed(1)} km`} away
-                      {nearestDist < 3 && <> (~{Math.max(1, Math.round(nearestDist / 0.083))} min walk)</>}
-                    </>}
-                    {within1km > 0 && <> · {within1km} park{within1km !== 1 ? "s" : ""} within 1 km</>}
-                  </span>
-                </div>
-              );
-            })()}
-
-            {/* Recently viewed — shown when idle (no search/filter/fav) */}
-            {!loading && !search && !geocodeNearby && !showFavOnly && recentParks.length > 0 && (
-              <div className="pp-recents-strip">
-                <div className="pp-recents-header">
-                  <span className="pp-recents-label">Recent</span>
-                  <button
-                    className="pp-recents-clear"
-                    onClick={() => {
-                      localStorage.removeItem("parkpulse_recent");
-                      setRecentParks([]);
-                    }}
-                    title="Clear recently viewed"
-                  >
-                    Clear
-                  </button>
-                </div>
-                <div className="pp-recents-chips">
-                  {recentParks.slice(0, 4).map(r => {
-                    const park = allParks.find(p => p.id === r.id);
-                    if (!park) return null;
-                    return (
-                      <button key={r.id} className="pp-recent-chip" onClick={() => selectPark(park)} title={park.suburb || park.type}>
-                        <span className="pp-recent-chip-name">{r.name}</span>
-                        {park.suburb && <span className="pp-recent-chip-sub">{park.suburb}</span>}
-                      </button>
-                    );
-                  })}
-                </div>
-              </div>
-            )}
-
-            {showScrollTop && (
-              <button
-                className="pp-scroll-top-btn"
-                onClick={() => resultsListRef.current?.scrollTo({ top: 0, behavior: "smooth" })}
-                title="Back to top"
-                aria-label="Scroll results to top"
-              >
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                  <path d="M18 15l-6-6-6 6"/>
-                </svg>
-              </button>
-            )}
-            <div className="pp-results-list" ref={resultsListRef}>
-              {loading ? (
-                Array.from({ length: 6 }).map((_, i) => <div key={i} className="pp-skeleton-card" />)
-              ) : displayParks.length === 0 && suggestions.length === 0 ? (
-                <div className="pp-empty-state">
-                  {showFavOnly && favoriteIds.size === 0 ? (
-                    <>
-                      <span style={{ fontSize: "2rem" }}>♡</span>
-                      <p>No saved parks yet.</p>
-                      <p style={{ fontSize: ".8rem" }}>Tap the heart on any park card to save it here.</p>
-                      <button className="pp-btn pp-btn-outline pp-btn-small" onClick={() => setShowFavOnly(false)}>Browse all parks</button>
-                    </>
-                  ) : search ? (
-                    <>
-                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                        <circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/>
-                      </svg>
-                      <p>No parks match <strong>"{search}"</strong>.</p>
-                      <p style={{ fontSize: ".8rem", marginTop: "-.25rem" }}>Try a suburb name, park type, or check spelling.</p>
-                      <div style={{ display: "flex", gap: ".5rem", flexWrap: "wrap", justifyContent: "center" }}>
-                        <button className="pp-btn pp-btn-outline pp-btn-small" onClick={() => { setSearchInput(""); setSearch(""); }}>Clear search</button>
-                        {activeFilterCount > 0 && <button className="pp-btn pp-btn-outline pp-btn-small" onClick={clearAll}>Clear all</button>}
-                      </div>
-                    </>
-                  ) : (
-                    <>
-                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                        <circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/>
-                      </svg>
-                      <p>No parks match your filters.</p>
-                      <p style={{ fontSize: ".8rem", marginTop: "-.25rem" }}>Try removing some filters to see more results.</p>
-                      {activeFilterCount > 0 && (
-                        <button className="pp-btn pp-btn-outline pp-btn-small" onClick={clearAll}>Clear all filters</button>
-                      )}
-                    </>
-                  )}
-                </div>
-              ) : displayParks.length === 0 && suggestions.length > 0 ? (
-                <div className="pp-did-you-mean">
-                  <p className="pp-dym-label">Did you mean…</p>
-                  {suggestions.map(p => (
-                    <button key={p.id} className="pp-dym-item" onClick={() => { setSearchInput(p.name); }}>
-                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ width: 13, height: 13, opacity: .5 }}>
-                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/>
-                      </svg>
-                      <span>{p.name}</span>
-                      {p.suburb && <span className="pp-dym-suburb">{p.suburb}</span>}
-                    </button>
-                  ))}
-                </div>
-              ) : (
-                <>
-                  {displayParks.slice(0, visibleCount).map((park, i) => {
-                    const dist = userLocation
-                      ? haversineKm(userLocation.lat, userLocation.lng, park.lat, park.lng)
-                      : null;
-                    const typeClass = park.type.toLowerCase().replace(/\s+/g, "-");
-                    const showRank = sortBy === "size" && i < 10 && park.area;
-                    return (
-                      <div
-                        key={park.id}
-                        data-park-id={park.id}
-                        className={`pp-park-card pp-card-stagger${compactView ? " compact" : ""}${showRank ? " pp-ranked" : ""}`}
-                        style={{ animationDelay: `${Math.min(i, 15) * 35}ms` }}
-                      >
-                        {showRank && (
-                          <span
-                            className="pp-rank-badge"
-                            title={`#${i + 1} largest`}
-                            style={i === 0 ? { background: "#FFD700", color: "#7A5C00" }
-                                 : i === 1 ? { background: "#C0C0C0", color: "#444" }
-                                 : i === 2 ? { background: "#8A4B14", color: "#fff" }
-                                 : undefined}
-                          >#{i + 1}</span>
-                        )}
-                        <button
-                          className={`pp-fav-btn${favoriteIds.has(park.id) ? " active" : ""}`}
-                          onClick={e => toggleFavorite(park.id, e)}
-                          aria-label={favoriteIds.has(park.id) ? `Remove ${park.name} from saved` : `Save ${park.name}`}
-                          title={favoriteIds.has(park.id) ? "Remove from saved" : "Save park"}
-                        >
-                          {favoriteIds.has(park.id) ? "♥" : "♡"}
-                        </button>
-                        <button
-                          className="pp-card-pin-btn"
-                          title={`Fly to ${park.name} on map`}
-                          onClick={e => {
-                            e.stopPropagation();
-                            mapRef.current?.flyTo([park.lat, park.lng], 17, { duration: 1.0, easeLinearity: 0.25 });
-                            setSidebarCollapsed(false);
-                          }}
-                          aria-label={`Show ${park.name} on map`}
-                        >
-                          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ width: 11, height: 11 }}>
-                            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/>
-                          </svg>
-                        </button>
-                        <button
-                          className="pp-card-share-btn"
-                          title="Copy link to this park"
-                          onClick={async e => {
-                            e.stopPropagation();
-                            const url = `${window.location.origin}${window.location.pathname}?park=${encodeURIComponent(park.name)}`;
-                            try {
-                              await navigator.clipboard.writeText(url);
-                            } catch (err) {
-                              console.warn("[explore] clipboard write failed:", err);
-                            }
-                            toast("Link copied!", "success");
-                          }}
-                          aria-label={`Copy link to ${park.name}`}
-                        >
-                          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ width: 11, height: 11 }}>
-                            <circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/>
-                            <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>
-                          </svg>
-                        </button>
-                        <div className="pp-park-card-header">
-                          <h4>
+                  {!loading && displayParks.length === 0 && (
+                    <div className="fa-state">
+                      {showFavOnly && favoriteIds.size === 0 ? (
+                        <>
+                          <strong>Nothing saved yet.</strong>
+                          Open a park and use Save to keep it here — saved places stay in this
+                          browser.
+                          <div className="fa-state-actions">
+                            <button type="button" className="fa-btn fa-btn--secondary" onClick={() => setShowFavOnly(false)}>
+                              Browse all parks
+                            </button>
+                          </div>
+                        </>
+                      ) : search ? (
+                        <>
+                          <strong>No parks match “{search}”.</strong>
+                          Try a shorter spelling, a suburb, or a park type.
+                          <div className="fa-state-actions">
                             <button
                               type="button"
-                              className="pp-park-card-title"
-                              onClick={() => selectPark(park)}
-                              aria-label={`View details for ${park.name}`}
+                              className="fa-btn fa-btn--secondary"
+                              onClick={() => {
+                                setSearchInput("");
+                                setSearch("");
+                              }}
                             >
-                              {search ? (() => {
-                                const q = search.trim();
-                                const idx = park.name.toLowerCase().indexOf(q.toLowerCase());
-                                if (idx === -1) return park.name;
-                                return (<>{park.name.slice(0, idx)}<mark className="pp-highlight-match">{park.name.slice(idx, idx + q.length)}</mark>{park.name.slice(idx + q.length)}</>);
-                              })() : park.name}
+                              Clear search
                             </button>
-                          </h4>
+                            {activeFilterCount > 0 && (
+                              <button type="button" className="fa-btn fa-btn--secondary" onClick={clearAll}>
+                                Clear all filters
+                              </button>
+                            )}
+                          </div>
+                        </>
+                      ) : (
+                        <>
+                          <strong>No parks match these filters.</strong>
+                          Widen the park type or lower the minimum area.
+                          <div className="fa-state-actions">
+                            <button type="button" className="fa-btn fa-btn--secondary" onClick={clearAll}>
+                              Clear all filters
+                            </button>
+                          </div>
+                        </>
+                      )}
+                    </div>
+                  )}
+
+                  {suggestions.length > 0 && (
+                    <div className="fa-did-you-mean">
+                      <p className="fa-panel-meta">Did you mean</p>
+                      <div className="fa-toolbar">
+                        {suggestions.map((p) => (
                           <button
-                            className={`pp-park-type-badge ${typeClass} pp-type-badge-btn`}
-                            onClick={e => {
-                              e.stopPropagation();
-                              const map: Partial<Record<string, keyof Filters>> = {
-                                Pocket: "pocket", Iconic: "iconic",
-                                Neighbourhood: "neighbourhood", Sportsfield: "sportsfield", Sports: "sportsfield",
-                              };
-                              const key = map[park.type];
-                              if (key) { setFilters(prev => ({ ...prev, [key!]: true })); setFiltersOpen(true); }
-                            }}
-                            title={`Filter to ${park.type} parks`}
+                            key={p.id}
+                            type="button"
+                            className="fa-chip-btn"
+                            onClick={() => setSearchInput(p.name)}
                           >
-                            {park.type}
+                            {p.name}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {displayParks.slice(0, visibleCount).map((park, rank) => {
+                    const dist = userLocation ? haversineKm(userLocation.lat, userLocation.lng, park.lat, park.lng) : null;
+                    const areaLabel = park.area
+                      ? park.area >= 10000
+                        ? `${(park.area / 10000).toFixed(1)} ha`
+                        : `${park.area.toLocaleString()} m²`
+                      : null;
+                    return (
+                      <article
+                        className="fa-result"
+                        key={park.id}
+                        data-park-id={park.id}
+                        data-selected={selectedPark?.id === park.id ? "true" : undefined}
+                        aria-labelledby={`result-title-${park.id}`}
+                      >
+                        <div className="fa-result-top">
+                          <h3 className="fa-result-heading">
+                            <button
+                              type="button"
+                              className="fa-result-title"
+                              id={`result-title-${park.id}`}
+                              onClick={() => selectPark(park)}
+                            >
+                              {park.name}
+                            </button>
+                          </h3>
+                          <button
+                            type="button"
+                            className="fa-result-save"
+                            aria-pressed={favoriteIds.has(park.id)}
+                            aria-label={
+                              favoriteIds.has(park.id)
+                                ? `Remove ${park.name} from saved`
+                                : `Save ${park.name}`
+                            }
+                            onClick={(e) => toggleFavorite(park.id, e)}
+                          >
+                            <svg viewBox="0 0 24 24" fill={favoriteIds.has(park.id) ? "currentColor" : "none"} stroke="currentColor" strokeWidth="1.8" aria-hidden="true">
+                              <path d="M12 21s-7-4.5-9.5-9A5.5 5.5 0 0 1 12 6a5.5 5.5 0 0 1 9.5 6c-2.5 4.5-9.5 9-9.5 9z" />
+                            </svg>
                           </button>
                         </div>
-                        <div className="pp-park-card-meta">
+
+                        <div className="fa-result-meta">
+                          <button
+                            type="button"
+                            className="fa-result-type"
+                            onClick={() => {
+                              const map: Partial<Record<string, keyof Filters>> = {
+                                Playground: "playground",
+                                Iconic: "iconic",
+                                Sports: "sports",
+                                Sportsfield: "sportsfield",
+                                Neighbourhood: "neighbourhood",
+                                Pocket: "pocket",
+                              };
+                              const key = map[park.type];
+                              if (key) {
+                                setFilters((prev) => ({ ...prev, [key]: true }));
+                                toast(`Filtered to ${park.type} parks`, "info");
+                              }
+                            }}
+                          >
+                            {park.type || "Unclassified"}
+                          </button>
                           {park.suburb && (
                             <button
-                              className="pp-park-suburb-pill pp-suburb-clickable"
-                              onClick={e => {
-                                e.stopPropagation();
-                                setSearchInput(park.suburb);
-                                setSearch(park.suburb);
+                              type="button"
+                              className="fa-result-suburb"
+                              onClick={() => {
+                                setSearchInput(park.suburb!);
+                                setSearch(park.suburb!);
                                 setGeocodeNearby(null);
                                 setGeocodePlace("");
                               }}
-                              title={`Search parks in ${park.suburb}`}
                             >
                               {park.suburb}
                             </button>
                           )}
                           {dist !== null && (
-                            <span className="pp-park-distance">
-                              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ width: 10, height: 10 }}>
-                                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/>
-                              </svg>
+                            <span className="fa-result-distance">
                               {dist < 1 ? `${Math.round(dist * 1000)} m` : `${dist.toFixed(1)} km`}
-                              {dist < 3 && <span className="pp-walk-time">· ~{Math.max(1, Math.round(dist / 0.083))} min</span>}
                             </span>
                           )}
+                          {areaLabel && <span className="fa-result-area">{areaLabel}</span>}
                         </div>
-                        {(park.hasPlayground || park.area) && (
-                          <div className="pp-park-card-facilities">
-                            {park.hasPlayground && (
-                              <span className="pp-facility-tag">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/></svg>
-                                Playground
-                              </span>
-                            )}
-                            {park.area && (() => {
-                              const { label, cls } = sizeLabel(park.area);
-                              return (
-                                <span className="pp-facility-tag">
-                                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/></svg>
-                                  {fmtArea(park.area)}
-                                  <span className={`pp-size-label ${cls}`}>{label}</span>
-                                </span>
-                              );
-                            })()}
-                          </div>
-                        )}
-                        {compactView && park.area && (() => {
-                          const { label, cls } = sizeLabel(park.area);
-                          return <span className={`pp-size-label ${cls} pp-compact-size`}>{label}</span>;
-                        })()}
-                        <div className="pp-card-hover-hint">Open park details →</div>
-                      </div>
+
+                        <div className="fa-result-foot">
+                          <span className="fa-result-facilities">
+                            {park.hasPlayground && <span className="fa-facility">Playground</span>}
+                            {rank < 100 && sortBy === "size" && <span className="fa-facility">Rank {rank + 1}</span>}
+                          </span>
+                          <button
+                            type="button"
+                            className="fa-panel-link"
+                            onClick={() => selectPark(park)}
+                          >
+                            Open details
+                          </button>
+                        </div>
+                      </article>
                     );
                   })}
 
                   {displayParks.length > visibleCount && (
                     <>
                       <button
-                        className="pp-load-more-btn"
-                        onClick={() => setVisibleCount(v => v + 100)}
+                        type="button"
+                        className="fa-btn fa-btn--secondary fa-load-more"
+                        onClick={() => setVisibleCount((v) => v + 100)}
                       >
                         Show {Math.min(100, displayParks.length - visibleCount)} more
-                        <span className="pp-load-more-count">({displayParks.length - visibleCount} remaining)</span>
+                        <span className="fa-panel-meta">
+                          {displayParks.length - visibleCount} remaining
+                        </span>
                       </button>
                       <div ref={loadMoreSentinelRef} style={{ height: 1 }} aria-hidden="true" />
                     </>
                   )}
-                </>
-              )}
-            </div>
-          </div>
-        </aside>
+                </div>
+              </section>
 
-        {/* ── Map ── */}
-        <div className="pp-map-container">
-          {sidebarCollapsed && (
-            <button
-              className="pp-sidebar-open-btn"
-              aria-label="Open sidebar"
-              onClick={() => { setSidebarCollapsed(false); setTimeout(() => mapRef.current?.invalidateSize(), 330); }}
-            >
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M9 18l6-6-6-6"/></svg>
-            </button>
-          )}
-          {visibleMapCount > 0 && !loading && (
-            <div className="pp-viewport-count" aria-live="polite">
-              {visibleMapCount} park{visibleMapCount === 1 ? "" : "s"} visible
+              {/* Scope totals sit after the results: they qualify the selection,
+                  they are not a step in finding a place. Always rendered, so a
+                  network-wide view still reports its figures. */}
+              <section className="fa-panel fa-panel--totals" aria-labelledby="fa-council-totals-heading">
+                <div className="fa-panel-head">
+                  <h2 id="fa-council-totals-heading">Scope totals</h2>
+                  <span className="fa-panel-meta">
+                    {selectedCouncilEntries.length > 0
+                      ? `${selectedCouncilEntries.length} council${selectedCouncilEntries.length > 1 ? "s" : ""}`
+                      : "Network-wide"}
+                  </span>
+                </div>
+                <CouncilStats
+                  selected={selectedCouncilEntries}
+                  parksInSelection={scopedParks}
+                  transitStops={transitStopsInSelection}
+                  transitLoading={transitLoading}
+                  totalAreaKm2={councilIndex?.total_area_km2 ?? 0}
+                  councilTotal={councilIndex?.total_councils ?? 0}
+                  networkParks={allParks.length}
+                  networkPlaygrounds={parkStats.playgrounds}
+                  networkParksAreaHa={networkParksAreaHa}
+                  layerCounts={layerCounts}
+                  loading={councilStatsLoading}
+                  failed={councilStatus === "error"}
+                />
+              </section>
+            </aside>
+
+            {/* ── Map: the stable right-hand pane ─────────────────────────── */}
+            <div className="fa-map-col">
+              <section className="fa-map-frame" aria-labelledby="fa-map-heading">
+                <div className="fa-map-head">
+                  <div>
+                    <h2 id="fa-map-heading">Map</h2>
+                    <p className="fa-map-sub">
+                      {loading
+                        ? "Loading park records"
+                        : `${visibleMapCount.toLocaleString()} in view · ${displayParks.length.toLocaleString()} in results`}
+                    </p>
+                  </div>
+                  <div className="fa-toolbar">
+                    <button
+                      type="button"
+                      className="fa-tool-btn"
+                      aria-pressed={basemap === "satellite"}
+                      aria-label={basemap === "satellite" ? "Switch to street map" : "Switch to satellite imagery"}
+                      onClick={() => setBasemap((b) => (b === "satellite" ? "streets" : "satellite"))}
+                    >
+                      {basemap === "satellite" ? "Satellite" : "Street"}
+                    </button>
+                    <button type="button" className="fa-tool-btn" onClick={handleLocate} title="Find my location (L)">
+                      Locate
+                    </button>
+                    <button
+                      type="button"
+                      className="fa-tool-btn"
+                      onClick={() => mapRef.current?.flyTo([-33.8688, 151.2093], 13, { duration: 1.1, easeLinearity: 0.25 })}
+                      title="Recentre on Sydney CBD (M)"
+                    >
+                      Sydney
+                    </button>
+                  </div>
+                </div>
+
+                <div className="fa-map-canvas">
+                  <div id="park-map" ref={mapContainerRef} />
+                </div>
+
+                <div className="fa-map-key" aria-label="Layers shown on the map">
+                  <span
+                    className="fa-key-item"
+                    title="City of Sydney park areas are always shown"
+                  >
+                    <span className="fa-key-swatch" style={{ background: "var(--pp-primary)" }} aria-hidden="true" />
+                    Parks
+                  </span>
+                  {LAYER_TOGGLES.filter((toggle) => filters[toggle.key]).map((toggle) => (
+                    <button
+                      key={toggle.key}
+                      type="button"
+                      className="fa-key-item fa-key-toggle"
+                      data-map-layer={toggle.key}
+                      aria-pressed="true"
+                      title={`Hide ${toggle.label.toLowerCase()}`}
+                      onClick={() => toggleFilter(toggle.key)}
+                    >
+                      <span className="fa-key-swatch" style={{ background: toggle.color }} aria-hidden="true" />
+                      {toggle.label}
+                      <span aria-hidden="true" className="fa-key-close">×</span>
+                    </button>
+                  ))}
+                  {GENERIC_LAYERS.filter((layer) => genericEnabled[layer.id]).map((layer) => (
+                    <button
+                      key={layer.id}
+                      type="button"
+                      className="fa-key-item fa-key-toggle"
+                      data-map-layer={layer.id}
+                      aria-pressed="true"
+                      title={`Hide ${layer.label.toLowerCase()}`}
+                      onClick={() =>
+                        setGenericEnabled((previous) => ({ ...previous, [layer.id]: false }))
+                      }
+                    >
+                      <span className="fa-key-swatch" style={{ background: layer.mapColor ?? "#8B5CF6" }} aria-hidden="true" />
+                      {layer.label}
+                      <span aria-hidden="true" className="fa-key-close">×</span>
+                    </button>
+                  ))}
+                </div>
+
+                <p className="fa-map-note">
+                  Park pins are polygon centres, not gates. Basemap © OpenStreetMap contributors.
+                </p>
+              </section>
             </div>
-          )}
-          <button
-            className="pp-locate-btn"
-            aria-label="Locate me"
-            onClick={handleLocate}
-            title="Find my location (L)"
-          >
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <circle cx="12" cy="12" r="10"/><line x1="22" y1="12" x2="18" y2="12"/>
-              <line x1="6" y1="12" x2="2" y2="12"/><line x1="12" y1="6" x2="12" y2="2"/>
-              <line x1="12" y1="22" x2="12" y2="18"/>
-            </svg>
-          </button>
-          <button
-            className="pp-recenter-btn"
-            aria-label="Recenter on Sydney"
-            title="Recenter on Sydney CBD"
-            onClick={() => mapRef.current?.flyTo([-33.8688, 151.2093], 13, { duration: 1.1, easeLinearity: 0.25 })}
-          >
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <path d="M12 2a7 7 0 0 1 7 7c0 5-7 13-7 13S5 14 5 9a7 7 0 0 1 7-7z"/>
-              <circle cx="12" cy="9" r="2.5" fill="currentColor" stroke="none"/>
-            </svg>
-          </button>
-          {/* Map Legend */}
-          <div className={`pp-map-legend${legendCollapsed ? " collapsed" : ""}`}>
-            <button className="pp-map-legend-title" onClick={() => setLegendCollapsed(v => !v)} title={legendCollapsed ? "Show legend" : "Hide legend"}>
-              Markers
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ width: 10, height: 10, marginLeft: "auto", transition: "transform .2s", transform: legendCollapsed ? "rotate(-90deg)" : "none" }}>
-                <polyline points="6 9 12 15 18 9"/>
-              </svg>
-            </button>
-            {!legendCollapsed && [
-              { color: "#E76F51", label: "Playground" },
-              { color: "#FFD166", label: "Iconic" },
-              { color: "#F4A261", label: "Sports" },
-              { color: "#83C5BE", label: "Neighbourhood" },
-              { color: "#9B59B6", label: "Pocket" },
-              { color: "#2D6A4F", label: "Park" },
-            ].map(({ color, label }) => (
-              <div key={label} className="pp-map-legend-item">
-                <div className="pp-map-legend-dot" style={{ background: color }} />
-                <span>{label}</span>
-              </div>
-            ))}
           </div>
-          <div id="park-map" ref={mapContainerRef} />
         </div>
 
-        {/* Mobile FAB — opens sidebar on small screens */}
-        {sidebarCollapsed && (
-          <button
-            className="pp-mobile-fab"
-            aria-label="Open filters"
-            onClick={() => { setSidebarCollapsed(false); setTimeout(() => mapRef.current?.invalidateSize(), 330); }}
-          >
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ width: 20, height: 20 }}>
-              <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/>
-            </svg>
-            Filters{activeFilterCount > 0 && <span className="pp-mobile-fab-count">{activeFilterCount}</span>}
-          </button>
-        )}
-
-      <Footer compact />
       </main>
 
       {/* Modal */}
       {selectedPark && (() => {
         const modalParks = geocodeNearby ?? displayParks;
-        const modalIdx   = modalParks.findIndex(p => p.id === selectedPark.id);
+        const modalIdx = modalParks.findIndex((p) => p.id === selectedPark.id);
         return (
           <ParkModal
             park={selectedPark}
@@ -2265,28 +2809,31 @@ export default function Explore() {
             }}
             onTypeFilter={(type) => {
               const typeMap: Partial<Record<string, keyof typeof filters>> = {
-                Playground: "playground", Iconic: "iconic",
-                Sportsfield: "sportsfield", Sports: "sports",
-                Neighbourhood: "neighbourhood", Pocket: "pocket",
+                Playground: "playground",
+                Iconic: "iconic",
+                Sportsfield: "sportsfield",
+                Sports: "sports",
+                Neighbourhood: "neighbourhood",
+                Pocket: "pocket",
                 "Off-leash": "dogs",
               };
               const key = typeMap[type];
               if (key) {
-                setFilters(prev => ({ ...prev, [key]: true }));
-                setFiltersOpen(true);
+                setFilters((prev) => ({ ...prev, [key]: true }));
                 toast(`Filtered to ${type} parks`, "info");
               }
               setSelectedPark(null);
             }}
             onFindNearby={(lat, lng, name) => {
-              const nearby = [...allParks]
-                .map(p => ({ p, d: haversineKm(lat, lng, p.lat, p.lng) }))
-                .filter(x => x.d <= 1)
+              const nearby = [...scopedParks]
+                .map((p) => ({ p, d: haversineKm(lat, lng, p.lat, p.lng) }))
+                .filter((x) => x.d <= 1)
                 .sort((a, b) => a.d - b.d)
-                .map(x => x.p);
+                .map((x) => x.p);
               setGeocodeNearby(nearby);
               setGeocodePlace(`Near ${name}`);
-              setSearchInput(""); setSearch("");
+              setSearchInput("");
+              setSearch("");
               mapRef.current?.flyTo([lat, lng], 15, { duration: 1.2, easeLinearity: 0.25 });
               toast(`${nearby.length} park${nearby.length !== 1 ? "s" : ""} within 1 km`, "info");
             }}
@@ -2302,46 +2849,44 @@ export default function Explore() {
       {/* Keyboard shortcuts overlay */}
       {showShortcuts && (
         <div className="pp-shortcuts-overlay" onClick={() => setShowShortcuts(false)}>
-          <div className="pp-shortcuts-modal" onClick={e => e.stopPropagation()}>
+          <div className="pp-shortcuts-modal" role="dialog" aria-modal="true" aria-labelledby="fa-shortcuts-title" onClick={(e) => e.stopPropagation()}>
             <div className="pp-shortcuts-header">
-              <h3>Keyboard Shortcuts</h3>
-              <button className="pp-modal-close-btn" onClick={() => setShowShortcuts(false)}>
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+              <h2 id="fa-shortcuts-title">Keyboard shortcuts</h2>
+              <button className="pp-modal-close-btn" onClick={() => setShowShortcuts(false)} aria-label="Close shortcuts">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+                  <line x1="18" y1="6" x2="6" y2="18" />
+                  <line x1="6" y1="6" x2="18" y2="18" />
+                </svg>
               </button>
             </div>
-            <div className="pp-shortcuts-grid">
+            <div className="fa-shortcut-grid">
               {[
-                { keys: ["/"],        desc: "Focus search" },
-                { keys: ["?"],        desc: "Show/hide shortcuts" },
-                { keys: ["↑", "↓"],  desc: "Navigate results" },
-                { keys: ["Enter"],    desc: "Open selected park" },
-                { keys: ["Esc"],      desc: "Close modal / dismiss" },
-                { keys: ["S"],        desc: "Surprise me — random park" },
-                { keys: ["C"],        desc: "Toggle compact view" },
-                { keys: ["F"],        desc: "Fit map to results" },
-                { keys: ["T"],        desc: "Cycle map theme" },
-                { keys: ["L"],        desc: "Locate me (GPS)" },
-                { keys: ["D"],        desc: "Toggle saved parks view" },
-                { keys: ["W"],        desc: "Walk directions for open park" },
-                { keys: ["G"],        desc: "Google Maps view for open park" },
-                { keys: ["N"],        desc: "Next park in list (modal open)" },
-                { keys: ["P"],        desc: "Previous park in list (modal open)" },
-                { keys: ["←", "→"],  desc: "Navigate parks in modal" },
-                { keys: ["M"],        desc: "Recenter map on Sydney CBD" },
-                { keys: ["1"],        desc: "Sort: Default" },
-                { keys: ["2"],        desc: "Sort: A–Z" },
-                { keys: ["3"],        desc: "Sort: Nearest (or locate if no GPS)" },
-                { keys: ["4"],        desc: "Sort: Largest" },
+                { keys: ["/"], desc: "Focus search" },
+                { keys: ["?"], desc: "Show or hide shortcuts" },
+                { keys: ["↑", "↓"], desc: "Move between results" },
+                { keys: ["Enter"], desc: "Open the focused park" },
+                { keys: ["Esc"], desc: "Close the dialog" },
+                { keys: ["S"], desc: "Open a random park" },
+                { keys: ["F"], desc: "Fit the map to the results" },
+                { keys: ["T"], desc: "Switch theme" },
+                { keys: ["L"], desc: "Find my location" },
+                { keys: ["D"], desc: "Show saved parks" },
+                { keys: ["1", "2", "3", "4"], desc: "Sort the results" },
+                { keys: ["M"], desc: "Recentre on Sydney" },
               ].map(({ keys, desc }) => (
-                <div key={desc} className="pp-shortcut-row">
-                  <div className="pp-shortcut-keys">
-                    {keys.map(k => <kbd key={k} className="pp-kbd">{k}</kbd>)}
-                  </div>
+                <div key={desc} className="fa-shortcut">
+                  <span>
+                    {keys.map((k) => (
+                      <kbd key={k} className="fa-kbd">{k}</kbd>
+                    ))}
+                  </span>
                   <span>{desc}</span>
                 </div>
               ))}
             </div>
-            <p className="pp-shortcuts-hint">Press <kbd className="pp-kbd">?</kbd> or <kbd className="pp-kbd">Esc</kbd> to close</p>
+            <p className="fa-panel-meta">
+              Shortcuts are ignored while you are typing in a field.
+            </p>
           </div>
         </div>
       )}

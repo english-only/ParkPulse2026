@@ -1,5 +1,16 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import * as DialogPrimitive from "@radix-ui/react-dialog";
+import {
+  Armchair,
+  Bath,
+  Blocks,
+  Flame,
+  Heart,
+  MapPin,
+  Sandwich,
+  SquareParking,
+  Tent,
+} from "lucide-react";
 import type { Park } from "../types/park";
 import { useToast } from "../context/ToastContext";
 import { haversineKm } from "../utils/geo";
@@ -39,15 +50,18 @@ function sizeLabel(area: number): string {
   return "Massive";
 }
 
-function npwsIcon(subtype: string): string {
-  if (subtype.includes("BBQ") || subtype.includes("Fire")) return "🔥";
-  if (subtype.includes("Picnic")) return "🧺";
-  if (subtype.includes("Shelter")) return "⛺";
-  if (subtype.includes("Playground")) return "🛝";
-  if (subtype.includes("Seat")) return "🪑";
-  if (subtype.includes("Toilet")) return "🚻";
-  if (subtype.includes("Parking")) return "🅿️";
-  return "📍";
+/** Facility glyph. Drawn icons, not emoji: these sit inside the record panel and
+ *  have to match the rest of the interface at a 15 px optical size. */
+function NpwsIcon({ subtype }: { subtype: string }) {
+  const props = { size: 15, strokeWidth: 1.75, "aria-hidden": true } as const;
+  if (subtype.includes("BBQ") || subtype.includes("Fire")) return <Flame {...props} />;
+  if (subtype.includes("Picnic")) return <Sandwich {...props} />;
+  if (subtype.includes("Shelter")) return <Tent {...props} />;
+  if (subtype.includes("Playground")) return <Blocks {...props} />;
+  if (subtype.includes("Seat")) return <Armchair {...props} />;
+  if (subtype.includes("Toilet")) return <Bath {...props} />;
+  if (subtype.includes("Parking")) return <SquareParking {...props} />;
+  return <MapPin {...props} />;
 }
 
 /** Parks the user has opened most recently, newest first, de-duplicated by id. */
@@ -129,7 +143,7 @@ export default function ParkModal({
         const target =
           opener && opener.isConnected
             ? opener
-            : document.querySelector<HTMLElement>(".pp-park-card-title, .pp-popup-btn");
+            : document.querySelector<HTMLElement>(".fa-result-title, .pp-popup-btn");
         target?.focus();
       });
     };
@@ -232,7 +246,6 @@ export default function ParkModal({
         <DialogPrimitive.Overlay className="pp-modal-overlay" />
         <DialogPrimitive.Content
           className="pp-modal-content"
-          aria-labelledby="modal-title"
           aria-describedby="modal-description"
           onKeyDown={handleKeyDown}
           onOpenAutoFocus={(e) => {
@@ -289,9 +302,10 @@ export default function ParkModal({
           )}
 
           <div className="pp-modal-header">
-            <DialogPrimitive.Title asChild>
-              <h2 id="modal-title">{park.name}</h2>
-            </DialogPrimitive.Title>
+            {/* Radix binds aria-labelledby to the id this Title renders —
+                forcing our own id here would orphan that binding (and trip
+                Radix's missing-DialogTitle warning). Default tag is h2. */}
+            <DialogPrimitive.Title>{park.name}</DialogPrimitive.Title>
             <DialogPrimitive.Description>
               <div className="pp-visually-hidden" id="modal-description">
                 {park.suburb && `${park.suburb}, NSW. `}
@@ -316,18 +330,18 @@ export default function ParkModal({
                 (onSuburbSearch ? (
                   <button
                     className="pp-park-suburb-pill pp-suburb-clickable"
-                    style={{ padding: "2px 8px", fontSize: ".72rem", fontWeight: 500 }}
+                    style={{ padding: "2px 8px", fontSize: ".8125rem", fontWeight: 500 }}
                     onClick={() => { onSuburbSearch(park.suburb); onClose(); }}
                     title={`Find parks in ${park.suburb}`}
                   >
-                    📍 {park.suburb}
+                    <MapPin size={12} strokeWidth={2} aria-hidden="true" /> {park.suburb}
                   </button>
                 ) : (
                   <span
                     className="pp-park-suburb-pill"
-                    style={{ padding: "2px 8px", background: "var(--pp-bg-alt)", color: "var(--pp-text-secondary)", borderRadius: "var(--pp-radius-full)", fontSize: ".72rem", fontWeight: 500 }}
+                    style={{ padding: "2px 8px", background: "var(--pp-bg-alt)", color: "var(--pp-text-secondary)", borderRadius: "var(--pp-radius-full)", fontSize: ".8125rem", fontWeight: 500 }}
                   >
-                    📍 {park.suburb}
+                    <MapPin size={12} strokeWidth={2} aria-hidden="true" /> {park.suburb}
                   </span>
                 ))}
             </div>
@@ -368,7 +382,7 @@ export default function ParkModal({
                         }}
                       />
                     </div>
-                    <span style={{ fontSize: ".65rem", color: "var(--pp-text-muted)", marginTop: 2, display: "block" }}>
+                    <span style={{ fontSize: ".8125rem", color: "var(--pp-text-muted)", marginTop: 2, display: "block" }}>
                       {Math.min(100, Math.round((park.area / 390000) * 100))}% of Sydney's largest ·{" "}
                       {park.area < 2856
                         ? `≈${Math.max(1, Math.round(park.area / 714))} tennis court${Math.max(1, Math.round(park.area / 714)) !== 1 ? "s" : ""}`
@@ -404,7 +418,7 @@ export default function ParkModal({
                   <circle cx="12" cy="12" r="10" />
                   <polyline points="12 6 12 12 16 14" />
                 </svg>
-                <span style={{ fontFamily: "monospace", fontSize: "0.78rem", color: "var(--pp-text-muted)" }}>
+                <span style={{ fontFamily: "var(--pp-font)", fontVariantNumeric: "tabular-nums", fontSize: "0.8125rem", color: "var(--pp-text-muted)" }}>
                   {park.lat.toFixed(5)}, {park.lng.toFixed(5)}
                 </span>
                 <span className="pp-copy-hint" aria-hidden="true">
@@ -449,7 +463,9 @@ export default function ParkModal({
                 <div className="pp-nearby-list">
                   {visibleNPWS.map((f, i) => (
                     <div key={`${f.name}-${i}`} className="pp-nearby-item">
-                      <span className="pp-nearby-icon" aria-hidden="true">{npwsIcon(f.subtype)}</span>
+                      <span className="pp-nearby-icon">
+                        <NpwsIcon subtype={f.subtype} />
+                      </span>
                       <div className="pp-nearby-info">
                         <span className="pp-nearby-name">{f.name}</span>
                         <span className="pp-nearby-meta">
@@ -509,7 +525,12 @@ export default function ParkModal({
                 aria-pressed={!!isFavorite}
                 aria-label={isFavorite ? "Remove from saved" : "Save park"}
               >
-                <span style={{ fontSize: "1rem", lineHeight: 1 }} aria-hidden="true">{isFavorite ? "♥" : "♡"}</span>
+                <Heart
+                  size={15}
+                  strokeWidth={2}
+                  aria-hidden="true"
+                  fill={isFavorite ? "currentColor" : "none"}
+                />
                 {isFavorite ? "Saved" : "Save"}
               </button>
             )}
