@@ -1,0 +1,11 @@
+{
+  "type": "FeatureCollection",
+  "name": "parkpulse-contributions",
+  "metadata": {
+    "generated": "2026-10-21",
+    "records": 0,
+    "note": "No community contribution batch has been accepted and published in this build. The dataset is shipped empty on purpose; an empty file is not evidence that no place exists.",
+    "publish": "node scripts/publish-contributions.mjs <exported.geojson>"
+  },
+  "features": []
+}
